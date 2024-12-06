@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form name="punchout_form" method="post" action="/online-bank/pay">
+    <input type="hidden" th:name="outTradeNo" th:value="${outTradeNo}" />
+    <input type="hidden" name="amount" value="10">
+    <input type="hidden" name="subject" value="测试商品">
+    <input type="hidden" name="goodsDesc" value="测试五金商品">
+    <input type="hidden" name="notifyUrl" value="">
+    <input type="hidden" name="returnUrl" value="https://www.baidu.com">
+    <input type="submit" value="立即支付" style="display:none">
+</form>
+<script>document.forms[0].submit();</script>
+</body>
+</html>

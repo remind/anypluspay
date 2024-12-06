@@ -1,0 +1,7 @@
+server:
+  port: 8081
+
+spring:
+  config:
+    import:
+      - optional:/Users/wxj/dev/anypluspay-project/config/channelgateway.yaml # 密钥配置文件

@@ -1,0 +1,36 @@
+package com.anypluspay.channelgateway.api.query;
+
+import com.anypluspay.channelgateway.ChannelGateway;
+import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.channelgateway.result.GatewayResult;
+import com.anypluspay.channelgateway.request.OrderInfo;
+import com.anypluspay.channel.types.channel.ChannelApiType;
+
+import java.util.List;
+
+/**
+ * 查询网关
+ *
+ * @author wxj
+ * 2024/9/15
+ */
+public interface QueryGateway extends ChannelGateway<OrderInfo> {
+
+    List<ChannelApiType> SUPPORT_API_TYPES = List.of(ChannelApiType.SINGLE_QUERY
+            , ChannelApiType.SINGLE_REFUND_QUERY);
+
+    @Override
+    default GatewayResult call(GatewayRequest<OrderInfo> gatewayRequest) {
+        GatewayResult result = new GatewayResult();
+        result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
+        query(gatewayRequest, gatewayRequest.getContent(), result);
+        return result;
+    }
+
+    @Override
+    default boolean support(String channelCode, ChannelApiType channelApiType) {
+        return SUPPORT_API_TYPES.contains(channelApiType);
+    }
+
+    void query(GatewayRequest<OrderInfo> gatewayRequest, OrderInfo orderInfo, GatewayResult result);
+}

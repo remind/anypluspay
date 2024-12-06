@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>订单信息</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        .field label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .actions button {
+            margin-right: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .success {
+            background-color: #4caf50;
+            color: white;
+        }
+        .failure {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>订单信息</h2>
+    <div class="field">
+        <label>订单号：</label>
+        <span th:text="${payOrder.outTradeNo}"></span>
+    </div>
+    <div class="field">
+        <label>金额：</label>
+        <span th:text="${payOrder.amount}"></span>
+    </div>
+    <div class="field">
+        <label>主题：</label>
+        <span th:text="${payOrder.subject}"></span>
+    </div>
+    <div class="field">
+        <label>商品信息：</label>
+        <span th:text="${payOrder.goodsDesc}"></span>
+    </div>
+    <div class="actions">
+        <button class="success" th:onclick="submit(1)">支付成功</button>
+        <button class="failure" th:onclick="submit(2)">支付失败</button>
+    </div>
+</div>
+<script th:inline="javascript">
+    var outTradeNo = [[${payOrder.outTradeNo}]];
+    function submit(action) {
+        var url = "/online-bank/submit?outTradeNo=" + outTradeNo + "&action=" + action;
+        window.location.href = url;
+    }
+</script>
+</body>
+</html>
