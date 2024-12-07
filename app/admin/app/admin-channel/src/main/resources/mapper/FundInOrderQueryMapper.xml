@@ -23,7 +23,7 @@
 
     <sql id="column">
         t.order_id,t.pay_method,t.pay_inst,t.amount,t.currency_code,t.goods_desc,t.terminal_type,t.terminal,t.route_extra,
-        b.request_id,b.biz_scene,b.member_id,b.request_root_type,b.request_type,b.status,b.inst_order_id,b.extra,b.inst_extra,b.gmt_create,b.gmt_modified
+        b.request_id,b.member_id,b.request_root_type,b.request_type,b.status,b.inst_order_id,b.extra,b.inst_extra,b.gmt_create,b.gmt_modified
     </sql>
 
     <sql id="where">

@@ -11,6 +11,7 @@ import com.anypluspay.channel.types.ExtKey;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.lang.utils.ExtUtil;
 import com.anypluspay.commons.terminal.AppOS;
 import com.anypluspay.commons.terminal.AppTerminal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,20 +65,11 @@ public class FundServiceBaseTest extends BaseChannelTest {
     /**
      * 新增路由参数
      * @param request
-     * @param key
+     * @param extKey
      * @param value
      */
-    protected void addRouteExtra(FundInRequest request, String key, String value) {
-        Map<String, String> routeExtra = request.getRouteExtra();
-        if (routeExtra ==  null) {
-            routeExtra = new HashMap<>();
-            request.setRouteExtra(routeExtra);
-        }
-        routeExtra.put(key, value);
-    }
-
     protected void addRouteExtra(FundInRequest request, ExtKey extKey, String value) {
-        addRouteExtra(request, extKey.getCode(), value);
+        ExtUtil.addValue(request.getRouteExtra(), extKey, value);
     }
 
 }

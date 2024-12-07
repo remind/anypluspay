@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 public abstract class AbstractTestBank {
 
-    protected static final String  url = "";
+    protected static final String  url = "http://localhost:9080";
 
     protected final WebClient webClient = WebClient.builder().baseUrl(url).build();
 

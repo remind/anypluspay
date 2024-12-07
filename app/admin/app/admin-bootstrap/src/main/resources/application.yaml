@@ -44,3 +44,8 @@ dubbo:
     address: nacos://127.0.0.1:8848
   consumer:
     check: false
+logging:
+  level:
+    com:
+      alibaba:
+        nacos: ERROR

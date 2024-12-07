@@ -41,12 +41,14 @@ public class ExtUtil {
      * @param extInfo
      * @param extKey
      * @param value
+     * @return
      */
-    public static void addValue(Map<String, String> extInfo, CodeEnum extKey, String value) {
+    public static Map<String, String> addValue(Map<String, String> extInfo, CodeEnum extKey, String value) {
         if (extInfo == null) {
             extInfo = new HashMap<>();
         }
         extInfo.put(extKey.getCode(), value);
+        return extInfo;
     }
 
     public static Map<String, String> merge(Map<String, String> oldExtra, Map<String, String> newExtra) {

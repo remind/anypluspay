@@ -28,7 +28,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
         parameters.put("goodsDesc", signOrderInfo.getGoodsDesc());
         parameters.put("notifyUrl", signOrderInfo.getCallbackServerUrl());
         parameters.put("returnUrl", signOrderInfo.getCallbackPageUrl());
-        String formHtml = buildForm(url + "/pay", parameters);
+        String formHtml = buildForm(url + "/online-bank/pay", parameters);
         result.setInstPageUrl(formHtml);
         result.setSuccess(true);
         result.setApiCode("0000");
@@ -36,14 +36,14 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
 
     public static String buildForm(String baseUrl, Map<String, String> parameters) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<form name=\"this_is_form\" method=\"post\" action=\"");
+        sb.append("<form name=\"this_is_form\" method=\"post\" target=\"_blank\" action=\"");
         sb.append(baseUrl);
         sb.append("\">\n");
         sb.append(buildHiddenFields(parameters));
 
         sb.append("<input type=\"submit\" value=\"立即支付\" style=\"display:none\" >\n");
         sb.append("</form>\n");
-        sb.append("<script>document.forms[0].submit();</script>");
+        sb.append("<script>document.forms['this_is_form'].submit();</script>");
         return sb.toString();
     }
 

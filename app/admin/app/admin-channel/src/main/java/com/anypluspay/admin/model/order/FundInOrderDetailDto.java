@@ -1,6 +1,7 @@
 package com.anypluspay.admin.model.order;
 
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
 import com.anypluspay.component.web.json.std.MoneySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -59,10 +60,12 @@ public class FundInOrderDetailDto {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime gmtCreate;
 
     /**
      * 最后修改时间
      */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime gmtModified;
 }

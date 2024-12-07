@@ -3,6 +3,7 @@ package com.anypluspay.channel.facade.result;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  * 2024/7/18
  */
 @Data
-public class ChannelResult {
+public class ChannelResult implements Serializable {
 
     /**
      * 请求号

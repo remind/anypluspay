@@ -1,5 +1,7 @@
 package com.anypluspay.channel.application.fundin;
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.application.FundServiceBaseTest;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
@@ -24,8 +26,8 @@ public class SignChannelTest extends FundServiceBaseTest {
 
     @Test
     public void applySignSuccess() {
-        FundInRequest fundInDTO = buildFundOrder(TestConstants.S);
-        FundResult fundResult = fundInFacade.apply(fundInDTO);
+        FundInRequest request = buildFundOrder(TestConstants.S);
+        FundResult fundResult = fundInFacade.apply(request);
         log.info(ToStringBuilder.reflectionToString(fundResult));
         Assert.assertEquals(BizOrderStatus.PROCESSING, fundResult.getStatus());
         Assert.assertNotNull(fundResult.getResponseExtra());
@@ -34,16 +36,16 @@ public class SignChannelTest extends FundServiceBaseTest {
 
     @Test
     public void applySignFail() {
-        FundInRequest fundInDTO = buildFundOrder(TestConstants.F);
-        FundResult fundResult = fundInFacade.apply(fundInDTO);
+        FundInRequest request = buildFundOrder(TestConstants.F);
+        FundResult fundResult = fundInFacade.apply(request);
         log.info(ToStringBuilder.reflectionToString(fundResult));
         Assert.assertEquals(BizOrderStatus.FAILED, fundResult.getStatus());
     }
 
     @Test
     public void testQuerySuccess() {
-        FundInRequest fundInDTO = buildFundOrder(TestConstants.S, TestConstants.S);
-        FundResult fundResult = fundInFacade.apply(fundInDTO);
+        FundInRequest request = buildFundOrder(TestConstants.S, TestConstants.S);
+        FundResult fundResult = fundInFacade.apply(request);
         FundResult queryResult = orderQueryFacade.queryByOrderId(fundResult.getOrderId(), true);
         log.info(ToStringBuilder.reflectionToString(queryResult));
         Assert.assertEquals(BizOrderStatus.SUCCESS, queryResult.getStatus());
@@ -53,8 +55,8 @@ public class SignChannelTest extends FundServiceBaseTest {
 
     @Test
     public void testQueryFail() {
-        FundInRequest fundInDTO = buildFundOrder(TestConstants.S, TestConstants.F);
-        FundResult fundResult = fundInFacade.apply(fundInDTO);
+        FundInRequest request = buildFundOrder(TestConstants.S, TestConstants.F);
+        FundResult fundResult = fundInFacade.apply(request);
         FundResult queryResult = orderQueryFacade.queryByOrderId(fundResult.getOrderId(), true);
         log.info(ToStringBuilder.reflectionToString(queryResult));
         Assert.assertEquals(BizOrderStatus.FAILED, queryResult.getStatus());
@@ -64,8 +66,8 @@ public class SignChannelTest extends FundServiceBaseTest {
 
     @Test
     public void testQueryAmountNotEqual() {
-        FundInRequest fundInDTO = buildFundOrder(TestConstants.S, TestConstants.QUERY_MONEY_NOT_EQUAL);
-        FundResult fundResult = fundInFacade.apply(fundInDTO);
+        FundInRequest request = buildFundOrder(TestConstants.S, TestConstants.QUERY_MONEY_NOT_EQUAL);
+        FundResult fundResult = fundInFacade.apply(request);
         FundResult queryResult = orderQueryFacade.queryByOrderId(fundResult.getOrderId(), true);
         log.info(ToStringBuilder.reflectionToString(queryResult));
         Assert.assertEquals(BizOrderStatus.PROCESSING, queryResult.getStatus());

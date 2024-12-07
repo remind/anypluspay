@@ -2,6 +2,7 @@ package com.anypluspay.channel.facade.request;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * 2024/9/24
  */
 @Data
-public class FundRequest {
+public class FundRequest implements Serializable {
 
     /**
      * 请求号

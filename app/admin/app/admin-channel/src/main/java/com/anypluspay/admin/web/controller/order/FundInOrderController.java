@@ -4,6 +4,8 @@ import com.anypluspay.admin.dao.mapper.FundInOrderQueryMapper;
 import com.anypluspay.admin.model.order.FundInOrderDetailDto;
 import com.anypluspay.admin.model.query.Order.FundInOrderQuery;
 import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -32,6 +34,11 @@ public class FundInOrderController extends AbstractController {
     @GetMapping("/list")
     public ResponseResult<PageResult<FundInOrderDetailDto>> list(FundInOrderQuery query) {
         IPage<FundInOrderDetailDto> page = fundInOrderQueryMapper.pageQuery(query, getIPage(query));
+        page.getRecords().forEach(this::convert);
         return ResponseResult.success(toPageResult(page));
+    }
+
+    private void convert(FundInOrderDetailDto dto) {
+        dto.setStatus(EnumUtil.getByCode(BizOrderStatus.class, dto.getStatus()).getDisplayName());
     }
 }
