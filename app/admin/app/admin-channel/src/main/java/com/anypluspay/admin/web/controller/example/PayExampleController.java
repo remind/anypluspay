@@ -40,6 +40,11 @@ public class PayExampleController {
         return ResponseResult.success(fundInFacade.apply(request));
     }
 
+    @PostMapping("/notify")
+    public ResponseResult<FundResult> notify(RefundRequest request) {
+        return ResponseResult.success(refundFacade.apply(request));
+    }
+
     @PostMapping("/refund")
     public ResponseResult<FundResult> refund(RefundRequest request) {
         return ResponseResult.success(refundFacade.apply(request));

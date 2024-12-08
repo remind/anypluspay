@@ -57,3 +57,6 @@ logging:
     org:
       apache:
         dubbo: INFO
+system:
+  config:
+    notify-url: http://127.0.0.1:8080

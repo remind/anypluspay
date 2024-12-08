@@ -1,5 +1,6 @@
 package com.anypluspay.channel.facade.fund;
 
+import cn.hutool.core.lang.Assert;
 import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -18,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 2024/8/19
  */
 @DubboService
-public class NotifyServiceImpl extends AbstractFundService implements NotifyFacade {
+public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacade {
 
     @Autowired
     private InstProcessService instProcessService;
@@ -32,6 +33,7 @@ public class NotifyServiceImpl extends AbstractFundService implements NotifyFaca
     @Override
     public FundResult notify(String fundChannelCode, String request) {
         ChannelApiContext channelApiContext = channelRouteService.routeByChannel(fundChannelCode,ChannelApiType.VERIFY_SIGN);
+        Assert.notNull(channelApiContext, "无可用渠道");
         InstProcessOrder instProcessOrder = instProcessService.noneOrderProcess(channelApiContext, request);
         InstOrder instOrder = instOrderRepository.load(instProcessOrder.getInstOrderId());
         BaseBizOrder bizOrder = bizOrderRepository.load(instOrder.getBizOrderId());

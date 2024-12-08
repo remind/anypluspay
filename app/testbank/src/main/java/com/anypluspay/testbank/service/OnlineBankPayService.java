@@ -58,7 +58,9 @@ public class OnlineBankPayService {
 
     private void notify(PayOrderDO payOrderDO) {
         if (StrUtil.isNotBlank(payOrderDO.getNotifyUrl())) {
-            webClient.post().uri(payOrderDO.getNotifyUrl()).bodyValue(payOrderDO).retrieve().bodyToMono(String.class).block();
+            String url = payOrderDO.getNotifyUrl() + "?outTradeNo=" + payOrderDO.getOutTradeNo() + "&status=" + payOrderDO.getStatus();
+            webClient.get().uri(url)
+                    .retrieve().bodyToMono(String.class).block();
         }
     }
 

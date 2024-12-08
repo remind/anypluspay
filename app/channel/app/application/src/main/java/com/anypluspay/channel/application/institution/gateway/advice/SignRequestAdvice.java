@@ -1,5 +1,6 @@
 package com.anypluspay.channel.application.institution.gateway.advice;
 
+import com.anypluspay.channel.domain.SystemConfig;
 import com.anypluspay.channelgateway.api.sign.SignOrderInfo;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -8,6 +9,7 @@ import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.application.institution.gateway.GatewayRequestAdvice;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,12 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class SignRequestAdvice implements GatewayRequestAdvice<SignOrderInfo, SignResult> {
 
+    @Autowired
+    private SystemConfig systemConfig;
+
     @Override
     public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, SignOrderInfo OrderInfo) {
         if (orderContext.getBizOrder() instanceof FundInOrder fundInOrder) {
             OrderInfo.setGoodsDesc(fundInOrder.getGoodsDesc());
         }
-        OrderInfo.setCallbackServerUrl("http://www.baidu.com");
+        OrderInfo.setCallbackServerUrl(systemConfig.getNotifyUrl() + "/notify/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + channelApiContext.getChannelCode());
     }
 
     @Override
