@@ -3,7 +3,7 @@ package com.anypluspay.channelgateway;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.OrderInfo;
+import com.anypluspay.channelgateway.request.GatewayOrder;
 import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.ExtKey;
@@ -20,13 +20,13 @@ public interface ChannelGateway<T extends RequestContent> {
 
     boolean support(String channelCode, ChannelApiType channelApiType);
 
-    default boolean isTest(OrderInfo orderInfo) {
-        return StrUtil.isNotBlank(orderInfo.getExtValue(ExtKey.TEST_FLAG));
+    default boolean isTest(GatewayOrder gatewayOrder) {
+        return StrUtil.isNotBlank(gatewayOrder.getExtValue(ExtKey.TEST_FLAG));
     }
 
-    default TestFlag getTestFlag(OrderInfo orderInfo) {
-        if (isTest(orderInfo)) {
-            return JSONUtil.toBean(orderInfo.getExtValue(ExtKey.TEST_FLAG), TestFlag.class);
+    default TestFlag getTestFlag(GatewayOrder gatewayOrder) {
+        if (isTest(gatewayOrder)) {
+            return JSONUtil.toBean(gatewayOrder.getExtValue(ExtKey.TEST_FLAG), TestFlag.class);
         }
         return null;
     }

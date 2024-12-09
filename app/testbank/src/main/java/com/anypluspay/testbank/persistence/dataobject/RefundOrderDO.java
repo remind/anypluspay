@@ -34,9 +34,9 @@ public class RefundOrderDO implements Serializable {
     private Long payOrderId;
 
     /**
-     * 外部订单号
+     * 退款请求号
      */
-    private String outTradeNo;
+    private String outRequestNo;
 
     /**
      * 退款金额
@@ -47,6 +47,11 @@ public class RefundOrderDO implements Serializable {
      * 状态
      */
     private String status;
+
+    /**
+     * 通知地址
+     */
+    private String notifyUrl;
 
     /**
      * 创建时间
@@ -70,12 +75,12 @@ public class RefundOrderDO implements Serializable {
         this.payOrderId = payOrderId;
     }
 
-    public String getOutTradeNo() {
-        return outTradeNo;
+    public String getOutRequestNo() {
+        return outRequestNo;
     }
 
-    public void setOutTradeNo(String outTradeNo) {
-        this.outTradeNo = outTradeNo;
+    public void setOutRequestNo(String outRequestNo) {
+        this.outRequestNo = outRequestNo;
     }
 
     public BigDecimal getAmount() {
@@ -98,6 +103,14 @@ public class RefundOrderDO implements Serializable {
         return gmtCreate;
     }
 
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
     public void setGmtCreate(LocalDateTime gmtCreate) {
         this.gmtCreate = gmtCreate;
     }
@@ -107,7 +120,7 @@ public class RefundOrderDO implements Serializable {
         return "RefundOrderDO{" +
         "id = " + id +
         ", payOrderId = " + payOrderId +
-        ", outTradeNo = " + outTradeNo +
+        ", outTradeNo = " + outRequestNo +
         ", amount = " + amount +
         ", status = " + status +
         ", gmtCreate = " + gmtCreate +

@@ -3,7 +3,7 @@ package com.anypluspay.channelgateway.testbank;
 import com.anypluspay.channelgateway.AbstractTestBank;
 import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignOrderInfo;
+import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -20,13 +20,13 @@ import java.util.Set;
 public class TestBankSignGateway extends AbstractTestBank implements SignGateway {
 
     @Override
-    public void sign(GatewayRequest<SignOrderInfo> gatewayRequest, SignOrderInfo signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("outTradeNo", signOrderInfo.getInstRequestNo());
         parameters.put("amount", signOrderInfo.getAmount().getAmount().toString());
         parameters.put("subject", "测试商品");
         parameters.put("goodsDesc", signOrderInfo.getGoodsDesc());
-        parameters.put("notifyUrl", signOrderInfo.getCallbackServerUrl());
+        parameters.put("notifyUrl", signOrderInfo.getServerNotifyUrl());
         parameters.put("returnUrl", signOrderInfo.getCallbackPageUrl());
         String formHtml = buildForm(url + "/online-bank/pay", parameters);
         result.setInstPageUrl(formHtml);

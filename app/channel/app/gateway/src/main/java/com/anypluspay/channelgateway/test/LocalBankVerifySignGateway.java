@@ -5,7 +5,7 @@ import com.anypluspay.channelgateway.api.verify.VerifySignGateway;
 import com.anypluspay.channelgateway.api.verify.VerifySignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.StringInfo;
-import com.anypluspay.channelgateway.test.request.TestOnlineBankNotifyResult;
+import com.anypluspay.channelgateway.test.request.LocalBankNotifyResult;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
  * 2024/7/15
  */
 @Service
-public class TestOnlineBankVerifySignGateway extends VerifySignGateway {
+public class LocalBankVerifySignGateway extends VerifySignGateway {
     @Override
     public void notify(GatewayRequest<StringInfo> request, VerifySignResult result) {
         result.setSuccess(true);
-        TestOnlineBankNotifyResult testOnlineBankNotifyResult = JSONUtil.toBean(request.getContent().getRequestBody(), TestOnlineBankNotifyResult.class);
+        LocalBankNotifyResult localBankNotifyResult = JSONUtil.toBean(request.getContent().getRequestBody(), LocalBankNotifyResult.class);
         result.setResponseBody("SUCCESS");
-        result.setApiCode(testOnlineBankNotifyResult.getResultCode());
-        result.setInstRequestNo(testOnlineBankNotifyResult.getInstRequestNo());
+        result.setApiCode(localBankNotifyResult.getResultCode());
+        result.setInstRequestNo(localBankNotifyResult.getInstRequestNo());
     }
 }

@@ -10,7 +10,6 @@ import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.service.BizOrderService;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.institution.InstProcessOrder;
-import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.domain.repository.InstProcessOrderRepository;
 import com.anypluspay.channel.domain.result.UnityResult;
@@ -43,9 +42,6 @@ public class InstResultService {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
-
-    @Autowired
-    private BizOrderRepository bizOrderRepository;
 
     @Autowired
     private InstOrderRepository instOrderRepository;

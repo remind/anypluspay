@@ -1,9 +1,12 @@
 package com.anypluspay.testbank.service;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.testbank.controller.dto.OnlineBankPayDto;
+import com.anypluspay.testbank.controller.dto.RefundDto;
 import com.anypluspay.testbank.domain.OrderStatus;
 import com.anypluspay.testbank.persistence.dataobject.PayOrderDO;
+import com.anypluspay.testbank.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testbank.persistence.mapper.PayOrderMapper;
 import com.anypluspay.testbank.persistence.mapper.RefundOrderMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -47,7 +50,20 @@ public class OnlineBankPayService {
             payOrderDO.setStatus(OrderStatus.TRADE_CLOSED.name());
         }
         payOrderMapper.updateById(payOrderDO);
-        notify(payOrderDO);
+        notifyByPay(payOrderDO);
+    }
+
+    public RefundOrderDO refund(RefundDto refundDto) {
+        PayOrderDO payOrderDO = payOrderMapper.selectById(refundDto.getOrigOrderId());
+        Assert.notNull(payOrderDO);
+        RefundOrderDO refundOrderDO = new RefundOrderDO();
+        refundOrderDO.setPayOrderId(refundDto.getOrigOrderId());
+        refundOrderDO.setAmount(refundDto.getAmount());
+        refundOrderDO.setOutRequestNo(refundDto.getOutRequestNo());
+        refundOrderDO.setStatus(OrderStatus.SUCCESS.name());
+        refundOrderMapper.insert(refundOrderDO);
+//        notifyByRefund(refundOrderDO);
+        return refundOrderDO;
     }
 
     public PayOrderDO getByOutTradeNo(String outTradeNo) {
@@ -56,9 +72,23 @@ public class OnlineBankPayService {
         return payOrderMapper.selectOne(queryWrapper);
     }
 
-    private void notify(PayOrderDO payOrderDO) {
+    private void notifyByPay(PayOrderDO payOrderDO) {
         if (StrUtil.isNotBlank(payOrderDO.getNotifyUrl())) {
-            String url = payOrderDO.getNotifyUrl() + "?outTradeNo=" + payOrderDO.getOutTradeNo() + "&status=" + payOrderDO.getStatus();
+            String url = payOrderDO.getNotifyUrl()
+                    + "?outTradeNo=" + payOrderDO.getOutTradeNo()
+                    + "&payOrderId=" + payOrderDO.getId()
+                    + "&status=" + payOrderDO.getStatus();
+            webClient.get().uri(url)
+                    .retrieve().bodyToMono(String.class).block();
+        }
+    }
+
+    private void notifyByRefund(RefundOrderDO refundOrderDO) {
+        if (StrUtil.isNotBlank(refundOrderDO.getNotifyUrl()) && refundOrderDO.getStatus().equals(OrderStatus.SUCCESS.name())) {
+            String url = refundOrderDO.getNotifyUrl()
+                    + "?outRequestNo=" + refundOrderDO.getOutRequestNo()
+                    + "&refundOrderId=" + refundOrderDO.getId()
+                    + "&status=" + refundOrderDO.getStatus();
             webClient.get().uri(url)
                     .retrieve().bodyToMono(String.class).block();
         }

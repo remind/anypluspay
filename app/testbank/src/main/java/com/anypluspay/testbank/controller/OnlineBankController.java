@@ -2,7 +2,9 @@ package com.anypluspay.testbank.controller;
 
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.testbank.controller.dto.OnlineBankPayDto;
+import com.anypluspay.testbank.controller.dto.RefundDto;
 import com.anypluspay.testbank.persistence.dataobject.PayOrderDO;
+import com.anypluspay.testbank.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testbank.service.OnlineBankPayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,12 @@ public class OnlineBankController {
     @ResponseBody
     public PayOrderDO pay(String outTradeNo) {
         return onlineBankPayService.getByOutTradeNo(outTradeNo);
+    }
+
+    @PostMapping("/refund")
+    @ResponseBody
+    public RefundOrderDO refund(@RequestBody RefundDto refundDto) {
+        return onlineBankPayService.refund(refundDto);
     }
 
     @GetMapping("/start")

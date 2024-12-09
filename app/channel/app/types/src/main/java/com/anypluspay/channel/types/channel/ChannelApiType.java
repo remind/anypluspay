@@ -18,6 +18,7 @@ public enum ChannelApiType implements CodeEnum {
     SINGLE_REFUND_QUERY("SRQ", "单笔退款查询"),
     MANUAL_REFUND("MR", "人工退款"),
     VERIFY_SIGN("VS", "验签"), // 异步通知结果验签
+    REFUND_VERIFY_SIGN("RVS", "验签"), // 退款异步通知结果验签
     DOWNLOAD_BILL("DB", "下载账单"), // 下载对账文件
 
 

@@ -9,9 +9,9 @@ import com.anypluspay.channel.types.channel.ChannelApiType;
  * @author wxj
  * 2024/9/16
  */
-public interface RefundGateway extends ChannelGateway<RefundOrder> {
+public interface RefundGateway extends ChannelGateway<RefundGatewayOrder> {
     @Override
-    default GatewayResult call(GatewayRequest<RefundOrder> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<RefundGatewayOrder> gatewayRequest) {
         GatewayResult result = new GatewayResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         refund(gatewayRequest, gatewayRequest.getContent(), result);
@@ -23,5 +23,5 @@ public interface RefundGateway extends ChannelGateway<RefundOrder> {
         return channelApiType == ChannelApiType.SINGLE_REFUND;
     }
 
-    void refund(GatewayRequest<RefundOrder> gatewayRequest, RefundOrder refundOrder, GatewayResult result);
+    void refund(GatewayRequest<RefundGatewayOrder> gatewayRequest, RefundGatewayOrder refundOrder, GatewayResult result);
 }

@@ -7,7 +7,7 @@ import lombok.Data;
  * 2024/8/20
  */
 @Data
-public class TestOnlineBankNotifyResult {
+public class LocalBankNotifyResult {
 
     private String instRequestNo;
 

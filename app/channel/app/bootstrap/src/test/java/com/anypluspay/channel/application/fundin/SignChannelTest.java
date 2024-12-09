@@ -1,7 +1,5 @@
 package com.anypluspay.channel.application.fundin;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.application.FundServiceBaseTest;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
@@ -29,9 +27,7 @@ public class SignChannelTest extends FundServiceBaseTest {
         FundInRequest request = buildFundOrder(TestConstants.S);
         FundResult fundResult = fundInFacade.apply(request);
         log.info(ToStringBuilder.reflectionToString(fundResult));
-        Assert.assertEquals(BizOrderStatus.PROCESSING, fundResult.getStatus());
-        Assert.assertNotNull(fundResult.getResponseExtra());
-        Assert.assertNotNull(fundResult.getInstResponseNo());
+        validateBySignSuccess(fundResult);
     }
 
     @Test
@@ -48,9 +44,7 @@ public class SignChannelTest extends FundServiceBaseTest {
         FundResult fundResult = fundInFacade.apply(request);
         FundResult queryResult = orderQueryFacade.queryByOrderId(fundResult.getOrderId(), true);
         log.info(ToStringBuilder.reflectionToString(queryResult));
-        Assert.assertEquals(BizOrderStatus.SUCCESS, queryResult.getStatus());
-        Assert.assertNotNull(queryResult.getUnityCode());
-        Assert.assertNotNull(queryResult.getUnityMessage());
+        validateByQuerySuccess(queryResult);
     }
 
     @Test

@@ -7,7 +7,9 @@ package com.anypluspay.testbank.domain;
 public enum OrderStatus {
     WAIT_BUYER_PAY("待支付"),
     TRADE_CLOSED("超时关闭"),
-    TRADE_SUCCESS("交易支付成功");
+    TRADE_SUCCESS("交易支付成功"),
+    SUCCESS("成功"),
+    ;
 
     private final String desc;
 

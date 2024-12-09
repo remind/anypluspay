@@ -22,6 +22,7 @@ public class TestOnlineBankVerifySignGateway extends VerifySignGateway {
         JSONObject jsonObject =  JSONUtil.parseObj(request.getContent().getRequestBody());
         result.setResponseBody("SUCCESS");
         result.setInstRequestNo(jsonObject.getStr("outTradeNo"));
+        result.setInstResponseNo(jsonObject.getStr("payOrderId"));
         result.setApiCode(jsonObject.getStr("status"));
     }
 }

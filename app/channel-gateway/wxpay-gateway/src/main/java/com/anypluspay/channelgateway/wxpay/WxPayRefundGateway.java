@@ -1,7 +1,7 @@
 package com.anypluspay.channelgateway.wxpay;
 
 import com.anypluspay.channelgateway.api.refund.RefundGateway;
-import com.anypluspay.channelgateway.api.refund.RefundOrder;
+import com.anypluspay.channelgateway.api.refund.RefundGatewayOrder;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.lang.types.Money;
@@ -21,12 +21,12 @@ import org.springframework.stereotype.Service;
 public class WxPayRefundGateway extends AbstractWxPayGateway implements RefundGateway {
 
     @Override
-    public void refund(GatewayRequest<RefundOrder> gatewayRequest, RefundOrder refundOrder, GatewayResult result) {
+    public void refund(GatewayRequest<RefundGatewayOrder> gatewayRequest, RefundGatewayOrder refundOrder, GatewayResult result) {
         WxPayConfig wxPayConfig = getWxPayConfig();
         requestWrapper((Void) -> {
             RefundService refundService = getRefundService(wxPayConfig);
             CreateRequest request = new CreateRequest();
-            request.setOutTradeNo(refundOrder.getOrigRequestNo());
+            request.setOutTradeNo(refundOrder.getOrigInstRequestNo());
             request.setOutRefundNo(refundOrder.getInstRequestNo());
             request.setReason(refundOrder.getReason());
             AmountReq amountReq = new AmountReq();

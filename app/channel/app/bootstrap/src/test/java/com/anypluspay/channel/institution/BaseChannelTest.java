@@ -9,10 +9,10 @@ import com.anypluspay.channel.domain.channel.fund.FundChannel;
 import com.anypluspay.channel.types.channel.ChannelApiProtocol;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.enums.CardType;
-import com.anypluspay.channelgateway.test.TestOnlineBankQueryGateway;
-import com.anypluspay.channelgateway.test.TestOnlineBankRefundGateway;
-import com.anypluspay.channelgateway.test.TestOnlineBankSignGateway;
-import com.anypluspay.channelgateway.test.TestOnlineBankVerifySignGateway;
+import com.anypluspay.channelgateway.test.LocalBankQueryGateway;
+import com.anypluspay.channelgateway.test.LocalBankRefundGateway;
+import com.anypluspay.channelgateway.test.LocalBankSignGateway;
+import com.anypluspay.channelgateway.test.LocalBankVerifySignGateway;
 import org.junit.Before;
 
 import java.util.ArrayList;
@@ -43,10 +43,10 @@ public class BaseChannelTest {
         channelSupportInstList.add(buildFundChannelSupportInst("ICBC", null));
         channelFullInfo.setChannelSupportInst(channelSupportInstList);
 
-        channelFullInfo.setChannelApis(List.of(buildFundChannelApi(ChannelApiType.SIGN, StrUtil.lowerFirst(TestOnlineBankSignGateway.class.getSimpleName()))
-                , buildFundChannelApi(ChannelApiType.SINGLE_QUERY, StrUtil.lowerFirst(TestOnlineBankQueryGateway.class.getSimpleName()))
-                , buildFundChannelApi(ChannelApiType.VERIFY_SIGN, StrUtil.lowerFirst(TestOnlineBankVerifySignGateway.class.getSimpleName()))
-                , buildFundChannelApi(ChannelApiType.SINGLE_REFUND, StrUtil.lowerFirst(TestOnlineBankRefundGateway.class.getSimpleName()))));
+        channelFullInfo.setChannelApis(List.of(buildFundChannelApi(ChannelApiType.SIGN, StrUtil.lowerFirst(LocalBankSignGateway.class.getSimpleName()))
+                , buildFundChannelApi(ChannelApiType.SINGLE_QUERY, StrUtil.lowerFirst(LocalBankQueryGateway.class.getSimpleName()))
+                , buildFundChannelApi(ChannelApiType.VERIFY_SIGN, StrUtil.lowerFirst(LocalBankVerifySignGateway.class.getSimpleName()))
+                , buildFundChannelApi(ChannelApiType.SINGLE_REFUND, StrUtil.lowerFirst(LocalBankRefundGateway.class.getSimpleName()))));
 
 //        Mockito.when(channelFullInfoRepository.getAllAvailableChannels(Mockito.any(), Mockito.any())).thenReturn(List.of(channelFullInfo));
 //        Mockito.when(channelFullInfoRepository.getChannelFullInfo(Mockito.any())).thenReturn(channelFullInfo);

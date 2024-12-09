@@ -8,15 +8,16 @@ import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.institution.BaseChannelTest;
 import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.ExtUtil;
 import com.anypluspay.commons.terminal.AppOS;
 import com.anypluspay.commons.terminal.AppTerminal;
+import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -57,7 +58,7 @@ public class FundServiceBaseTest extends BaseChannelTest {
         terminal.setAppOS(AppOS.IOS);
         terminal.setVersion("1.0.0");
         request.setTerminal(terminal);
-        Map<String, String> instExtra = Map.of("appId", "appId1234", ExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
+        Map<String, String> instExtra = Map.of(ExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
         request.setInstExtra(instExtra);
         return request;
     }
@@ -70,6 +71,28 @@ public class FundServiceBaseTest extends BaseChannelTest {
      */
     protected void addRouteExtra(FundInRequest request, ExtKey extKey, String value) {
         ExtUtil.addValue(request.getRouteExtra(), extKey, value);
+    }
+
+    /**
+     * 签名成功验证
+     * @param result
+     */
+    protected void validateBySignSuccess(FundResult result) {
+        Assert.assertNotNull(result);
+        Assert.assertEquals(BizOrderStatus.PROCESSING, result.getStatus());
+        Assert.assertNotNull(result.getUnityCode());
+        Assert.assertNotNull(result.getUnityMessage());
+        Assert.assertNotNull(result.getInstRequestNo());
+        Assert.assertNotNull(result.getInstResponseNo());
+        Assert.assertNotNull(result.getResponseExtra());
+        Assert.assertNotNull(ExtUtil.getStringValue(ExtKey.INST_URL, result.getResponseExtra()));
+    }
+
+    protected void validateByQuerySuccess(FundResult result) {
+        Assert.assertNotNull(result);
+        Assert.assertEquals(BizOrderStatus.SUCCESS, result.getStatus());
+        Assert.assertNotNull(result.getUnityCode());
+        Assert.assertNotNull(result.getUnityMessage());
     }
 
 }

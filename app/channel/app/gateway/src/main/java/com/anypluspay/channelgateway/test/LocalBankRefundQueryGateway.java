@@ -2,7 +2,7 @@ package com.anypluspay.channelgateway.test;
 
 import com.anypluspay.channelgateway.api.query.QueryGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.OrderInfo;
+import com.anypluspay.channelgateway.request.GatewayOrder;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
@@ -11,20 +11,20 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author wxj
- * 2024/7/11
+ * 2024/8/22
  */
 @Service
-public class TestOnlineBankQueryGateway implements QueryGateway {
+public class LocalBankRefundQueryGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<OrderInfo> gatewayRequest, OrderInfo orderInfo, GatewayResult result) {
+    public void query(GatewayRequest<GatewayOrder> gatewayRequest, GatewayOrder gatewayOrder, GatewayResult result) {
         result.setSuccess(true);
-        if (isTest(orderInfo)) {
-            testProcess(orderInfo, result);
+        if (isTest(gatewayOrder)) {
+            testProcess(gatewayOrder, result);
         }
     }
 
-    private void testProcess(OrderInfo orderInfo, GatewayResult result) {
-        TestFlag testFlag = getTestFlag(orderInfo);
+    private void testProcess(GatewayOrder gatewayOrder, GatewayResult result) {
+        TestFlag testFlag = getTestFlag(gatewayOrder);
         if (TestConstants.S.equals(testFlag.getQ())) {
             result.setApiCode("SUCCESS");
         } else if (TestConstants.F.equals(testFlag.getQ())) {
@@ -32,7 +32,7 @@ public class TestOnlineBankQueryGateway implements QueryGateway {
             result.setApiMessage("订单已关闭");
         } else if (TestConstants.QUERY_MONEY_NOT_EQUAL.equals(testFlag.getQ())) {
             result.setApiCode("SUCCESS");
-            result.setRealAmount(orderInfo.getAmount().add(new Money(1)));
+            result.setRealAmount(gatewayOrder.getAmount().add(new Money(1)));
         } else {
             result.setApiCode("unkown");
             result.setApiMessage("未知");

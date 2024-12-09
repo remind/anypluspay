@@ -18,6 +18,7 @@ public enum ExtKey implements CodeEnum {
     CARD_TYPE("cardType", "卡类型"),
     ORIG_INST_ORDER_ID("origInstOrderId", "原始机构订单号"),
     ORIG_INST_REQUEST_NO("origInstRequestNo", "原始机构请求单号"),
+    ORIG_INST_RESPONSE_NO("origInstResponseNo", "原始机构响应单号"),
     CARD_INFO("cardInfo", "卡信息"),
     NOTIFY_RESPONSE_DATA("notify_response_data", "通知响应数据"),
     TEST_FLAG("testFlag", "测试标志"),

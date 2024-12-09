@@ -2,6 +2,8 @@ package com.anypluspay.admin.web.controller.example;
 
 import cn.hutool.core.lang.UUID;
 import cn.hutool.json.JSONUtil;
+import com.anypluspay.admin.web.controller.example.convertor.ExampleConvertor;
+import com.anypluspay.admin.web.controller.example.request.ExampleRefundRequest;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
@@ -13,10 +15,8 @@ import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.lang.utils.ExtUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 支付测试
@@ -33,6 +33,9 @@ public class PayExampleController {
     @DubboReference
     private RefundFacade refundFacade;
 
+    @Autowired
+    private ExampleConvertor exampleConvertor;
+
     @PostMapping("/pay")
     public ResponseResult<FundResult> pay(@RequestBody FundInRequest request) {
         request.setRequestId(UUID.fastUUID().toString(true));
@@ -46,7 +49,9 @@ public class PayExampleController {
     }
 
     @PostMapping("/refund")
-    public ResponseResult<FundResult> refund(RefundRequest request) {
+    public ResponseResult<FundResult> refund(@RequestBody ExampleRefundRequest exampleRefundRequest) {
+        RefundRequest request = exampleConvertor.toRefundRequest(exampleRefundRequest);
+        request.setRequestId(UUID.fastUUID().toString(true));
         return ResponseResult.success(refundFacade.apply(request));
     }
 }

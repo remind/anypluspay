@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 订单信息
+ * 网关订单信息
  *
  * @author wxj
  * 2024/9/13
  */
 @Data
-public class OrderInfo extends RequestContent {
+public class GatewayOrder extends RequestContent {
 
     /**
      * 机构订单ID
@@ -23,7 +23,7 @@ public class OrderInfo extends RequestContent {
     private String instOrderId;
 
     /**
-     * 机构请求订单号
+     * 机构请求号
      */
     private String instRequestNo;
 
@@ -41,6 +41,11 @@ public class OrderInfo extends RequestContent {
      * 提交时间
      */
     private LocalDateTime gmtSubmit;
+
+    /**
+     * 后端回调地址
+     */
+    private String serverNotifyUrl;
 
     /**
      * 扩展信息

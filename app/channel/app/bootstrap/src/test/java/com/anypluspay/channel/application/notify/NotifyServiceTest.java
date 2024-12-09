@@ -1,7 +1,8 @@
 package com.anypluspay.channel.application.notify;
 
 import cn.hutool.json.JSONUtil;
-import com.anypluspay.channelgateway.test.request.TestOnlineBankNotifyResult;
+import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channelgateway.test.request.LocalBankNotifyResult;
 import com.anypluspay.channel.application.FundServiceBaseTest;
 import com.anypluspay.channel.facade.NotifyFacade;
 import com.anypluspay.channel.facade.result.FundResult;
@@ -32,10 +33,10 @@ public class NotifyServiceTest extends FundServiceBaseTest {
     public void testNotifySuccess() {
         FundResult fundResult = buildNormalFundOrder();
 
-        TestOnlineBankNotifyResult testOnlineBankNotifyResult = new TestOnlineBankNotifyResult();
-        testOnlineBankNotifyResult.setInstRequestNo(fundResult.getInstRequestNo());
-        testOnlineBankNotifyResult.setResultCode("SUCCESS");
-        FundResult notifyResult = notifyFacade.notify(channelFullInfo.getFundChannel().getCode(), JSONUtil.toJsonStr(testOnlineBankNotifyResult));
+        LocalBankNotifyResult localBankNotifyResult = new LocalBankNotifyResult();
+        localBankNotifyResult.setInstRequestNo(fundResult.getInstRequestNo());
+        localBankNotifyResult.setResultCode("SUCCESS");
+        FundResult notifyResult = notifyFacade.notify(channelFullInfo.getFundChannel().getCode(), ChannelApiType.VERIFY_SIGN,JSONUtil.toJsonStr(localBankNotifyResult));
         Assert.assertEquals(BizOrderStatus.SUCCESS, notifyResult.getStatus());
         Assert.assertEquals("SUCCESS", ExtUtil.getStringValue(ExtKey.NOTIFY_RESPONSE_DATA, notifyResult.getResponseExtra()));
     }
@@ -44,10 +45,10 @@ public class NotifyServiceTest extends FundServiceBaseTest {
     public void testNotifyProcessing() {
         FundResult fundResult = buildNormalFundOrder();
 
-        TestOnlineBankNotifyResult testOnlineBankNotifyResult = new TestOnlineBankNotifyResult();
-        testOnlineBankNotifyResult.setInstRequestNo(fundResult.getInstRequestNo());
-        testOnlineBankNotifyResult.setResultCode("processing");
-        FundResult notifyResult = notifyFacade.notify(channelFullInfo.getFundChannel().getCode(), JSONUtil.toJsonStr(testOnlineBankNotifyResult));
+        LocalBankNotifyResult localBankNotifyResult = new LocalBankNotifyResult();
+        localBankNotifyResult.setInstRequestNo(fundResult.getInstRequestNo());
+        localBankNotifyResult.setResultCode("processing");
+        FundResult notifyResult = notifyFacade.notify(channelFullInfo.getFundChannel().getCode(), ChannelApiType.VERIFY_SIGN, JSONUtil.toJsonStr(localBankNotifyResult));
         Assert.assertEquals(BizOrderStatus.PROCESSING, notifyResult.getStatus());
         Assert.assertEquals("SUCCESS", ExtUtil.getStringValue(ExtKey.NOTIFY_RESPONSE_DATA, notifyResult.getResponseExtra()));
     }

@@ -9,9 +9,9 @@ import com.anypluspay.channel.types.channel.ChannelApiType;
  * @author wxj
  * 2024/9/15
  */
-public interface SignGateway extends ChannelGateway<SignOrderInfo> {
+public interface SignGateway extends ChannelGateway<SignGatewayOrder> {
     @Override
-    default GatewayResult call(GatewayRequest<SignOrderInfo> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<SignGatewayOrder> gatewayRequest) {
         SignResult result = new SignResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         sign(gatewayRequest, gatewayRequest.getContent(), result);
@@ -23,5 +23,5 @@ public interface SignGateway extends ChannelGateway<SignOrderInfo> {
         return channelApiType == ChannelApiType.SIGN;
     }
 
-    void sign(GatewayRequest<SignOrderInfo> gatewayRequest, SignOrderInfo signOrderInfo, SignResult result);
+    void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result);
 }

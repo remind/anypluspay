@@ -2,14 +2,14 @@ package com.anypluspay.channel.facade.fund.builder;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.domain.IdType;
+import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.bizorder.fund.FundOutOrder;
 import com.anypluspay.channel.domain.bizorder.fund.RefundOrder;
-import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
-import com.anypluspay.channel.facade.request.FundRequest;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.request.FundOutRequest;
+import com.anypluspay.channel.facade.request.FundRequest;
 import com.anypluspay.channel.facade.request.RefundRequest;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.enums.SystemCodeEnums;
@@ -39,7 +39,6 @@ public class FundOrderBuilder {
      */
     public FundInOrder buildFundIn(FundInRequest request) {
         FundInOrder fundInOrder = new FundInOrder();
-        fundInOrder.setStatus(BizOrderStatus.PROCESSING);
         fundInOrder.setRouteExtra(request.getRouteExtra());
         fundInOrder.setPayInst(request.getPayInst());
         fundInOrder.setPayMethod(request.getPayMethod());
@@ -69,6 +68,7 @@ public class FundOrderBuilder {
             originOrder = bizOrderRepository.load(request.getOrigOrderId());
         }
         Assert.notNull(originOrder, "origin order not found");
+        request.setMemberId(originOrder.getMemberId());
 
         refundOrder.setOrigOrderId(originOrder.getOrderId());
         refundOrder.setOrigRequestId(originOrder.getRequestId());
@@ -81,6 +81,7 @@ public class FundOrderBuilder {
         bizOrder.setMemberId(fundRequest.getMemberId());
         bizOrder.setExtra(fundRequest.getExtra());
         bizOrder.setInstExtra(fundRequest.getInstExtra());
+        bizOrder.setStatus(BizOrderStatus.PROCESSING);
         bizOrder.setOrderId(sequenceService.getId(fundRequest.getMemberId(), SystemCodeEnums.CHANNEL, idType));
     }
 }

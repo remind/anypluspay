@@ -1,8 +1,10 @@
 package com.anypluspay.channel.application.institution.gateway;
 
+import com.anypluspay.channel.application.institution.CombineCallbackUrlService;
+import com.anypluspay.channel.domain.bizorder.fund.RefundOrder;
 import com.anypluspay.channelgateway.request.StringInfo;
 import com.anypluspay.channelgateway.result.GatewayResult;
-import com.anypluspay.channelgateway.request.OrderInfo;
+import com.anypluspay.channelgateway.request.GatewayOrder;
 import com.anypluspay.channelgateway.types.RequestResponseClass;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -33,6 +35,9 @@ public class GatewayRequestDispatcher {
     @Autowired
     private GatewayProxy gatewayProxy;
 
+    @Autowired
+    private CombineCallbackUrlService combineCallbackUrlService;
+
     @Qualifier("gatewayInterceptorMap")
     @Autowired
     private Map<ChannelApiType, GatewayRequestAdvice> gatewayInterceptorMap;
@@ -45,13 +50,13 @@ public class GatewayRequestDispatcher {
      * @return
      */
     public GatewayResult doDispatch(ChannelApiContext channelApiContext, OrderContext orderContext) {
-        OrderInfo orderInfo = buildRequestOrder(channelApiContext, orderContext);
+        GatewayOrder gatewayOrder = buildRequestOrder(channelApiContext, orderContext);
         GatewayResult gatewayResult;
         int retryCount = 0;
         boolean afterProcess = false;
         do {
             try {
-                gatewayResult = gatewayProxy.invoke(channelApiContext.getChannelApi(), orderInfo);
+                gatewayResult = gatewayProxy.invoke(channelApiContext.getChannelApi(), gatewayOrder);
                 afterProcess = true;
             } catch (Exception e) {
                 log.error("网关分发异常", e);
@@ -133,30 +138,35 @@ public class GatewayRequestDispatcher {
     }
 
     @SuppressWarnings("unchecked")
-    private OrderInfo buildRequestOrder(ChannelApiContext channelApiContext, OrderContext orderContext) {
+    private GatewayOrder buildRequestOrder(ChannelApiContext channelApiContext, OrderContext orderContext) {
         try {
             Class<?> cl = RequestResponseClass.getRequestClass(channelApiContext.getChannelApiType());
-            OrderInfo orderInfo = (OrderInfo) cl.getConstructor().newInstance();
-            orderInfo.setExtra(orderContext.getInstOrder().getRequestExtra());
-            orderInfo.setInstOrderId(orderContext.getInstOrder().getInstOrderId());
-            orderInfo.setInstRequestNo(orderContext.getInstOrder().getInstRequestNo());
+            GatewayOrder gatewayOrder = (GatewayOrder) cl.getConstructor().newInstance();
+            gatewayOrder.setExtra(orderContext.getInstOrder().getRequestExtra());
+            gatewayOrder.setInstOrderId(orderContext.getInstOrder().getInstOrderId());
+            gatewayOrder.setInstRequestNo(orderContext.getInstOrder().getInstRequestNo());
 
-            fillBizOrderInfo(orderInfo, orderContext.getBizOrder());
+            gatewayOrder.setServerNotifyUrl(combineCallbackUrlService.getServerNotifyUrl(channelApiContext));
+
+            fillBizOrderInfo(gatewayOrder, orderContext.getBizOrder());
 
             if (gatewayInterceptorMap.get(channelApiContext.getChannelApiType()) != null) {
-                gatewayInterceptorMap.get(channelApiContext.getChannelApiType()).preHandle(channelApiContext, orderContext, orderInfo);
+                gatewayInterceptorMap.get(channelApiContext.getChannelApiType()).preHandle(channelApiContext, orderContext, gatewayOrder);
             }
-            return orderInfo;
+            return gatewayOrder;
         } catch (Exception e) {
             log.error("构造请求订单参数异常", e);
             throw new RuntimeException(e);
         }
     }
 
-    private void fillBizOrderInfo(OrderInfo orderInfo, BaseBizOrder bizOrder) {
+    private void fillBizOrderInfo(GatewayOrder gatewayOrder, BaseBizOrder bizOrder) {
         if (bizOrder instanceof FundInOrder fundOrder) {
-            orderInfo.setTargetInst(fundOrder.getPayInst());
-            orderInfo.setAmount(fundOrder.getAmount());
+            gatewayOrder.setTargetInst(fundOrder.getPayInst());
+            gatewayOrder.setAmount(fundOrder.getAmount());
+        } else if (bizOrder instanceof RefundOrder refundOrder) {
+            gatewayOrder.setAmount(refundOrder.getAmount());
         }
     }
+
 }

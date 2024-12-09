@@ -1,10 +1,11 @@
 package com.anypluspay.channelgateway.test;
 
+import cn.hutool.core.lang.UUID;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignOrderInfo;
+import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.OrderInfo;
+import com.anypluspay.channelgateway.request.GatewayOrder;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import org.springframework.stereotype.Service;
@@ -14,21 +15,20 @@ import org.springframework.stereotype.Service;
  * 2024/9/15
  */
 @Service
-public class TestOnlineBankSignGateway implements SignGateway {
+public class LocalBankSignGateway implements SignGateway {
     @Override
-    public void sign(GatewayRequest<SignOrderInfo> gatewayRequest, SignOrderInfo signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
         result.setSuccess(true);
         if (isTest(signOrderInfo)) {
             testProcess(signOrderInfo, result);
         }
     }
 
-    private void testProcess(OrderInfo orderInfo, SignResult result) {
-        TestFlag testFlag = getTestFlag(orderInfo);
+    private void testProcess(GatewayOrder gatewayOrder, SignResult result) {
+        TestFlag testFlag = getTestFlag(gatewayOrder);
         if (TestConstants.S.equals(testFlag.getD())) {
-            String ret = "{\\\"prepay_id\\\":\\\"wx26112221580621e9b071c00d9e093b0000\\\"}";
-            result.setInstPageUrl(ret);
-            result.setInstResponseNo("wx26112221580621e9b071c00d9e093b0000");
+            result.setInstPageUrl("pay page url");
+            result.setInstResponseNo(UUID.fastUUID().toString(true));
             result.setApiCode("200");
         } else if (TestConstants.F.equals(testFlag.getD())) {
             result.setApiCode("PARAM_ERROR");

@@ -31,8 +31,8 @@ public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacad
     private BizOrderRepository bizOrderRepository;
 
     @Override
-    public FundResult notify(String fundChannelCode, String request) {
-        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(fundChannelCode,ChannelApiType.VERIFY_SIGN);
+    public FundResult notify(String fundChannelCode, ChannelApiType apiType, String request) {
+        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(fundChannelCode, apiType);
         Assert.notNull(channelApiContext, "无可用渠道");
         InstProcessOrder instProcessOrder = instProcessService.noneOrderProcess(channelApiContext, request);
         InstOrder instOrder = instOrderRepository.load(instProcessOrder.getInstOrderId());
