@@ -47,6 +47,8 @@ dubbo:
   protocol:
     name: tri
     port: -1
+  provider:
+    validation: jvalidationNew
   registry:
     address: nacos://${nacos.config.server-addr}
 logging:

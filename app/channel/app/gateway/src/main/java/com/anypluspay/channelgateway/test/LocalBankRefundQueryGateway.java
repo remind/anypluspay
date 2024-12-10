@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 2024/8/22
  */
 @Service
-public class LocalBankRefundQueryGateway implements QueryGateway {
+public class LocalBankRefundQueryGateway extends AbstractLocalBankGateway implements QueryGateway {
     @Override
     public void query(GatewayRequest<GatewayOrder> gatewayRequest, GatewayOrder gatewayOrder, GatewayResult result) {
         result.setSuccess(true);

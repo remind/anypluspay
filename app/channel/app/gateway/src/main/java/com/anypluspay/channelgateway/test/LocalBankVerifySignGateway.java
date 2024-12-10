@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * 2024/7/15
  */
 @Service
-public class LocalBankVerifySignGateway extends VerifySignGateway {
+public class LocalBankVerifySignGateway extends AbstractLocalBankGateway implements VerifySignGateway {
     @Override
     public void notify(GatewayRequest<StringInfo> request, VerifySignResult result) {
         result.setSuccess(true);

@@ -14,8 +14,7 @@ import org.apache.dubbo.config.annotation.DubboService;
  * 2024/12/8
  */
 @DubboService(group = "test-bank-vs", interfaceClass = ChannelGateway.class)
-public class TestOnlineBankVerifySignGateway extends VerifySignGateway {
-
+public class TestOnlineBankVerifySignGateway implements VerifySignGateway {
     @Override
     public void notify(GatewayRequest<StringInfo> request, VerifySignResult result) {
         result.setSuccess(true);

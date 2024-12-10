@@ -67,7 +67,8 @@ public class FundOrderBuilder {
         if (StrUtil.isNotBlank(request.getOrigRequestId())) {
             originOrder = bizOrderRepository.load(request.getOrigOrderId());
         }
-        Assert.notNull(originOrder, "origin order not found");
+        Assert.notNull(originOrder, "原单不存在");
+        Assert.isTrue(originOrder.getStatus() == BizOrderStatus.SUCCESS, "原单未成功");
         request.setMemberId(originOrder.getMemberId());
 
         refundOrder.setOrigOrderId(originOrder.getOrderId());

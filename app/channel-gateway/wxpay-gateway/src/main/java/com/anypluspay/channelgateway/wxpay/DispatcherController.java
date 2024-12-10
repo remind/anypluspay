@@ -48,11 +48,11 @@ public class DispatcherController {
         gatewayRequest.setChannelCode(channelCode);
         gatewayRequest.setChannelApiType(apiType);
         gatewayRequest.setContent(content);
-        for (ChannelGateway channelGateway : channelGateways) {
-            if (channelGateway.support(channelCode, apiType)) {
-                return channelGateway.call(gatewayRequest);
-            }
-        }
+//        for (ChannelGateway channelGateway : channelGateways) {
+//            if (channelGateway.support(channelCode, apiType)) {
+//                return channelGateway.call(gatewayRequest);
+//            }
+//        }
         return buildResult(GatewayResultCode.NOT_SUPPORT);
     }
 

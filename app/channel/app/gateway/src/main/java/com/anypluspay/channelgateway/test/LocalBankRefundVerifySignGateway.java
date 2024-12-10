@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * 2024/12/9
  */
 @Service
-public class LocalBankRefundVerifySignGateway implements SignGateway {
+public class LocalBankRefundVerifySignGateway extends AbstractLocalBankGateway implements SignGateway {
     @Override
     public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
 

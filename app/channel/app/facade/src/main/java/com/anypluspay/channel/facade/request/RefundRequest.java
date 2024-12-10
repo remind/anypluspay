@@ -2,18 +2,22 @@ package com.anypluspay.channel.facade.request;
 
 import com.anypluspay.channel.types.enums.RefundType;
 import com.anypluspay.commons.lang.types.Money;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author wxj
  * 2024/9/24
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class RefundRequest extends FundRequest {
 
     /**
      * 退款类型
      */
+    @NotNull
     private RefundType refundType;
 
     /**
@@ -29,6 +33,7 @@ public class RefundRequest extends FundRequest {
     /**
      * 退款金额
      */
+    @NotNull
     private Money amount;
 
     /**

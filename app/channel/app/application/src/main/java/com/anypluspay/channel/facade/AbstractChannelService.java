@@ -1,13 +1,12 @@
 package com.anypluspay.channel.facade;
 
-import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.application.route.ChannelRouteService;
-import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
-import com.anypluspay.channel.domain.bizorder.fund.RefundOrder;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
+import com.anypluspay.channel.domain.bizorder.fund.RefundOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.institution.InstProcessOrder;
 import com.anypluspay.channel.domain.institution.service.InstOrderService;
@@ -20,6 +19,7 @@ import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.channel.types.order.ProcessTimeType;
 import com.anypluspay.channel.types.result.CsResultCode;
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -125,6 +125,12 @@ public abstract class AbstractChannelService {
             result.setUnityMessage(StrUtil.firstNonBlank(instProcessOrder.getUnityMessage(), instProcessOrder.getApiMessage()));
         }
         result.setStatus(bizOrder.getStatus());
+    }
+
+    protected void fillChannelResultByBizException(ChannelResult result, BizException e) {
+        result.setSuccess(false);
+        result.setCode(e.getResultCode().getCode());
+        result.setMessage(e.getResultCode().getMessage());
     }
 
     /**

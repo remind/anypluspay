@@ -1,7 +1,9 @@
 package com.anypluspay.channel.facade.result;
 
 import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.response.FacadeResult;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -10,8 +12,9 @@ import java.util.Map;
  * @author wxj
  * 2024/7/18
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class ChannelResult implements Serializable {
+public class ChannelResult extends FacadeResult {
 
     /**
      * 请求号

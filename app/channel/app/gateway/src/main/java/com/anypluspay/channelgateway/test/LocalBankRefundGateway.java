@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 2024/7/14
  */
 @Service
-public class LocalBankRefundGateway implements RefundGateway {
+public class LocalBankRefundGateway extends AbstractLocalBankGateway implements RefundGateway {
     @Override
     public void refund(GatewayRequest<RefundGatewayOrder> gatewayRequest, RefundGatewayOrder refundOrder, GatewayResult result) {
         result.setSuccess(true);
