@@ -1,9 +1,6 @@
 package com.anypluspay.admin.model;
 
-import com.anypluspay.admin.model.order.BizOrderDto;
-import com.anypluspay.admin.model.order.FundInOrderDto;
-import com.anypluspay.admin.model.order.InstOrderDto;
-import com.anypluspay.admin.model.order.InstProcessOrderDto;
+import com.anypluspay.admin.model.order.*;
 import lombok.Data;
 
 import java.util.List;
@@ -26,6 +23,12 @@ public class UnionQueryResult {
      * 入款订单
      */
     private FundInOrderDto fundInOrder;
+
+
+    /**
+     * 退款订单
+     */
+    private List<RefundOrderDto> refundOrders;
 
     /**
      * 机构订单

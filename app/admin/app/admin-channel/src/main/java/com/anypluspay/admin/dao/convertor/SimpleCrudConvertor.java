@@ -13,7 +13,7 @@ import java.util.List;
  * @author wxj
  * 2024/12/5
  */
-public interface SimpleCrudConvertor<DtoType, RequestType, DoType> extends BaseExpressionConvertor {
+public interface SimpleCrudConvertor<DtoType, RequestType, DoType> extends SimpleQueryConvertor<DtoType,DoType> {
 
     /**
      * request 转换为DO，用于新增修改
@@ -23,29 +23,4 @@ public interface SimpleCrudConvertor<DtoType, RequestType, DoType> extends BaseE
      */
     DoType requestToDo(RequestType request);
 
-    /**
-     * DO 转换为DTO，用于查询
-     *
-     * @param doObject DO
-     * @return DTO
-     */
-    DtoType toDto(DoType doObject);
-
-    default List<DtoType> toDto(List<DoType> doObjects) {
-        List<DtoType> dtoObjects = new ArrayList<>();
-        if (doObjects != null) {
-            doObjects.forEach(doObject -> dtoObjects.add(toDto(doObject)));
-        }
-        return dtoObjects;
-    }
-
-    default PageResult<DtoType> toDto(IPage<DoType> page) {
-        PageResult<DtoType> pageResult = new PageResult<>();
-        pageResult.setPage(page.getCurrent());
-        pageResult.setPageSize(page.getSize());
-        pageResult.setTotal(page.getTotal());
-        pageResult.setItems(toDto(page.getRecords()));
-
-        return pageResult;
-    }
 }

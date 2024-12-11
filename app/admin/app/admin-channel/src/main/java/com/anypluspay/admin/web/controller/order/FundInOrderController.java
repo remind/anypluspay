@@ -1,11 +1,10 @@
 package com.anypluspay.admin.web.controller.order;
 
+import com.anypluspay.admin.dao.convertor.order.FundInOrderConvertor;
 import com.anypluspay.admin.dao.mapper.FundInOrderQueryMapper;
-import com.anypluspay.admin.model.order.FundInOrderDetailDto;
+import com.anypluspay.admin.model.order.FundInOrderDto;
 import com.anypluspay.admin.model.query.Order.FundInOrderQuery;
 import com.anypluspay.admin.web.controller.AbstractController;
-import com.anypluspay.channel.types.order.BizOrderStatus;
-import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -26,19 +25,19 @@ public class FundInOrderController extends AbstractController {
     @Autowired
     private FundInOrderQueryMapper fundInOrderQueryMapper;
 
+    @Autowired
+    private FundInOrderConvertor fundInOrderConvertor;
+
     /**
      * 列表分页查询
      * @param query 查询参数
      * @return  查询结果
      */
     @GetMapping("/list")
-    public ResponseResult<PageResult<FundInOrderDetailDto>> list(FundInOrderQuery query) {
-        IPage<FundInOrderDetailDto> page = fundInOrderQueryMapper.pageQuery(query, getIPage(query));
-        page.getRecords().forEach(this::convert);
+    public ResponseResult<PageResult<FundInOrderDto>> list(FundInOrderQuery query) {
+        IPage<FundInOrderDto> page = fundInOrderQueryMapper.pageQuery(query, getIPage(query));
+        page.getRecords().forEach(fundInOrderConvertor::fill);
         return ResponseResult.success(toPageResult(page));
     }
 
-    private void convert(FundInOrderDetailDto dto) {
-        dto.setStatus(EnumUtil.getByCode(BizOrderStatus.class, dto.getStatus()).getDisplayName());
-    }
 }

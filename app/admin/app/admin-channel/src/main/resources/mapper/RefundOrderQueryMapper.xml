@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anypluspay.admin.dao.mapper.RefundOrderQueryMapper">
+
+    <resultMap id="queryResult" type="com.anypluspay.admin.model.order.RefundOrderDto">
+        <id column="order_id" property="orderId"/>
+        <result column="request_id" property="requestId"/>
+        <result column="status" property="status"/>
+        <result column="inst_order_id" property="instOrderId"/>
+        <result column="refund_type" property="refundType"/>
+        <result column="orig_order_id" property="origOrderId"/>
+        <result column="orig_request_id" property="origRequestId"/>
+        <result column="reason" property="reason"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <association property="amount" javaType="com.anypluspay.commons.lang.types.Money">
+            <constructor>
+                <arg column="amount" javaType="java.math.BigDecimal"/>
+                <arg column="currency_code" javaType="java.util.Currency"
+                     typeHandler="com.anypluspay.component.dal.mybatis.type.CurrencyTypeHandler"/>
+            </constructor>
+        </association>
+    </resultMap>
+
+    <sql id="column">
+        t.order_id,t.refund_type,t.orig_order_id,t.orig_request_id,t.amount,t.currency_code,t.reason,
+        b.request_id,b.member_id,b.request_root_type,b.request_type,b.status,b.inst_order_id,b.extra,b.inst_extra,b.gmt_create,b.gmt_modified
+    </sql>
+
+    <sql id="selectPrefix">
+        SELECT
+        <include refid="column"/>
+        FROM
+        tb_refund_order t
+        inner join tb_biz_order b on t.order_id = b.order_id
+    </sql>
+
+    <select id="selectByOrigOrder" parameterType="map"
+            resultMap="queryResult">
+        <include refid="selectPrefix"/>
+        where orig_order_id = #{origOrderId}
+        order by b.gmt_create asc
+    </select>
+
+</mapper>

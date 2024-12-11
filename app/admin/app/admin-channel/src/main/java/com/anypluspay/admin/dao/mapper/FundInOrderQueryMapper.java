@@ -1,6 +1,6 @@
 package com.anypluspay.admin.dao.mapper;
 
-import com.anypluspay.admin.model.order.FundInOrderDetailDto;
+import com.anypluspay.admin.model.order.FundInOrderDto;
 import com.anypluspay.admin.model.query.Order.FundInOrderQuery;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
@@ -18,5 +18,12 @@ public interface FundInOrderQueryMapper {
      * @param page  分页参数
      * @return  查询结果
      */
-    IPage<FundInOrderDetailDto> pageQuery(@Param("query") FundInOrderQuery query, @Param("page") IPage page);
+    IPage<FundInOrderDto> pageQuery(@Param("query") FundInOrderQuery query, @Param("page") IPage page);
+
+    /**
+     * 根据订单号查询
+     * @param orderId
+     * @return
+     */
+    FundInOrderDto selectByOrderId(String orderId);
 }

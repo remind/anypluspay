@@ -37,6 +37,11 @@ public class FundInOrderDetailDto {
     private String status;
 
     /**
+     * 状态名称
+     */
+    private String statusName;
+
+    /**
      * 机构订单ID
      */
     private String instOrderId;
@@ -50,6 +55,21 @@ public class FundInOrderDetailDto {
      * 支付机构
      */
     private String payInst;
+
+    /**
+     * 商品描述
+     */
+    private String goodsDesc;
+
+    /**
+     * 扩展参数
+     */
+    private String extra;
+
+    /**
+     * 路由扩展参数
+     */
+    private String routeExtra;
 
     /**
      * 金额

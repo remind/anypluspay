@@ -42,6 +42,11 @@ public class BizOrderDto {
     private String status;
 
     /**
+     * 状态名称
+     */
+    private String statusName;
+
+    /**
      * 机构订单ID
      */
     private String instOrderId;

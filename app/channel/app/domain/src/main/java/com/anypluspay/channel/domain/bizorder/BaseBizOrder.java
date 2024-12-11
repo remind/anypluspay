@@ -65,10 +65,16 @@ public abstract class BaseBizOrder extends Entity {
     }
 
     public void addExtValue(ExtKey extKey, String value) {
+        if (extra == null) {
+            extra = new HashMap<>();
+        }
         extra.put(extKey.getCode(), value);
     }
 
     public void addInstExtValue(ExtKey extKey, String value) {
+        if (instExtra == null) {
+            instExtra = new HashMap<>();
+        }
         instExtra.put(extKey.getCode(), value);
     }
 }

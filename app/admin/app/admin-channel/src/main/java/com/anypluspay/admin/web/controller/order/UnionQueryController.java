@@ -2,10 +2,11 @@ package com.anypluspay.admin.web.controller.order;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import com.anypluspay.admin.dao.OrderQueryDao;
 import com.anypluspay.admin.model.UnionQueryResult;
 import com.anypluspay.admin.model.order.BizOrderDto;
 import com.anypluspay.admin.model.order.InstOrderDto;
-import com.anypluspay.admin.dao.OrderQueryDao;
+import com.anypluspay.admin.model.order.RefundOrderDto;
 import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
 import com.anypluspay.channel.infra.persistence.dataobject.InstOrderDO;
 import com.anypluspay.channel.infra.persistence.mapper.InstOrderMapper;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 联合查询
@@ -45,11 +49,18 @@ public class UnionQueryController {
         UnionQueryResult result = new UnionQueryResult();
         BizOrderDto bizOrderDto = getBizOrder(orderId, orderType);
         Assert.notNull(bizOrderDto, "订单不存在");
+        List<String> allOrderIds = new ArrayList<>();
+        allOrderIds.add(bizOrderDto.getOrderId());
+
         result.setBizOrder(bizOrderDto);
-        if (bizOrderDto.getRequestType() == RequestType.FUND_IN) {
-            result.setFundInOrder(orderQueryDao.getFundInOrderByOrderId(result.getBizOrder().getOrderId()));
+        result.setFundInOrder(orderQueryDao.getFundInOrderByOrderId(result.getBizOrder().getOrderId()));
+
+        List<RefundOrderDto> refundOrders = orderQueryDao.getRefundOrderByBizOrigOrderId(bizOrderDto.getOrderId());
+        if (CollectionUtil.isNotEmpty(refundOrders)) {
+            result.setRefundOrders(refundOrders);
+            allOrderIds.addAll(refundOrders.stream().map(RefundOrderDto::getOrderId).toList());
         }
-        result.setInstOrders(orderQueryDao.getInstOrderByBizOrderId(bizOrderDto.getOrderId()));
+        result.setInstOrders(orderQueryDao.getInstOrderByBizOrderId(allOrderIds));
         if (CollectionUtil.isNotEmpty(result.getInstOrders())) {
             result.setInstProcessOrders(orderQueryDao.getInstProcessOrderByInstOrderId(
                     result.getInstOrders().stream().map(InstOrderDto::getInstOrderId).toList()));
@@ -62,6 +73,9 @@ public class UnionQueryController {
         if ("1".equals(orderType)) {
             // 渠道订单号
             bizOrder = orderQueryDao.getBizOrderByOrderId(orderId);
+            if (bizOrder != null && bizOrder.getRequestType() == RequestType.REFUND) {
+                bizOrder = orderQueryDao.getOrigBizOrderByRefundOrderId(bizOrder.getOrderId());
+            }
         } else if ("2".equals(orderType)) {
             // 请求号
             LambdaQueryWrapper<BizOrderDO> queryWrapper = new LambdaQueryWrapper<>();

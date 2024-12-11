@@ -39,6 +39,11 @@ public class InstProcessOrderDto {
     private String status;
 
     /**
+     * 状态名称
+     */
+    private String statusName;
+
+    /**
      * 统一结果码
      */
     private String unityCode;

@@ -54,6 +54,11 @@ public class InstOrderDto {
     private String status;
 
     /**
+     * 状态名称
+     */
+    private String statusName;
+
+    /**
      * 请求扩展信息
      */
     private String requestExtra;

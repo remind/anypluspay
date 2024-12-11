@@ -58,7 +58,7 @@ public class InstOrderController extends AbstractController {
             queryWrapper.le(InstOrderDO::getGmtCreate, query.getGmtCreateEnd());
         }
         IPage<InstOrderDO> page = instOrderMapper.selectPage(getIPage(query), queryWrapper);
-        return ResponseResult.success(instOrderConvertor.toEntity(page));
+        return ResponseResult.success(instOrderConvertor.toDto(page));
     }
 
     /**

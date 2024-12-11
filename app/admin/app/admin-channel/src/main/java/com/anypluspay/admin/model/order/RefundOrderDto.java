@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 
 /**
  * @author wxj
- * 2024/11/21
+ * 2024/12/11
  */
 @Data
-public class FundInOrderDto {
+public class RefundOrderDto {
 
     /**
-     * 渠道订单号
+     * 订单号
      */
     private String orderId;
 
@@ -26,9 +26,29 @@ public class FundInOrderDto {
     private String requestId;
 
     /**
-     * 会员ID
+     * 退款类型
      */
-    private String memberId;
+    private String refundType;
+
+    /**
+     * 退款类型名称
+     */
+    private String refundTypeName;
+
+    /**
+     * 原订单号
+     */
+    private String origOrderId;
+
+    /**
+     * 原请求号
+     */
+    private String origRequestId;
+
+    /**
+     * 机构订单ID
+     */
+    private String instOrderId;
 
     /**
      * 状态
@@ -41,40 +61,15 @@ public class FundInOrderDto {
     private String statusName;
 
     /**
-     * 机构订单ID
-     */
-    private String instOrderId;
-
-    /**
-     * 支付方式
-     */
-    private String payMethod;
-
-    /**
-     * 支付机构
-     */
-    private String payInst;
-
-    /**
-     * 商品描述
-     */
-    private String goodsDesc;
-
-    /**
-     * 扩展参数
-     */
-    private String extra;
-
-    /**
-     * 路由扩展参数
-     */
-    private String routeExtra;
-
-    /**
-     * 金额
+     * 退款金额
      */
     @JsonSerialize(using = MoneySerializer.class)
     private Money amount;
+
+    /**
+     * 原因
+     */
+    private String reason;
 
     /**
      * 创建时间
