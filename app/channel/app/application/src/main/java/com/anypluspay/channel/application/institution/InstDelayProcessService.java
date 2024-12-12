@@ -49,11 +49,11 @@ public class InstDelayProcessService {
 
     private boolean lockProcessOrder(String instOrderId) {
         return Boolean.TRUE.equals(transactionTemplate.execute(transactionStatus -> {
-            InstOrder instOrder = instOrderRepository.load(instOrderId);
+            InstOrder instOrder = instOrderRepository.lock(instOrderId);
             if (instOrder.getStatus() == InstOrderStatus.INIT) {
                 InstDelayOrder instDelayOrder = instOrder.getInstDelayOrder();
                 if (instDelayOrder.getStatus() == DelayOrderStatus.WAIT
-                        || instDelayOrder.getStatus() == DelayOrderStatus.LOCK && instDelayOrder.getLastProcessTime().plusMinutes(30).isAfter(LocalDateTime.now())
+                        || (instDelayOrder.getStatus() == DelayOrderStatus.LOCK && instDelayOrder.getLastProcessTime().plusMinutes(10).isAfter(LocalDateTime.now()))
                 ) {
                     instDelayOrder.setStatus(DelayOrderStatus.LOCK);
                     instDelayOrder.setLastProcessTime(LocalDateTime.now());

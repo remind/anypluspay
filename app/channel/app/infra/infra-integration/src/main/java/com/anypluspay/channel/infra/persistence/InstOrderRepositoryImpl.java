@@ -62,7 +62,8 @@ public class InstOrderRepositoryImpl implements InstOrderRepository {
 
     @Override
     public InstOrder lock(String instOrderId) {
-        return null;
+        InstOrderDO instOrderDO = instOrderMapper.lockById(instOrderId);
+        return convert(instOrderDO);
     }
 
     @Override
