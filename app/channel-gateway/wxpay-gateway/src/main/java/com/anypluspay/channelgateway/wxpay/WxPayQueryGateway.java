@@ -2,7 +2,7 @@ package com.anypluspay.channelgateway.wxpay;
 
 import com.anypluspay.channelgateway.api.query.QueryGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.GatewayOrder;
+import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.lang.types.Money;
 import com.wechat.pay.java.core.exception.ServiceException;
@@ -21,12 +21,12 @@ import org.springframework.stereotype.Service;
 public class WxPayQueryGateway extends AbstractWxPayGateway implements QueryGateway {
 
     @Override
-    public void query(GatewayRequest<GatewayOrder> gatewayRequest, GatewayOrder gatewayOrder, GatewayResult result) {
+    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) {
         WxPayConfig wxPayConfig = getWxPayConfig();
         try {
             JsapiServiceExtension service = getJsapiService(wxPayConfig);
             QueryOrderByOutTradeNoRequest queryRequest = new QueryOrderByOutTradeNoRequest();
-            queryRequest.setOutTradeNo(gatewayOrder.getInstRequestNo());
+            queryRequest.setOutTradeNo(normalContent.getInstRequestNo());
             queryRequest.setMchid(wxPayConfig.getMerchantId());
             Transaction transaction = service.queryOrderByOutTradeNo(queryRequest);
             result.setApiCode(transaction.getTradeState().name());

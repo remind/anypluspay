@@ -2,7 +2,7 @@ package com.anypluspay.channelgateway.wxpay;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.wechat.pay.java.service.payments.jsapi.JsapiServiceExtension;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class WxPaySignGateway extends AbstractWxPayGateway implements SignGateway {
 
     @Override
-    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
         WxPayConfig wxPayConfig = getWxPayConfig();
         requestWrapper((Void) -> {
             JsapiServiceExtension service = getJsapiService(wxPayConfig);
@@ -38,7 +38,7 @@ public class WxPaySignGateway extends AbstractWxPayGateway implements SignGatewa
         }, result);
     }
 
-    private PrepayRequest buildPrepayRequest(SignGatewayOrder signOrderInfo, WxPayConfig wxPayConfig) {
+    private PrepayRequest buildPrepayRequest(SignNormalContent signOrderInfo, WxPayConfig wxPayConfig) {
         PrepayRequest request = new PrepayRequest();
         request.setAppid(wxPayConfig.getAppId());
         request.setMchid(wxPayConfig.getMerchantId());

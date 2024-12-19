@@ -9,7 +9,6 @@ import com.anypluspay.channel.types.channel.MaintainTimeType;
 import com.anypluspay.channel.types.enums.CardType;
 import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
-import com.anypluspay.channel.types.order.InstProcessOrderStatus;
 import com.anypluspay.commons.enums.CodeEnum;
 import com.anypluspay.commons.response.ResponseResult;
 import jakarta.validation.constraints.NotBlank;
@@ -42,8 +41,7 @@ public class EnumValueController {
             RequestType.class,
             CardType.class,
             MaintainTimeType.class,
-            InstOrderStatus.class,
-            InstProcessOrderStatus.class
+            InstOrderStatus.class
     );
 
     /**

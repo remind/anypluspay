@@ -26,5 +26,5 @@ public interface OrderQueryFacade {
      * @param isInstQuery   是否提交到机构查询
      * @return  订单结果
      */
-    FundResult queryByInstOrderId(String instOrderId, boolean isInstQuery);
+    FundResult queryByInstOrderId(Long instOrderId, boolean isInstQuery);
 }

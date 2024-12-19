@@ -2,7 +2,6 @@ package com.anypluspay.channel.channel;
 
 import com.anypluspay.channel.domain.channel.api.ApiRequestNoMode;
 import com.anypluspay.channel.domain.channel.api.service.ApiRequestNoModeService;
-import com.anypluspay.channel.institution.BaseChannelTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
-public class ApiRequestNoModeServiceTest extends BaseChannelTest {
+public class ApiRequestNoModeServiceTest {
 
     @Autowired
     private ApiRequestNoModeService apiRequestNoModeService;
@@ -27,7 +26,7 @@ public class ApiRequestNoModeServiceTest extends BaseChannelTest {
     @Test
     public void testSuccess() {
         ApiRequestNoMode apiRequestNoMode = new ApiRequestNoMode();
-        apiRequestNoMode.setSeqName("seq_inst_wxpay");
+        apiRequestNoMode.setSeqName("seq_inst_order_id");
         apiRequestNoMode.setGenPattern("f:50122|t:MMdd|f:022|s:8");
         String s = apiRequestNoModeService.generateRequestNo(apiRequestNoMode);
         log.info("ID:" + s);

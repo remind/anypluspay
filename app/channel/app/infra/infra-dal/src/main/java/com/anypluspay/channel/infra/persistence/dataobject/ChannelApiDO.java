@@ -33,6 +33,11 @@ public class ChannelApiDO implements Serializable {
     private String channelCode;
 
     /**
+     * 适用支付方式
+     */
+    private String payMethods;
+
+    /**
      * 接口类型
      */
     private String type;
@@ -93,6 +98,14 @@ public class ChannelApiDO implements Serializable {
 
     public void setChannelCode(String channelCode) {
         this.channelCode = channelCode;
+    }
+
+    public String getPayMethods() {
+        return payMethods;
+    }
+
+    public void setPayMethods(String payMethods) {
+        this.payMethods = payMethods;
     }
 
     public String getType() {

@@ -4,6 +4,7 @@ import com.anypluspay.channel.application.institution.gateway.GatewayProxy;
 import com.anypluspay.channel.domain.channel.api.ChannelApi;
 import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channelgateway.types.RequestResponseClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class DefaultGatewayProxy implements GatewayProxy {
     private final WebClient webClient = WebClient.builder().build();
 
     @Override
-    public GatewayResult invoke(ChannelApi channelApi, Object content) {
+    public GatewayResult invoke(ChannelApi channelApi, RequestContent content) {
         return switch (channelApi.getProtocol()) {
             case BEAN -> invokeBean(channelApi, content);
             case HTTP -> invokeHttp(channelApi, content);
@@ -39,7 +40,7 @@ public class DefaultGatewayProxy implements GatewayProxy {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private GatewayResult invokeBean(ChannelApi channelApi, Object content) {
+    private GatewayResult invokeBean(ChannelApi channelApi, RequestContent content) {
         ChannelGateway channelGateway = applicationContext.getBean(channelApi.getAddress(), ChannelGateway.class);
         GatewayRequest request = new GatewayRequest();
         request.setChannelCode(channelApi.getChannelCode());

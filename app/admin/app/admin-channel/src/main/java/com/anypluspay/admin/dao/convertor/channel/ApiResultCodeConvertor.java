@@ -17,7 +17,7 @@ import org.mapstruct.MappingConstants;
 public interface ApiResultCodeConvertor extends SimpleCrudConvertor<ApiResultCodeDto, ApiResultCodeRequest, ApiResultCodeDO> {
 
     @Mapping(target = "apiTypeName", expression = "java(ConvertorUtils.toApiTypeName(doObject.getApiType()))")
-    @Mapping(target = "resultStatusName", expression = "java(ConvertorUtils.toInstProcessOrderStatusName(doObject.getResultStatus()))")
+    @Mapping(target = "resultStatusName", expression = "java(ConvertorUtils.toInstOrderStatusName(doObject.getResultStatus()))")
     ApiResultCodeDto toDto(ApiResultCodeDO doObject);
 
 

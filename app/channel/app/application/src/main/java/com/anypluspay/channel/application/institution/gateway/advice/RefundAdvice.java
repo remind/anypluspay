@@ -5,7 +5,7 @@ import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channelgateway.api.refund.RefundGatewayOrder;
+import com.anypluspay.channelgateway.api.refund.RefundContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
  * 2024/12/11
  */
 @Service
-public class RefundAdvice implements GatewayRequestAdvice<RefundGatewayOrder, GatewayResult> {
+public class RefundAdvice implements GatewayRequestAdvice<RefundContent, GatewayResult> {
     @Override
-    public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, RefundGatewayOrder OrderInfo) {
+    public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, RefundContent requestContent) {
 
     }
 

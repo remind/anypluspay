@@ -33,6 +33,12 @@ public class ChannelApiRequest {
     private String type;
 
     /**
+     * 适用支付方式
+     */
+    @NotNull(message = "适用支付方式不能为空")
+    private String payMethods;
+
+    /**
      * 协议
      */
     private String protocol;

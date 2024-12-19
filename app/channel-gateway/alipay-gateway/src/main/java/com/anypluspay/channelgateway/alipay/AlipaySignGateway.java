@@ -5,7 +5,7 @@ import com.alipay.api.AlipayResponse;
 import com.alipay.api.domain.AlipayTradeAppPayModel;
 import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AlipaySignGateway extends AbstractAlipayGateway implements SignGateway {
     @Override
-    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
         AlipayTradeAppPayRequest req = getAlipayTradeAppPayRequest(signOrderInfo);
         try {
             AlipayResponse response = build().sdkExecute(req);
@@ -33,7 +33,7 @@ public class AlipaySignGateway extends AbstractAlipayGateway implements SignGate
     }
 
     @NotNull
-    private AlipayTradeAppPayRequest getAlipayTradeAppPayRequest(SignGatewayOrder signOrderInfo) {
+    private AlipayTradeAppPayRequest getAlipayTradeAppPayRequest(SignNormalContent signOrderInfo) {
         AlipayTradeAppPayRequest req = new AlipayTradeAppPayRequest();
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
         model.setOutTradeNo(signOrderInfo.getInstRequestNo());

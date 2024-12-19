@@ -5,7 +5,7 @@ import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstProcessOrder;
+import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.NotifyFacade;
@@ -34,11 +34,11 @@ public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacad
     public FundResult notify(String fundChannelCode, ChannelApiType apiType, String request) {
         ChannelApiContext channelApiContext = channelRouteService.routeByChannel(fundChannelCode, apiType);
         Assert.notNull(channelApiContext, "无可用渠道");
-        InstProcessOrder instProcessOrder = instProcessService.noneOrderProcess(channelApiContext, request);
-        InstOrder instOrder = instOrderRepository.load(instProcessOrder.getInstOrderId());
+        InstCommandOrder instCommandOrder = instProcessService.noneOrderProcess(channelApiContext, request);
+        InstOrder instOrder = instOrderRepository.load(instCommandOrder.getInstOrderId());
         BaseBizOrder bizOrder = bizOrderRepository.load(instOrder.getBizOrderId());
-        FundResult result = (FundResult) buildChannelResult(bizOrder, instOrder, instProcessOrder);
-        fillChannelResultCommon(result, bizOrder, instOrder, instProcessOrder);
+        FundResult result = (FundResult) buildChannelResult(bizOrder, instOrder, instCommandOrder);
+        fillChannelResultCommon(result, bizOrder, instOrder, instCommandOrder);
         return result;
     }
 

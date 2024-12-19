@@ -48,7 +48,7 @@ public abstract class BaseBizOrder extends Entity {
     /**
      * 最后使用的机构单ID
      */
-    private String instOrderId;
+    private Long instOrderId;
 
     /**
      * 扩展字段

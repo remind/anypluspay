@@ -8,14 +8,14 @@ import com.anypluspay.channelgateway.result.GatewayResult;
  * @author wxj
  * 2024/9/15
  */
-public interface SignGateway extends ChannelGateway<SignGatewayOrder> {
+public interface SignGateway extends ChannelGateway<SignNormalContent> {
     @Override
-    default GatewayResult call(GatewayRequest<SignGatewayOrder> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<SignNormalContent> gatewayRequest) {
         SignResult result = new SignResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         sign(gatewayRequest, gatewayRequest.getContent(), result);
         return result;
     }
 
-    void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result);
+    void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result);
 }

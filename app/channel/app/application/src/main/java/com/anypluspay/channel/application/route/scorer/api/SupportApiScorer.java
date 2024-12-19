@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class SupportApiScorer implements ChannelApiScorer {
     @Override
     public int score(ChannelApi channelApi, ChannelFullInfo channelFullInfo, RouteParam routeParam) {
-        return channelApi.getType() == ChannelApiType.SIGN ? STANDARD_SCORE : ZERO_SCORE;
+        return channelApi.getPayMethods().contains(routeParam.getPayMethod())
+                && ChannelApiType.isFirstCommand(channelApi.getType()) ? STANDARD_SCORE : ZERO_SCORE;
     }
 }

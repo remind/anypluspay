@@ -34,7 +34,7 @@ public class BizOrderService {
         bizOrderRepository.reStore(bizOrder);
     }
 
-    public void relateInstOrderId(BaseBizOrder bizOrder, String instOrderId) {
+    public void relateInstOrderId(BaseBizOrder bizOrder, Long instOrderId) {
         bizOrder.setInstOrderId(instOrderId);
         bizOrderRepository.reStore(bizOrder);
     }

@@ -6,12 +6,13 @@ import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
 import com.anypluspay.channel.infra.persistence.mapper.RefundOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author wxj
  * 2024/8/20
  */
-@Component
+@Repository
 public class RefundDalOperator implements BizOrderDalOperator<RefundOrder> {
 
     @Autowired

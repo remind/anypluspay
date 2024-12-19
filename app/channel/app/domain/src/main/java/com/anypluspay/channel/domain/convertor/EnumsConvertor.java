@@ -27,19 +27,9 @@ public interface EnumsConvertor extends GlobalTypeConvertor {
     default ChannelApiType toChannelApiType(String code) {
         return EnumUtil.getByCode(ChannelApiType.class, code);
     }
-    default PayMode toPayMode(String code) {
-        return EnumUtil.getByCode(PayMode.class, code);
-    }
 
-    default InstProcessOrderStatus toInstOrderResultStatus(String code) {
-        return EnumUtil.getByCode(InstProcessOrderStatus.class, code);
-    }
-    default DelayOrderStatus toDelayOrderStatus(String code) {
-        return EnumUtil.getByCode(DelayOrderStatus.class, code);
-    }
-
-    default ProcessTimeType toProcessTimeType(String code) {
-        return EnumUtil.getByCode(ProcessTimeType.class, code);
+    default SubmitTimeType toSubmitTimeType(String code) {
+        return EnumUtil.getByCode(SubmitTimeType.class, code);
     }
 
     default RefundType toRefundType(String code) {
@@ -64,6 +54,10 @@ public interface EnumsConvertor extends GlobalTypeConvertor {
 
     default RequestType toRequestType(String code) {
         return EnumUtil.getByCode(RequestType.class, code);
+    }
+
+    default TaskStatus toTaskStatus(String code) {
+        return EnumUtil.getByCode(TaskStatus.class, code);
     }
 
 }

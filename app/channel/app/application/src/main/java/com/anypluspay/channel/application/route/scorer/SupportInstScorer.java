@@ -2,6 +2,7 @@ package com.anypluspay.channel.application.route.scorer;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.application.route.FieldMatcher;
 import com.anypluspay.channel.application.route.RouteParam;
 import com.anypluspay.channel.domain.channel.ChannelFullInfo;
@@ -73,7 +74,7 @@ public class SupportInstScorer implements ChannelScorer {
      * @return
      */
     private boolean matchByExtra(RouteParam routeParam, ChannelSupportInst channelSupportInst) {
-        if (channelSupportInst.getExtra() == null) {
+        if (StrUtil.isBlank(channelSupportInst.getExtra())) {
             return true;
         }
         if (routeParam.getExtra() == null) {

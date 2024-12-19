@@ -16,6 +16,7 @@ public enum InstOrderStatus implements CodeEnum {
     SUCCESS("SU", "成功"),
     FAILED("FA", "失败"),
     PROCESSING("PR", "处理中"),
+    UNKNOWN("UK", "未知"),
     ;
 
     private final String code;

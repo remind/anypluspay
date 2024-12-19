@@ -1,7 +1,7 @@
 package com.anypluspay.channel.domain.result;
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channel.types.order.InstProcessOrderStatus;
+import com.anypluspay.channel.types.order.InstOrderStatus;
 import lombok.Data;
 
 /**
@@ -32,8 +32,8 @@ public class UnityResult {
     private String resultMessage;
 
     /**
-     * 机构单结果状态
+     * 机构单状态
      */
-    private InstProcessOrderStatus status;
+    private InstOrderStatus status;
 
 }

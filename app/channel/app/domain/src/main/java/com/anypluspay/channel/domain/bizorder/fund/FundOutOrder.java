@@ -1,12 +1,10 @@
 package com.anypluspay.channel.domain.bizorder.fund;
 
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
-import com.anypluspay.channel.types.CardInfo;
+import com.anypluspay.channel.types.enums.CompanyOrPersonal;
 import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
-
-import java.util.Map;
 
 /**
  * @author wxj
@@ -16,9 +14,14 @@ import java.util.Map;
 public class FundOutOrder extends BaseBizOrder {
 
     /**
-     * 银行代码
+     * 银行编码
      */
     private String bankCode;
+
+    /**
+     * 支付方式
+     */
+    private String payMethod;
 
     /**
      * 金额
@@ -26,14 +29,19 @@ public class FundOutOrder extends BaseBizOrder {
     private Money amount;
 
     /**
-     * 出款卡信息
+     * 账户号
      */
-    private CardInfo cardInfo;
+    private String accountNo;
 
     /**
-     * 路由字段信息
+     * 账户名称
      */
-    private Map<String, String> routeExtra;
+    private String accountName;
+
+    /**
+     * 账户类型
+     */
+    private CompanyOrPersonal accountType;
 
     public FundOutOrder() {
         super(RequestType.FUND_OUT);

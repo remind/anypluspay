@@ -7,7 +7,7 @@ import com.anypluspay.channel.domain.result.UnityResult;
 import com.anypluspay.channel.domain.result.UnityResultCode;
 import com.anypluspay.channel.domain.result.service.ApiResultService;
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channel.types.order.InstProcessOrderStatus;
+import com.anypluspay.channel.types.order.InstOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,9 +39,9 @@ public class ApiResultServiceImpl implements ApiResultService {
                 }
             }
         } else {
-            addApiResultCode(channelCode, apiType, instApiCode, instApiMessage);
+            addApiResultCode(channelCode, apiType, instApiCode, instApiSubCode,instApiMessage);
         }
-        fillUnknownResult(result, instApiCode, instApiMessage);
+        fillUnknownResult(result, instApiCode, instApiSubCode,instApiMessage);
         return result;
     }
 
@@ -52,18 +52,19 @@ public class ApiResultServiceImpl implements ApiResultService {
         result.setStatus(apiResultCode.getResultStatus());
     }
 
-    private void fillUnknownResult(UnityResult result, String channelResultCode, String channelResultMessage) {
+    private void fillUnknownResult(UnityResult result, String instApiCode, String instApiSubCode, String channelResultMessage) {
         result.setMatch(false);
-        result.setResultCode(channelResultCode);
+        result.setResultCode(instApiCode);
         result.setResultMessage(channelResultMessage);
-        result.setStatus(InstProcessOrderStatus.UNKNOWN);
+        result.setStatus(InstOrderStatus.UNKNOWN);
     }
 
-    private void addApiResultCode(String fundChannelCode, ChannelApiType apiType, String channelResultCode, String channelResultMessage) {
+    private void addApiResultCode(String fundChannelCode, ChannelApiType apiType, String instApiCode, String instApiSubCode, String channelResultMessage) {
         ApiResultCode apiResultCode = new ApiResultCode();
         apiResultCode.setChannelCode(fundChannelCode);
         apiResultCode.setApiType(apiType);
-        apiResultCode.setInstApiCode(channelResultCode);
+        apiResultCode.setInstApiCode(instApiCode);
+        apiResultCode.setInstApiSubCode(instApiSubCode);
         apiResultCode.setInstApiMessage(channelResultMessage);
         apiResultRepository.store(apiResultCode);
     }

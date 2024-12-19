@@ -1,12 +1,14 @@
 package com.anypluspay.channel;
 
-import cn.hutool.json.JSONUtil;
-import com.anypluspay.channel.types.test.TestConstants;
-import com.anypluspay.channel.types.test.TestFlag;
-import org.springframework.web.reactive.function.client.WebClient;
+import cn.hutool.core.io.BOMInputStream;
+import cn.hutool.core.io.resource.ResourceUtil;
+import cn.hutool.core.text.csv.CsvReader;
+import cn.hutool.core.text.csv.CsvUtil;
+import com.anypluspay.channel.infra.persistence.dataobject.FundChannelDO;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  * @author wxj
@@ -14,20 +16,12 @@ import java.util.Map;
  */
 public class MainTest {
 
-    public static void main(String[] args) {
-        Map<String, String> params = new HashMap<>();
-        params.put("outRequestNo", "123");
-        params.put("origOrderId", "123");
-        params.put("amount", "123");
-        params.put("reason", "123");
-        params.put("notifyUrl", "123");
-        params.put("notify", "true");
-        String  url = "http://localhost:9080";
-        WebClient webClient = WebClient.builder().baseUrl(url).build();
-        webClient.post().uri("/online-bank/refund")
-                .bodyValue(params)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+    public static void main(String[] args) throws Exception {
+        final CsvReader reader = CsvUtil.getReader();
+        BOMInputStream stream = new BOMInputStream(ResourceUtil.getStream("mock/tc_fund_channel.csv"));
+        final List<FundChannelDO> result = reader.read(
+                new BufferedReader(new InputStreamReader(stream, stream.getCharset())), FundChannelDO.class);
+        result.forEach(System.out::println);
     }
+
 }

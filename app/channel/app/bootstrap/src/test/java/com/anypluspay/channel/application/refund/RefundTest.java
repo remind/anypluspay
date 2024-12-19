@@ -1,7 +1,7 @@
 package com.anypluspay.channel.application.refund;
 
 import cn.hutool.json.JSONUtil;
-import com.anypluspay.channel.application.FundServiceBaseTest;
+import com.anypluspay.channel.application.FundInBaseTest;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.request.RefundRequest;
@@ -13,6 +13,7 @@ import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.response.GlobalResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.Assert;
@@ -32,7 +33,7 @@ import java.util.Map;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
-public class RefundTest extends FundServiceBaseTest {
+public class RefundTest extends FundInBaseTest {
 
     @Autowired
     private RefundFacade refundService;
@@ -58,24 +59,25 @@ public class RefundTest extends FundServiceBaseTest {
         Assert.assertEquals(BizOrderStatus.FAILED, refundResult.getStatus());
     }
 
-    @Test(expected = BizException.class)
+    @Test
     public void refundAmountGreaterThanOrigAmount() {
-        refundService.apply(buildRefundOrder(TestConstants.S, new Money(104)));
+        FundResult fundResult = refundService.apply(buildRefundOrder(TestConstants.S, new Money(104)));
+        Assert.assertEquals(fundResult.getCode(), GlobalResultCode.FAIL.getCode());
     }
 
-    @Test(expected = BizException.class)
+    @Test
     public void multipleRefundAmountGreaterThanOrigAmount() {
-        FundResult origResult = buildNormalFundOrder();
+        FundResult origResult = createSuccessFundInOrder();
         FundResult fundResult1 = refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(40)));
         Assert.assertEquals(BizOrderStatus.SUCCESS, fundResult1.getStatus());
 
         FundResult fundResult2 = refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(63)));
-        Assert.assertEquals(BizOrderStatus.SUCCESS, fundResult2.getStatus());
+        Assert.assertEquals(fundResult2.getCode(), GlobalResultCode.FAIL.getCode());
     }
 
     @Test
     public void multipleRefundSuccess() {
-        FundResult origResult = buildNormalFundOrder();
+        FundResult origResult = createSuccessFundInOrder();
         FundResult fundResult1 = refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(40)));
         Assert.assertEquals(BizOrderStatus.SUCCESS, fundResult1.getStatus());
 
@@ -84,7 +86,7 @@ public class RefundTest extends FundServiceBaseTest {
     }
 
     private RefundRequest buildRefundOrder(String testFlag, Money refundAmount) {
-        return buildRefundOrder(buildNormalFundOrder(), testFlag, refundAmount);
+        return buildRefundOrder(createSuccessFundInOrder(), testFlag, refundAmount);
     }
 
     private RefundRequest buildRefundOrder(FundResult originOrder, String testFlag, Money refundAmount) {

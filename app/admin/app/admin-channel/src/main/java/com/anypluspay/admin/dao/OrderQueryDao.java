@@ -4,14 +4,8 @@ import com.anypluspay.admin.dao.convertor.order.*;
 import com.anypluspay.admin.dao.mapper.FundInOrderQueryMapper;
 import com.anypluspay.admin.dao.mapper.RefundOrderQueryMapper;
 import com.anypluspay.admin.model.order.*;
-import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
-import com.anypluspay.channel.infra.persistence.dataobject.InstOrderDO;
-import com.anypluspay.channel.infra.persistence.dataobject.InstProcessOrderDO;
-import com.anypluspay.channel.infra.persistence.dataobject.RefundOrderDO;
-import com.anypluspay.channel.infra.persistence.mapper.BizOrderMapper;
-import com.anypluspay.channel.infra.persistence.mapper.InstOrderMapper;
-import com.anypluspay.channel.infra.persistence.mapper.InstProcessOrderMapper;
-import com.anypluspay.channel.infra.persistence.mapper.RefundOrderMapper;
+import com.anypluspay.channel.infra.persistence.dataobject.*;
+import com.anypluspay.channel.infra.persistence.mapper.*;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +49,10 @@ public class OrderQueryDao extends AbstractDao {
     private InstOrderMapper instOrderMapper;
 
     @Autowired
-    private InstProcessOrderConvertor instProcessOrderConvertor;
+    private InstCommandOrderConvertor instCommandOrderConvertor;
 
     @Autowired
-    private InstProcessOrderMapper instProcessOrderMapper;
+    private InstCommandOrderMapper instCommandOrderMapper;
 
 
     public BizOrderDto getBizOrderByOrderId(String orderId) {
@@ -97,10 +91,10 @@ public class OrderQueryDao extends AbstractDao {
         return instOrderConvertor.toDto(instOrderMapper.selectList(queryWrapper));
     }
 
-    public List<InstProcessOrderDto> getInstProcessOrderByInstOrderId(List<String> instOrderIds) {
-        LambdaQueryWrapper<InstProcessOrderDO> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.in(InstProcessOrderDO::getInstOrderId, instOrderIds);
-        queryWrapper.orderByAsc(InstProcessOrderDO::getGmtModified);
-        return instProcessOrderConvertor.toDto(instProcessOrderMapper.selectList(queryWrapper));
+    public List<InstCommandOrderDto> getInstProcessOrderByInstOrderId(List<String> instOrderIds) {
+        LambdaQueryWrapper<InstCommandOrderDO> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.in(InstCommandOrderDO::getInstOrderId, instOrderIds);
+        queryWrapper.orderByAsc(InstCommandOrderDO::getGmtModified);
+        return instCommandOrderConvertor.toDto(instCommandOrderMapper.selectList(queryWrapper));
     }
 }

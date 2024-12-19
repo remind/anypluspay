@@ -1,9 +1,10 @@
 package com.anypluspay.channelgateway.types;
 
-import com.anypluspay.channelgateway.api.refund.RefundGatewayOrder;
-import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
+import com.anypluspay.channelgateway.api.refund.RefundContent;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
-import com.anypluspay.channelgateway.request.GatewayOrder;
+import com.anypluspay.channelgateway.request.FundOutContent;
+import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
@@ -19,8 +20,9 @@ import lombok.Getter;
 @Getter
 public enum RequestResponseClass {
 
-    SIGN(ChannelApiType.SIGN, SignGatewayOrder.class, SignResult.class),
-    SINGLE_REFUND(ChannelApiType.SINGLE_REFUND, RefundGatewayOrder.class, null),
+    SIGN(ChannelApiType.SIGN, SignNormalContent.class, SignResult.class),
+    SINGLE_REFUND(ChannelApiType.SINGLE_REFUND, RefundContent.class, null),
+    SINGLE_FUND_OUT(ChannelApiType.SINGLE_FUND_OUT, FundOutContent.class, null),
     ;
 
     private final ChannelApiType channelApiType;
@@ -46,7 +48,7 @@ public enum RequestResponseClass {
 
     public static Class<? extends RequestContent> getRequestClass(ChannelApiType channelApiType) {
         RequestResponseClass requestResponseClass = getByChannelApiType(channelApiType);
-        return requestResponseClass == null ? GatewayOrder.class : requestResponseClass.getRequestClass();
+        return requestResponseClass == null ? NormalContent.class : requestResponseClass.getRequestClass();
     }
 
     public static Class<? extends ProcessResult> getResponseClass(ChannelApiType channelApiType) {

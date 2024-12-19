@@ -9,7 +9,6 @@ import com.anypluspay.channel.types.enums.RefundType;
 import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.order.InstOrderStatus;
-import com.anypluspay.channel.types.order.InstProcessOrderStatus;
 import com.anypluspay.commons.convertor.GlobalConvertorUtils;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 
@@ -25,10 +24,6 @@ public class ConvertorUtils extends GlobalConvertorUtils {
 
     public static String toApiTypeName(String code) {
         return StrUtil.isNotBlank(code) ? Objects.requireNonNull(EnumUtil.getByCode(ChannelApiType.class, code)).getDisplayName() : "";
-    }
-
-    public static String toInstProcessOrderStatusName(String code) {
-        return StrUtil.isNotBlank(code) ? Objects.requireNonNull(EnumUtil.getByCode(InstProcessOrderStatus.class, code)).getDisplayName() : "";
     }
 
     public static String toMaintainTimeTypeName(String code) {

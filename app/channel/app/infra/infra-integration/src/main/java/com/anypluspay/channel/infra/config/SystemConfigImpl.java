@@ -2,7 +2,6 @@ package com.anypluspay.channel.infra.config;
 
 import com.anypluspay.channel.domain.SystemConfig;
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

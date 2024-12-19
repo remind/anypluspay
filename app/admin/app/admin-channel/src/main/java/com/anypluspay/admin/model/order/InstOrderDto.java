@@ -69,10 +69,32 @@ public class InstOrderDto {
     private String responseExtra;
 
     /**
-     * 处理时间
+     * 提交时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime processTime;
+    private LocalDateTime submitTime;
+
+    /**
+     * 预约提交时间
+     */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime bookSubmitTime;
+
+    /**
+     * 下次补单时间
+     */
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime nextRetryTime;
+
+    /**
+     * 补单次数
+     */
+    private Integer retryTimes;
+
+    /**
+     * 任务状态
+     */
+    private String taskStatus;
 
     /**
      * 创建时间

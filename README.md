@@ -2,7 +2,6 @@
  `anypluspay`旨在解决互联网企业支付问题，目标提供各行业+支付的完整解决方案。
 
 ## 系统介绍
-技术选型大道至简，工程优先。
 
 ### 系统整体目录结构
 ``` java
@@ -88,6 +87,8 @@ admin -- 应用名称
 ### 渠道管理
 
 ![渠道详情](docs/images/admin-channel-detail.png)
+
+![联合查询](docs/images/admin-union-query.png)
 
 ## 附录
 ### 关于支付

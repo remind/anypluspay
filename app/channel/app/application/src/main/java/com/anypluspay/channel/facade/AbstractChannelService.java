@@ -5,11 +5,12 @@ import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.application.route.ChannelRouteService;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.bizorder.fund.RefundOrder;
+import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstProcessOrder;
-import com.anypluspay.channel.domain.institution.service.InstOrderService;
+import com.anypluspay.channel.domain.institution.service.InstOrderDomainService;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.builder.InstOrderBuilder;
@@ -17,7 +18,7 @@ import com.anypluspay.channel.facade.fund.validator.FundValidatorService;
 import com.anypluspay.channel.facade.result.ChannelResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
-import com.anypluspay.channel.types.order.ProcessTimeType;
+import com.anypluspay.channel.types.order.SubmitTimeType;
 import com.anypluspay.channel.types.result.CsResultCode;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
@@ -43,7 +44,7 @@ public abstract class AbstractChannelService {
     protected TransactionTemplate transactionTemplate;
 
     @Autowired
-    protected InstOrderService instOrderService;
+    protected InstOrderDomainService instOrderDomainService;
 
     @Autowired
     protected ChannelRouteService channelRouteService;
@@ -63,23 +64,12 @@ public abstract class AbstractChannelService {
      */
     protected ChannelResult applyInstProcess(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
         AssertUtil.notNull(channelApiContext, CsResultCode.NOT_EXIST_CHANNEL);
-        InstOrder instOrder = instOrderBuilder.buildInstOrder(channelApiContext, bizOrder);
-
-        transactionTemplate.executeWithoutResult(transactionStatus -> {
-            if (bizOrder instanceof RefundOrder refundOrder) {
-                FundInOrder origOrder = (FundInOrder) bizOrderRepository.lock(refundOrder.getOrigOrderId());
-                fundValidatorService.refundValidate(refundOrder, origOrder);
-            }
-            bizOrder.setInstOrderId(instOrder.getInstOrderId());
-            bizOrderRepository.store(bizOrder);
-            instOrderRepository.store(instOrder);
-        });
-        InstProcessOrder instProcessOrder = null;
-        if (instOrder.getProcessTimeType() == ProcessTimeType.REAL) {
-            instProcessOrder = instProcessService.process(channelApiContext, bizOrder, instOrder);
+        OrderContext orderContext = createOrderContext(channelApiContext, bizOrder);
+        if (orderContext.getInstCommandOrder() != null) {
+            orderContext = instProcessService.submit(channelApiContext, orderContext);
         }
-        ChannelResult result = buildChannelResult(bizOrder, instOrder, instProcessOrder);
-        fillChannelResultCommon(result, bizOrder, instOrder, instProcessOrder);
+        ChannelResult result = buildChannelResult(orderContext.getBizOrder(), orderContext.getInstOrder(), orderContext.getInstCommandOrder());
+        fillChannelResultCommon(result, orderContext.getBizOrder(), orderContext.getInstOrder(), orderContext.getInstCommandOrder());
         return result;
     }
 
@@ -93,9 +83,9 @@ public abstract class AbstractChannelService {
     protected ChannelResult applyInstProcess(BaseBizOrder bizOrder, ChannelApiType apiType) {
         InstOrder instOrder = instOrderRepository.load(bizOrder.getInstOrderId());
         ChannelApiContext channelApiContext = channelRouteService.routeByChannel(instOrder.getFundChannelCode(), apiType);
-        InstProcessOrder instProcessOrder = instProcessService.process(channelApiContext, bizOrder, instOrder);
-        ChannelResult result = buildChannelResult(bizOrder, instOrder, instProcessOrder);
-        fillChannelResultCommon(result, bizOrder, instOrder, instProcessOrder);
+        OrderContext orderContext = instProcessService.createAndSubmit(channelApiContext, bizOrder, instOrder);
+        ChannelResult result = buildChannelResult(orderContext.getBizOrder(), orderContext.getInstOrder(), orderContext.getInstCommandOrder());
+        fillChannelResultCommon(result, orderContext.getBizOrder(), orderContext.getInstOrder(), orderContext.getInstCommandOrder());
         return result;
     }
 
@@ -104,16 +94,16 @@ public abstract class AbstractChannelService {
         BaseBizOrder bizOrder = bizOrderRepository.load(orderId);
         AssertUtil.notNull(bizOrder, "订单不存在");
         InstOrder instOrder = instOrderRepository.load(bizOrder.getInstOrderId());
-        InstProcessOrder instProcessOrder = null;
+        InstCommandOrder instCommandOrder = null;
         if (instOrder.getStatus() != InstOrderStatus.INIT) {
-            instProcessOrder = instOrderService.loadMainProcessOrder(instOrder);
+            instCommandOrder = instOrderDomainService.loadMainProcessOrder(instOrder);
         }
-        result = buildChannelResult(bizOrder, instOrder, instProcessOrder);
-        fillChannelResultCommon(result, bizOrder, instOrder, instProcessOrder);
+        result = buildChannelResult(bizOrder, instOrder, instCommandOrder);
+        fillChannelResultCommon(result, bizOrder, instOrder, instCommandOrder);
         return result;
     }
 
-    protected void fillChannelResultCommon(ChannelResult result, BaseBizOrder bizOrder, InstOrder instOrder, InstProcessOrder instProcessOrder) {
+    protected void fillChannelResultCommon(ChannelResult result, BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         result.setRequestId(bizOrder.getRequestId());
         result.setOrderId(bizOrder.getOrderId());
         result.setFundChannelCode(instOrder.getFundChannelCode());
@@ -121,8 +111,8 @@ public abstract class AbstractChannelService {
             result.setUnityCode(CsResultCode.WAIT_SUBMIT_INST.getCode());
             result.setUnityMessage(CsResultCode.WAIT_SUBMIT_INST.getMessage());
         } else {
-            result.setUnityCode(StrUtil.firstNonBlank(instProcessOrder.getUnityCode(), instProcessOrder.getApiCode()));
-            result.setUnityMessage(StrUtil.firstNonBlank(instProcessOrder.getUnityMessage(), instProcessOrder.getApiMessage()));
+            result.setUnityCode(StrUtil.firstNonBlank(instCommandOrder.getUnityCode(), instCommandOrder.getApiCode()));
+            result.setUnityMessage(StrUtil.firstNonBlank(instCommandOrder.getUnityMessage(), instCommandOrder.getApiMessage()));
         }
         result.setStatus(bizOrder.getStatus());
     }
@@ -138,8 +128,34 @@ public abstract class AbstractChannelService {
      *
      * @param bizOrder
      * @param instOrder
-     * @param instProcessOrder
+     * @param instCommandOrder
      * @return
      */
-    protected abstract ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstProcessOrder instProcessOrder);
+    protected abstract ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder);
+
+    /**
+     * 创建订单
+     * @param channelApiContext
+     * @param bizOrder
+     * @return
+     */
+    private OrderContext createOrderContext(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
+        OrderContext orderContext = new OrderContext();
+        InstOrder instOrder = instOrderBuilder.buildInstOrder(channelApiContext, bizOrder);
+        orderContext.setInstOrder(instOrder);
+        orderContext.setBizOrder(bizOrder);
+        transactionTemplate.executeWithoutResult(transactionStatus -> {
+            if (bizOrder instanceof RefundOrder refundOrder) {
+                FundInOrder origOrder = (FundInOrder) bizOrderRepository.lock(refundOrder.getOrigOrderId());
+                fundValidatorService.refundValidate(refundOrder, origOrder);
+            }
+            instOrderRepository.store(instOrder);
+            bizOrder.setInstOrderId(instOrder.getInstOrderId());
+            bizOrderRepository.store(bizOrder);
+            if (instOrder.getSubmitTimeType() == SubmitTimeType.REAL) {
+                orderContext.setInstCommandOrder(instOrderDomainService.createCommand(instOrder, channelApiContext.getChannelApiType()));
+            }
+        });
+        return orderContext;
+    }
 }

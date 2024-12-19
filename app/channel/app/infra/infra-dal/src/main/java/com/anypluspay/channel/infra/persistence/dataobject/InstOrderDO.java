@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-08-25
+ * @since 2024-12-19
  */
 @TableName("ti_inst_order")
 public class InstOrderDO implements Serializable {
@@ -24,8 +24,8 @@ public class InstOrderDO implements Serializable {
     /**
      * 机构订单号
      */
-    @TableId(value = "inst_order_id", type = IdType.NONE)
-    private String instOrderId;
+    @TableId(value = "inst_order_id", type = IdType.AUTO)
+    private Long instOrderId;
 
     /**
      * 业务订单号
@@ -33,9 +33,9 @@ public class InstOrderDO implements Serializable {
     private String bizOrderId;
 
     /**
-     * 处理时间类型
+     * 提交时间类型
      */
-    private String processTimeType;
+    private String submitTimeType;
 
     /**
      * 机构请求单号
@@ -73,9 +73,29 @@ public class InstOrderDO implements Serializable {
     private String responseExtra;
 
     /**
-     * 处理时间
+     * 提交时间
      */
-    private LocalDateTime processTime;
+    private LocalDateTime submitTime;
+
+    /**
+     * 预约提交时间
+     */
+    private LocalDateTime bookSubmitTime;
+
+    /**
+     * 下次补单时间
+     */
+    private LocalDateTime nextRetryTime;
+
+    /**
+     * 补单次数
+     */
+    private Integer retryTimes;
+
+    /**
+     * 任务状态
+     */
+    private String taskStatus;
 
     /**
      * 创建时间
@@ -89,11 +109,11 @@ public class InstOrderDO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
-    public String getInstOrderId() {
+    public Long getInstOrderId() {
         return instOrderId;
     }
 
-    public void setInstOrderId(String instOrderId) {
+    public void setInstOrderId(Long instOrderId) {
         this.instOrderId = instOrderId;
     }
 
@@ -105,12 +125,12 @@ public class InstOrderDO implements Serializable {
         this.bizOrderId = bizOrderId;
     }
 
-    public String getProcessTimeType() {
-        return processTimeType;
+    public String getSubmitTimeType() {
+        return submitTimeType;
     }
 
-    public void setProcessTimeType(String processTimeType) {
-        this.processTimeType = processTimeType;
+    public void setSubmitTimeType(String submitTimeType) {
+        this.submitTimeType = submitTimeType;
     }
 
     public String getInstRequestNo() {
@@ -169,12 +189,44 @@ public class InstOrderDO implements Serializable {
         this.responseExtra = responseExtra;
     }
 
-    public LocalDateTime getProcessTime() {
-        return processTime;
+    public LocalDateTime getSubmitTime() {
+        return submitTime;
     }
 
-    public void setProcessTime(LocalDateTime processTime) {
-        this.processTime = processTime;
+    public void setSubmitTime(LocalDateTime submitTime) {
+        this.submitTime = submitTime;
+    }
+
+    public LocalDateTime getBookSubmitTime() {
+        return bookSubmitTime;
+    }
+
+    public void setBookSubmitTime(LocalDateTime bookSubmitTime) {
+        this.bookSubmitTime = bookSubmitTime;
+    }
+
+    public LocalDateTime getNextRetryTime() {
+        return nextRetryTime;
+    }
+
+    public void setNextRetryTime(LocalDateTime nextRetryTime) {
+        this.nextRetryTime = nextRetryTime;
+    }
+
+    public Integer getRetryTimes() {
+        return retryTimes;
+    }
+
+    public void setRetryTimes(Integer retryTimes) {
+        this.retryTimes = retryTimes;
+    }
+
+    public String getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -198,7 +250,7 @@ public class InstOrderDO implements Serializable {
         return "InstOrderDO{" +
         "instOrderId = " + instOrderId +
         ", bizOrderId = " + bizOrderId +
-        ", processTimeType = " + processTimeType +
+        ", submitTimeType = " + submitTimeType +
         ", instRequestNo = " + instRequestNo +
         ", instResponseNo = " + instResponseNo +
         ", fundChannelCode = " + fundChannelCode +
@@ -206,7 +258,11 @@ public class InstOrderDO implements Serializable {
         ", status = " + status +
         ", requestExtra = " + requestExtra +
         ", responseExtra = " + responseExtra +
-        ", processTime = " + processTime +
+        ", submitTime = " + submitTime +
+        ", bookSubmitTime = " + bookSubmitTime +
+        ", nextRetryTime = " + nextRetryTime +
+        ", retryTimes = " + retryTimes +
+        ", taskStatus = " + taskStatus +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

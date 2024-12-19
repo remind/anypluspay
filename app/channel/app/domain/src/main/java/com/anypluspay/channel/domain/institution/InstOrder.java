@@ -1,10 +1,12 @@
 package com.anypluspay.channel.domain.institution;
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channel.types.enums.TaskStatus;
 import com.anypluspay.channel.types.order.InstOrderStatus;
-import com.anypluspay.channel.types.order.ProcessTimeType;
+import com.anypluspay.channel.types.order.SubmitTimeType;
 import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -15,28 +17,19 @@ import java.util.Map;
  * @author wxj
  * 2024/7/13
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class InstOrder extends Entity {
 
     /**
      * 机构订单ID
      */
-    private String instOrderId;
+    private Long instOrderId;
 
     /**
      * 业务订单ID
      */
     private String bizOrderId;
-
-    /**
-     * 处理时间类型
-     */
-    private ProcessTimeType processTimeType;
-
-    /**
-     * 处理时间
-     */
-    private LocalDateTime processTime;
 
     /**
      * 机构请求号
@@ -79,9 +72,29 @@ public class InstOrder extends Entity {
     private Map<String, String> responseExtra;
 
     /**
-     * 延迟过程单
+     * 提交时间类型
      */
-    private InstDelayOrder instDelayOrder;
+    private SubmitTimeType submitTimeType;
+
+    /**
+     * 提交时间
+     */
+    private LocalDateTime submitTime;
+
+    /**
+     * 预约提交时间
+     */
+    private LocalDateTime bookSubmitTime;
+
+    /**
+     * 下次补单时间
+     */
+    private LocalDateTime nextRetryTime;
+
+    /**
+     * 任务状态
+     */
+    private TaskStatus taskStatus;
 
 }
 

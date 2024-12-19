@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anypluspay.channel.infra.persistence.mapper.TaskLoaderMapper">
+    <select id="loadInstOrderByQueryTask">
+        <![CDATA[
+            select inst_order_id from ti_inst_order
+            where status = #{query.status}
+            and task_status = #{query.taskStatus}
+            and submit_time >= date_sub(now(), interval 2 hour)
+            and next_retry_time < now()
+            order by next_retry_time asc
+            limit #{query.size}
+        ]]>
+    </select>
+
+    <select id="loadDelayInstOrder">
+        <![CDATA[
+            select * from ap_channel.ti_inst_order
+            where status = #{query.status}
+            and task_status = #{query.taskStatus}
+            and book_submit_time < now()
+            order by book_submit_time asc
+            limit #{query.size}
+        ]]>
+    </select>
+
+    <update id="tryLock">
+        <![CDATA[
+            update ti_inst_order set task_status = #{lockStatus}
+            where inst_order_id = #{instOrderId}
+            and task_status = #{unLockStatus}
+        ]]>
+    </update>
+
+    <update id="releaseLock">
+        update ti_inst_order set
+        task_status = #{unLockStatus},
+        retry_times = retry_times + 1
+        <if test="nextRetryTime != null">
+            ,next_retry_time = #{nextRetryTime}
+        </if>
+        where inst_order_id = #{instOrderId}
+        and task_status = #{lockStatus}
+    </update>
+</mapper>

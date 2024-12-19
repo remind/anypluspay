@@ -29,6 +29,11 @@ public class ChannelApiDto {
     private String type;
 
     /**
+     * 适用支付方式
+     */
+    private String payMethods;
+
+    /**
      * 协议
      */
     private String protocol;

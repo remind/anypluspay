@@ -1,9 +1,10 @@
 package com.anypluspay.channel.domain.bizorder;
 
+import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstProcessOrder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 订单上下文
@@ -11,6 +12,7 @@ import lombok.Data;
  * 2024/8/22
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class OrderContext {
 
@@ -27,5 +29,5 @@ public class OrderContext {
     /**
      * 机构过程订单
      */
-    private InstProcessOrder instProcessOrder;
+    private InstCommandOrder instCommandOrder;
 }

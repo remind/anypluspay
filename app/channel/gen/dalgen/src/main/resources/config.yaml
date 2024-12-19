@@ -19,16 +19,17 @@ db:
       - tb_biz_order
 #      - tb_fund_in_order
 #      - tb_refund_order
-#      - ti_inst_order
+#      - tb_fund_out_order
+      - ti_inst_order
 #      - ti_inst_delay_order
-#      - ti_inst_process_order
+      - ti_inst_command_order
 #      - tc_api_result_code
 #      - tc_unity_result_code
 #      - tc_fund_channel
 #      - tc_api_request_no_mode
 #      - tc_channel_api
 #      - tc_channel_support_inst
-      - tc_channel_maintain
+#      - tc_channel_maintain
 #      - tc_fund_channel_limit
 #      - tc_institution
 #      - tc_pay_method

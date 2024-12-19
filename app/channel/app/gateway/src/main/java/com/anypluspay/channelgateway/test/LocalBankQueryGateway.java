@@ -2,7 +2,7 @@ package com.anypluspay.channelgateway.test;
 
 import com.anypluspay.channelgateway.api.query.QueryGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.GatewayOrder;
+import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalBankQueryGateway extends AbstractLocalBankGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<GatewayOrder> gatewayRequest, GatewayOrder gatewayOrder, GatewayResult result) {
+    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) {
         result.setSuccess(true);
-        if (isTest(gatewayOrder)) {
-            testProcess(gatewayOrder, result);
+        if (isTest(normalContent)) {
+            testProcess(normalContent, result);
         }
     }
 
-    private void testProcess(GatewayOrder gatewayOrder, GatewayResult result) {
-        TestFlag testFlag = getTestFlag(gatewayOrder);
+    private void testProcess(NormalContent normalContent, GatewayResult result) {
+        TestFlag testFlag = getTestFlag(normalContent);
         if (TestConstants.S.equals(testFlag.getQ())) {
             result.setApiCode("SUCCESS");
         } else if (TestConstants.F.equals(testFlag.getQ())) {
@@ -32,7 +32,7 @@ public class LocalBankQueryGateway extends AbstractLocalBankGateway implements Q
             result.setApiMessage("订单已关闭");
         } else if (TestConstants.QUERY_MONEY_NOT_EQUAL.equals(testFlag.getQ())) {
             result.setApiCode("SUCCESS");
-            result.setRealAmount(gatewayOrder.getAmount().add(new Money(1)));
+            result.setRealAmount(normalContent.getAmount().add(new Money(1)));
         } else {
             result.setApiCode("unkown");
             result.setApiMessage("未知");

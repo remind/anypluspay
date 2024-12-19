@@ -1,5 +1,6 @@
 package com.anypluspay.channel.types.result;
 
+import com.anypluspay.channel.types.channel.ChannelApiType;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,16 @@ import java.io.Serializable;
  */
 @Data
 public class ProcessResult implements Serializable {
+
+    /**
+     * 渠道编码
+     */
+    private String channelCode;
+
+    /**
+     * 接口类型
+     */
+    private ChannelApiType apiType;
 
     /**
      * 结果码

@@ -4,16 +4,12 @@ import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.infra.persistence.bizorder.BizOrderConvertor;
 import com.anypluspay.channel.infra.persistence.bizorder.BizOrderDalOperatorContainer;
-import com.anypluspay.channel.infra.persistence.bizorder.fundin.FundInDalOperator;
 import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
 import com.anypluspay.channel.infra.persistence.mapper.BizOrderMapper;
-import com.anypluspay.channel.types.enums.RequestType;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import java.util.Objects;
 
 /**
  * @author wxj
@@ -29,9 +25,6 @@ public class BizOrderRepositoryImpl implements BizOrderRepository {
     private BizOrderMapper bizOrderMapper;
 
     @Autowired
-    private FundInDalOperator fundInDalOperator;
-
-    @Autowired
     private BizOrderDalOperatorContainer dalOperatorContainer;
 
     @Autowired
@@ -42,7 +35,7 @@ public class BizOrderRepositoryImpl implements BizOrderRepository {
     public void store(BaseBizOrder bizOrder) {
         transactionTemplate.executeWithoutResult(status -> {
             storeBaseOrder(bizOrder);
-            dalOperatorContainer.getBizOrderDalOperator(bizOrder).store(bizOrder);
+            dalOperatorContainer.getOperator(bizOrder.getRequestType().getCode()).store(bizOrder);
         });
     }
 
@@ -51,34 +44,31 @@ public class BizOrderRepositoryImpl implements BizOrderRepository {
     public void reStore(BaseBizOrder bizOrder) {
         transactionTemplate.executeWithoutResult(status -> {
             reStoreBaseOrder(bizOrder);
-            dalOperatorContainer.getBizOrderDalOperator(bizOrder).reStore(bizOrder);
+            dalOperatorContainer.getOperator(bizOrder.getRequestType().getCode()).reStore(bizOrder);
         });
     }
 
     @Override
     public BaseBizOrder load(String orderId) {
-        BizOrderDO bizOrderDO = bizOrderMapper.selectById(orderId);
-        return load(bizOrderDO);
+        return completeFill(bizOrderMapper.selectById(orderId));
     }
 
     @Override
     public BaseBizOrder loadByRequestId(String requestId) {
         LambdaQueryWrapper<BizOrderDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(BizOrderDO::getRequestId, requestId);
-        return load(bizOrderMapper.selectOne(queryWrapper));
+        return completeFill(bizOrderMapper.selectOne(queryWrapper));
     }
 
     @Override
     public BaseBizOrder lock(String orderId) {
         BizOrderDO bizOrderDO = bizOrderMapper.lockById(orderId);
-        return load(bizOrderDO);
+        return completeFill(bizOrderDO);
     }
 
-    private BaseBizOrder load(BizOrderDO bizOrderDO) {
+    private BaseBizOrder completeFill(BizOrderDO bizOrderDO) {
         if (bizOrderDO != null) {
-            if (Objects.equals(bizOrderDO.getRequestType(), RequestType.FUND_IN.getCode())) {
-                return fundInDalOperator.load(bizOrderDO);
-            }
+            return dalOperatorContainer.getOperator(bizOrderDO.getRequestType()).load(bizOrderDO);
         }
         return null;
     }

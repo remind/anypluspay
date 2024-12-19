@@ -3,6 +3,7 @@ package com.anypluspay.channel.infra.channel;
 import com.anypluspay.channel.domain.channel.api.ChannelApi;
 import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import org.apache.dubbo.config.ApplicationConfig;
 import org.apache.dubbo.config.ReferenceConfig;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DubboGatewayProxy {
 
-    public GatewayResult invoke(ChannelApi channelApi, Object content) {
+    public GatewayResult invoke(ChannelApi channelApi, RequestContent content) {
         ChannelGateway channelGateway = getGateway(channelApi);
         GatewayRequest request = new GatewayRequest();
         request.setChannelCode(channelApi.getChannelCode());

@@ -1,7 +1,7 @@
 package com.anypluspay.channel.domain.result;
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channel.types.order.InstProcessOrderStatus;
+import com.anypluspay.channel.types.order.InstOrderStatus;
 import lombok.Data;
 
 /**
@@ -45,7 +45,7 @@ public class ApiResultCode {
     /**
      * 渠道结果状态
      */
-    private InstProcessOrderStatus resultStatus;
+    private InstOrderStatus resultStatus;
 
     /**
      * 是否映射

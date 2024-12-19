@@ -9,10 +9,12 @@ import lombok.Getter;
  */
 @Getter
 public enum IdType implements BizIdType {
-    BIZ_FUND_IN("1", "01", "seq_biz_fund_in_id", "渠道服务订单-流入"),
-    BIZ_REFUND("1", "02", "seq_biz_refund_id", "渠道服务订单-退款"),
-    INST_ORDER("2", "01", "seq_inst_order_id", "机构订单"),
-    INST_PROCESS_ORDER("2", "02", "seq_inst_process_order_id", "机构过程订单"),
+    BIZ_FUND_IN("1", "01", "seq_biz_fund_in_id", "资金流入"),
+    BIZ_REFUND("1", "02", "seq_biz_refund_id", "资金退款"),
+    BIZ_FUND_OUT("1", "03", "seq_biz_fund_out_id", "资金流出"),
+
+//    INST_ORDER("2", "01", "seq_inst_order_id", "机构订单"),
+//    INST_PROCESS_ORDER("2", "02", "seq_inst_process_order_id", "机构过程订单"),
     ;
 
     /**

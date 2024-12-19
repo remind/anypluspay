@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 2024/9/15
  */
 @Data
-public class GatewayRequest<T> implements Serializable {
+public class GatewayRequest<T extends RequestContent> implements Serializable {
 
     /**
      * 渠道编码

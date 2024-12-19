@@ -1,8 +1,8 @@
 package com.anypluspay.channel.route;
 
+import com.anypluspay.channel.mock.FundChannelMock;
 import com.anypluspay.channel.application.route.ChannelRouteService;
 import com.anypluspay.channel.application.route.RouteParam;
-import com.anypluspay.channel.institution.BaseChannelTest;
 import com.anypluspay.channel.types.enums.RequestType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
-public class ChannelRouteServiceTest extends BaseChannelTest {
+public class ChannelRouteServiceTest extends FundChannelMock {
 
     @Autowired
     private ChannelRouteService channelRouteService;
@@ -28,8 +28,8 @@ public class ChannelRouteServiceTest extends BaseChannelTest {
     public void testRoteOneSuccess() {
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(RequestType.FUND_IN);
-        routeParam.setPayInst("ICBC");
-        routeParam.setPayInst("ICBC");
+        routeParam.setPayInst("TB1");
+        routeParam.setPayMethod("qpay");
         Assert.assertNotNull(channelRouteService.routeOne(routeParam));
     }
 }

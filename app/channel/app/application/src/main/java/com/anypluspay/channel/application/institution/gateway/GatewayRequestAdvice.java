@@ -14,9 +14,25 @@ import com.anypluspay.channelgateway.request.RequestContent;
  */
 public interface GatewayRequestAdvice<T extends RequestContent, R extends ProcessResult> {
 
-    void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, T OrderInfo);
+    /**
+     * 调用前处理
+     * @param channelApiContext
+     * @param orderContext
+     * @param requestContent
+     */
+    void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, T requestContent);
 
+    /**
+     * 调用后处理
+     * @param channelApiContext
+     * @param orderContext
+     * @param result
+     */
     void afterCompletion(ChannelApiContext channelApiContext, OrderContext orderContext, R result);
 
+    /**
+     * 支持的api类型
+     * @return
+     */
     ChannelApiType supportApiType();
 }

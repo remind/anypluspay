@@ -1,7 +1,6 @@
 package com.anypluspay.channel.domain.repository;
 
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstDelayOrder;
 
 /**
  * @author wxj
@@ -12,11 +11,10 @@ public interface InstOrderRepository {
 
     void reStore(InstOrder instOrder);
 
-    InstOrder load(String instOrderId);
+    InstOrder load(Long instOrderId);
 
-    InstOrder lock(String instOrderId);
+    InstOrder lock(Long instOrderId);
 
     InstOrder loadByInstRequestNo(String instRequestNo);
 
-    void updateDelayOrder(InstDelayOrder instDelayOrder);
 }

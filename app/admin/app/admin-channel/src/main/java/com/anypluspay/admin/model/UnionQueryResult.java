@@ -38,5 +38,5 @@ public class UnionQueryResult {
     /**
      * 机构过程订单
      */
-    private List<InstProcessOrderDto> instProcessOrders;
+    private List<InstCommandOrderDto> instProcessOrders;
 }

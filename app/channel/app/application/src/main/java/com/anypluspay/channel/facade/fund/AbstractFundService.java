@@ -2,8 +2,9 @@ package com.anypluspay.channel.facade.fund;
 
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.channel.api.service.ChannelApiDomainService;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstProcessOrder;
+import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.AbstractChannelService;
@@ -32,6 +33,9 @@ public abstract class AbstractFundService extends AbstractChannelService {
     @Autowired
     protected FundOrderBuilder fundOrderBuilder;
 
+    @Autowired
+    protected ChannelApiDomainService channelApiDomainService;
+
     protected FundResult applyInstProcess(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
         return (FundResult) super.applyInstProcess(channelApiContext, bizOrder);
     }
@@ -41,7 +45,7 @@ public abstract class AbstractFundService extends AbstractChannelService {
     }
 
     @Override
-    protected ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstProcessOrder instProcessOrder) {
+    protected ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         FundResult fundResult = new FundResult();
         fundResult.setInstRequestNo(instOrder.getInstRequestNo());
         fundResult.setInstResponseNo(instOrder.getInstResponseNo());

@@ -1,6 +1,6 @@
 package com.anypluspay.channel.application.query;
 
-import com.anypluspay.channel.application.FundServiceBaseTest;
+import com.anypluspay.channel.application.FundInBaseTest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +17,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Slf4j
-public class OrderQueryFacadeTest extends FundServiceBaseTest {
+public class OrderQueryFacadeTest extends FundInBaseTest {
 
     @Test
     public void testQueryByOrderId() {
-        FundResult fundResult = buildNormalFundOrder();
+        FundResult fundResult = createProcessFundOrder();
         FundResult queryResult = orderQueryFacade.queryByOrderId(fundResult.getOrderId(), true);
         Assert.assertEquals(BizOrderStatus.SUCCESS, queryResult.getStatus());
         Assert.assertNotNull(queryResult.getUnityCode());

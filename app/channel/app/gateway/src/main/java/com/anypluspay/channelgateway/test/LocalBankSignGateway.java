@@ -2,10 +2,10 @@ package com.anypluspay.channelgateway.test;
 
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.GatewayOrder;
+import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import org.springframework.stereotype.Service;
@@ -17,15 +17,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalBankSignGateway extends AbstractLocalBankGateway implements SignGateway {
     @Override
-    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
         result.setSuccess(true);
         if (isTest(signOrderInfo)) {
             testProcess(signOrderInfo, result);
         }
     }
 
-    private void testProcess(GatewayOrder gatewayOrder, SignResult result) {
-        TestFlag testFlag = getTestFlag(gatewayOrder);
+    private void testProcess(NormalContent normalContent, SignResult result) {
+        TestFlag testFlag = getTestFlag(normalContent);
         if (TestConstants.S.equals(testFlag.getD())) {
             result.setInstPageUrl("pay page url");
             result.setInstResponseNo(UUID.fastUUID().toString(true));

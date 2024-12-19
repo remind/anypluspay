@@ -3,7 +3,7 @@ package com.anypluspay.channelgateway.testbank;
 import com.anypluspay.channelgateway.AbstractTestBank;
 import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignGatewayOrder;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -20,7 +20,7 @@ import java.util.Set;
 public class TestBankSignGateway extends AbstractTestBank implements SignGateway {
 
     @Override
-    public void sign(GatewayRequest<SignGatewayOrder> gatewayRequest, SignGatewayOrder signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("outTradeNo", signOrderInfo.getInstRequestNo());
         parameters.put("amount", signOrderInfo.getAmount().getAmount().toString());

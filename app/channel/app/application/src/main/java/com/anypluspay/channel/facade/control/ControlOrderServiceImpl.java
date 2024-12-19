@@ -1,11 +1,11 @@
 package com.anypluspay.channel.facade.control;
 
+import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.facade.AbstractChannelService;
 import com.anypluspay.channel.domain.bizorder.control.ControlBizOrder;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.domain.institution.InstProcessOrder;
 import com.anypluspay.channel.facade.control.request.ControlRequest;
 import com.anypluspay.channel.facade.result.ChannelResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
@@ -36,9 +36,9 @@ public class ControlOrderServiceImpl extends AbstractChannelService implements C
     }
 
     @Override
-    protected ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstProcessOrder instProcessOrder) {
+    protected ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         ChannelResult result = new ChannelResult();
-        fillChannelResultCommon(result, bizOrder, instOrder, instProcessOrder);
+        fillChannelResultCommon(result, bizOrder, instOrder, instCommandOrder);
         return result;
     }
 }

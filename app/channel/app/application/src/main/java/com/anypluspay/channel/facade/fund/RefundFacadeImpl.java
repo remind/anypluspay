@@ -29,7 +29,7 @@ public class RefundFacadeImpl extends AbstractFundService implements RefundFacad
             FundInOrder fundOrder = (FundInOrder) bizOrderRepository.lock(refundOrder.getOrigOrderId());
             InstOrder origInstOrder = instOrderRepository.load(fundOrder.getInstOrderId());
             ChannelApiContext channelApiContext = channelRouteService.routeByChannel(origInstOrder.getFundChannelCode(), ChannelApiType.SINGLE_REFUND);
-            refundOrder.addExtValue(ExtKey.ORIG_INST_ORDER_ID, origInstOrder.getInstOrderId());
+            refundOrder.addExtValue(ExtKey.ORIG_INST_ORDER_ID, origInstOrder.getInstOrderId().toString());
             refundOrder.addInstExtValue(ExtKey.ORIG_INST_REQUEST_NO, origInstOrder.getInstRequestNo());
             refundOrder.addInstExtValue(ExtKey.ORIG_INST_RESPONSE_NO, origInstOrder.getInstResponseNo());
             return applyInstProcess(channelApiContext, refundOrder);

@@ -51,6 +51,13 @@ public class FundOrderBuilder {
 
     public FundOutOrder buildFundOut(FundOutRequest request) {
         FundOutOrder fundOutOrder = new FundOutOrder();
+        fundOutOrder.setAmount(request.getAmount());
+        fundOutOrder.setBankCode(request.getBankCode());
+        fundOutOrder.setPayMethod(request.getPayMethod());
+        fundOutOrder.setAccountNo(request.getAccountNo());
+        fundOutOrder.setAccountName(request.getAccountName());
+        fundOutOrder.setAccountType(request.getAccountType());
+        fillBizOrder(fundOutOrder, request, IdType.BIZ_FUND_OUT);
         return fundOutOrder;
     }
 

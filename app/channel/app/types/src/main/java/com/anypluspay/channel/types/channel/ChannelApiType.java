@@ -21,8 +21,8 @@ public enum ChannelApiType implements CodeEnum {
     REFUND_VERIFY_SIGN("RVS", "验签"), // 退款异步通知结果验签
     DOWNLOAD_BILL("DB", "下载账单"), // 下载对账文件
 
-
     SINGLE_FUND_OUT("SFO", "单笔出款"),
+    SINGLE_FUND_OUT_QUERY("SFOQ", "单笔出款查询"),
     ;
 
     private final String code;
@@ -34,7 +34,21 @@ public enum ChannelApiType implements CodeEnum {
         this.displayName = displayName;
     }
 
+    /**
+     * 是否人工类
+     * @param channelApiType
+     * @return
+     */
     public static boolean isManual(ChannelApiType channelApiType) {
         return MANUAL_REFUND.equals(channelApiType);
+    }
+
+    /**
+     * 是否首次指令
+     * @param channelApiType
+     * @return
+     */
+    public static boolean isFirstCommand(ChannelApiType channelApiType) {
+        return SINGLE_DEBIT.equals(channelApiType) || SIGN.equals(channelApiType) || SINGLE_FUND_OUT.equals(channelApiType);
     }
 }

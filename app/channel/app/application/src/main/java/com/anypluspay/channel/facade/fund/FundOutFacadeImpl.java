@@ -2,8 +2,8 @@ package com.anypluspay.channel.facade.fund;
 
 import com.anypluspay.channel.application.route.ChannelRouteService;
 import com.anypluspay.channel.application.route.RouteParam;
-import com.anypluspay.channel.domain.bizorder.fund.FundOutOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.fund.FundOutOrder;
 import com.anypluspay.channel.facade.FundOutFacade;
 import com.anypluspay.channel.facade.request.FundOutRequest;
 import com.anypluspay.channel.facade.result.FundResult;
@@ -31,9 +31,9 @@ public class FundOutFacadeImpl extends AbstractFundService implements FundOutFac
     private RouteParam buildRouteParam(FundOutOrder fundOutOrder) {
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(fundOutOrder.getRequestType());
+        routeParam.setPayMethod(fundOutOrder.getPayMethod());
         routeParam.setPayInst(fundOutOrder.getBankCode());
         routeParam.setAmount(fundOutOrder.getAmount());
-        routeParam.setExtra(fundOutOrder.getRouteExtra());
         return routeParam;
     }
 
