@@ -12,10 +12,17 @@
     <modules>
         <module>app/domain</module>
         <module>app/types</module>
+        <module>app/infra</module>
+        <module>app/application</module>
+        <module>app/facade</module>
+        <module>app/infra/infra-dal</module>
+        <module>app/infra/infra-integration</module>
+        <module>gen/account-dalgen</module>
+        <module>app/bootstrap</module>
     </modules>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <revision>1.0-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
@@ -27,7 +34,27 @@
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-facade</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
                 <artifactId>account-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-application</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-infra-dal</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-infra-integration</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

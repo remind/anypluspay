@@ -8,9 +8,8 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>com.anypluspay.account</groupId>
-    <artifactId>acccout-domain</artifactId>
+    <artifactId>account-domain</artifactId>
     <packaging>jar</packaging>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

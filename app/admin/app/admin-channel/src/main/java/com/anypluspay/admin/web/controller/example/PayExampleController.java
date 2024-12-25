@@ -14,7 +14,6 @@ import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.lang.utils.ExtUtil;
 import com.anypluspay.commons.response.ResponseResult;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,10 +26,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pay-example")
 public class PayExampleController {
 
-    @DubboReference
+    @Autowired
     private FundInFacade fundInFacade;
 
-    @DubboReference
+    @Autowired
     private RefundFacade refundFacade;
 
     @Autowired

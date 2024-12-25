@@ -7,7 +7,7 @@ import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.channel.ApiResultCodeDto;
 import com.anypluspay.admin.model.query.ApiResultCodeQuery;
 import com.anypluspay.admin.model.request.ApiResultCodeRequest;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.ApiResultCodeDO;
 import com.anypluspay.channel.infra.persistence.mapper.ApiResultCodeMapper;
 import com.anypluspay.commons.response.ResponseResult;

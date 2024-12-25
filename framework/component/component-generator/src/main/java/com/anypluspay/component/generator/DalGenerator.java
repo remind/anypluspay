@@ -107,7 +107,8 @@ public class DalGenerator {
         return builder -> {
             builder.addInclude(getTableNames())
                     .addTablePrefix(genConfig.getDb().getTable().getPrefix());
-
+            builder.serviceBuilder().disableServiceImpl().disableService();
+            builder.controllerBuilder().disable();
             builderEntity(builder.entityBuilder());
             builderMapper(builder.mapperBuilder());
         };

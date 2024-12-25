@@ -4,7 +4,7 @@ import com.anypluspay.admin.dao.convertor.order.FundInOrderConvertor;
 import com.anypluspay.admin.dao.mapper.FundInOrderQueryMapper;
 import com.anypluspay.admin.model.order.FundInOrderDto;
 import com.anypluspay.admin.model.query.Order.FundInOrderQuery;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.baomidou.mybatisplus.core.metadata.IPage;

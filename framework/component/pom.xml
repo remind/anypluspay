@@ -10,6 +10,8 @@
         <module>component-api</module>
         <module>component-generator</module>
         <module>component-sequence</module>
+        <module>component-config</module>
+        <module>component-rpc</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

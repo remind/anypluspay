@@ -7,14 +7,12 @@ import com.anypluspay.channel.domain.bizorder.fund.FundOutOrder;
 import com.anypluspay.channel.facade.FundOutFacade;
 import com.anypluspay.channel.facade.request.FundOutRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author wxj
  * 2024/7/18
  */
-@DubboService
 public class FundOutFacadeImpl extends AbstractFundService implements FundOutFacade {
 
     @Autowired

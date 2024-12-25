@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: admin
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: test
+      config: # 公共配置，其它的在import里面
+        namespace: test
+  config:
+    import:
+      - nacos:${spring.application.name}.yaml?refreshEnabled=true
+

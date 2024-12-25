@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.anypluspay.admin.dao.convertor.order.InstOrderConvertor;
 import com.anypluspay.admin.model.order.InstOrderDto;
 import com.anypluspay.admin.model.query.Order.InstOrderQuery;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.facade.OrderQueryFacade;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.infra.persistence.dataobject.InstOrderDO;
@@ -13,13 +13,14 @@ import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 机构订单
  * @author wxj
  * 2024/11/22
  */
@@ -33,7 +34,7 @@ public class InstOrderController extends AbstractController {
     @Autowired
     private InstOrderMapper instOrderMapper;
 
-    @DubboReference
+    @Autowired
     private OrderQueryFacade orderQueryFacade;
 
     /**
@@ -67,7 +68,7 @@ public class InstOrderController extends AbstractController {
      * @return
      */
     @GetMapping("/inst-query")
-    public ResponseResult<FundResult> instQuery(Long instOrderId) {
+    public ResponseResult<FundResult> instQuery(@RequestParam("instOrderId") Long instOrderId) {
         return ResponseResult.success(orderQueryFacade.queryByInstOrderId(instOrderId, true));
     }
 }

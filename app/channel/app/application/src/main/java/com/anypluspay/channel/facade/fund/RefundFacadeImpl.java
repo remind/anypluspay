@@ -10,16 +10,16 @@ import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.ExtKey;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wxj
  * 2024/7/18
  */
-@DubboService(validation = "true")
 @Slf4j
 @Validated
+@RestController
 public class RefundFacadeImpl extends AbstractFundService implements RefundFacade {
 
     @Override

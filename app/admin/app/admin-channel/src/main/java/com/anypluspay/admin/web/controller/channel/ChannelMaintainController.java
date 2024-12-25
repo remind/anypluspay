@@ -7,7 +7,7 @@ import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.channel.ChannelMaintainDto;
 import com.anypluspay.admin.model.query.ChannelMaintainQuery;
 import com.anypluspay.admin.model.request.ChannelMaintainRequest;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.ChannelMaintainDO;
 import com.anypluspay.channel.infra.persistence.mapper.ChannelMaintainMapper;
 import com.anypluspay.commons.response.ResponseResult;

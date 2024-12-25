@@ -1,21 +1,20 @@
 package com.anypluspay.channel.facade.fund;
 
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
-import com.anypluspay.channel.domain.channel.api.service.ChannelApiDomainService;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.facade.OrderQueryFacade;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.utils.AssertUtil;
-import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wxj
  * 2024/8/23
  */
-@DubboService
+@RestController
 public class OrderQueryFacadeImpl extends AbstractFundService implements OrderQueryFacade {
 
     @Override

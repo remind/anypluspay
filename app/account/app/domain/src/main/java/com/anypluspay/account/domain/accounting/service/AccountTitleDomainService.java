@@ -17,13 +17,13 @@ public class AccountTitleDomainService {
      */
     public void setAccountTitleLevel(AccountTitle accountTitle, AccountTitle parentAccountTitle) {
         if (parentAccountTitle == null) {
-            accountTitle.setTitleLevel(AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MIN);
+            accountTitle.setLevel(AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MIN);
             accountTitle.setLeaf(false);
         } else {
-            AssertUtil.isTrue(parentAccountTitle.getTitleLevel() < AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MAX
+            AssertUtil.isTrue(parentAccountTitle.getLevel() < AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MAX
                     , "科目层级已经超过最大值");
-            accountTitle.setTitleLevel(parentAccountTitle.getTitleLevel() + 1);
-            accountTitle.setLeaf(accountTitle.getTitleLevel() == AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MAX);
+            accountTitle.setLevel(parentAccountTitle.getLevel() + 1);
+            accountTitle.setLeaf(accountTitle.getLevel() == AccountDomainConstants.ACCOUNT_TITLE_LEVEL_MAX);
         }
     }
 }

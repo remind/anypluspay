@@ -1,9 +1,11 @@
 ## 项目介绍
- `anypluspay`旨在解决互联网企业支付问题，目标提供各行业+支付的完整解决方案。
+
+`anypluspay`旨在解决互联网企业支付问题，目标提供各行业+支付的完整解决方案。
 
 ## 系统介绍
 
 ### 系统整体目录结构
+
 ``` java
 anypluspay
     ├── app -- 应用服务目录
@@ -29,12 +31,15 @@ anypluspay
             └── parent -- 应用父POM
     └── docs -- 文档目录
 ```
+
 ### 应用目录结构
 
 #### 后端服务
+
 根据DDD将应用服务进行层次划分
 
 以`channel`为例，目录结构：
+
 ``` java
 channel -- 应用名称
     ├── app -- 应用代码目录
@@ -51,6 +56,7 @@ channel -- 应用名称
     └── gen -- 代码生成器目录
          └── dalgen -- dal生成器，自动生成数据库访问代码
 ```
+
 依赖关系：
 
 ![应用模块依赖关系](docs/images/app-ddd-dir.png)
@@ -60,6 +66,7 @@ channel -- 应用名称
 微服务入口应用没有太多逻辑，重在集成，不必严格安装`DDD`来
 
 如`admin`
+
 ``` java
 admin -- 应用名称
     └── app -- 应用代码目录
@@ -67,23 +74,26 @@ admin -- 应用名称
          ├── admin-bootstrap -- 启动层
          └── admin-channel -- 渠道相关管理接口
 ```
+
 如果后续涉及业务的管理，可以再增加`module`，如`admin-cashier`
 
 ### 技术栈
 
-| 软件名称                                      | 描述          | 版本
-|-------------------------------------------|-------------|---
-| JDK                                       | Java环境      | 17
-| Spring Boot                               | 开发框架        | 3.1.6
-| MySQL                                     | 数据库         | 8
-| Redis                                     | 缓存          | ?
-| [Dubbo](https://github.com/apache/dubbo/) | RPC框架       | 3.3.0
-| [Nacos](https://github.com/alibaba/nacos) | 注册中心、配置中心   | 2.4.1
-| [MyBatis-Plus](https://mp.baomidou.com/)  | MyBatis增强工具 | 3.5.4.1
-| [MapStruct](https://mapstruct.org/)       | 对象转换        | 1.6.3
-| [Hutool](https://www.hutool.cn/)          | Java工具类库    | 5.8.24
+| 软件名称                                                                    | 描述          | 版本         
+|-------------------------------------------------------------------------|-------------|------------
+| JDK                                                                     | Java环境      | 17         
+| [Spring Boot](https://github.com/spring-projects/spring-boot)           | 开发框架        | 3.4.1      
+| [Spring Cloud](https://spring.io/projects/spring-cloud)                 | 微服务         | 2024.0.0   
+| MySQL                                                                   | 数据库         | 8+         
+| Redis                                                                   | 缓存          | ?          
+| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos依赖     | 2023.0.3.2 
+| [Nacos](https://github.com/alibaba/nacos)                               | 注册中心、配置中心   | 2.4.1      
+| [MyBatis-Plus](https://mp.baomidou.com/)                                | MyBatis增强工具 | 3.5.4.1    
+| [MapStruct](https://mapstruct.org/)                                     | 对象转换        | 1.6.3      
+| [Hutool](https://www.hutool.cn/)                                        | Java工具类库    | 5.8.24     
 
 ## 后台管理功能
+
 ### 渠道管理
 
 ![渠道详情](docs/images/admin-channel-detail.png)
@@ -91,7 +101,9 @@ admin -- 应用名称
 ![联合查询](docs/images/admin-union-query.png)
 
 ## 附录
+
 ### 关于支付
+
 1、可关注微信公众号`凤凰牌老熊`,`隐墨星辰`,`刚哥白话`,`陈天宇宙`
 
 ### 关于`DDD`

@@ -7,7 +7,6 @@
         <version>${revision}</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <artifactId>channel-infra-dal</artifactId>
     <packaging>jar</packaging>
 

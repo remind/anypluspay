@@ -5,7 +5,7 @@ import com.anypluspay.admin.model.AddValidate;
 import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.channel.ChannelApiDto;
 import com.anypluspay.admin.model.request.ChannelApiRequest;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.ChannelApiDO;
 import com.anypluspay.channel.infra.persistence.mapper.ChannelApiMapper;
 import com.anypluspay.commons.response.ResponseResult;

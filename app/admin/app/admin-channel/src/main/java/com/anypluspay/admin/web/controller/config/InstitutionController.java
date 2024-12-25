@@ -7,7 +7,7 @@ import com.anypluspay.admin.model.request.InstitutionRequest;
 import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.config.InstitutionDto;
 import com.anypluspay.admin.model.query.InstQuery;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.InstitutionDO;
 import com.anypluspay.channel.infra.persistence.mapper.InstitutionMapper;
 import com.anypluspay.commons.response.ResponseResult;

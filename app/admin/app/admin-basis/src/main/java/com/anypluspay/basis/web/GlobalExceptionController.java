@@ -34,8 +34,10 @@ public class GlobalExceptionController {
                 return ResponseResult.fail(objectErrorList.get(0).getDefaultMessage());
             }
         } else if (e instanceof MissingServletRequestParameterException exception) {
+            log.error("参数异常,url={},异常信息={}", request.getRequestURI(), e.getMessage(), e);
             return ResponseResult.fail(GlobalResultCode.ILLEGAL_PARAM);
         } else if (e instanceof IllegalArgumentException exception) {
+            log.error("参数异常,url={},异常信息={}", request.getRequestURI(), e.getMessage(), e);
             return ResponseResult.fail(exception.getMessage());
         } else {
             log.error("请求异常,url={},异常信息={}", request.getRequestURI(), e.getMessage(), e);

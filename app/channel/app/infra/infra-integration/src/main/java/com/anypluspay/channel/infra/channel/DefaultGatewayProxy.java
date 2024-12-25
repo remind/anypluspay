@@ -10,6 +10,7 @@ import com.anypluspay.channelgateway.types.RequestResponseClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -26,16 +27,17 @@ public class DefaultGatewayProxy implements GatewayProxy {
     private ApplicationContext applicationContext;
 
     @Autowired
-    private DubboGatewayProxy dubboGatewayProxy;
+    private RestTemplate restTemplate;
 
     private final WebClient webClient = WebClient.builder().build();
+
 
     @Override
     public GatewayResult invoke(ChannelApi channelApi, RequestContent content) {
         return switch (channelApi.getProtocol()) {
             case BEAN -> invokeBean(channelApi, content);
+            case DISCOVERY -> invokeDiscovery(channelApi, content);
             case HTTP -> invokeHttp(channelApi, content);
-            case DUBBO -> dubboGatewayProxy.invoke(channelApi, content);
         };
     }
 
@@ -49,7 +51,14 @@ public class DefaultGatewayProxy implements GatewayProxy {
         return channelGateway.call(request);
     }
 
-
+    private GatewayResult invokeDiscovery(ChannelApi channelApi, Object content) {
+        String[] url = channelApi.getAddress().split("/");
+        String fullUrl = "http://" + url[0]
+                + "?channelCode=" + channelApi.getChannelCode()
+                + "&apiTypeCode=" + channelApi.getType().getCode()
+                + "&bean=" + url[1];
+        return (GatewayResult) restTemplate.postForObject(fullUrl, content, RequestResponseClass.getResponseClass(channelApi.getType()));
+    }
 
     private GatewayResult invokeHttp(ChannelApi channelApi, Object content) {
         String fullUrl = channelApi.getAddress() + "?channelCode=" + channelApi.getChannelCode() + "&apiTypeCode=" + channelApi.getType().getCode();
@@ -61,4 +70,5 @@ public class DefaultGatewayProxy implements GatewayProxy {
                 .retrieve().bodyToMono(responseType);
         return mono.block();
     }
+
 }

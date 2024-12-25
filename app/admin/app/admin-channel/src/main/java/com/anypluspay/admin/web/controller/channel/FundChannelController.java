@@ -7,7 +7,7 @@ import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.channel.FundChannelDto;
 import com.anypluspay.admin.model.query.FundChannelQuery;
 import com.anypluspay.admin.model.request.FundChannelRequest;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.*;
 import com.anypluspay.channel.infra.persistence.mapper.*;
 import com.anypluspay.commons.response.ResponseResult;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * 资金渠道
@@ -51,6 +52,9 @@ public class FundChannelController extends AbstractController {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     /**
      * 分页查询资金渠道
      *
@@ -70,6 +74,7 @@ public class FundChannelController extends AbstractController {
             queryWrapper.eq(FundChannelDO::getEnable, query.getEnable());
         }
         queryWrapper.orderByDesc(FundChannelDO::getGmtCreate);
+        String s = restTemplate.getForObject("http://channel/order/query-by-order-id?orderId=202412190041010000032322&isInstQuery=false", String.class);
         return ResponseResult.success(convertor.toDto(dalMapper.selectPage(getIPage(query), queryWrapper)));
     }
 

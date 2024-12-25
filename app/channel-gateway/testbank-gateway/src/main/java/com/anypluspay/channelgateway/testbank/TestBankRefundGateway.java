@@ -1,14 +1,13 @@
 package com.anypluspay.channelgateway.testbank;
 
 import com.anypluspay.channelgateway.AbstractTestBank;
-import com.anypluspay.channelgateway.ChannelGateway;
-import com.anypluspay.channelgateway.api.refund.RefundGateway;
 import com.anypluspay.channelgateway.api.refund.RefundContent;
+import com.anypluspay.channelgateway.api.refund.RefundGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channelgateway.testbank.model.RefundOrderResponse;
 import com.anypluspay.commons.lang.types.Money;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,7 @@ import java.util.Map;
  * @author wxj
  * 2024/12/8
  */
-@DubboService(group = "test-bank-sr", interfaceClass = ChannelGateway.class)
+@Service
 public class TestBankRefundGateway extends AbstractTestBank implements RefundGateway {
     @Override
     public void refund(GatewayRequest<RefundContent> gatewayRequest, RefundContent refundOrder, GatewayResult result) {

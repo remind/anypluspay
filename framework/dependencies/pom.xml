@@ -49,6 +49,16 @@
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.component</groupId>
+                <artifactId>component-config</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.component</groupId>
+                <artifactId>component-rpc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.component</groupId>
                 <artifactId>component-generator</artifactId>
                 <version>${revision}</version>
             </dependency>

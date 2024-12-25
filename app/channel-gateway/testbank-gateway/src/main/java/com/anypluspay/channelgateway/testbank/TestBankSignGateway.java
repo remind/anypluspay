@@ -1,12 +1,11 @@
 package com.anypluspay.channelgateway.testbank;
 
 import com.anypluspay.channelgateway.AbstractTestBank;
-import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Set;
  * @author wxj
  * 2024/11/27
  */
-@DubboService(group = "test-bank-sg", interfaceClass = ChannelGateway.class)
+@Service
 public class TestBankSignGateway extends AbstractTestBank implements SignGateway {
 
     @Override

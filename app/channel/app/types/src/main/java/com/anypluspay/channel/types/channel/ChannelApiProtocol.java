@@ -10,9 +10,9 @@ import lombok.Getter;
 @Getter
 public enum ChannelApiProtocol implements CodeEnum {
 
-    BEAN("BEAN", "BEAN"),
-    HTTP("HTTP", "HTTP"),
-    DUBBO("DUBBO", "DUBBO"),
+    BEAN("BEAN", "Spring Bean"),
+    HTTP("HTTP", "HTTP调用"),
+    DISCOVERY("DISCOVERY", "注册发现"),
     ;
 
     private final String code;

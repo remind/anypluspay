@@ -29,6 +29,14 @@
             <artifactId>channel-gateway</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-rpc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>

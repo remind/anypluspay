@@ -22,7 +22,6 @@ public enum ChannelApiType implements CodeEnum {
     DOWNLOAD_BILL("DB", "下载账单"), // 下载对账文件
 
     SINGLE_FUND_OUT("SFO", "单笔出款"),
-    SINGLE_FUND_OUT_QUERY("SFOQ", "单笔出款查询"),
     ;
 
     private final String code;

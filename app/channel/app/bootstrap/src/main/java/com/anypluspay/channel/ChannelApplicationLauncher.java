@@ -1,10 +1,10 @@
 package com.anypluspay.channel;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @Slf4j
-@EnableDubbo
+@EnableDiscoveryClient
 @MapperScan("com.anypluspay.channel.infra.persistence.mapper")
 @ComponentScan(basePackages = {"com.anypluspay.channel", "com.anypluspay.channelgateway"})
 public class ChannelApplicationLauncher {

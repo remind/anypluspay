@@ -9,7 +9,7 @@ import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.lang.utils.ExtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotBlank;
-import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 public class NotifyController {
 
-    @DubboReference
+    @Autowired
     private NotifyFacade notifyFacade;
 
     /**

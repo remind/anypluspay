@@ -2,14 +2,14 @@ package com.anypluspay.channel.facade.fund;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.application.route.RouteParam;
-import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.ExtKey;
 import com.anypluspay.commons.lang.utils.ExtUtil;
-import org.apache.dubbo.config.annotation.DubboService;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 
@@ -19,7 +19,7 @@ import java.util.Arrays;
  * @author wxj
  * 2024/9/24
  */
-@DubboService
+@RestController
 public class FundInFacadeImpl extends AbstractFundService implements FundInFacade {
 
     @Override

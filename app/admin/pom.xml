@@ -14,10 +14,12 @@
     <modules>
         <module>app/admin-channel</module>
         <module>app/admin-bootstrap</module>
+        <module>app/admin-account</module>
     </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>
         <channel.version>1.0-SNAPSHOT</channel.version>
+        <account.version>1.0-SNAPSHOT</account.version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +43,16 @@
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-facade</artifactId>
                 <version>${channel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-infra-dal</artifactId>
+                <version>${account.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-facade</artifactId>
+                <version>${account.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -72,6 +84,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <parameters>true</parameters>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

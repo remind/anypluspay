@@ -7,7 +7,7 @@ import com.anypluspay.admin.model.UpdateValidate;
 import com.anypluspay.admin.model.config.PayMethodDto;
 import com.anypluspay.admin.model.query.PayMethodQuery;
 import com.anypluspay.admin.model.request.PayMethodRequest;
-import com.anypluspay.admin.web.controller.AbstractController;
+import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.channel.infra.persistence.dataobject.PayMethodDO;
 import com.anypluspay.channel.infra.persistence.mapper.PayMethodMapper;
 import com.anypluspay.commons.response.ResponseResult;
