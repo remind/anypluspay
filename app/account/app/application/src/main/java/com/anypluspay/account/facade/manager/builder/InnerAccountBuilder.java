@@ -7,7 +7,6 @@ import com.anypluspay.account.domain.repository.AccountTitleRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
 import com.anypluspay.account.facade.manager.convertor.InnerAccountConvertor;
 import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
-import com.anypluspay.account.types.accounting.AccountTitleStatus;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class InnerAccountBuilder {
 
         AccountTitle accountTitle = accountTitleRepository.load(request.getTitleCode());
         AssertUtil.notNull(accountTitle, "科目不存在");
-        AssertUtil.isTrue(accountTitle.getStatus() == AccountTitleStatus.VALID, "科目状态不是有效");
+        AssertUtil.isTrue(accountTitle.isEnable(), "科目状态不是有效");
 
         account.setBalanceDirection(accountTitle.getBalanceDirection());
         account.setCurrentBalanceDirection(AccountUtil.getBalanceCrdr(accountTitle.getBalanceDirection()));

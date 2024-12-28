@@ -119,8 +119,8 @@ public abstract class AbstractChannelService {
 
     protected void fillChannelResultByBizException(ChannelResult result, BizException e) {
         result.setSuccess(false);
-        result.setCode(e.getResultCode().getCode());
-        result.setMessage(e.getResultCode().getMessage());
+        result.setCode(e.getCode());
+        result.setMessage(e.getMessage());
     }
 
     /**

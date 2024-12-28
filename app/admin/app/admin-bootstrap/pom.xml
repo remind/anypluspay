@@ -28,6 +28,10 @@
             <artifactId>admin-channel</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.admin</groupId>
+            <artifactId>admin-account</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.anypluspay.component</groupId>
             <artifactId>component-rpc</artifactId>
         </dependency>

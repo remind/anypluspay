@@ -1,6 +1,6 @@
 package com.anypluspay.admin.dao.convertor.channel;
 
-import com.anypluspay.admin.dao.convertor.SimpleCrudConvertor;
+import com.anypluspay.basis.convertor.SimpleCrudConvertor;
 import com.anypluspay.admin.dao.convertor.ConvertorUtils;
 import com.anypluspay.admin.model.channel.ApiResultCodeDto;
 import com.anypluspay.admin.model.request.ApiResultCodeRequest;

@@ -25,7 +25,7 @@ public class ResponseResult<T> {
     }
 
     public ResponseResult(String code, String message, T data) {
-        this.code = code;
+        this.code = code == null ? GlobalResultCode.FAIL.getCode() : code;
         this.message = message;
         this.data = data;
     }
@@ -100,6 +100,17 @@ public class ResponseResult<T> {
      */
     public static <T> ResponseResult<T> fail(ResultCode resultCode, T data) {
         return new ResponseResult<>(resultCode.getCode(), resultCode.getMessage(), data);
+    }
+
+    /**
+     * 构造失败结果，指定错误码和消息
+     * @param code
+     * @param message
+     * @return
+     * @param <T>
+     */
+    public static <T> ResponseResult<T> fail(String code, String message) {
+        return new ResponseResult<>(code, message, null);
     }
 
     /**

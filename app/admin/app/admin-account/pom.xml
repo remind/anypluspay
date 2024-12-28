@@ -22,6 +22,12 @@
         <dependency>
             <groupId>com.anypluspay.account</groupId>
             <artifactId>account-infra-dal</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.anypluspay.component</groupId>
+                    <artifactId>component-sequence</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.anypluspay.account</groupId>

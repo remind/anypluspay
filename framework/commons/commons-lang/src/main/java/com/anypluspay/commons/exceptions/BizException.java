@@ -2,7 +2,6 @@ package com.anypluspay.commons.exceptions;
 
 import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.commons.response.ResultCode;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 业务异常
@@ -11,22 +10,26 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BizException extends RuntimeException {
 
-    private final ResultCode resultCode;
+    private final String code;
 
     public BizException(ResultCode resultCode) {
-        this(resultCode, null);
+        this(resultCode, resultCode.getMessage());
     }
     public BizException(String message) {
-        this(null, message);
+        this(GlobalResultCode.FAIL, message);
     }
 
     public BizException(ResultCode resultCode, String message) {
-        super(StringUtils.isNotBlank(message) ? message : resultCode.getMessage());
-        this.resultCode = resultCode != null ? resultCode : GlobalResultCode.FAIL;
+        this(resultCode == null ? null : resultCode.getCode(), message);
     }
 
-    public ResultCode getResultCode() {
-        return resultCode;
+    public BizException(String code, String message) {
+        super(message);
+        this.code = code != null ? code : GlobalResultCode.FAIL.getCode();
+    }
+
+    public String getCode() {
+        return code;
     }
 
 }

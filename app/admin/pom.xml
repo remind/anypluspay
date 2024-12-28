@@ -35,6 +35,11 @@
                 <version>${revision}</version>
             </dependency>
             <dependency>
+                <groupId>com.anypluspay.admin</groupId>
+                <artifactId>admin-account</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-infra-dal</artifactId>
                 <version>${channel.version}</version>

@@ -26,7 +26,7 @@ public class GlobalExceptionController {
     @ResponseBody
     public ResponseResult<String> exceptionHandler(HttpServletRequest request, Exception e) {
         if (e instanceof BizException) {
-            log.info("业务异常,异常信息={}", e.getMessage());
+            log.error("业务异常", e);
             return ResponseResult.fail(e.getMessage());
         } else if (e instanceof MethodArgumentNotValidException exception) {
             if (exception.getBindingResult().getErrorCount() > 0) {

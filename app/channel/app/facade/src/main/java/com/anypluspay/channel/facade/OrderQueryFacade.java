@@ -17,7 +17,7 @@ public interface OrderQueryFacade {
     String PREFIX = "/order";
 
     /**
-     * 根据订单号查询，如果是处理中状态，则会提交到机构查询
+     * 根据订单号查询
      *
      * @param orderId     订单号
      * @param isInstQuery 是否提交到机构查询
@@ -28,7 +28,7 @@ public interface OrderQueryFacade {
 
 
     /**
-     * 根据订单号查询，如果是处理中状态，则需要提交给渠道查询
+     * 根据机构订单号查询
      *
      * @param instOrderId 机构订单号
      * @param isInstQuery 是否提交到机构查询

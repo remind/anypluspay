@@ -1,7 +1,7 @@
 package com.anypluspay.admin.dao.convertor.channel;
 
 import com.anypluspay.admin.dao.convertor.ConvertorUtils;
-import com.anypluspay.admin.dao.convertor.SimpleCrudConvertor;
+import com.anypluspay.basis.convertor.SimpleCrudConvertor;
 import com.anypluspay.admin.model.channel.ChannelSupportInstDto;
 import com.anypluspay.admin.model.request.ChannelSupportInstRequest;
 import com.anypluspay.channel.infra.persistence.dataobject.ChannelSupportInstDO;

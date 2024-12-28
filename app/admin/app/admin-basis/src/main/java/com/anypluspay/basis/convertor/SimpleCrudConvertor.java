@@ -1,11 +1,4 @@
-package com.anypluspay.admin.dao.convertor;
-
-import com.anypluspay.commons.convertor.BaseExpressionConvertor;
-import com.anypluspay.commons.response.page.PageResult;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.anypluspay.basis.convertor;
 
 /**
  * 简单CRUD 转换器

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-24
+ * @since 2024-12-26
  */
 @TableName("t_outer_sub_account_detail")
 public class OuterSubAccountDetailDO implements Serializable {

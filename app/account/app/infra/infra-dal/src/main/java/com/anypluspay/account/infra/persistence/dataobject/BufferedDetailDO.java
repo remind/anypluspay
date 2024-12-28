@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-24
+ * @since 2024-12-26
  */
 @TableName("t_buffered_detail")
 public class BufferedDetailDO implements Serializable {

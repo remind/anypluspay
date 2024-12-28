@@ -1,6 +1,6 @@
 package com.anypluspay.account.facade.accounting.dto;
 
-import com.anypluspay.account.types.accounting.AccountTitleRange;
+import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.enums.BalanceDirection;
 import lombok.Data;
@@ -39,7 +39,7 @@ public class AccountTitleCommon {
     /**
      * 适用范围
      */
-    private AccountTitleRange titleRange;
+    private AccountTitleScope titleRange;
     /**
      * 备注
      */

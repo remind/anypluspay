@@ -7,10 +7,10 @@ import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.utils.AssertUtil;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 订单结果查询
  * @author wxj
  * 2024/8/23
  */

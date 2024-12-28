@@ -1,4 +1,4 @@
-package com.anypluspay.admin.dao.convertor;
+package com.anypluspay.basis.convertor;
 
 import com.anypluspay.commons.convertor.BaseExpressionConvertor;
 import com.anypluspay.commons.response.page.PageResult;

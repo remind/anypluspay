@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-24
+ * @since 2024-12-27
  */
 @TableName("t_account_title")
 public class AccountTitleDO implements Serializable {
@@ -35,7 +35,7 @@ public class AccountTitleDO implements Serializable {
     /**
      * 科目级别
      */
-    private Short level;
+    private Short tier;
 
     /**
      * 父科目代码
@@ -43,9 +43,9 @@ public class AccountTitleDO implements Serializable {
     private String parentCode;
 
     /**
-     * 是否为叶子节点：1 是， 0 否
+     * 是否为叶子节点
      */
-    private String leaf;
+    private Boolean leaf;
 
     /**
      * 类型：1（资产类）；2（负债类）；3(所有者权益)；4（共同类）5(损益类)
@@ -58,14 +58,14 @@ public class AccountTitleDO implements Serializable {
     private String balanceDirection;
 
     /**
-     * 状态：1（有效）；0（无效）
+     * 是否有效
      */
-    private String status;
+    private Boolean enable;
 
     /**
      * 适用范围：1.内部科目;2,外部科目
      */
-    private String range;
+    private String scope;
 
     /**
      * 备注
@@ -100,12 +100,12 @@ public class AccountTitleDO implements Serializable {
         this.name = name;
     }
 
-    public Short getLevel() {
-        return level;
+    public Short getTier() {
+        return tier;
     }
 
-    public void setLevel(Short level) {
-        this.level = level;
+    public void setTier(Short tier) {
+        this.tier = tier;
     }
 
     public String getParentCode() {
@@ -116,11 +116,11 @@ public class AccountTitleDO implements Serializable {
         this.parentCode = parentCode;
     }
 
-    public String getLeaf() {
+    public Boolean getLeaf() {
         return leaf;
     }
 
-    public void setLeaf(String leaf) {
+    public void setLeaf(Boolean leaf) {
         this.leaf = leaf;
     }
 
@@ -140,20 +140,20 @@ public class AccountTitleDO implements Serializable {
         this.balanceDirection = balanceDirection;
     }
 
-    public String getStatus() {
-        return status;
+    public Boolean getEnable() {
+        return enable;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 
-    public String getRange() {
-        return range;
+    public String getScope() {
+        return scope;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public String getMemo() {
@@ -185,13 +185,13 @@ public class AccountTitleDO implements Serializable {
         return "AccountTitleDO{" +
         "code = " + code +
         ", name = " + name +
-        ", level = " + level +
+        ", tier = " + tier +
         ", parentCode = " + parentCode +
         ", leaf = " + leaf +
         ", type = " + type +
         ", balanceDirection = " + balanceDirection +
-        ", status = " + status +
-        ", range = " + range +
+        ", enable = " + enable +
+        ", scope = " + scope +
         ", memo = " + memo +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +

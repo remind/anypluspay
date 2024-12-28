@@ -69,7 +69,7 @@ public class InstResultService {
                     updateInstProcessOrderStatus(orderContext.getInstCommandOrder(), unityResult.getStatus(), unityResult.getResultCode(), unityResult.getResultMessage());
                     updateInstOrderStatus(orderContext.getInstOrder(), orderContext.getInstCommandOrder());
                 } catch (BizException e) {
-                    updateInstProcessOrderStatus(orderContext.getInstCommandOrder(), InstOrderStatus.UNKNOWN, e.getResultCode().getCode(), e.getMessage());
+                    updateInstProcessOrderStatus(orderContext.getInstCommandOrder(), InstOrderStatus.UNKNOWN, e.getCode(), e.getMessage());
                     log.error("机构结果校验异常", e);
                 }
             } else {

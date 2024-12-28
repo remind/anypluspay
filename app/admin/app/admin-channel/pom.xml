@@ -25,6 +25,12 @@
         <dependency>
             <groupId>com.anypluspay.channel</groupId>
             <artifactId>channel-infra-dal</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.anypluspay.component</groupId>
+                    <artifactId>component-sequence</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.anypluspay.channel</groupId>

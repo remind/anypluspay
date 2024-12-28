@@ -1,7 +1,7 @@
 package com.anypluspay.admin.dao.convertor.order;
 
 import com.anypluspay.admin.dao.convertor.ConvertorUtils;
-import com.anypluspay.admin.dao.convertor.SimpleQueryConvertor;
+import com.anypluspay.basis.convertor.SimpleQueryConvertor;
 import com.anypluspay.admin.model.order.InstCommandOrderDto;
 import com.anypluspay.channel.infra.persistence.dataobject.InstCommandOrderDO;
 import org.mapstruct.Mapper;

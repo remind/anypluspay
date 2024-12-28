@@ -1,7 +1,6 @@
 package com.anypluspay.account.infra.convertor;
 
-import com.anypluspay.account.types.accounting.AccountTitleRange;
-import com.anypluspay.account.types.accounting.AccountTitleStatus;
+import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.buffer.BufferedRuleStatus;
 import com.anypluspay.account.types.enums.*;
@@ -23,12 +22,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(BalanceDirection.class, code);
     }
 
-    default AccountTitleStatus toAccountTitleStatus(String code) {
-        return EnumUtil.getByCode(AccountTitleStatus.class, code);
-    }
-
-    default AccountTitleRange toAccountTitleRange(String code) {
-        return EnumUtil.getByCode(AccountTitleRange.class, code);
+    default AccountTitleScope toAccountTitleRange(String code) {
+        return EnumUtil.getByCode(AccountTitleScope.class, code);
     }
 
     default AccountAttribute toAccountAttribute(String code) {
