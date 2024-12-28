@@ -2,8 +2,8 @@ package com.anypluspay.admin.web.controller.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.admin.dao.convertor.config.PayMethodConvertor;
-import com.anypluspay.admin.model.AddValidate;
-import com.anypluspay.admin.model.UpdateValidate;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import com.anypluspay.admin.model.config.PayMethodDto;
 import com.anypluspay.admin.model.query.PayMethodQuery;
 import com.anypluspay.admin.model.request.PayMethodRequest;

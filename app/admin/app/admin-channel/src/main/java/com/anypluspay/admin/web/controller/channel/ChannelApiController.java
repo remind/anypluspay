@@ -1,8 +1,8 @@
 package com.anypluspay.admin.web.controller.channel;
 
 import com.anypluspay.admin.dao.convertor.channel.ChannelApiConvertor;
-import com.anypluspay.admin.model.AddValidate;
-import com.anypluspay.admin.model.UpdateValidate;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import com.anypluspay.admin.model.channel.ChannelApiDto;
 import com.anypluspay.admin.model.request.ChannelApiRequest;
 import com.anypluspay.basis.web.controller.AbstractController;

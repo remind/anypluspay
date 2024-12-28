@@ -1,8 +1,8 @@
 package com.anypluspay.admin.web.controller.channel;
 
 import com.anypluspay.admin.dao.convertor.channel.ChannelSupportInstConvertor;
-import com.anypluspay.admin.model.AddValidate;
-import com.anypluspay.admin.model.UpdateValidate;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import com.anypluspay.admin.model.channel.ChannelSupportInstDto;
 import com.anypluspay.admin.model.request.ChannelSupportInstRequest;
 import com.anypluspay.channel.infra.persistence.dataobject.ChannelSupportInstDO;

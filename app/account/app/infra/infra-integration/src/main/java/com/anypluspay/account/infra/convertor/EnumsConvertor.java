@@ -4,6 +4,7 @@ import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.buffer.BufferedRuleStatus;
 import com.anypluspay.account.types.enums.*;
+import com.anypluspay.commons.convertor.GlobalTypeConvertor;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import org.mapstruct.Mapper;
 
@@ -12,7 +13,7 @@ import org.mapstruct.Mapper;
  * 2023/12/16
  */
 @Mapper(componentModel = "spring")
-public interface EnumsConvertor {
+public interface EnumsConvertor extends GlobalTypeConvertor {
 
     default AccountTitleType toAccountTitleType(String code) {
         return EnumUtil.getByCode(AccountTitleType.class, code);

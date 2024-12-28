@@ -2,8 +2,8 @@ package com.anypluspay.admin.web.controller.channel;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.admin.dao.convertor.channel.ApiResultCodeConvertor;
-import com.anypluspay.admin.model.AddValidate;
-import com.anypluspay.admin.model.UpdateValidate;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import com.anypluspay.admin.model.channel.ApiResultCodeDto;
 import com.anypluspay.admin.model.query.ApiResultCodeQuery;
 import com.anypluspay.admin.model.request.ApiResultCodeRequest;

@@ -9,12 +9,12 @@ public interface AccountDomainConstants {
     /**
      * 科目层级最小值
      */
-    int ACCOUNT_TITLE_LEVEL_MIN = 1;
+    int ACCOUNT_TITLE_TIER_MIN = 1;
 
     /**
      * 科目层级最大值
      */
-    int ACCOUNT_TITLE_LEVEL_MAX = 3;
+    int ACCOUNT_TITLE_TIER_MAX = 3;
 
     /**
      * 默认资金类型

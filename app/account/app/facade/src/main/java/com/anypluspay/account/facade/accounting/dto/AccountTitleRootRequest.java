@@ -1,17 +1,10 @@
-package com.anypluspay.admin.account.dto;
-
-import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.Data;
-
-import java.time.LocalDateTime;
+package com.anypluspay.account.facade.accounting.dto;
 
 /**
  * @author wxj
- * 2024/12/26
+ * 2024/12/28
  */
-@Data
-public class AccountTitleDto {
+public class AccountTitleRootRequest {
 
     /**
      * 科目代码
@@ -62,16 +55,4 @@ public class AccountTitleDto {
      * 备注
      */
     private String memo;
-
-    /**
-     * 创建时间
-     */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime gmtCreate;
-
-    /**
-     * 最后修改时间
-     */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime gmtModified;
 }

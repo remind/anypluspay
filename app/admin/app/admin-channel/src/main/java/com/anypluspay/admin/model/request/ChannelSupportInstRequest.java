@@ -1,6 +1,6 @@
 package com.anypluspay.admin.model.request;
 
-import com.anypluspay.admin.model.UpdateValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
