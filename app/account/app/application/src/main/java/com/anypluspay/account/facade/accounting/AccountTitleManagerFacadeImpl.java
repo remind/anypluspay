@@ -57,4 +57,11 @@ public class AccountTitleManagerFacadeImpl implements AccountTitleManagerFacade 
         accountTitleRepository.reStore(accountTitle);
         return true;
     }
+
+    @Override
+    public void deleteAccountTitle(String code) {
+        AccountTitle accountTitle = accountTitleRepository.load(code);
+        AssertUtil.notNull(accountTitle, "科目不存在");
+        accountTitleRepository.delete(code);
+    }
 }

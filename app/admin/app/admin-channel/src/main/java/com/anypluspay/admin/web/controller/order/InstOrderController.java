@@ -69,6 +69,7 @@ public class InstOrderController extends AbstractController {
      */
     @GetMapping("/inst-query")
     public ResponseResult<FundResult> instQuery(@RequestParam("instOrderId") Long instOrderId) {
-        return ResponseResult.success(orderQueryFacade.queryByInstOrderId(instOrderId, true));
+        FundResult fundResult = orderQueryFacade.queryByInstOrderId(instOrderId, true);
+        return ResponseResult.success(fundResult);
     }
 }

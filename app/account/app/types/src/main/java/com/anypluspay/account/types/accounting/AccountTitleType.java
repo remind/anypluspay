@@ -2,9 +2,10 @@ package com.anypluspay.account.types.accounting;
 
 import com.anypluspay.commons.enums.CodeEnum;
 
-
 /**
- *
+ * 科目类型
+ * @author wxj
+ * 2024/12/30
  */
 public enum AccountTitleType implements CodeEnum {
     Assets("1","资产类"),

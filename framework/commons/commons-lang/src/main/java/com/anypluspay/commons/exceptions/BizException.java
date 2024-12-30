@@ -12,6 +12,15 @@ public class BizException extends RuntimeException {
 
     private final String code;
 
+    public BizException(Exception e) {
+        super(e.getMessage());
+        if (e instanceof BizException bizException) {
+            this.code = bizException.getCode();
+        } else {
+            this.code = GlobalResultCode.FAIL.getCode();
+        }
+    }
+
     public BizException(ResultCode resultCode) {
         this(resultCode, resultCode.getMessage());
     }

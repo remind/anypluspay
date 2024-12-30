@@ -9,6 +9,7 @@ import com.anypluspay.channel.facade.request.RefundRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.ExtKey;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.commons.exceptions.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class RefundFacadeImpl extends AbstractFundService implements RefundFacad
             return applyInstProcess(channelApiContext, refundOrder);
         } catch (Exception e) {
             log.error("退款异常", e);
-            return buildResultByException(request.getRequestId(), e);
+            throw new BizException(e);
         }
     }
 

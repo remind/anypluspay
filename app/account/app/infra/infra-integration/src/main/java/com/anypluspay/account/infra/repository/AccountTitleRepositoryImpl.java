@@ -43,6 +43,11 @@ public class AccountTitleRepositoryImpl implements AccountTitleRepository {
         return null;
     }
 
+    @Override
+    public void delete(String titleCode) {
+        accountTitleMapper.deleteById(titleCode);
+    }
+
     private Wrapper<AccountTitleDO> getIdWrapper(String code) {
         return new LambdaQueryWrapper<AccountTitleDO>().eq(AccountTitleDO::getCode, code);
     }

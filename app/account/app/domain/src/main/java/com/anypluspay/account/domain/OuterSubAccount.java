@@ -17,6 +17,7 @@ public class OuterSubAccount extends Entity {
      * 账户号
      **/
     private String accountNo;
+
     /**
      * 资金类型
      */
@@ -31,6 +32,7 @@ public class OuterSubAccount extends Entity {
      * 可用余额
      */
     private Money availableBalance = new Money();
+
     /**
      * 备注
      **/

@@ -1,12 +1,16 @@
 package com.anypluspay.account.facade.manager.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author wxj
  * 2024/1/4
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OuterAccountAddResponse {
 
     /**
@@ -24,12 +28,4 @@ public class OuterAccountAddResponse {
      */
     private String accountNo;
 
-    public OuterAccountAddResponse() {
-    }
-
-    public OuterAccountAddResponse(String memberId, String accountType, String accountNo) {
-        this.memberId = memberId;
-        this.accountType = accountType;
-        this.accountNo = accountNo;
-    }
 }

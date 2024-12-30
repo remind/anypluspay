@@ -11,6 +11,7 @@ import com.anypluspay.admin.account.query.AccountTitleQuery;
 import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
+import com.anypluspay.commons.validator.UpdateValidate;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -53,7 +54,7 @@ public class AccountTitleController extends AbstractController {
         if (query.getEnable() != null) {
             queryWrapper.eq(AccountTitleDO::getEnable, query.getEnable());
         }
-        queryWrapper.orderByDesc(AccountTitleDO::getGmtCreate);
+        queryWrapper.orderByAsc(AccountTitleDO::getCode).orderByAsc(AccountTitleDO::getTier);
         return ResponseResult.success(convertor.toDto(dalMapper.selectPage(getIPage(query), queryWrapper)));
     }
 
@@ -75,8 +76,32 @@ public class AccountTitleController extends AbstractController {
      * @return 新增结果
      */
     @PostMapping("/add")
-    public ResponseResult<String> add(@RequestBody @Validated AccountTitleRequest request) {
+    public ResponseResult<String> add(@RequestBody @Validated(UpdateValidate.class) AccountTitleRequest request) {
         accountTitleManagerFacade.createAccountTitle(request);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 修改
+     *
+     * @param request 修改请求对象
+     * @return 修改结果
+     */
+    @PostMapping("/update")
+    public ResponseResult<String> update(@RequestBody @Validated(UpdateValidate.class) AccountTitleRequest request) {
+        accountTitleManagerFacade.updateAccountTitle(request);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 删除
+     *
+     * @param code 主键ID
+     * @return 删除结果
+     */
+    @GetMapping("/delete")
+    public ResponseResult<String> delete(@RequestParam String code) {
+        accountTitleManagerFacade.deleteAccountTitle(code);
         return ResponseResult.success();
     }
 }

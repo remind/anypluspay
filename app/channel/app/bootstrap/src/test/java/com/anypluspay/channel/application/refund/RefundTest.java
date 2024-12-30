@@ -61,8 +61,12 @@ public class RefundTest extends FundInBaseTest {
 
     @Test
     public void refundAmountGreaterThanOrigAmount() {
-        FundResult fundResult = refundService.apply(buildRefundOrder(TestConstants.S, new Money(104)));
-        Assert.assertEquals(fundResult.getCode(), GlobalResultCode.FAIL.getCode());
+        try {
+            refundService.apply(buildRefundOrder(TestConstants.S, new Money(104)));
+            Assert.fail();
+        } catch (BizException e) {
+            Assert.assertEquals(e.getCode(), GlobalResultCode.FAIL.getCode());
+        }
     }
 
     @Test
@@ -71,8 +75,12 @@ public class RefundTest extends FundInBaseTest {
         FundResult fundResult1 = refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(40)));
         Assert.assertEquals(BizOrderStatus.SUCCESS, fundResult1.getStatus());
 
-        FundResult fundResult2 = refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(63)));
-        Assert.assertEquals(fundResult2.getCode(), GlobalResultCode.FAIL.getCode());
+        try {
+            refundService.apply(buildRefundOrder(origResult, TestConstants.S, new Money(63)));
+            Assert.fail();
+        } catch (BizException e) {
+            Assert.assertEquals(e.getCode(), GlobalResultCode.FAIL.getCode());
+        }
     }
 
     @Test

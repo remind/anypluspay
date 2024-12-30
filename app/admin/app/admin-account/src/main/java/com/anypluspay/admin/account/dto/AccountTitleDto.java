@@ -44,9 +44,19 @@ public class AccountTitleDto {
     private String type;
 
     /**
-     * 余额方向：1:借 2:贷 0:双向
+     * 类型名称
+     */
+    private String typeName;
+
+    /**
+     * 余额方向：1:借 2:贷
      */
     private String balanceDirection;
+
+    /**
+     * 余额方向名称
+     */
+    private String balanceDirectionName;
 
     /**
      * 是否有效
@@ -57,6 +67,11 @@ public class AccountTitleDto {
      * 适用范围：1.内部科目;2,外部科目
      */
     private String scope;
+
+    /**
+     * 适用范围名称
+     */
+    private String scopeName;
 
     /**
      * 备注

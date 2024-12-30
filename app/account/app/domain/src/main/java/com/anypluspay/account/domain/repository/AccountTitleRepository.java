@@ -15,4 +15,6 @@ public interface AccountTitleRepository {
     AccountTitle load(String titleCode);
 
     AccountTitle lock(String titleCode);
+
+    void delete(String titleCode);
 }

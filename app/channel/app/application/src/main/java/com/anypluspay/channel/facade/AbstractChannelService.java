@@ -117,12 +117,6 @@ public abstract class AbstractChannelService {
         result.setStatus(bizOrder.getStatus());
     }
 
-    protected void fillChannelResultByBizException(ChannelResult result, BizException e) {
-        result.setSuccess(false);
-        result.setCode(e.getCode());
-        result.setMessage(e.getMessage());
-    }
-
     /**
      * 构造ChannelResult
      *

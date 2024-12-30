@@ -1,4 +1,4 @@
-package com.anypluspay.admin.model.common;
+package com.anypluspay.basis.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
