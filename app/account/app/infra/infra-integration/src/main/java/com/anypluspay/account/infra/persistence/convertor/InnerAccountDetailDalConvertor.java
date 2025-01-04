@@ -4,12 +4,8 @@ import com.anypluspay.account.domain.detail.InnerAccountDetail;
 import com.anypluspay.account.infra.convertor.EnumsConvertor;
 import com.anypluspay.account.infra.persistence.dataobject.InnerAccountDetailDO;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
-import com.anypluspay.commons.lang.types.Money;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.math.BigDecimal;
-import java.util.Currency;
 
 /**
  * @author wxj
@@ -30,8 +26,5 @@ public interface InnerAccountDetailDalConvertor extends ReadWriteConvertor<Inner
     @Override
     InnerAccountDetailDO toDO(InnerAccountDetail innerAccountDetail);
 
-    default Money toMoney(BigDecimal amount, String currencyCode) {
-        return new Money(amount, Currency.getInstance(currencyCode));
-    }
 }
 

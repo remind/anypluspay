@@ -11,7 +11,7 @@ import com.anypluspay.channel.infra.persistence.mapper.ChannelSupportInstMapper;
 import com.anypluspay.channel.infra.persistence.mapper.FundChannelMapper;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
 
@@ -27,19 +27,19 @@ import static org.mockito.Mockito.when;
  */
 public class FundChannelMock extends AbstractBaseTest {
 
-    @MockBean
+    @MockitoBean
     private FundChannelMapper dalMapper;
 
-    @MockBean
+    @MockitoBean
     private ChannelApiMapper channelApiMapper;
 
-    @MockBean
+    @MockitoBean
     private ChannelSupportInstMapper channelSupportInstMapper;
 
-    @MockBean
+    @MockitoBean
     private ChannelMaintainMapper channelMaintainMapper;
 
-    @MockBean
+    @MockitoBean
     protected ApiResultRepository apiResultRepository;
 
     @Autowired

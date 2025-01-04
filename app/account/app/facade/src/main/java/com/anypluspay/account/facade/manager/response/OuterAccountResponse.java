@@ -24,7 +24,7 @@ public class OuterAccountResponse extends AccountResponse {
     /**
      * 可用余额
      */
-    private Money availableBalance = new Money();
+    private Money availableBalance;
 
     /**
      * 账户属性

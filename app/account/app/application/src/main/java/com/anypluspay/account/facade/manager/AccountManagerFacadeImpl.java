@@ -5,13 +5,13 @@ import com.anypluspay.account.domain.OuterAccount;
 import com.anypluspay.account.domain.repository.InnerAccountRepository;
 import com.anypluspay.account.domain.repository.OuterAccountRepository;
 import com.anypluspay.account.domain.service.OuterAccountDomainService;
-import com.anypluspay.account.facade.AccountFacade;
 import com.anypluspay.account.facade.manager.builder.InnerAccountBuilder;
 import com.anypluspay.account.facade.manager.builder.OuterAccountBuilder;
+import com.anypluspay.account.facade.manager.convertor.InnerAccountConvertor;
 import com.anypluspay.account.facade.manager.convertor.OuterAccountConvertor;
 import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
 import com.anypluspay.account.facade.manager.dto.OuterAccountAddRequest;
-import com.anypluspay.account.facade.manager.dto.OuterAccountAddResponse;
+import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.account.types.enums.DenyStatus;
 import com.anypluspay.commons.exceptions.BizException;
@@ -40,6 +40,9 @@ public class AccountManagerFacadeImpl implements AccountManagerFacade {
 
     @Autowired
     private InnerAccountBuilder innerAccountBuilder;
+
+    @Autowired
+    private InnerAccountConvertor innerAccountConvertor;
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -105,6 +108,12 @@ public class AccountManagerFacadeImpl implements AccountManagerFacade {
     @Override
     public OuterAccountResponse queryOuterAccount(String accountNo) {
         OuterAccount outerAccount = outerAccountRepository.load(accountNo);
-        return outerAccountConvertor.toDto(outerAccount);
+        return outerAccountConvertor.toResponse(outerAccount);
+    }
+
+    @Override
+    public InnerAccountResponse queryInnerAccount(String accountNo) {
+        InnerAccount account = innerAccountRepository.load(accountNo);
+        return innerAccountConvertor.toResponse(account);
     }
 }

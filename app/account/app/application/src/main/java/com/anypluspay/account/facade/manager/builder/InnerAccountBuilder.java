@@ -28,7 +28,7 @@ public class InnerAccountBuilder {
     private AccountTitleRepository accountTitleRepository;
 
     public InnerAccount build(InnerAccountAddRequest request) {
-        InnerAccount account = convertor.toOuterAccount(request);
+        InnerAccount account = convertor.toInnerAccount(request);
         account.setBalance(new Money(0, Currency.getInstance(request.getCurrencyCode())));
 
         AccountTitle accountTitle = accountTitleRepository.load(request.getTitleCode());

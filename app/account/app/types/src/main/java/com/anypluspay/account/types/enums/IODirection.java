@@ -9,9 +9,9 @@ import com.anypluspay.commons.enums.CodeEnum;
  */
 public enum IODirection implements CodeEnum {
 
-    IN("1", "加"),
+    IN("I", "加"),
 
-    OUT("2", "减");
+    OUT("O", "减");
     ;
 
     private final String code;

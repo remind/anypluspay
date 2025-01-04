@@ -10,5 +10,7 @@ import java.util.List;
  */
 public interface AccountDetailRepository {
 
+    List<AccountDetail> loadByRequestNo(String requestNo);
+
     void store(List<AccountDetail> accountDetails);
 }

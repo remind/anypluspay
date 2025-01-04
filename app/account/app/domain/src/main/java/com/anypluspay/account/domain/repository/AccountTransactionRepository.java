@@ -8,5 +8,7 @@ import com.anypluspay.account.domain.AccountTransaction;
  */
 public interface AccountTransactionRepository {
 
+    AccountTransaction loadByRequestNo(String requestNo);
+
     void store(AccountTransaction accountTransaction);
 }

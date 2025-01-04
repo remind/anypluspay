@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @Slf4j
 public class ApiResultCodeTest extends FundInBaseTest {
 
-    @MockBean(name = "localBankSignGateway")
+    @MockitoBean(name = "localBankSignGateway")
     private ChannelGateway channelGateway;
 
     @Captor

@@ -4,8 +4,9 @@ import com.anypluspay.channel.types.channel.ChannelApiProtocol;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.channel.InstAbility;
 import com.anypluspay.channel.types.enums.*;
-import com.anypluspay.channel.types.order.*;
-import com.anypluspay.commons.convertor.GlobalTypeConvertor;
+import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.channel.types.order.InstOrderStatus;
+import com.anypluspay.channel.types.order.SubmitTimeType;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import org.mapstruct.Mapper;
 
@@ -14,7 +15,7 @@ import org.mapstruct.Mapper;
  * 2024/8/2
  */
 @Mapper(componentModel = "spring")
-public interface EnumsConvertor extends GlobalTypeConvertor {
+public interface EnumsConvertor  {
 
     default BizOrderStatus toBizOrderStatus(String code) {
         return EnumUtil.getByCode(BizOrderStatus.class, code);

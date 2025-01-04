@@ -14,5 +14,5 @@ import org.mapstruct.Mapper;
 public interface OuterAccountConvertor {
     OuterAccount toOuterAccount(OuterAccountAddRequest request, OuterAccountType outerAccountType);
 
-    OuterAccountResponse toDto(OuterAccount account);
+    OuterAccountResponse toResponse(OuterAccount account);
 }

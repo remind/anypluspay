@@ -3,6 +3,7 @@ package com.anypluspay.account.facade.manager.response;
 import com.anypluspay.account.types.enums.BalanceDirection;
 import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,6 +19,11 @@ public abstract class AccountResponse extends Entity {
      * 账户编号
      */
     private String accountNo;
+
+    /**
+     * 总余额
+     */
+    private Money balance;
 
     /**
      * 科目号

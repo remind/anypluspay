@@ -7,7 +7,7 @@ import java.util.List;
  * @author wxj
  * 2023/12/16
  */
-public interface WriteConvertor<EntityType, DoType> {
+public interface WriteConvertor<EntityType, DoType> extends BaseExpressionConvertor{
 
     DoType toDO(EntityType entityType);
 

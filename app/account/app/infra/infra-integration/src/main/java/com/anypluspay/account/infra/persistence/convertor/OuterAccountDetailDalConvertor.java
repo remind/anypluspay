@@ -1,15 +1,16 @@
 package com.anypluspay.account.infra.persistence.convertor;
 
 import com.anypluspay.account.domain.detail.OuterAccountDetail;
+import com.anypluspay.account.domain.detail.OuterSubAccountDetail;
 import com.anypluspay.account.infra.convertor.EnumsConvertor;
 import com.anypluspay.account.infra.persistence.dataobject.OuterAccountDetailDO;
-import com.anypluspay.commons.convertor.ReadWriteConvertor;
-import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.account.infra.persistence.dataobject.OuterSubAccountDetailDO;
+import com.anypluspay.commons.convertor.WriteConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.math.BigDecimal;
-import java.util.Currency;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wxj
@@ -17,12 +18,13 @@ import java.util.Currency;
  */
 
 @Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
-public interface OuterAccountDetailDalConvertor extends ReadWriteConvertor<OuterAccountDetail, OuterAccountDetailDO> {
+public interface OuterAccountDetailDalConvertor extends WriteConvertor<OuterAccountDetail, OuterAccountDetailDO> {
+
     @Mapping(target = "beforeBalance", expression = "java(toMoney(outerAccountDetailDO.getBeforeBalance(), outerAccountDetailDO.getCurrencyCode()))")
     @Mapping(target = "afterBalance", expression = "java(toMoney(outerAccountDetailDO.getAfterBalance(), outerAccountDetailDO.getCurrencyCode()))")
     @Mapping(target = "amount", expression = "java(toMoney(outerAccountDetailDO.getAmount(), outerAccountDetailDO.getCurrencyCode()))")
-    @Override
-    OuterAccountDetail toEntity(OuterAccountDetailDO outerAccountDetailDO);
+    @Mapping(target = "outerSubAccountDetails", expression = "java(subToEntity(outerSubAccountDetailDOs))")
+    OuterAccountDetail toEntity(OuterAccountDetailDO outerAccountDetailDO, List<OuterSubAccountDetailDO> outerSubAccountDetailDOs);
 
     @Mapping(target = "currencyCode", expression = "java(outerAccountDetail.getBeforeBalance().getCurrency().getCurrencyCode())")
     @Mapping(target = "beforeBalance", expression = "java(outerAccountDetail.getBeforeBalance().getAmount())")
@@ -31,7 +33,22 @@ public interface OuterAccountDetailDalConvertor extends ReadWriteConvertor<Outer
     @Override
     OuterAccountDetailDO toDO(OuterAccountDetail outerAccountDetail);
 
-    default Money toMoney(BigDecimal amount, String currencyCode) {
-        return new Money(amount, Currency.getInstance(currencyCode));
+    @Mapping(target = "currencyCode", expression = "java(outerSubAccountDetail.getBeforeBalance().getCurrency().getCurrencyCode())")
+    @Mapping(target = "beforeBalance", expression = "java(outerSubAccountDetail.getBeforeBalance().getAmount())")
+    @Mapping(target = "afterBalance", expression = "java(outerSubAccountDetail.getAfterBalance().getAmount())")
+    @Mapping(target = "amount", expression = "java(outerSubAccountDetail.getAmount().getAmount())")
+    OuterSubAccountDetailDO subToDO(OuterSubAccountDetail outerSubAccountDetail);
+
+    @Mapping(target = "beforeBalance", expression = "java(toMoney(outerSubAccountDetailDO.getBeforeBalance(), outerSubAccountDetailDO.getCurrencyCode()))")
+    @Mapping(target = "afterBalance", expression = "java(toMoney(outerSubAccountDetailDO.getAfterBalance(), outerSubAccountDetailDO.getCurrencyCode()))")
+    @Mapping(target = "amount", expression = "java(toMoney(outerSubAccountDetailDO.getAmount(), outerSubAccountDetailDO.getCurrencyCode()))")
+    OuterSubAccountDetail subToEntity(OuterSubAccountDetailDO outerSubAccountDetailDO);
+
+    default List<OuterSubAccountDetail> subToEntity(List<OuterSubAccountDetailDO> outerSubAccountDetailDOS) {
+        List<OuterSubAccountDetail> outerSubAccountDetails = new ArrayList<>();
+        if (outerSubAccountDetailDOS != null) {
+            outerSubAccountDetailDOS.forEach(entityType -> outerSubAccountDetails.add(subToEntity(entityType)));
+        }
+        return outerSubAccountDetails;
     }
 }

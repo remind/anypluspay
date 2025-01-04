@@ -3,6 +3,7 @@ package com.anypluspay.account.facade.manager;
 import com.anypluspay.account.facade.ApiConstants;
 import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
 import com.anypluspay.account.facade.manager.dto.OuterAccountAddRequest;
+import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,4 +67,13 @@ public interface AccountManagerFacade {
      */
     @GetMapping(PREFIX + "/query-outer-account")
     OuterAccountResponse queryOuterAccount(@RequestParam String accountNo);
+
+
+    /**
+     * 查询内部账户
+     * @param accountNo 账户号
+     * @return  结果信息
+     */
+    @GetMapping(PREFIX + "/query-inner-account")
+    InnerAccountResponse queryInnerAccount(@RequestParam String accountNo);
 }

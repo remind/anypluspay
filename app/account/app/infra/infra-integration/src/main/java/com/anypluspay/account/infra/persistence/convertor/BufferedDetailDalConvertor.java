@@ -4,12 +4,8 @@ import com.anypluspay.account.domain.detail.BufferedDetail;
 import com.anypluspay.account.infra.convertor.EnumsConvertor;
 import com.anypluspay.account.infra.persistence.dataobject.BufferedDetailDO;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
-import com.anypluspay.commons.lang.types.Money;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
-import java.math.BigDecimal;
-import java.util.Currency;
 
 /**
  * @author wxj
@@ -26,7 +22,4 @@ public interface BufferedDetailDalConvertor extends ReadWriteConvertor<BufferedD
     @Override
     BufferedDetailDO toDO(BufferedDetail bufferedDetail);
 
-    default Money toMoney(BigDecimal amount, String currencyCode) {
-        return new Money(amount, Currency.getInstance(currencyCode));
-    }
 }

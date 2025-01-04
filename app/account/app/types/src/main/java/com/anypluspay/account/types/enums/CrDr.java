@@ -8,9 +8,9 @@ import com.anypluspay.commons.enums.CodeEnum;
  */
 public enum CrDr implements CodeEnum {
 
-    DEBIT("1", "借方"),
+    DEBIT("D", "借方"),
 
-    CREDIT("2", "贷方");
+    CREDIT("C", "贷方");
     ;
 
     private final String code;
