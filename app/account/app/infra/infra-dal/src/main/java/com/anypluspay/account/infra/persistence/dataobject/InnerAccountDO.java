@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-01-06
  */
 @TableName("t_inner_account")
 public class InnerAccountDO implements Serializable {
@@ -57,6 +57,11 @@ public class InnerAccountDO implements Serializable {
      * 余额
      */
     private BigDecimal balance;
+
+    /**
+     * 备注
+     */
+    private String memo;
 
     /**
      * 创建时间
@@ -126,6 +131,14 @@ public class InnerAccountDO implements Serializable {
         this.balance = balance;
     }
 
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -152,6 +165,7 @@ public class InnerAccountDO implements Serializable {
         ", balanceDirection = " + balanceDirection +
         ", currencyCode = " + currencyCode +
         ", balance = " + balance +
+        ", memo = " + memo +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

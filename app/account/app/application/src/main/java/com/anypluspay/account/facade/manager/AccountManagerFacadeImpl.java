@@ -9,7 +9,7 @@ import com.anypluspay.account.facade.manager.builder.InnerAccountBuilder;
 import com.anypluspay.account.facade.manager.builder.OuterAccountBuilder;
 import com.anypluspay.account.facade.manager.convertor.InnerAccountConvertor;
 import com.anypluspay.account.facade.manager.convertor.OuterAccountConvertor;
-import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
+import com.anypluspay.account.facade.manager.dto.InnerAccountRequest;
 import com.anypluspay.account.facade.manager.dto.OuterAccountAddRequest;
 import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
@@ -19,8 +19,8 @@ import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.List;
  * @author wxj
  * 2023/12/22
  */
-@Service
+@RestController
 @Slf4j
 public class AccountManagerFacadeImpl implements AccountManagerFacade {
 
@@ -85,7 +85,7 @@ public class AccountManagerFacadeImpl implements AccountManagerFacade {
     }
 
     @Override
-    public String createInnerAccount(InnerAccountAddRequest request) {
+    public String createInnerAccount(InnerAccountRequest request) {
         try {
             InnerAccount account = innerAccountBuilder.build(request);
             return transactionTemplate.execute(status -> innerAccountRepository.store(account));
@@ -93,6 +93,22 @@ public class AccountManagerFacadeImpl implements AccountManagerFacade {
             log.error("内部户开户失败,titleCode=" + request.getTitleCode(), e);
             throw new BizException(e);
         }
+    }
+
+    @Override
+    public void updateInnerAccount(InnerAccountRequest request) {
+        InnerAccount account = innerAccountRepository.load(request.getAccountNo());
+        AssertUtil.notNull(account, "账户不存在");
+        account.setAccountName(request.getAccountName());
+        account.setMemo(request.getMemo());
+        innerAccountRepository.reStore(account);
+    }
+
+    @Override
+    public void deleteInnerAccount(String accountNo) {
+        InnerAccount account = innerAccountRepository.load(accountNo);
+        AssertUtil.notNull(account, "账户不存在");
+        innerAccountRepository.delete(accountNo);
     }
 
     @Override

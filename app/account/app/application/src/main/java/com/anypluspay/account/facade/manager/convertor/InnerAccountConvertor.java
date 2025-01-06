@@ -1,7 +1,7 @@
 package com.anypluspay.account.facade.manager.convertor;
 
 import com.anypluspay.account.domain.InnerAccount;
-import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
+import com.anypluspay.account.facade.manager.dto.InnerAccountRequest;
 import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import org.mapstruct.Mapper;
 
@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface InnerAccountConvertor {
 
-    InnerAccount toInnerAccount(InnerAccountAddRequest request);
+    InnerAccount toInnerAccount(InnerAccountRequest request);
 
     InnerAccountResponse toResponse(InnerAccount account);
 }

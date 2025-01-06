@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 账户
+ * 外部账户
  *
  * @author wxj
  * 2024/12/30
  */
 @RestController
-@RequestMapping("/account/")
-public class AccountController {
+@RequestMapping("/account/outer-account")
+public class OuterAccountController {
 
     @Autowired
     private AccountManagerFacade accountManagerFacade;

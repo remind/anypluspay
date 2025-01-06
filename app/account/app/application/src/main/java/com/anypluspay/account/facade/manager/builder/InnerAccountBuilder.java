@@ -6,7 +6,7 @@ import com.anypluspay.account.domain.accounting.AccountTitle;
 import com.anypluspay.account.domain.repository.AccountTitleRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
 import com.anypluspay.account.facade.manager.convertor.InnerAccountConvertor;
-import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
+import com.anypluspay.account.facade.manager.dto.InnerAccountRequest;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class InnerAccountBuilder {
     @Autowired
     private AccountTitleRepository accountTitleRepository;
 
-    public InnerAccount build(InnerAccountAddRequest request) {
+    public InnerAccount build(InnerAccountRequest request) {
         InnerAccount account = convertor.toInnerAccount(request);
         account.setBalance(new Money(0, Currency.getInstance(request.getCurrencyCode())));
 

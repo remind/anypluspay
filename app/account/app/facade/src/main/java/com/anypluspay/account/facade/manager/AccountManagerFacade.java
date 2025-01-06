@@ -1,11 +1,14 @@
 package com.anypluspay.account.facade.manager;
 
 import com.anypluspay.account.facade.ApiConstants;
-import com.anypluspay.account.facade.manager.dto.InnerAccountAddRequest;
+import com.anypluspay.account.facade.manager.dto.InnerAccountRequest;
 import com.anypluspay.account.facade.manager.dto.OuterAccountAddRequest;
 import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -49,7 +52,23 @@ public interface AccountManagerFacade {
      * @return  创建结果
      */
     @PostMapping(PREFIX + "/create-inner-account")
-    String createInnerAccount(@RequestBody InnerAccountAddRequest request);
+    String createInnerAccount(@RequestBody @Validated(AddValidate.class) InnerAccountRequest request);
+
+    /**
+     * 修改内部账户
+     *
+     * @param request 请求参数
+     */
+    @PostMapping(PREFIX + "/update-inner-account")
+    void updateInnerAccount(@RequestBody @Validated(UpdateValidate.class) InnerAccountRequest request);
+
+    /**
+     * 删除内部账户
+     *
+     * @param accountNo 账户编号
+     */
+    @GetMapping(PREFIX + "/delete-inner-account")
+    void deleteInnerAccount(@RequestParam String accountNo);
 
     /**
      * 变更账户禁止状态

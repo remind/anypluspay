@@ -20,4 +20,6 @@ public interface InnerAccountRepository {
     InnerAccount load(String accountNo);
 
     InnerAccount lock(String accountNo);
+
+    void delete(String accountNo);
 }

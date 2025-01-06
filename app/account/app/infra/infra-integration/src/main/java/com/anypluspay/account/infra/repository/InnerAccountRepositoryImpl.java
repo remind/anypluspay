@@ -56,6 +56,11 @@ public class InnerAccountRepositoryImpl implements InnerAccountRepository {
         return dalConvertor.toEntity(mapper.lockOne(getIdWrapper(accountNo)));
     }
 
+    @Override
+    public void delete(String accountNo) {
+        mapper.deleteById(accountNo);
+    }
+
     private String genAccountNo(String titleCode, String currencyCode) {
         String incId = getIncId(titleCode, currencyCode);
         return titleCode + Currency.getInstance(currencyCode).getNumericCode() + incId;

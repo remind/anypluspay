@@ -9,7 +9,7 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-01-06
  */
 public interface InnerAccountMapper extends ExtBaseMapper<InnerAccountDO> {
 
