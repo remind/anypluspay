@@ -51,5 +51,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(BufferedRuleStatus.class, code);
     }
 
+    default OperationType toOperationType(String code) {
+        return EnumUtil.getByCode(OperationType.class, code);
+    }
 
 }

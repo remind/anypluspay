@@ -1,8 +1,8 @@
 package com.anypluspay.admin.account.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.anypluspay.account.facade.manager.AccountManagerFacade;
-import com.anypluspay.account.facade.manager.dto.InnerAccountRequest;
+import com.anypluspay.account.facade.manager.InnerAccountManagerFacade;
+import com.anypluspay.account.facade.manager.request.InnerAccountRequest;
 import com.anypluspay.account.infra.persistence.dataobject.InnerAccountDO;
 import com.anypluspay.account.infra.persistence.mapper.InnerAccountMapper;
 import com.anypluspay.admin.account.convertor.InnerAccountConvertor;
@@ -34,7 +34,7 @@ public class InnerAccountController extends AbstractController {
     private InnerAccountMapper dalMapper;
 
     @Autowired
-    private AccountManagerFacade accountManagerFacade;
+    private InnerAccountManagerFacade accountManagerFacade;
 
     /**
      * 分页查询
@@ -78,7 +78,7 @@ public class InnerAccountController extends AbstractController {
      */
     @PostMapping("/add")
     public ResponseResult<String> add(@RequestBody @Validated(UpdateValidate.class) InnerAccountRequest request) {
-        accountManagerFacade.createInnerAccount(request);
+        accountManagerFacade.create(request);
         return ResponseResult.success();
     }
 
@@ -90,7 +90,7 @@ public class InnerAccountController extends AbstractController {
      */
     @PostMapping("/update")
     public ResponseResult<String> update(@RequestBody @Validated(UpdateValidate.class) InnerAccountRequest request) {
-        accountManagerFacade.updateInnerAccount(request);
+        accountManagerFacade.update(request);
         return ResponseResult.success();
     }
 
@@ -102,7 +102,7 @@ public class InnerAccountController extends AbstractController {
      */
     @GetMapping("/delete")
     public ResponseResult<String> delete(@RequestParam String accountNo) {
-        accountManagerFacade.deleteInnerAccount(accountNo);
+        accountManagerFacade.delete(accountNo);
         return ResponseResult.success();
     }
 }

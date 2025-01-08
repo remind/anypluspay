@@ -38,7 +38,7 @@ public class InnerAccountDomainService {
             log.error("账户锁定异常,accountNo=" + accountNo, e);
             throw new BizException(AccountResultCode.ACCOUNT_LOCK_TIME_OUT);
         }
-        AssertUtil.notNull(account, AccountResultCode.ACCOUNT_ID_NOT_EXISTS);
+        AssertUtil.notNull(account, AccountResultCode.ACCOUNT_NOT_EXISTS);
 
         details.forEach(accountDetail -> {
             InnerAccountDetail detail = (InnerAccountDetail) accountDetail;

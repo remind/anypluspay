@@ -21,6 +21,6 @@ public class BufferedService {
      * @return
      */
     public boolean isBuffer(AccountDetail accountDetail) {
-        return bufferedRuleRepository.isExists(accountDetail.getAccountNo(), accountDetail.getCrDr());
+        return accountDetail.getCrDr() != null && bufferedRuleRepository.isExists(accountDetail.getAccountNo(), accountDetail.getCrDr());
     }
 }

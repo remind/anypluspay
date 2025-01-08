@@ -9,10 +9,9 @@ import com.anypluspay.account.domain.repository.OuterAccountRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
 import com.anypluspay.account.types.AccountResultCode;
 import com.anypluspay.account.types.enums.DenyStatus;
-import com.anypluspay.account.types.enums.IODirection;
+import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
-import com.anypluspay.commons.lang.utils.EnumUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,13 +46,15 @@ public class OuterAccountDomainService {
             log.error("账户锁定异常,accountNo=" + accountNo, e);
             throw new BizException(AccountResultCode.ACCOUNT_LOCK_TIME_OUT);
         }
-        AssertUtil.notNull(account, AccountResultCode.ACCOUNT_ID_NOT_EXISTS);
+        AssertUtil.notNull(account, AccountResultCode.ACCOUNT_NOT_EXISTS);
 
         accountDetails.forEach(accountDetail -> {
             OuterAccountDetail outerAccountDetail = (OuterAccountDetail) accountDetail;
-            outerAccountDetail.setIoDirection(AccountUtil.convert(account.getCurrentBalanceDirection()
-                    , outerAccountDetail.getCrDr()));
-            checkBalance(account, outerAccountDetail);
+
+            if (OperationType.NORMAL == outerAccountDetail.getOperationType()) {
+                outerAccountDetail.setIoDirection(AccountUtil.convert(account.getCurrentBalanceDirection()
+                        , outerAccountDetail.getCrDr()));
+            }
             updateBalance(account, outerAccountDetail);
         });
 
@@ -68,17 +69,10 @@ public class OuterAccountDomainService {
      * @param denyStatus
      */
     public void changeDenyStatus(OuterAccount outerAccount, DenyStatus denyStatus) {
-        AssertUtil.notNull(outerAccount, AccountResultCode.ACCOUNT_ID_NOT_EXISTS);
+        AssertUtil.notNull(outerAccount, AccountResultCode.ACCOUNT_NOT_EXISTS);
         AssertUtil.isFalse(outerAccount.getDenyStatus().equals(denyStatus), "状态已经为：" + outerAccount.getDenyStatus().getDisplayName());
         outerAccount.setDenyStatus(denyStatus);
         outerAccountRepository.reStore(outerAccount);
-    }
-
-    private void checkBalance(OuterAccount outerAccount, OuterAccountDetail outerAccountDetail) {
-        if (outerAccountDetail.getIoDirection() == IODirection.OUT) {
-            AssertUtil.isFalse(outerAccountDetail.getAmount().greaterThan(outerAccount.getAvailableBalance())
-                    , AccountResultCode.ACCOUNT_BALANCE_NOT_ENOUGH);
-        }
     }
 
     /**
@@ -95,8 +89,12 @@ public class OuterAccountDomainService {
 
             outerSubAccountDetail.setBeforeBalance(outerSubAccount.getBalance());
             outerSubAccountDetail.setMemo(outerAccountDetail.getMemo());
-
-            outerSubAccount.updateAvailableBalance(outerAccountDetail.getIoDirection(), outerSubAccountDetail.getAmount());
+            switch (outerAccountDetail.getOperationType()) {
+                case NORMAL ->
+                        outerSubAccount.updateAvailableBalance(outerAccountDetail.getIoDirection(), outerSubAccountDetail.getAmount());
+                case FROZEN -> outerSubAccount.frozenBalance(outerSubAccountDetail.getAmount());
+                case UNFROZEN -> outerSubAccount.unfrozenBalance(outerSubAccountDetail.getAmount());
+            }
             outerSubAccountDetail.setAfterBalance(outerSubAccount.getBalance());
         });
         outerAccountDetail.setAfterBalance(outerAccount.getBalance());

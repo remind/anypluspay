@@ -17,7 +17,7 @@ db:
     name:
     # 依次为：表名,业务主键字段(如果也是表主键就不用)
 #      - t_account_title
-      - t_inner_account
+#      - t_inner_account
 #      - t_outer_account
 #      - t_outer_account_type
 #      - t_outer_sub_account
@@ -27,3 +27,4 @@ db:
 #      - t_inner_account_detail
 #      - t_buffered_detail
 #      - t_buffered_rule
+      - t_accounting_entry

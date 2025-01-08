@@ -9,7 +9,7 @@ import com.anypluspay.commons.response.ResultCode;
  */
 public enum AccountResultCode implements ResultCode {
 
-    ACCOUNT_ID_NOT_EXISTS("ACCOUNT_ID_NOT_EXISTS","账户不存在"),
+    ACCOUNT_NOT_EXISTS("ACCOUNT_NOT_EXISTS","账户不存在"),
     ACCOUNT_LOCK_TIME_OUT("ACCOUNT_LOCK_TIME_OUT", "账户锁定超时"),
     SUB_ACCOUNT_NOT_EXISTS("SUB_ACCOUNT_NOT_EXISTS", "不存在指定的子账户"),
     CR_DR_NOT_EXISTS("CR_DR_NOT_EXISTS", "不存借贷方向"),

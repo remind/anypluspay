@@ -6,7 +6,7 @@ import com.anypluspay.account.domain.detail.BufferedDetail;
 import com.anypluspay.account.domain.detail.InnerAccountDetail;
 import com.anypluspay.account.domain.detail.OuterAccountDetail;
 import com.anypluspay.account.domain.utils.AccountUtil;
-import com.anypluspay.account.facade.dto.AccountingRequest;
+import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.facade.dto.EntryDetail;
 import com.anypluspay.account.types.enums.AccountFamily;
 import org.mapstruct.Mapper;

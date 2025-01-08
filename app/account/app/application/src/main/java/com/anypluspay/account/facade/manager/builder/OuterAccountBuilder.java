@@ -9,7 +9,7 @@ import com.anypluspay.account.domain.repository.AccountTitleRepository;
 import com.anypluspay.account.domain.repository.AccountTypeRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
 import com.anypluspay.account.facade.manager.convertor.OuterAccountConvertor;
-import com.anypluspay.account.facade.manager.dto.OuterAccountAddRequest;
+import com.anypluspay.account.facade.manager.request.OuterAccountRequest;
 import com.anypluspay.account.types.enums.DenyStatus;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.response.GlobalResultCode;
@@ -37,7 +37,7 @@ public class OuterAccountBuilder {
     @Autowired
     private OuterAccountConvertor outerAccountConvertor;
 
-    public OuterAccount build(OuterAccountAddRequest request) {
+    public OuterAccount build(OuterAccountRequest request) {
         OuterAccountType outerAccountType = accountTypeRepository.load(request.getAccountType());
         AssertUtil.notNull(outerAccountType, GlobalResultCode.ILLEGAL_PARAM, "账户类型不存在");
         OuterAccount outerAccount = outerAccountConvertor.toOuterAccount(request, outerAccountType);
@@ -50,7 +50,7 @@ public class OuterAccountBuilder {
         return outerAccount;
     }
 
-    public List<OuterAccount> build(List<OuterAccountAddRequest> requests) {
+    public List<OuterAccount> build(List<OuterAccountRequest> requests) {
         List<OuterAccount> outerAccounts = new ArrayList<>();
         requests.forEach(outerAccountAddRequest -> outerAccounts.add(build(outerAccountAddRequest)));
         return outerAccounts;

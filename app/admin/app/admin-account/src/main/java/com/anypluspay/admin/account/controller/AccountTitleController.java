@@ -1,8 +1,8 @@
 package com.anypluspay.admin.account.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.anypluspay.account.facade.accounting.AccountTitleManagerFacade;
-import com.anypluspay.account.facade.accounting.dto.AccountTitleRequest;
+import com.anypluspay.account.facade.manager.AccountTitleManagerFacade;
+import com.anypluspay.account.facade.manager.request.AccountTitleRequest;
 import com.anypluspay.account.infra.persistence.dataobject.AccountTitleDO;
 import com.anypluspay.account.infra.persistence.mapper.AccountTitleMapper;
 import com.anypluspay.admin.account.convertor.AccountTitleConvertor;

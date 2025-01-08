@@ -3,6 +3,7 @@ package com.anypluspay.account.domain;
 import com.anypluspay.account.types.enums.AccountAttribute;
 import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author wxj
  * 2023/12/22
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OuterAccountType extends Entity {
 

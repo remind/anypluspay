@@ -1,6 +1,7 @@
 package com.anypluspay.account.domain.detail;
 
 import com.anypluspay.account.types.enums.IODirection;
+import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.response.GlobalResultCode;
@@ -25,6 +26,11 @@ public class OuterAccountDetail extends AccountDetail {
      * 入账后余额
      */
     private Money afterBalance = new Money();
+
+    /**
+     * 操作类型
+     */
+    private OperationType operationType;
 
     /**
      * 加减方向

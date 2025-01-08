@@ -24,6 +24,11 @@ public abstract class AccountDetail extends Entity {
     private String requestNo;
 
     /**
+     * 套号，同一套号内借贷平衡
+     */
+    private String suiteNo;
+
+    /**
      * 帐号
      */
     private String accountNo;

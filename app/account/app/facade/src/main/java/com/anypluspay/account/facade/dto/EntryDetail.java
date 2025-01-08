@@ -1,7 +1,9 @@
 package com.anypluspay.account.facade.dto;
 
 import com.anypluspay.account.types.enums.CrDr;
+import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.lang.types.Money;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class EntryDetail {
     /**
      * 凭证号
      **/
+    @NotNull
     private String voucherNo;
 
     /**
@@ -27,6 +30,7 @@ public class EntryDetail {
     /**
      * 账户号
      **/
+    @NotNull
     private String accountNo;
 
     /**
@@ -37,7 +41,14 @@ public class EntryDetail {
     /**
      * 金额
      **/
+    @NotNull
     private Money amount;
+
+    /**
+     * 操作类型
+     */
+    @NotNull
+    private OperationType operationType;
 
     /**
      * 借贷标志

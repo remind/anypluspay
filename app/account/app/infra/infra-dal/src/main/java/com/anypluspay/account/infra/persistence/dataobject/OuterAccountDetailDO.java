@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-01-08
  */
 @TableName("t_outer_account_detail")
 public class OuterAccountDetailDO implements Serializable {
@@ -56,6 +56,11 @@ public class OuterAccountDetailDO implements Serializable {
      * 货币类型
      */
     private String currencyCode;
+
+    /**
+     * 操作类型，常规、冻结、解冻
+     */
+    private String operationType;
 
     /**
      * 借贷标志
@@ -145,6 +150,14 @@ public class OuterAccountDetailDO implements Serializable {
         this.currencyCode = currencyCode;
     }
 
+    public String getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
+
     public String getCrDr() {
         return crDr;
     }
@@ -203,6 +216,7 @@ public class OuterAccountDetailDO implements Serializable {
         ", afterBalance = " + afterBalance +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
+        ", operationType = " + operationType +
         ", crDr = " + crDr +
         ", ioDirection = " + ioDirection +
         ", accountingDate = " + accountingDate +

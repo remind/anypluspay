@@ -1,7 +1,7 @@
 package com.anypluspay.account.application.entry;
 
 import com.anypluspay.account.domain.repository.BufferedRuleRepository;
-import com.anypluspay.account.facade.dto.AccountingRequest;
+import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.facade.dto.EntryDetail;
 import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.commons.lang.types.Money;
@@ -43,8 +43,8 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
     @Test
     public void testProcessBuffer() {
         AccountingRequest request = buildAccountingRequest(bufferAccountNo, "40010010011560002", new Money(1));
-        accountEntryService.process(request);
-        assertResult(request);
+        accountOperationService.process(request);
+        assertAccountResult(request);
     }
 
     private String createBufferDetail() {
@@ -68,7 +68,7 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
         entryDetail2.setMemo("测试入账2");
 
         request.setEntryDetails(List.of(entryDetail1, entryDetail2));
-        accountEntryService.process(request);
+        accountOperationService.process(request);
         return entryDetail2.getVoucherNo();
     }
 }
