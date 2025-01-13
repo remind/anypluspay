@@ -1,12 +1,14 @@
 package com.anypluspay.account.types.enums;
 
 import com.anypluspay.commons.enums.CodeEnum;
+import lombok.Getter;
 
 /**
  * 禁止状态
  * @author wxj
  * 2023/12/16
  */
+@Getter
 public enum DenyStatus implements CodeEnum {
     INIT("0", "未冻结"),
 
@@ -25,11 +27,4 @@ public enum DenyStatus implements CodeEnum {
 
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
 }

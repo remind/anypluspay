@@ -1,6 +1,6 @@
 package com.anypluspay.account.facade;
 
-import com.anypluspay.account.application.entry.AccountEntryBaseTest;
+import com.anypluspay.account.AccountEntryBaseTest;
 import com.anypluspay.account.domain.detail.AccountDetail;
 import com.anypluspay.account.domain.detail.OuterAccountDetail;
 import com.anypluspay.account.facade.request.TransferRequest;
@@ -51,7 +51,7 @@ public class TransferFacadeTest extends AccountEntryBaseTest {
 
     private TransferRequest buildRequest(String transferOutAccountNo, String transferInAccountNo, Money amount) {
         TransferRequest request = new TransferRequest();
-        request.setRequestNo(getUUID());
+        request.setRequestNo(randomId());
         request.setAmount(amount);
         request.setTransferInAccountNo(transferInAccountNo);
         request.setTransferOutAccountNo(transferOutAccountNo);

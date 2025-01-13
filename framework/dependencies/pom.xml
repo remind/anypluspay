@@ -59,6 +59,11 @@
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.component</groupId>
+                <artifactId>component-test</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.component</groupId>
                 <artifactId>component-generator</artifactId>
                 <version>${revision}</version>
             </dependency>

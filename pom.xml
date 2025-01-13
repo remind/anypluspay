@@ -18,6 +18,7 @@
         <module>app/channel-gateway/alipay-gateway</module>
         <module>app/channel-gateway/testbank-gateway</module>
         <module>app/testbank</module>
+        <module>framework/component/component-test</module>
     </modules>
 
     <properties>

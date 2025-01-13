@@ -5,6 +5,7 @@ import com.anypluspay.account.types.enums.AccountFamily;
 import com.anypluspay.account.types.enums.DenyStatus;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author wxj
  * 2023/12/16
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OuterAccount extends Account {
 
@@ -42,7 +44,6 @@ public class OuterAccount extends Account {
      * 子账户，一个资金类型的只能有一个
      */
     private List<OuterSubAccount> outerSubAccounts = new ArrayList<>();
-
 
     @Override
     public AccountFamily getAccountFamily() {

@@ -1,5 +1,6 @@
-package com.anypluspay.account.application.entry;
+package com.anypluspay.account.application.account;
 
+import com.anypluspay.account.AccountEntryBaseTest;
 import com.anypluspay.account.domain.repository.BufferedRuleRepository;
 import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.facade.dto.EntryDetail;
@@ -50,9 +51,9 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
     private String createBufferDetail() {
         AccountingRequest request = new AccountingRequest();
         request.setAccountingDate("20231221");
-        request.setRequestNo(getUUID());
+        request.setRequestNo(randomId());
         EntryDetail entryDetail1 = new EntryDetail();
-        entryDetail1.setVoucherNo(getUUID());
+        entryDetail1.setVoucherNo(randomId());
         entryDetail1.setAccountNo("200100200110000000215600001");
         entryDetail1.setSuiteNo("1");
         entryDetail1.setAmount(new Money(1));
@@ -60,7 +61,7 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
         entryDetail1.setMemo("测试入账1");
 
         EntryDetail entryDetail2 = new EntryDetail();
-        entryDetail2.setVoucherNo(getUUID());
+        entryDetail2.setVoucherNo(randomId());
         entryDetail2.setAccountNo("40010010011560001");
         entryDetail2.setSuiteNo("1");
         entryDetail2.setAmount(new Money(1));

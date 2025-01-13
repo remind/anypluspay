@@ -1,5 +1,6 @@
-package com.anypluspay.account.application.entry;
+package com.anypluspay.account.application.account;
 
+import com.anypluspay.account.AccountEntryBaseTest;
 import com.anypluspay.account.domain.repository.BufferedRuleRepository;
 import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.commons.lang.types.Money;

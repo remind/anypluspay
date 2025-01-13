@@ -9,11 +9,11 @@ import com.anypluspay.commons.enums.CodeEnum;
  */
 public enum BalanceDirection implements CodeEnum {
 
-    TWO_WAY("0","双向"),
+    TWO_WAY("T","双向"),
 
-    DEBIT("1", "借方"),
+    DEBIT("D", "借方"),
 
-    CREDIT("2", "贷方");
+    CREDIT("C", "贷方");
 
     private final String code;
     private final String displayName;

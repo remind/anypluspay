@@ -26,21 +26,21 @@ public interface AccountTitleManagerFacade {
      * @param request   请求对象
      * @return  创建结果
      */
-    @PostMapping(PREFIX + "/create-account-title")
-    boolean createAccountTitle(@Validated(AddValidate.class) @RequestBody AccountTitleRequest request);
+    @PostMapping(PREFIX + "/create")
+    String create(@Validated(AddValidate.class) @RequestBody AccountTitleRequest request);
 
     /**
      * 更新科目
      * @param request   请求对象
      * @return  更新结果
      */
-    @PostMapping(PREFIX + "/update-account-title")
-    boolean updateAccountTitle(@Validated(UpdateValidate.class) @RequestBody AccountTitleRequest request);
+    @PostMapping(PREFIX + "/update")
+    boolean update(@Validated(UpdateValidate.class) @RequestBody AccountTitleRequest request);
 
     /**
      * 删除科目
      * @param code  科目代码
      */
-    @GetMapping(PREFIX + "/delete-account-title")
-    void deleteAccountTitle(@RequestParam String code);
+    @GetMapping(PREFIX + "/delete")
+    void delete(@RequestParam String code);
 }

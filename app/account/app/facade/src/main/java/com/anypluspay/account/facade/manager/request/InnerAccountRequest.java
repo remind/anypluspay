@@ -1,6 +1,7 @@
 package com.anypluspay.account.facade.manager.request;
 
 import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ public class InnerAccountRequest {
     /**
      * 账户号
      */
-    @NotNull
+    @NotNull(groups = UpdateValidate.class)
     private String accountNo;
 
     /**
@@ -38,6 +39,5 @@ public class InnerAccountRequest {
     /**
      * 备注
      */
-    @NotNull
     private String memo;
 }

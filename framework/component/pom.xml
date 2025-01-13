@@ -12,6 +12,7 @@
         <module>component-sequence</module>
         <module>component-config</module>
         <module>component-rpc</module>
+        <module>component-test</module>
     </modules>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

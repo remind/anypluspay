@@ -32,9 +32,8 @@ public class OuterAccountRequest {
     private String accountType;
 
     /**
-     * 账户名称
+     * 账户名称，不传就取类型对应的名称
      **/
-    @NotNull
     private String accountName;
 
 }

@@ -1,6 +1,6 @@
 package com.anypluspay.account.facade;
 
-import com.anypluspay.account.application.entry.AccountEntryBaseTest;
+import com.anypluspay.account.AccountEntryBaseTest;
 import com.anypluspay.account.domain.detail.AccountDetail;
 import com.anypluspay.account.domain.detail.OuterAccountDetail;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
@@ -70,7 +70,7 @@ public class FrozenFacadeTest extends AccountEntryBaseTest {
 
     private FrozenRequest buildFrozenRequest(Money amount) {
         FrozenRequest request = new FrozenRequest();
-        request.setRequestNo(getUUID());
+        request.setRequestNo(randomId());
         request.setAccountNo(accountNo);
         request.setAmount(amount);
         request.setMemo("测试冻结");
@@ -79,7 +79,7 @@ public class FrozenFacadeTest extends AccountEntryBaseTest {
 
     private UnFrozenRequest buildUnFrozenRequest(Money amount) {
         UnFrozenRequest request = new UnFrozenRequest();
-        request.setRequestNo(getUUID());
+        request.setRequestNo(randomId());
         request.setAccountNo(accountNo);
         request.setAmount(amount);
         request.setMemo("测试解冻");

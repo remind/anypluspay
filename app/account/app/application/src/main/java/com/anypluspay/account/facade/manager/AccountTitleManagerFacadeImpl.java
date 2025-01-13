@@ -7,6 +7,8 @@ import com.anypluspay.account.facade.manager.builder.AccountTitleBuilder;
 import com.anypluspay.account.facade.manager.request.AccountTitleRequest;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
+import com.anypluspay.commons.validator.AddValidate;
+import com.anypluspay.commons.validator.UpdateValidate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class AccountTitleManagerFacadeImpl implements AccountTitleManagerFacade 
     private AccountTitleRepository accountTitleRepository;
 
     @Override
-    public boolean createAccountTitle(AccountTitleRequest request) {
+    public String create(@Validated(AddValidate.class) AccountTitleRequest request) {
         String parentCode = request.getParentCode();
         AccountTitle parentAccountTitle = null;
         if (StringUtils.isNotBlank(parentCode)) {
@@ -45,11 +47,11 @@ public class AccountTitleManagerFacadeImpl implements AccountTitleManagerFacade 
         } catch (DuplicateKeyException e) {
             throw new BizException("科目代码已经存在");
         }
-        return true;
+        return accountTitle.getCode();
     }
 
     @Override
-    public boolean updateAccountTitle(AccountTitleRequest request) {
+    public boolean update(@Validated(UpdateValidate.class) AccountTitleRequest request) {
         AccountTitle accountTitle = accountTitleRepository.load(request.getCode());
         accountTitle.setName(request.getName());
         accountTitle.setMemo(request.getMemo());
@@ -59,7 +61,7 @@ public class AccountTitleManagerFacadeImpl implements AccountTitleManagerFacade 
     }
 
     @Override
-    public void deleteAccountTitle(String code) {
+    public void delete(String code) {
         AccountTitle accountTitle = accountTitleRepository.load(code);
         AssertUtil.notNull(accountTitle, "科目不存在");
         accountTitleRepository.delete(code);

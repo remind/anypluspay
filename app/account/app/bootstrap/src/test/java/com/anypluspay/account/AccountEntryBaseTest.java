@@ -1,6 +1,5 @@
-package com.anypluspay.account.application.entry;
+package com.anypluspay.account;
 
-import com.anypluspay.account.BaseTest;
 import com.anypluspay.account.application.account.AccountOperationService;
 import com.anypluspay.account.domain.AccountTransaction;
 import com.anypluspay.account.domain.detail.AccountDetail;
@@ -9,16 +8,17 @@ import com.anypluspay.account.domain.detail.OuterAccountDetail;
 import com.anypluspay.account.domain.repository.AccountDetailRepository;
 import com.anypluspay.account.domain.repository.AccountTransactionRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
-import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.facade.dto.EntryDetail;
 import com.anypluspay.account.facade.manager.InnerAccountManagerFacade;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.InnerAccountResponse;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
+import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.account.types.enums.IODirection;
 import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.component.test.AbstractBaseTest;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +30,9 @@ import java.util.List;
  * @author wxj
  * 2025/1/3
  */
-public abstract class AccountEntryBaseTest extends BaseTest {
+public abstract class AccountEntryBaseTest extends AbstractBaseTest {
+
+    protected  final String DEFAULT_SUITE_NO = "1";
 
     @Autowired
     protected AccountOperationService accountOperationService;
@@ -116,27 +118,27 @@ public abstract class AccountEntryBaseTest extends BaseTest {
 
     protected AccountingRequest buildAccountingRequest(String crAccountNo, String drAccountNo, Money amount) {
         AccountingRequest request = new AccountingRequest();
-        request.setRequestNo(getUUID());
+        request.setRequestNo(randomId());
         request.setEntryDetails(buildEntryDetails(crAccountNo, drAccountNo, amount));
         return request;
     }
 
     protected List<EntryDetail> buildEntryDetails(String crAccountNo, String drAccountNo, Money amount) {
         String suiteNo = "1";
-        String memo = "测试入账";
-        EntryDetail crEntryDetail = buildEntryDetail(suiteNo, crAccountNo, amount, CrDr.CREDIT, memo);
-        EntryDetail drEntryDetail = buildEntryDetail(suiteNo, drAccountNo, amount, CrDr.DEBIT, memo);
+        EntryDetail crEntryDetail = buildEntryDetail(suiteNo, crAccountNo, amount, CrDr.CREDIT);
+        EntryDetail drEntryDetail = buildEntryDetail(suiteNo, drAccountNo, amount, CrDr.DEBIT);
         return List.of(crEntryDetail, drEntryDetail);
     }
 
-    protected EntryDetail buildEntryDetail(String suiteNo, String accountNo, Money amount, CrDr crDr, String memo) {
+    protected EntryDetail buildEntryDetail(String suiteNo, String accountNo, Money amount, CrDr crDr) {
         EntryDetail entryDetail = new EntryDetail();
-        entryDetail.setVoucherNo(getUUID());
+        entryDetail.setVoucherNo(randomId());
         entryDetail.setAccountNo(accountNo);
         entryDetail.setSuiteNo(suiteNo);
         entryDetail.setAmount(amount);
         entryDetail.setCrDr(crDr);
-        entryDetail.setMemo(memo);
+        entryDetail.setOperationType(OperationType.NORMAL);
+        entryDetail.setMemo("测试入账");
         return entryDetail;
     }
 }

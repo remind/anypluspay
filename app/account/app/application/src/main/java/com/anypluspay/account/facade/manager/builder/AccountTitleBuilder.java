@@ -2,12 +2,16 @@ package com.anypluspay.account.facade.manager.builder;
 
 import com.anypluspay.account.domain.AccountDomainConstants;
 import com.anypluspay.account.domain.accounting.AccountTitle;
+import com.anypluspay.account.domain.repository.AccountTitleRepository;
 import com.anypluspay.account.facade.manager.request.AccountTitleRequest;
 import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.enums.BalanceDirection;
 import com.anypluspay.commons.exceptions.BizException;
+import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +20,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AccountTitleBuilder {
+
+    @Autowired
+    private AccountTitleRepository accountTitleRepository;
 
     public AccountTitle build(AccountTitleRequest request, AccountTitle parentAccountTitle) {
         AccountTitle accountTitle = new AccountTitle();
@@ -43,10 +50,26 @@ public class AccountTitleBuilder {
         return accountTitle;
     }
 
+
+    public AccountTitle validate(AccountTitleRequest request) {
+        AccountTitle parentAccountTitle = null;
+        if (StringUtils.isBlank(request.getParentCode())) {
+            // 一级科目
+
+        } else {
+            // 二、三级科目
+            parentAccountTitle = accountTitleRepository.load(request.getParentCode());
+            AssertUtil.notNull(parentAccountTitle, "父科目不存在");
+        }
+
+        return parentAccountTitle;
+    }
+
     private BalanceDirection getBalanceDirection(AccountTitleType type) {
         return switch (type) {
             case Assets -> BalanceDirection.DEBIT;
             case Liabilities, OwnersEquity, IncreaseAndDecrease, Public -> BalanceDirection.CREDIT;
         };
     }
+
 }

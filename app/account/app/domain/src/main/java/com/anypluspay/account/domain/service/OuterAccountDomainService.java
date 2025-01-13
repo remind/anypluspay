@@ -9,6 +9,7 @@ import com.anypluspay.account.domain.repository.OuterAccountRepository;
 import com.anypluspay.account.domain.utils.AccountUtil;
 import com.anypluspay.account.types.AccountResultCode;
 import com.anypluspay.account.types.enums.DenyStatus;
+import com.anypluspay.account.types.enums.IODirection;
 import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
@@ -90,13 +91,26 @@ public class OuterAccountDomainService {
             outerSubAccountDetail.setBeforeBalance(outerSubAccount.getBalance());
             outerSubAccountDetail.setMemo(outerAccountDetail.getMemo());
             switch (outerAccountDetail.getOperationType()) {
-                case NORMAL ->
-                        outerSubAccount.updateAvailableBalance(outerAccountDetail.getIoDirection(), outerSubAccountDetail.getAmount());
+                case NORMAL -> {
+                    validateAccount(outerAccount, outerAccountDetail.getIoDirection());
+                    outerSubAccount.updateAvailableBalance(outerAccountDetail.getIoDirection(), outerSubAccountDetail.getAmount());
+                }
                 case FROZEN -> outerSubAccount.frozenBalance(outerSubAccountDetail.getAmount());
                 case UNFROZEN -> outerSubAccount.unfrozenBalance(outerSubAccountDetail.getAmount());
             }
             outerSubAccountDetail.setAfterBalance(outerSubAccount.getBalance());
         });
         outerAccountDetail.setAfterBalance(outerAccount.getBalance());
+    }
+
+    /**
+     * 验证账户状态
+     * @param outerAccount
+     * @param ioDirection
+     */
+    private void validateAccount(OuterAccount outerAccount, IODirection ioDirection) {
+        AssertUtil.isFalse(outerAccount.getDenyStatus() == DenyStatus.DENY_IN_OUT, AccountResultCode.ACCOUNT_DENY_IN_OUT);
+        AssertUtil.isFalse(outerAccount.getDenyStatus() == DenyStatus.DENY_OUT && ioDirection == IODirection.OUT, AccountResultCode.ACCOUNT_DENY_OUT);
+        AssertUtil.isFalse(outerAccount.getDenyStatus() == DenyStatus.DENY_IN && ioDirection == IODirection.IN, AccountResultCode.ACCOUNT_DENY_IN);
     }
 }

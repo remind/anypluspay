@@ -77,7 +77,7 @@ public class AccountTitleController extends AbstractController {
      */
     @PostMapping("/add")
     public ResponseResult<String> add(@RequestBody @Validated(UpdateValidate.class) AccountTitleRequest request) {
-        accountTitleManagerFacade.createAccountTitle(request);
+        accountTitleManagerFacade.create(request);
         return ResponseResult.success();
     }
 
@@ -89,7 +89,7 @@ public class AccountTitleController extends AbstractController {
      */
     @PostMapping("/update")
     public ResponseResult<String> update(@RequestBody @Validated(UpdateValidate.class) AccountTitleRequest request) {
-        accountTitleManagerFacade.updateAccountTitle(request);
+        accountTitleManagerFacade.update(request);
         return ResponseResult.success();
     }
 
@@ -101,7 +101,7 @@ public class AccountTitleController extends AbstractController {
      */
     @GetMapping("/delete")
     public ResponseResult<String> delete(@RequestParam String code) {
-        accountTitleManagerFacade.deleteAccountTitle(code);
+        accountTitleManagerFacade.delete(code);
         return ResponseResult.success();
     }
 }

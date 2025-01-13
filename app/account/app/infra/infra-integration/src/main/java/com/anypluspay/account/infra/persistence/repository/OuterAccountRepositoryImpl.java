@@ -59,7 +59,7 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
         AssertUtil.notNull(account, GlobalResultCode.ILLEGAL_PARAM);
         OuterAccountDO outerAccountDO = dalConvertor.toOuterAccountDo(account);
         List<OuterSubAccountDO> outerSubAccountDOS = outerSubAccountDalConvertor.toDO(account.getOuterSubAccounts());
-        outerAccountMapper.update(outerAccountDO, getOuterAccountIdWrapper(account.getAccountNo()));
+        outerAccountMapper.updateById(outerAccountDO);
         outerSubAccountDOS.forEach(outerSubAccountDO -> {
             outerSubAccountMapper.update(outerSubAccountDO
                     , getOuterSubAccountIdWrapper(outerSubAccountDO.getAccountNo(), outerSubAccountDO.getFundType()));
@@ -70,7 +70,7 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
     public OuterAccount load(String accountNo) {
         AssertUtil.notNull(accountNo, GlobalResultCode.ILLEGAL_PARAM);
         OuterAccount outerAccount = null;
-        OuterAccountDO outerAccountDO = outerAccountMapper.selectOne(getOuterAccountIdWrapper(accountNo));
+        OuterAccountDO outerAccountDO = outerAccountMapper.selectById(accountNo);
         if (outerAccountDO != null) {
             List<OuterSubAccountDO> outerSubAccountDOS = outerSubAccountMapper.selectList(Wrappers.lambdaQuery(OuterSubAccountDO.class)
                     .eq(OuterSubAccountDO::getAccountNo, outerAccountDO.getAccountNo()));
@@ -83,7 +83,7 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
     public OuterAccount lock(String accountNo) {
         AssertUtil.notNull(accountNo, GlobalResultCode.ILLEGAL_PARAM);
         OuterAccount outerAccount = null;
-        OuterAccountDO outerAccountDO = outerAccountMapper.lockOne(getOuterAccountIdWrapper(accountNo));
+        OuterAccountDO outerAccountDO = outerAccountMapper.lockById(accountNo);
         if (outerAccountDO != null) {
             List<OuterSubAccountDO> outerSubAccountDOS = outerSubAccountMapper.selectList(Wrappers.lambdaQuery(OuterSubAccountDO.class)
                     .eq(OuterSubAccountDO::getAccountNo, outerAccountDO.getAccountNo()));
@@ -116,10 +116,6 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
     private boolean isExists(String memberId, String accountType) {
         return outerAccountMapper.exists(new LambdaQueryWrapper<OuterAccountDO>().eq(OuterAccountDO::getMemberId, memberId)
                 .eq(OuterAccountDO::getAccountType, accountType));
-    }
-
-    private Wrapper<OuterAccountDO> getOuterAccountIdWrapper(String accountNo) {
-        return new LambdaQueryWrapper<OuterAccountDO>().eq(OuterAccountDO::getAccountNo, accountNo);
     }
 
     private Wrapper<OuterSubAccountDO> getOuterSubAccountIdWrapper(String accountNo, String fundType) {

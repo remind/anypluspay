@@ -17,6 +17,11 @@ public interface AccountDomainConstants {
     int ACCOUNT_TITLE_TIER_MAX = 3;
 
     /**
+     * 科目每层级的长度为3，科目规则为 type + 000 + 000 + 000，首位为类型，后面每层级占3位
+     */
+    int ACCOUNT_TITLE_PER_LEN = 3;
+
+    /**
      * 默认资金类型
      */
     String DEFAULT_FUND_TYPE = "NORMAL";
