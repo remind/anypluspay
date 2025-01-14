@@ -29,7 +29,16 @@ public class AccountTitleManagerFacadeTest extends AbstractBaseTest {
         request.setType(AccountTitleType.Assets.getCode());
         request.setScope(AccountTitleScope.INNER_ENTRIES.getCode());
         request.setEnable(true);
+        request.setMemo("test");
         String titleCode = accountTitleManagerFacade.create(request);
         Assert.assertNotNull(titleCode);
+
+        request = new AccountTitleRequest();
+        request.setParentCode(titleCode);
+        request.setName("test");
+        request.setMemo("test");
+        request.setEnable(true);
+        String titleCode1 = accountTitleManagerFacade.create(request);
+        Assert.assertNotNull(titleCode1);
     }
 }

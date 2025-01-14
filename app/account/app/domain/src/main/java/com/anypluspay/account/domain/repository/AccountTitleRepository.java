@@ -1,6 +1,7 @@
 package com.anypluspay.account.domain.repository;
 
 import com.anypluspay.account.domain.accounting.AccountTitle;
+import com.anypluspay.account.types.accounting.AccountTitleType;
 
 /**
  * @author wxj
@@ -17,4 +18,6 @@ public interface AccountTitleRepository {
     AccountTitle lock(String titleCode);
 
     void delete(String titleCode);
+
+    String getTitleCode(AccountTitleType type, Integer tier, String parentCode);
 }

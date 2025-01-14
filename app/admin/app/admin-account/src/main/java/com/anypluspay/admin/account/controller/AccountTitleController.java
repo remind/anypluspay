@@ -11,6 +11,7 @@ import com.anypluspay.admin.account.query.AccountTitleQuery;
 import com.anypluspay.basis.web.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
+import com.anypluspay.commons.validator.AddValidate;
 import com.anypluspay.commons.validator.UpdateValidate;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +77,7 @@ public class AccountTitleController extends AbstractController {
      * @return 新增结果
      */
     @PostMapping("/add")
-    public ResponseResult<String> add(@RequestBody @Validated(UpdateValidate.class) AccountTitleRequest request) {
+    public ResponseResult<String> add(@RequestBody @Validated(AddValidate.class) AccountTitleRequest request) {
         accountTitleManagerFacade.create(request);
         return ResponseResult.success();
     }

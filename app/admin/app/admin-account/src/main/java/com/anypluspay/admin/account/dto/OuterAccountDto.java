@@ -40,9 +40,19 @@ public class OuterAccountDto {
     private String denyStatus;
 
     /**
+     * 禁止状态名称
+     */
+    private String denyStatusName;
+
+    /**
      * 账户属性 1:对私，2:对公
      */
     private String accountAttribute;
+
+    /**
+     * 账户属性名称
+     */
+    private String accountAttributeName;
 
     /**
      * 账户类型
@@ -50,14 +60,24 @@ public class OuterAccountDto {
     private String accountType;
 
     /**
-     * 当前余额方向 1:借，2:贷
+     * 当前余额方向 D:借，C:贷
      */
     private String currentBalanceDirection;
 
     /**
-     * 账户余额方向 1:借，2:贷，0:双向
+     * 当前余额方向名称
+     */
+    private String currentBalanceDirectionName;
+
+    /**
+     * 账户余额方向 D:借，C:贷，T:双向
      */
     private String balanceDirection;
+
+    /**
+     * 账户余额方向名称
+     */
+    private String balanceDirectionName;
 
     /**
      * 货币类型

@@ -26,7 +26,6 @@ public class AccountTitleBuilder {
 
     public AccountTitle build(AccountTitleRequest request, AccountTitle parentAccountTitle) {
         AccountTitle accountTitle = new AccountTitle();
-        accountTitle.setCode(request.getCode());
         accountTitle.setName(request.getName());
         accountTitle.setParentCode(request.getParentCode());
         accountTitle.setEnable(request.getEnable());
@@ -47,6 +46,7 @@ public class AccountTitleBuilder {
             accountTitle.setTier(parentAccountTitle.getTier() + 1);
             accountTitle.setLeaf(accountTitle.getTier() == AccountDomainConstants.ACCOUNT_TITLE_TIER_MAX);
         }
+        accountTitle.setCode(accountTitleRepository.getTitleCode(accountTitle.getType(), accountTitle.getTier(), request.getParentCode()));
         return accountTitle;
     }
 

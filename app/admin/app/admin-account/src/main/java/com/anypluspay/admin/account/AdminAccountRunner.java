@@ -3,6 +3,7 @@ package com.anypluspay.admin.account;
 import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.enums.BalanceDirection;
+import com.anypluspay.account.types.enums.DenyStatus;
 import com.anypluspay.commons.enums.CodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -27,5 +28,6 @@ public class AdminAccountRunner implements ApplicationRunner {
         codeEnumList.add(AccountTitleType.class);
         codeEnumList.add(BalanceDirection.class);
         codeEnumList.add(AccountTitleScope.class);
+        codeEnumList.add(DenyStatus.class);
     }
 }
