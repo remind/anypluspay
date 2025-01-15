@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 外部户
@@ -85,6 +86,11 @@ public class OuterAccountDto {
     private String currencyCode;
 
     /**
+     * 子户
+     */
+    private List<OuterSubAccountDto> outerSubAccounts;
+
+    /**
      * 创建时间
      */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -95,4 +101,5 @@ public class OuterAccountDto {
      */
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime gmtModified;
+
 }

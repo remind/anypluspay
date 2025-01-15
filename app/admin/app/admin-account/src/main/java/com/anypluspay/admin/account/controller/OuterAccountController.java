@@ -3,10 +3,12 @@ package com.anypluspay.admin.account.controller;
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.request.OuterAccountRequest;
-import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.account.infra.persistence.dataobject.OuterAccountDO;
+import com.anypluspay.account.infra.persistence.dataobject.OuterSubAccountDO;
 import com.anypluspay.account.infra.persistence.mapper.OuterAccountMapper;
+import com.anypluspay.account.infra.persistence.mapper.OuterSubAccountMapper;
 import com.anypluspay.admin.account.convertor.OuterAccountConvertor;
+import com.anypluspay.admin.account.convertor.OuterSubAccountConvertor;
 import com.anypluspay.admin.account.dto.OuterAccountDto;
 import com.anypluspay.admin.account.query.OuterAccountQuery;
 import com.anypluspay.basis.web.controller.AbstractController;
@@ -33,6 +35,12 @@ public class OuterAccountController extends AbstractController {
 
     @Autowired
     private OuterAccountMapper dalMapper;
+
+    @Autowired
+    private OuterSubAccountMapper outerSubAccountMapper;
+
+    @Autowired
+    private OuterSubAccountConvertor outerSubAccountConvertor;
 
     @Autowired
     private OuterAccountManagerFacade accountManagerFacade;
@@ -67,8 +75,13 @@ public class OuterAccountController extends AbstractController {
      * @return 查询结果
      */
     @GetMapping("/detail")
-    public ResponseResult<OuterAccountResponse> detail(@RequestParam String accountNo) {
-        OuterAccountResponse outerAccountDto = accountManagerFacade.detail(accountNo);
+    public ResponseResult<OuterAccountDto> detail(@RequestParam String accountNo) {
+        OuterAccountDto outerAccountDto = convertor.toDto(dalMapper.selectById(accountNo));
+        if (outerAccountDto != null) {
+            LambdaQueryWrapper<OuterSubAccountDO> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(OuterSubAccountDO::getAccountNo, accountNo);
+            outerAccountDto.setOuterSubAccounts(outerSubAccountConvertor.toDto(outerSubAccountMapper.selectList(queryWrapper)));
+        }
         return ResponseResult.success(outerAccountDto);
     }
 
@@ -99,12 +112,12 @@ public class OuterAccountController extends AbstractController {
     /**
      * 变更账户禁止状态
      *
-     * @param accountNo 账户编号
-     * @param denyStatusCode 账户状态编码
+     * @param accountNo      账户编号
+     * @param denyStatus 账户状态编码
      */
     @GetMapping("/change-deny-status")
-    public ResponseResult<String> changeDenyStatus(@RequestParam String accountNo, @RequestParam String denyStatusCode) {
-        accountManagerFacade.changeDenyStatus(accountNo, denyStatusCode);
+    public ResponseResult<String> changeDenyStatus(@RequestParam String accountNo, @RequestParam String denyStatus) {
+        accountManagerFacade.changeDenyStatus(accountNo, denyStatus);
         return ResponseResult.success();
     }
 }
