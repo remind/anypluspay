@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anypluspay.admin.account.mapper.TitleDailyQueryMapper">
+    <resultMap id="queryResult" type="com.anypluspay.admin.account.model.dto.TitleDailyDto">
+        <result property="accountDate" column="account_date"/>
+        <result property="titleCode" column="title_code"/>
+        <result property="titleName" column="title_name"/>
+        <result property="balanceDirection" column="balance_direction"/>
+        <result property="debitAmount" column="debit_amount" javaType="java.math.BigDecimal"/>
+        <result property="creditAmount" column="credit_amount" javaType="java.math.BigDecimal"/>
+        <result property="debitCount" column="debit_count" javaType="java.lang.Long"/>
+        <result property="creditCount" column="credit_count" javaType="java.lang.Long"/>
+        <result property="debitBalance" column="debit_balance" javaType="java.math.BigDecimal"/>
+        <result property="creditBalance" column="credit_balance" javaType="java.math.BigDecimal"/>
+        <result property="currencyCode" column="currency_code"/>
+    </resultMap>
+
+
+    <select id="list" parameterType="map"
+            resultMap="queryResult">
+        select d.account_date,
+        t.code as title_code,t.name as title_name,t.balance_direction,
+        d.debit_amount, d.credit_amount, d.debit_count,d.credit_count, d.debit_balance, d.credit_balance,
+        d.currency_code from t_title_daily d
+        inner join t_account_title t on d.title_code = t.code
+        <where>
+            <if test="query.accountDate != null and query.accountDate != ''">
+                AND d.account_date = #{query.accountDate}
+            </if>
+        </where>
+        order by t.code asc
+    </select>
+
+</mapper>

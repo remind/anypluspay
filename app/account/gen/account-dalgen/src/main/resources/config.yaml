@@ -27,4 +27,5 @@ db:
 #      - t_inner_account_detail
 #      - t_buffered_detail
 #      - t_buffered_rule
-      - t_accounting_entry
+#      - t_accounting_entry
+      - t_title_daily

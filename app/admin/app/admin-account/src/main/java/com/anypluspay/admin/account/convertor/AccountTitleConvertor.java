@@ -1,7 +1,7 @@
 package com.anypluspay.admin.account.convertor;
 
 import com.anypluspay.account.infra.persistence.dataobject.AccountTitleDO;
-import com.anypluspay.admin.account.dto.AccountTitleDto;
+import com.anypluspay.admin.account.model.dto.AccountTitleDto;
 import com.anypluspay.basis.convertor.SimpleQueryConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

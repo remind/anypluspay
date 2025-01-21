@@ -1,4 +1,4 @@
-package com.anypluspay.admin.account.dto;
+package com.anypluspay.admin.account.model.dto;
 
 import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 
 /**
  * @author wxj
- * 2025/1/15
+ * 2025/1/5
  */
 @Data
-public class OuterSubAccountDto {
+public class InnerAccountDto {
 
     /**
      * 账户号
@@ -20,24 +20,34 @@ public class OuterSubAccountDto {
     private String accountNo;
 
     /**
-     * 资金类型
+     * 科目号
      */
-    private String fundType;
+    private String titleCode;
+
+    /**
+     * 账户名称
+     */
+    private String accountName;
+
+    /**
+     * 当前余额方向 D:借，C:贷
+     */
+    private String currentBalanceDirection;
+
+    /**
+     * 账户余额方向 D:借，C:贷，0:双向
+     */
+    private String balanceDirection;
+
+    /**
+     * 货币类型
+     */
+    private String currencyCode;
 
     /**
      * 余额
      */
     private BigDecimal balance;
-
-    /**
-     * 可用余额
-     */
-    private BigDecimal availableBalance;
-
-    /**
-     * 币种代码
-     */
-    private String currencyCode;
 
     /**
      * 备注

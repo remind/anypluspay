@@ -1,7 +1,7 @@
 package com.anypluspay.admin.account.convertor;
 
 import com.anypluspay.account.infra.persistence.dataobject.OuterSubAccountDO;
-import com.anypluspay.admin.account.dto.OuterSubAccountDto;
+import com.anypluspay.admin.account.model.dto.OuterSubAccountDto;
 import com.anypluspay.basis.convertor.SimpleQueryConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

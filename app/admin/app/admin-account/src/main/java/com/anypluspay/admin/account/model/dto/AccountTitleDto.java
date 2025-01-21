@@ -1,4 +1,4 @@
-package com.anypluspay.admin.account.dto;
+package com.anypluspay.admin.account.model.dto;
 
 import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

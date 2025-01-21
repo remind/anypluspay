@@ -24,7 +24,6 @@ public class UnionQueryResult {
      */
     private FundInOrderDto fundInOrder;
 
-
     /**
      * 退款订单
      */
