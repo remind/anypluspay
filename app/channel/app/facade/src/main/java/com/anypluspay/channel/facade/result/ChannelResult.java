@@ -10,7 +10,7 @@ import java.util.Map;
  * 2024/7/18
  */
 @Data
-public class ChannelResult{
+public class ChannelResult {
 
     /**
      * 请求号

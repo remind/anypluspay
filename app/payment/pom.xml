@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.anypluspay</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>payment</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>app/bootstrap</module>
+        <module>app/facade</module>
+        <module>app/infra</module>
+        <module>app/application</module>
+        <module>app/domain</module>
+        <module>app/types</module>
+        <module>gen/dalgen</module>
+    </modules>
+
+    <properties>
+        <revision>1.0-SNAPSHOT</revision>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-types</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-facade</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-application</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-infra</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-infra-dal</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-infra-integration</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.channel</groupId>
+                <artifactId>channel-facade</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

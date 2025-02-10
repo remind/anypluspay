@@ -13,12 +13,13 @@
         <module>framework/dependencies</module>
         <module>framework/parent</module>
         <module>app/admin</module>
+        <module>app/payment</module>
+        <module>app/account</module>
         <module>app/channel</module>
+        <module>app/testbank</module>
         <module>app/channel-gateway/wxpay-gateway</module>
         <module>app/channel-gateway/alipay-gateway</module>
         <module>app/channel-gateway/testbank-gateway</module>
-        <module>app/testbank</module>
-        <module>framework/component/component-test</module>
     </modules>
 
     <properties>

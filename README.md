@@ -10,6 +10,7 @@
 anypluspay
     ├── app -- 应用服务目录
          ├── admin -- 后台管理服务
+         ├── payment -- 支付服务
          ├── account -- 账务服务
          ├── channel -- 渠道服务
          ├── channel-gateway -- 渠道网关目录

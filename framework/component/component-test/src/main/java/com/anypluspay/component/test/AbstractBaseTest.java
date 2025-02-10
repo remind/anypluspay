@@ -5,6 +5,7 @@ import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.text.csv.CsvReader;
 import cn.hutool.core.text.csv.CsvUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.response.ResultCode;
 import org.junit.Assert;
@@ -64,5 +65,9 @@ public abstract class AbstractBaseTest {
      */
     protected String randomId() {
         return UUID.fastUUID().toString(true);
+    }
+
+    public String randomPersonalMemberId() {
+        return "100000000" + RandomUtil.randomNumbers(3);
     }
 }
