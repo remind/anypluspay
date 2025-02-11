@@ -24,7 +24,7 @@ public class AccountingRequest {
     private String accountingDate;
 
     /**
-     * 明细明细
+     * 入账明细
      */
     private List<EntryDetail> entryDetails;
 

@@ -15,12 +15,18 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-02-11
  */
 @TableName("t_outer_sub_account_detail")
 public class OuterSubAccountDetailDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 自增ID
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 凭证号
@@ -78,6 +84,14 @@ public class OuterSubAccountDetailDO implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getVoucherNo() {
         return voucherNo;
@@ -170,7 +184,8 @@ public class OuterSubAccountDetailDO implements Serializable {
     @Override
     public String toString() {
         return "OuterSubAccountDetailDO{" +
-        "voucherNo = " + voucherNo +
+        "id = " + id +
+        ", voucherNo = " + voucherNo +
         ", requestNo = " + requestNo +
         ", accountNo = " + accountNo +
         ", fundType = " + fundType +

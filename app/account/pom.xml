@@ -17,7 +17,7 @@
         <module>app/facade</module>
         <module>app/infra/infra-dal</module>
         <module>app/infra/infra-integration</module>
-        <module>gen/account-dalgen</module>
+        <module>gen/dalgen</module>
         <module>app/bootstrap</module>
     </modules>
 

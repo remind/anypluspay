@@ -17,7 +17,7 @@ import java.util.List;
 public class EntryDetail {
 
     /**
-     * 凭证号
+     * 凭证号，全局唯一
      **/
     @NotNull
     private String voucherNo;

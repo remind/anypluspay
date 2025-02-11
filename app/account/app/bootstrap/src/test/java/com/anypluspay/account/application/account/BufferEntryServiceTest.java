@@ -1,14 +1,17 @@
 package com.anypluspay.account.application.account;
 
 import com.anypluspay.account.AccountEntryBaseTest;
+import com.anypluspay.account.domain.detail.AccountDetail;
+import com.anypluspay.account.domain.detail.BufferedDetail;
+import com.anypluspay.account.domain.repository.BufferedDetailRepository;
 import com.anypluspay.account.domain.repository.BufferedRuleRepository;
 import com.anypluspay.account.facade.request.AccountingRequest;
-import com.anypluspay.account.facade.dto.EntryDetail;
-import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.commons.lang.types.Money;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,6 +23,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * 缓冲入账测试
+ *
  * @author wxj
  * 2025/1/3
  */
@@ -29,6 +33,9 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
 
     @MockitoBean
     private BufferedRuleRepository bufferedRuleRepository;
+
+    @Autowired
+    private BufferedDetailRepository bufferedDetailRepository;
 
     private static final String bufferAccountNo = "40010010011560001";
 
@@ -40,36 +47,32 @@ public class BufferEntryServiceTest extends AccountEntryBaseTest {
 
     /**
      * 测试入账缓冲
+     * 1条正常1条缓冲，缓冲不执行
      */
     @Test
     public void testProcessBuffer() {
         AccountingRequest request = buildAccountingRequest(bufferAccountNo, "40010010011560002", new Money(1));
         accountOperationService.process(request);
-        assertAccountResult(request);
+        assetBufferDetail(request, 1, 1);
     }
 
-    private String createBufferDetail() {
-        AccountingRequest request = new AccountingRequest();
-        request.setAccountingDate("20231221");
-        request.setRequestNo(randomId());
-        EntryDetail entryDetail1 = new EntryDetail();
-        entryDetail1.setVoucherNo(randomId());
-        entryDetail1.setAccountNo("200100200110000000215600001");
-        entryDetail1.setSuiteNo("1");
-        entryDetail1.setAmount(new Money(1));
-        entryDetail1.setCrDr(CrDr.CREDIT);
-        entryDetail1.setMemo("测试入账1");
+    private void assetBufferDetail(AccountingRequest request, int bufferCount, int normalCount) {
+        List<AccountDetail> accountDetails = assertRequest(request.getRequestNo());
+        Assert.assertEquals(normalCount, accountDetails.size());
+        List<BufferedDetail> bufferedDetails = bufferedDetailRepository.loadByRequestNo(request.getRequestNo());
+        Assert.assertEquals(bufferCount, bufferedDetails.size());
 
-        EntryDetail entryDetail2 = new EntryDetail();
-        entryDetail2.setVoucherNo(randomId());
-        entryDetail2.setAccountNo("40010010011560001");
-        entryDetail2.setSuiteNo("1");
-        entryDetail2.setAmount(new Money(1));
-        entryDetail2.setCrDr(CrDr.DEBIT);
-        entryDetail2.setMemo("测试入账2");
-
-        request.setEntryDetails(List.of(entryDetail1, entryDetail2));
-        accountOperationService.process(request);
-        return entryDetail2.getVoucherNo();
+        request.getEntryDetails().forEach(entryDetail -> {
+            if (entryDetail.getAccountNo().equals(bufferAccountNo)) {
+                BufferedDetail bufferedDetail = bufferedDetailRepository.load(entryDetail.getVoucherNo());
+                Assert.assertNotNull(bufferedDetail);
+                Assert.assertEquals(bufferedDetail.getRequestNo(), request.getRequestNo());
+                Assert.assertEquals(bufferedDetail.getAmount(), entryDetail.getAmount());
+            } else {
+                List<AccountDetail> entryAccountDetails = accountDetails.stream().filter(accountDetail -> accountDetail.getVoucherNo().equals(entryDetail.getVoucherNo())).toList();
+                Assert.assertEquals(1, entryAccountDetails.size());
+                assertAccountDetail(entryDetail, entryAccountDetails.get(0));
+            }
+        });
     }
 }

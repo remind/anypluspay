@@ -15,12 +15,15 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-02-11
  */
 @TableName("t_outer_sub_account")
 public class OuterSubAccountDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 账户号
@@ -63,6 +66,14 @@ public class OuterSubAccountDO implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getAccountNo() {
         return accountNo;
@@ -131,7 +142,8 @@ public class OuterSubAccountDO implements Serializable {
     @Override
     public String toString() {
         return "OuterSubAccountDO{" +
-        "accountNo = " + accountNo +
+        "id = " + id +
+        ", accountNo = " + accountNo +
         ", fundType = " + fundType +
         ", balance = " + balance +
         ", availableBalance = " + availableBalance +

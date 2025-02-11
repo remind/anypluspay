@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-01-21
+ * @since 2025-02-11
  */
 @TableName("t_title_daily")
 public class TitleDailyDO implements Serializable {

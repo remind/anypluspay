@@ -15,4 +15,8 @@ public interface BufferedDetailRepository {
     void reStore(BufferedDetail bufferedDetail);
 
     BufferedDetail lock(String voucherNo);
+
+    BufferedDetail load(String voucherNo);
+
+    List<BufferedDetail> loadByRequestNo(String requestNo);
 }

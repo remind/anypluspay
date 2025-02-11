@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-01-08
+ * @since 2025-02-11
  */
 @TableName("t_outer_account_detail")
 public class OuterAccountDetailDO implements Serializable {
@@ -25,6 +25,7 @@ public class OuterAccountDetailDO implements Serializable {
     /**
      * 凭证号
      */
+    @TableId(value = "voucher_no", type = IdType.NONE)
     private String voucherNo;
 
     /**

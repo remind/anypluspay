@@ -7,6 +7,7 @@ import com.anypluspay.account.infra.persistence.dataobject.BufferedDetailDO;
 import com.anypluspay.account.infra.persistence.mapper.BufferedDetailMapper;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,15 +35,24 @@ public class BufferedDetailRepositoryImpl implements BufferedDetailRepository {
 
     @Override
     public void reStore(BufferedDetail bufferedDetail) {
-        mapper.update(dalConvertor.toDO(bufferedDetail), getIdWrapper(bufferedDetail.getVoucherNo()));
+        mapper.updateById(dalConvertor.toDO(bufferedDetail));
     }
 
     @Override
     public BufferedDetail lock(String voucherNo) {
-        return dalConvertor.toEntity(mapper.lockOne(getIdWrapper(voucherNo)));
+        return dalConvertor.toEntity(mapper.lockById(voucherNo));
     }
 
-    private Wrapper<BufferedDetailDO> getIdWrapper(String voucherNo) {
-        return new LambdaQueryWrapper<BufferedDetailDO>().eq(BufferedDetailDO::getVoucherNo, voucherNo);
+    @Override
+    public BufferedDetail load(String voucherNo) {
+        return dalConvertor.toEntity(mapper.selectById(voucherNo));
     }
+
+    @Override
+    public List<BufferedDetail> loadByRequestNo(String requestNo) {
+        LambdaQueryWrapper<BufferedDetailDO> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(BufferedDetailDO::getRequestNo, requestNo);
+        return dalConvertor.toEntity(mapper.selectList(queryWrapper));
+    }
+
 }

@@ -9,7 +9,7 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
  * </p>
  *
  * @author wxj
- * @since 2025-01-21
+ * @since 2025-02-11
  */
 public interface TitleDailyMapper extends ExtBaseMapper<TitleDailyDO> {
 

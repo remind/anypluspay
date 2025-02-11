@@ -68,7 +68,7 @@ public abstract class AccountEntryBaseTest extends AbstractBaseTest {
         });
     }
 
-    private void assertAccountDetail(EntryDetail entryDetail, AccountDetail accountDetail) {
+    protected void assertAccountDetail(EntryDetail entryDetail, AccountDetail accountDetail) {
         Assert.assertEquals(entryDetail.getVoucherNo(), accountDetail.getVoucherNo());
         Assert.assertEquals(entryDetail.getAccountNo(), accountDetail.getAccountNo());
         Assert.assertEquals(entryDetail.getMemo(), accountDetail.getMemo());

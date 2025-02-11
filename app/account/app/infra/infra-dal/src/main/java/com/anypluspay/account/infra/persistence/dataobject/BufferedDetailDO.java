@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-26
+ * @since 2025-02-11
  */
 @TableName("t_buffered_detail")
 public class BufferedDetailDO implements Serializable {
@@ -23,14 +23,9 @@ public class BufferedDetailDO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 自增ID
-     */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-
-    /**
      * 凭证号
      */
+    @TableId(value = "voucher_no", type = IdType.NONE)
     private String voucherNo;
 
     /**
@@ -89,14 +84,6 @@ public class BufferedDetailDO implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getVoucherNo() {
         return voucherNo;
@@ -197,8 +184,7 @@ public class BufferedDetailDO implements Serializable {
     @Override
     public String toString() {
         return "BufferedDetailDO{" +
-        "id = " + id +
-        ", voucherNo = " + voucherNo +
+        "voucherNo = " + voucherNo +
         ", requestNo = " + requestNo +
         ", accountNo = " + accountNo +
         ", amount = " + amount +
