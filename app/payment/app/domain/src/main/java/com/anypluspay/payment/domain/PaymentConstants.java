@@ -6,7 +6,14 @@ package com.anypluspay.payment.domain;
  */
 public interface PaymentConstants {
 
+    /**
+     * 过渡户
+     */
     String TRANSITION_ACCOUNT = "TRANSITION_ACCOUNT";
+
+    /**
+     * 账户用户
+     */
     String INNER_MEMBER_ID = "inner_member";
 
     /**

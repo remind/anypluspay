@@ -15,16 +15,22 @@ public enum FundAction implements CodeEnum {
     FREEZE("FREEZE", "冻结", 3),
     INCREASE("INCREASE", "增加", 2),
     DECREASE("DECREASE", "减少", 1),
-    TRANSFER("TRANSFER", "转账", 0);
+    ;
 
-    private String code;
+    /**
+     * 编码
+     */
+    private final String code;
 
-    private String displayName;
+    /**
+     * 显示名称
+     */
+    private final String displayName;
 
     /**
      * 执行顺序
      */
-    private int sort;
+    private final int sort;
 
     FundAction(String code, String displayName, int sort) {
         this.code = code;
@@ -38,7 +44,6 @@ public enum FundAction implements CodeEnum {
             case UNFREEZE -> FREEZE;
             case INCREASE -> DECREASE;
             case DECREASE -> INCREASE;
-            case TRANSFER -> TRANSFER;
         };
     }
 

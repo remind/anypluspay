@@ -1,9 +1,12 @@
 package com.anypluspay.payment.facade.instant;
 
 import cn.hutool.core.map.MapUtil;
+import com.anypluspay.account.facade.AccountingFacade;
 import com.anypluspay.channel.facade.FundInFacade;
+import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.domain.flux.*;
@@ -32,7 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author wxj
@@ -56,6 +59,12 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     @MockitoBean
     private FundInFacade fundInFacade;
 
+    @MockitoBean
+    private RefundFacade refundFacade;
+
+    @MockitoBean
+    protected AccountingFacade accountingFacade;
+
     protected void mockFundInSuccess() {
         FundResult fundResult = new FundResult();
         fundResult.setStatus(BizOrderStatus.SUCCESS);
@@ -66,6 +75,16 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         when(fundInFacade.apply(any())).thenReturn(fundResult);
     }
 
+    protected void mockRefundSuccess() {
+        FundResult fundResult = new FundResult();
+        fundResult.setStatus(BizOrderStatus.SUCCESS);
+        fundResult.setUnityCode("S001");
+        Map<String, Object> extInfo = new HashMap<>();
+        extInfo.put(PaymentKey.CLEARING_ACCOUNT_NO, CHANNEL_CLEARING_ACCOUNT_NO);
+        fundResult.setExtInfo(extInfo);
+        when(refundFacade.apply(any())).thenReturn(fundResult);
+    }
+
     protected void mockFundInProcessing() {
         FundResult fundResult = new FundResult();
         fundResult.setStatus(BizOrderStatus.PROCESSING);
@@ -74,6 +93,14 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         responseExtra.put("instUrl", "channel pay url");
         fundResult.setResponseExtra(responseExtra);
         when(fundInFacade.apply(any())).thenReturn(fundResult);
+    }
+
+    protected void mockAccountingSuccess() {
+        doNothing().when(accountingFacade).apply(any());
+    }
+
+    protected void mockAccountingFail() {
+        doThrow(new BizException("accounting fail")).when(accountingFacade).apply(any());
     }
 
     protected InstantPaymentRequest buildInstantPaymentRequest(double amount) {

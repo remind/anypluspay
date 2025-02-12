@@ -24,6 +24,7 @@ public class BalancePayTest extends InstPaymentBaseTest {
 
     @Test
     public void testPaySuccess() {
+        mockAccountingSuccess();
         double amount = 10;
         InstantPaymentRequest request = buildInstantPaymentRequest(amount);
         request.setPayerFundDetail(List.of(buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, amount)));

@@ -8,7 +8,8 @@ import lombok.Getter;
  * 2024/6/27
  */
 @Getter
-public enum ChannelApiType implements CodeEnum {
+public enum
+ChannelApiType implements CodeEnum {
 
     SINGLE_DEBIT("SD", "单笔扣款"), // 直接扣款类
     SIGN("SG", "签名"), // 网银、微信/支付宝等需要先签名或下单

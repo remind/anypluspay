@@ -1,6 +1,5 @@
 package com.anypluspay.payment.domain.payorder.service;
 
-import com.anypluspay.payment.domain.asset.factory.AssetFluxFactory;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.BasePayOrder;
@@ -20,9 +19,6 @@ public abstract class AbstractBasePayService {
 
     @Autowired
     protected IdGeneratorService idGeneratorService;
-
-    @Autowired
-    protected AssetFluxFactory assetFluxFactory;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected FluxOrder buildFluxOrder(BasePayOrder payOrder) {
