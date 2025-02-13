@@ -39,6 +39,8 @@
 ![img.png](docs/images/balance-pay-sequence.png)
 ### 外部支付
 ![img.png](docs/images/external-pay-sequence.png)
+### 余额+外部支付
+![external-balance-pay-sequence.png](docs/images/external-balance-pay-sequence.png)
 ## 系统介绍
 
 ### 系统整体目录结构
