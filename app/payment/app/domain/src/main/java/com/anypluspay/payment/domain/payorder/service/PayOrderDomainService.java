@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.payorder.service;
 
-import com.anypluspay.payment.domain.payorder.PayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.types.PayResult;
 
 /**
@@ -9,6 +9,6 @@ import com.anypluspay.payment.types.PayResult;
  */
 public interface PayOrderDomainService {
 
-    PayResult pay(PayOrder payOrder);
+    PayResult pay(GeneralPayOrder generalPayOrder);
 
 }

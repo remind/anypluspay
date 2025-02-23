@@ -9,18 +9,36 @@ import com.anypluspay.commons.enums.CodeEnum;
  */
 public enum BelongTo implements CodeEnum {
 
-    PAYEE("payee", "收款方"),
-    PAYER("payer","付款方");
+    PAYEE("payee", "收款方") {
+        @Override
+        public BelongTo reverse() {
+            return PAYER;
+        }
+    },
+    PAYER("payer", "付款方") {
+        @Override
+        public BelongTo reverse() {
+            return PAYEE;
+        }
+    };
 
 
-    private String code;
+    private final String code;
 
-    private String displayName;
+    private final String displayName;
+
+    /**
+     * 返回方向
+     *
+     * @return
+     */
+    public abstract BelongTo reverse();
 
     BelongTo(String code, String displayName) {
         this.code = code;
         this.displayName = displayName;
     }
+
     ;
 
     @Override

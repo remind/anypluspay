@@ -19,11 +19,9 @@ public enum PayOrderStatus implements OrderStatus {
     SUCCESS("SUCCESS", "成功"),
     ;
 
-    @Getter
-    private String code;
+    private final String code;
 
-    @Getter
-    private String displayName;
+    private final String displayName;
 
     PayOrderStatus(String code, String displayName) {
         this.code = code;

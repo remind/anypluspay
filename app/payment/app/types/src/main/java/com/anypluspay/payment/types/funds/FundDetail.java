@@ -29,6 +29,11 @@ public class FundDetail {
     private String detailId;
 
     /**
+     * 关联ID，退款时关联其支付时的详情ID
+     */
+    private String relationId;
+
+    /**
      * 资产所有人ID
      */
     private String memberId;

@@ -1,6 +1,7 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
 import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.InstructionType;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.infra.persistence.dataobject.FluxInstructionDO;
 import com.anypluspay.payment.infra.persistence.mapper.FluxInstructionMapper;
@@ -29,6 +30,19 @@ public class FluxInstructionRepositoryImpl implements FluxInstructionRepository 
         LambdaQueryWrapper<FluxInstructionDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(FluxInstructionDO::getFluxOrderId, fluxOrderId);
         return dalConvertor.toEntity(dalMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public FluxInstruction loadByPayFundDetailId(String fundDetailId) {
+        LambdaQueryWrapper<FluxInstructionDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FluxInstructionDO::getFundDetailId, fundDetailId);
+        queryWrapper.eq(FluxInstructionDO::getType, InstructionType.PAY.getCode());
+        return dalConvertor.toEntity(dalMapper.selectOne(queryWrapper));
+    }
+
+    @Override
+    public FluxInstruction load(String fluxInstructionId) {
+        return dalConvertor.toEntity(dalMapper.selectById(fluxInstructionId));
     }
 
     @Override

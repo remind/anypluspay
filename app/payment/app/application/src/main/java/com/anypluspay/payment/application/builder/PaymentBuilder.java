@@ -1,6 +1,6 @@
 package com.anypluspay.payment.application.builder;
 
-import com.anypluspay.payment.domain.BasePayment;
+import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.facade.request.BasePaymentRequest;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
@@ -22,11 +22,25 @@ public abstract class PaymentBuilder {
 
     /**
      * 填充支付基础信息
+     * @param request
+     * @param paymentType
+     */
+    protected Payment buildPayment(BasePaymentRequest request, PaymentType paymentType) {
+        Payment payment = new Payment();
+        payment.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), paymentType.getIdType()));
+        payment.setMemberId(request.getMemberId());
+        payment.setPaymentType(paymentType);
+        payment.setMerchantId(request.getMerchantId());
+        return payment;
+    }
+
+    /**
+     * 填充支付基础信息
      * @param payment
      * @param request
      * @param paymentType
      */
-    protected void fillBasePayment(BasePayment payment, BasePaymentRequest request, PaymentType paymentType) {
+    protected void fillBasePayment(Payment payment, BasePaymentRequest request, PaymentType paymentType) {
         payment.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), paymentType.getIdType()));
         payment.setMemberId(request.getMemberId());
         payment.setPaymentType(paymentType);

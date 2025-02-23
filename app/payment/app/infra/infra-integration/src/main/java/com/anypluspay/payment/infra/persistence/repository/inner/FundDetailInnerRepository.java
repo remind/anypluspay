@@ -28,6 +28,10 @@ public class FundDetailInnerRepository  {
         return dalConvertor.toEntity(dalMapper.selectList(buildPaymentIdQueryWrapper(paymentId)));
     }
 
+    public List<FundDetail> loadByOrderId(String orderId) {
+        return dalConvertor.toEntity(dalMapper.selectList(buildOrderIdQueryWrapper(orderId)));
+    }
+
     public void store(List<FundDetail> fundDetails) {
         fundDetails.forEach(fundDetail -> {
             dalMapper.insert(dalConvertor.toDO(fundDetail));
@@ -42,5 +46,9 @@ public class FundDetailInnerRepository  {
 
     private Wrapper<FundDetailDO> buildPaymentIdQueryWrapper(String paymentId) {
         return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPaymentId, paymentId);
+    }
+
+    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String orderId) {
+        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getOrderId, orderId);
     }
 }

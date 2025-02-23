@@ -1,8 +1,8 @@
 package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.payment.application.builder.PaymentBuilder;
-import com.anypluspay.payment.domain.instant.InstantPayment;
-import com.anypluspay.payment.domain.payorder.PayOrder;
+import com.anypluspay.payment.domain.Payment;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.PayOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
@@ -17,38 +17,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class InstantPaymentBuilder extends PaymentBuilder {
 
-    public InstantPayment build(InstantPaymentRequest request) {
-        InstantPayment instantPayment = new InstantPayment();
-        fillBasePayment(instantPayment, request, PaymentType.INSTANT);
-        instantPayment.setPayOrder(buildPayOrder(instantPayment.getPaymentId(), request));
-        fillFundDetails(instantPayment.getPayOrder(), request);
-        return instantPayment;
+    public Payment buildPayment(InstantPaymentRequest request) {
+        return buildPayment(request, PaymentType.INSTANT);
     }
 
-    private PayOrder buildPayOrder(String paymentId, InstantPaymentRequest request) {
-        PayOrder payOrder = new PayOrder();
-        payOrder.setPaymentId(paymentId);
-        payOrder.setOrderId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
-        payOrder.setRequestId(request.getRequestId());
-        payOrder.setAmount(request.getPayAmount());
-        payOrder.setMemberId(request.getPayerId());
-        payOrder.setOrderStatus(PayOrderStatus.INIT);
-        return payOrder;
+    public GeneralPayOrder buildPayOrder(String paymentId, InstantPaymentRequest request) {
+        GeneralPayOrder generalPayOrder = new GeneralPayOrder();
+        generalPayOrder.setPaymentId(paymentId);
+        generalPayOrder.setOrderId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
+        generalPayOrder.setRequestId(request.getRequestId());
+        generalPayOrder.setAmount(request.getPayAmount());
+        generalPayOrder.setMemberId(request.getPayerId());
+        generalPayOrder.setOrderStatus(PayOrderStatus.INIT);
+        fillFundDetails(generalPayOrder, request);
+        return generalPayOrder;
     }
 
     /**
      * 填充资金明细
-     * @param payOrder
+     * @param generalPayOrder
      * @param request
      */
-    private void fillFundDetails(PayOrder payOrder, InstantPaymentRequest request) {
+    private void fillFundDetails(GeneralPayOrder generalPayOrder, InstantPaymentRequest request) {
         request.getPayerFundDetail().forEach(fundDetailInfo -> {
-            payOrder.addPayerFundDetail(buildFundDetail(payOrder.getPaymentId(), payOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
+            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
         });
 
         request.getTradeInfos().forEach(tradeInfo -> {
             tradeInfo.getPayeeFundDetail().forEach(fundDetailInfo -> {
-                payOrder.addPayeeFundDetail(buildFundDetail(payOrder.getPaymentId(), payOrder.getOrderId(), fundDetailInfo, BelongTo.PAYEE));
+                generalPayOrder.addPayeeFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYEE));
             });
         });
     }

@@ -1,13 +1,20 @@
 package com.anypluspay.payment.domain.payorder.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
+import com.anypluspay.payment.domain.flux.service.FluxEngineService;
 import com.anypluspay.payment.domain.payorder.BasePayOrder;
-import com.anypluspay.payment.domain.payorder.PayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
+import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
+import com.anypluspay.payment.domain.repository.FluxOrderRepository;
+import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.funds.FundDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -20,15 +27,41 @@ public abstract class AbstractBasePayService {
     @Autowired
     protected IdGeneratorService idGeneratorService;
 
+    @Autowired
+    protected FluxEngineService fluxEngineService;
+
+    @Autowired
+    protected FluxOrderRepository fluxOrderRepository;
+
+    @Autowired
+    protected FluxInstructionRepository fluxInstructionRepository;
+
+    @Autowired
+    protected GeneralPayOrderRepository generalPayOrderRepository;
+
+    @Autowired
+    protected TransactionTemplate transactionTemplate;
+
+    @Autowired
+    protected PaymentRepository paymentRepository;
+
+    protected FluxOrder createAndStoreFluxOrder(BasePayOrder payOrder) {
+        FluxOrder fluxOrder = buildFluxOrder(payOrder);
+        transactionTemplate.executeWithoutResult(status -> {
+            fluxOrderRepository.store(fluxOrder);
+        });
+        return fluxOrder;
+    }
+
     @SuppressWarnings({"unchecked", "rawtypes"})
     protected FluxOrder buildFluxOrder(BasePayOrder payOrder) {
         FluxOrder fluxOrder = new FluxOrder();
         fluxOrder.setPaymentId(payOrder.getPaymentId());
         fluxOrder.setPayOrderId(payOrder.getOrderId());
         fluxOrder.setFluxOrderId(idGeneratorService.genIdByRelateId(payOrder.getPaymentId(), IdType.FLUX_ORDER_ID));
-        fluxOrder.setStatus(FluxOrderStatus.INIT);
+        fluxOrder.setStatus(FluxOrderStatus.PROCESS);
         fluxOrder.setInstructChain(new InstructChain());
-        InstructionType type = payOrder instanceof PayOrder ? InstructionType.PAY : InstructionType.REFUND;
+        InstructionType type = payOrder instanceof GeneralPayOrder ? InstructionType.PAY : InstructionType.REFUND;
         fillFluxInstruct(fluxOrder, payOrder.getPayerDetails(), payOrder.getPayeeDetails(), type);
         return fluxOrder;
     }
@@ -56,6 +89,11 @@ public abstract class AbstractBasePayService {
 
         fluxInstruction.setAssetInfo(fundDetail.getAssetInfo());
         fluxInstruction.setFundAction(fundDetail.getFundAction());
+
+        if (StrUtil.isNotBlank(fundDetail.getRelationId())) {
+            FluxInstruction relationFluxInstruction = fluxInstructionRepository.loadByPayFundDetailId(fundDetail.getRelationId());
+            fluxInstruction.setRelationId(relationFluxInstruction.getInstructionId());
+        }
 
         fluxOrder.getInstructChain().append(fluxInstruction);
     }

@@ -808,7 +808,7 @@ public class Money implements Serializable, Comparable<Money>, Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Money clone()  {
         return new Money(this.getAmount(),this.currency);
     }
 }

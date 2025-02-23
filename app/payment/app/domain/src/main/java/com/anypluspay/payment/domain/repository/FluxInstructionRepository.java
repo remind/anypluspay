@@ -12,6 +12,10 @@ public interface FluxInstructionRepository {
 
     List<FluxInstruction> loadByFluxOrderId(String fluxOrderId);
 
+    FluxInstruction loadByPayFundDetailId(String relationId);
+
+    FluxInstruction load(String fluxInstructionId);
+
     void store(FluxInstruction fluxInstruction);
 
     void reStore(FluxInstruction fluxInstruction);

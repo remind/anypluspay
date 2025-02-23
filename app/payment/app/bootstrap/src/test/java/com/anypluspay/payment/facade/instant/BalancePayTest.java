@@ -30,6 +30,6 @@ public class BalancePayTest extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        assetPayment(request, response);
+        assetPayOrder(request, response);
     }
 }

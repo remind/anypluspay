@@ -1,6 +1,5 @@
 package com.anypluspay.payment.facade.instant;
 
-import cn.hutool.core.map.MapUtil;
 import com.anypluspay.account.facade.AccountingFacade;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.RefundFacade;
@@ -11,10 +10,10 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.instant.InstantPayment;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.PayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
-import com.anypluspay.payment.domain.repository.InstantPaymentRepository;
+import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.TradeInfo;
@@ -51,7 +50,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected static final String CHANNEL_CLEARING_ACCOUNT_NO = "40010010011560001";
 
     @Autowired
-    private InstantPaymentRepository instantPaymentRepository;
+    protected GeneralPayOrderRepository generalPayOrderRepository;
 
     @Autowired
     private FluxOrderRepository fluxOrderRepository;
@@ -137,16 +136,16 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         return fundDetailInfo;
     }
 
-    protected void assetPayment(InstantPaymentRequest request, InstantPaymentResponse response) {
-        InstantPayment payment = instantPaymentRepository.load(response.getPaymentId());
-        Assert.assertNotNull(payment);
-        Assert.assertEquals(request.getRequestId(), payment.getBasePayOrder().getRequestId());
-        Assert.assertEquals(request.getPayAmount(), payment.getBasePayOrder().getAmount());
-        Assert.assertEquals(request.getPayerId(), payment.getBasePayOrder().getMemberId());
-        assetDetail(request.getPayerFundDetail(), payment.getBasePayOrder().getPayerDetails());
+    protected void assetPayOrder(InstantPaymentRequest request, InstantPaymentResponse response) {
+        GeneralPayOrder generalPayOrder = generalPayOrderRepository.load(response.getPayOrderId());
+        Assert.assertNotNull(generalPayOrder);
+        Assert.assertEquals(request.getRequestId(), generalPayOrder.getRequestId());
+        Assert.assertEquals(request.getPayAmount(), generalPayOrder.getAmount());
+        Assert.assertEquals(request.getPayerId(), generalPayOrder.getMemberId());
+        assetDetail(request.getPayerFundDetail(), generalPayOrder.getPayerDetails());
 
         List<FundDetailInfo> payeeFundDetailInfos = request.getTradeInfos().stream().map(TradeInfo::getPayeeFundDetail).flatMap(List::stream).toList();
-        assetDetail(payeeFundDetailInfos, payment.getBasePayOrder().getPayeeDetails());
+        assetDetail(payeeFundDetailInfos, generalPayOrder.getPayeeDetails());
         assetFlux(response);
     }
 

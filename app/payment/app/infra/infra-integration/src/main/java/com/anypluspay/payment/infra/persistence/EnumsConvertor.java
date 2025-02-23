@@ -5,7 +5,7 @@ import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionType;
 import com.anypluspay.payment.domain.payorder.PayOrderStatus;
-import com.anypluspay.payment.domain.payorder.RefundOrderStatus;
+import com.anypluspay.payment.domain.refund.RefundOrderStatus;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;

@@ -14,5 +14,7 @@ public interface FluxOrderRepository {
 
     FluxOrder load(String fluxOrderId);
 
+    FluxOrder lock(String fluxOrderId);
+
     FluxOrder loadByPayOrderId(String payOrderId);
 }

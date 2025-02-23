@@ -72,7 +72,7 @@ public class MultiMethodPayTest extends InstPaymentBaseTest {
         request.setTradeInfos(List.of(tradeInfo));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
         Assert.assertEquals(PayOrderStatus.FAIL, response.getOrderStatus());
-        assetPayment(request, response);
+        assetPayOrder(request, response);
     }
 
 }

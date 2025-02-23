@@ -35,7 +35,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
         Assert.assertEquals(PayOrderStatus.SUCCESS, response.getOrderStatus());
-        assetPayment(request, response);
+        assetPayOrder(request, response);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        assetPayment(request, response);
+        assetPayOrder(request, response);
         Assert.assertEquals(PayOrderStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());

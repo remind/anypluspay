@@ -13,8 +13,9 @@ db:
     name:
     # 依次为：表名,业务主键字段(如果也是表主键就不用)
 #      - tp_payment,payment_id
-#      - tp_pay_order,order_id
 #      - tp_fund_detail,detail_id
 #      - tp_order_extension,order_id
-      - tp_flux_order
-      - tp_flux_instruction
+#      - tp_flux_order
+#      - tp_flux_instruction
+      - tp_refund_order
+#      - tp_general_pay_order
