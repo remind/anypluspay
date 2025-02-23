@@ -7,7 +7,9 @@ import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.infra.persistence.convertor.FluxOrderDalConvertor;
+import com.anypluspay.payment.infra.persistence.dataobject.FluxInstructionDO;
 import com.anypluspay.payment.infra.persistence.dataobject.FluxOrderDO;
+import com.anypluspay.payment.infra.persistence.mapper.FluxInstructionMapper;
 import com.anypluspay.payment.infra.persistence.mapper.FluxOrderMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class FluxOrderRepositoryImpl implements FluxOrderRepository {
 
     @Autowired
     private FluxOrderMapper dalMapper;
+
+    @Autowired
+    private FluxInstructionMapper instructionMapper;
 
     @Autowired
     private FluxOrderDalConvertor dalConvertor;
@@ -64,6 +69,12 @@ public class FluxOrderRepositoryImpl implements FluxOrderRepository {
         LambdaQueryWrapper<FluxOrderDO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(FluxOrderDO::getPayOrderId, payOrderId);
         return buildFluxOrder(dalMapper.selectOne(wrapper));
+    }
+
+    @Override
+    public FluxOrder loadByInstructionId(String instructionId) {
+        FluxInstructionDO fluxInstructionDO = instructionMapper.selectById(instructionId);
+        return fluxInstructionDO != null ? load(fluxInstructionDO.getFluxOrderId()) : null;
     }
 
     private FluxOrder buildFluxOrder(FluxOrderDO fluxOrderDO) {

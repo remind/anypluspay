@@ -56,7 +56,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     private FluxOrderRepository fluxOrderRepository;
 
     @MockitoBean
-    private FundInFacade fundInFacade;
+    protected FundInFacade fundInFacade;
 
     @MockitoBean
     private RefundFacade refundFacade;
