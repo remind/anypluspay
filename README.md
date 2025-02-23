@@ -50,8 +50,8 @@ anypluspay
     ├── app -- 应用服务目录
          ├── admin -- 运营平台
          ├── payment -- 支付服务
-         ├── account -- 账务账务
-         ├── channel -- 渠道账务
+         ├── account -- 账务服务
+         ├── channel -- 渠道服务
          ├── channel-gateway -- 渠道网关目录
                 ├── alipay-gateway -- 支付宝网关
                 ├── wxpay-gateway -- 微信网关

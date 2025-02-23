@@ -35,19 +35,6 @@ public abstract class PaymentBuilder {
     }
 
     /**
-     * 填充支付基础信息
-     * @param payment
-     * @param request
-     * @param paymentType
-     */
-    protected void fillBasePayment(Payment payment, BasePaymentRequest request, PaymentType paymentType) {
-        payment.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), paymentType.getIdType()));
-        payment.setMemberId(request.getMemberId());
-        payment.setPaymentType(paymentType);
-        payment.setMerchantId(request.getMerchantId());
-    }
-
-    /**
      * 构造资金明细
      * @param paymentId
      * @param orderId
