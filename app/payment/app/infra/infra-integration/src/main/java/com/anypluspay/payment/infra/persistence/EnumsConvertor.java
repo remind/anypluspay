@@ -4,8 +4,8 @@ import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionType;
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
-import com.anypluspay.payment.domain.refund.RefundOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
@@ -24,8 +24,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(PaymentType.class, code);
     }
 
-    default PayOrderStatus toPayOrderStatus(String code) {
-        return EnumUtil.getByCode(PayOrderStatus.class, code);
+    default GeneralPayOrderStatus toPayOrderStatus(String code) {
+        return EnumUtil.getByCode(GeneralPayOrderStatus.class, code);
     }
 
     default RefundOrderStatus toRefundOrderStatus(String code) {

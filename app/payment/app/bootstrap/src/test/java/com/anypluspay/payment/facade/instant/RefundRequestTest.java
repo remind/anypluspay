@@ -1,7 +1,7 @@
 package com.anypluspay.payment.facade.instant;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
@@ -65,7 +65,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         tradeInfo.setPayeeFundDetail(List.of(payeeFundDetail));
         request.setTradeInfos(List.of(tradeInfo));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(PayOrderStatus.SUCCESS, response.getOrderStatus());
+        Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
         return response;
     }

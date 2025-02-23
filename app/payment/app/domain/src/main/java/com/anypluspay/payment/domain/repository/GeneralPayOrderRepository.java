@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.repository;
 
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 
 /**
  * @author wxj

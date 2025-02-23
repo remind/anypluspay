@@ -1,11 +1,11 @@
 package com.anypluspay.payment.domain.payorder;
 
-import com.anypluspay.payment.types.OrderStatus;
-import com.anypluspay.payment.types.asset.BelongTo;
-import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
+import com.anypluspay.payment.types.OrderStatus;
+import com.anypluspay.payment.types.asset.BelongTo;
+import com.anypluspay.payment.types.funds.FundDetail;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -63,11 +63,6 @@ public abstract class BasePayOrder<T extends OrderStatus> extends Entity {
      * 付款方资金详情
      */
     private List<FundDetail> payerDetails = new ArrayList<>();
-
-    /**
-     * 资金关系
-     */
-//    private List<FundsRelation> fundsRelations;
 
     public void addPayeeFundDetail(FundDetail fundDetail) {
         AssertUtil.isTrue(fundDetail.getBelongTo() == BelongTo.PAYEE, "收款方资金详情 belongTo 为 PAYEE");

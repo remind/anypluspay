@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.payorder;
+package com.anypluspay.payment.domain.payorder.general;
 
 import com.anypluspay.payment.types.OrderStatus;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Getter;
  * 2024/1/15
  */
 @Getter
-public enum PayOrderStatus implements OrderStatus {
+public enum GeneralPayOrderStatus implements OrderStatus {
 
     INIT("INIT", "初始化"),
 
@@ -23,7 +23,7 @@ public enum PayOrderStatus implements OrderStatus {
 
     private final String displayName;
 
-    PayOrderStatus(String code, String displayName) {
+    GeneralPayOrderStatus(String code, String displayName) {
         this.code = code;
         this.displayName = displayName;
     }

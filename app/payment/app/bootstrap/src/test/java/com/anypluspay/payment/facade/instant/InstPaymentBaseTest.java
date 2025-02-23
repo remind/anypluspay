@@ -10,8 +10,8 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
@@ -183,10 +183,10 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
             }
         });
 
-        if (response.getOrderStatus() == PayOrderStatus.SUCCESS) {
+        if (response.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
             Assert.assertEquals(FluxOrderStatus.SUCCESS, fluxOrder.getStatus());
             Assert.assertEquals(0, instructChain.toList().stream().filter(f -> f.getStatus() != InstructStatus.SUCCESS).count());
-        } else if (response.getOrderStatus() == PayOrderStatus.FAIL) {
+        } else if (response.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
             Assert.assertEquals(FluxOrderStatus.FAIL, fluxOrder.getStatus());
             fluxInstructions.forEach(fluxInstruction -> {
                 Assert.assertEquals(1,

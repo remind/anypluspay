@@ -1,6 +1,6 @@
 package com.anypluspay.payment.infra.persistence.repository.payorder;
 
-import com.anypluspay.payment.domain.refund.RefundOrder;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.infra.persistence.convertor.RefundOrderDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.RefundOrderDO;

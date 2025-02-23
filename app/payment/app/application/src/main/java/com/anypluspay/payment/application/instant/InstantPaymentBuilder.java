@@ -2,8 +2,8 @@ package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.payment.application.builder.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentType;
@@ -28,7 +28,7 @@ public class InstantPaymentBuilder extends PaymentBuilder {
         generalPayOrder.setRequestId(request.getRequestId());
         generalPayOrder.setAmount(request.getPayAmount());
         generalPayOrder.setMemberId(request.getPayerId());
-        generalPayOrder.setOrderStatus(PayOrderStatus.INIT);
+        generalPayOrder.setOrderStatus(GeneralPayOrderStatus.INIT);
         fillFundDetails(generalPayOrder, request);
         return generalPayOrder;
     }

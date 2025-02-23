@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.instant;
 
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -34,7 +34,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(PayOrderStatus.SUCCESS, response.getOrderStatus());
+        Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
     }
 
@@ -48,7 +48,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
         assetPayOrder(request, response);
-        Assert.assertEquals(PayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());
         Assert.assertNotNull(payResult.getPayParam());

@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.repository;
 
-import com.anypluspay.payment.domain.refund.RefundOrder;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 
 import java.util.List;
 

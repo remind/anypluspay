@@ -3,7 +3,7 @@ package com.anypluspay.payment.application.flux;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.BasePayOrder;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.funds.FundDetail;

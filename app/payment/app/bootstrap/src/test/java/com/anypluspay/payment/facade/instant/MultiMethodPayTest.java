@@ -4,7 +4,7 @@ import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.PayOrderStatus;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
@@ -71,7 +71,7 @@ public class MultiMethodPayTest extends InstPaymentBaseTest {
         tradeInfo.setPayeeFundDetail(List.of(payeeFundDetail));
         request.setTradeInfos(List.of(tradeInfo));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(PayOrderStatus.FAIL, response.getOrderStatus());
+        Assert.assertEquals(GeneralPayOrderStatus.FAIL, response.getOrderStatus());
         assetPayOrder(request, response);
     }
 

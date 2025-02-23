@@ -1,7 +1,7 @@
 package com.anypluspay.payment.application;
 
-import com.anypluspay.payment.domain.payorder.PayService;
-import com.anypluspay.payment.domain.refund.RefundService;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayService;
+import com.anypluspay.payment.domain.payorder.refund.RefundService;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
@@ -31,7 +31,7 @@ public abstract class AbstractPaymentService {
     protected IdGeneratorService idGeneratorService;
 
     @Autowired
-    protected PayService payService;
+    protected GeneralPayService generalPayService;
 
     @Autowired
     protected RefundService refundService;
