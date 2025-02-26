@@ -34,6 +34,10 @@
 ### 项目愿景
 致力于打造一套开源、易用、功能强大的支付系统解决方案，帮助开发者快速构建安全可靠的支付系统，推动支付行业的技术发展。
 
+## 核心模型
+### 单据模型
+![order-model.png](docs/images/order-model.png)
+
 ## 核心流程
 ### 余额支付
 ![img.png](docs/images/balance-pay-sequence.png)
