@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-02-23
+ * @since 2025-02-28
  */
 @TableName("tp_refund_order")
 public class RefundOrderDO implements Serializable {
@@ -62,6 +62,11 @@ public class RefundOrderDO implements Serializable {
      * 订单状态
      */
     private String orderStatus;
+
+    /**
+     * 扩展信息
+     */
+    private String extension;
 
     /**
      * 创建时间
@@ -139,6 +144,14 @@ public class RefundOrderDO implements Serializable {
         this.orderStatus = orderStatus;
     }
 
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -166,6 +179,7 @@ public class RefundOrderDO implements Serializable {
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
         ", orderStatus = " + orderStatus +
+        ", extension = " + extension +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

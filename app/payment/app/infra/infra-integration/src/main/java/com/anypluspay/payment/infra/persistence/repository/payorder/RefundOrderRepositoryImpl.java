@@ -30,6 +30,8 @@ public class RefundOrderRepositoryImpl extends AbstractPayOrderRepository implem
     @Override
     public void store(RefundOrder refundOrder) {
         dalMapper.insert(dalConvertor.toDO(refundOrder));
+        storeFundDetail(refundOrder.getPayerDetails());
+        storeFundDetail(refundOrder.getPayeeDetails());
     }
 
     @Override

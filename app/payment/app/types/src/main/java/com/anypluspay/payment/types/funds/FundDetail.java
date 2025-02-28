@@ -1,5 +1,6 @@
 package com.anypluspay.payment.types.funds;
 
+import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.commons.lang.types.Money;
@@ -11,7 +12,7 @@ import lombok.Data;
  * 2024/1/15
  */
 @Data
-public class FundDetail {
+public class FundDetail extends Entity  {
 
     /**
      * 支付总单ID

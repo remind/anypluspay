@@ -1,7 +1,10 @@
 package com.anypluspay.payment.facade.instant;
 
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
@@ -33,19 +36,27 @@ public class RefundRequestTest extends InstPaymentBaseTest {
     private InstantPaymentFacade instantPaymentFacade;
 
     @Test
-    public void test() {
+    public void testSuccess() {
+        mockRefundSuccess();
         InstantPaymentResponse response = buildInstantPayment();
         RefundRequest refundRequest = new RefundRequest();
         refundRequest.setRequestId(randomId());
         refundRequest.setAmount(new Money(2000));
         refundRequest.setOrigOrderId(response.getPayOrderId());
         RefundResponse refundResponse = instantPaymentFacade.refund(refundRequest);
-        System.out.println(ToStringBuilder.reflectionToString(refundResponse));
+        Assert.assertNotNull(refundResponse);
+        modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
+        RefundOrder refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
+        refundOrder.getPayeeDetails().forEach(fundDetail -> {
+            Assert.assertEquals(RefundOrderStatus.SUCCESS, refundOrder.getOrderStatus());
+        });
     }
+
+
 
     private InstantPaymentResponse buildInstantPayment() {
         mockFundInSuccess();
-        mockRefundSuccess();
+
         InstantPaymentRequest request = new InstantPaymentRequest();
         request.setRequestId(randomId());
         request.setMerchantId("merchantId123");

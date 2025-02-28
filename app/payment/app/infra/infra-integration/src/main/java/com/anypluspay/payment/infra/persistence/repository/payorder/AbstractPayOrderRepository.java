@@ -4,7 +4,6 @@ import com.anypluspay.payment.domain.payorder.BasePayOrder;
 import com.anypluspay.payment.infra.persistence.convertor.FundDetailDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.FundDetailDO;
 import com.anypluspay.payment.infra.persistence.mapper.FundDetailMapper;
-import com.anypluspay.payment.infra.persistence.mapper.OrderExtensionMapper;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -24,9 +23,6 @@ public abstract class AbstractPayOrderRepository {
 
     @Autowired
     private FundDetailDalConvertor fundDetailDalConvertor;
-
-    @Autowired
-    protected OrderExtensionMapper extensionMapper;
 
     protected void fillFundDetails(BasePayOrder payOrder) {
         if (payOrder != null) {

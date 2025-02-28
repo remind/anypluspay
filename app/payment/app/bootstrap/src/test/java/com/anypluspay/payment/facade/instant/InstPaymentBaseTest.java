@@ -8,17 +8,22 @@ import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
+import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
+import com.anypluspay.payment.domain.repository.PaymentRepository;
+import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.facade.instant.common.ModelIntegrityCheck;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.TradeInfo;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PaymentKey;
+import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.AssetTypeCategory;
 import com.anypluspay.payment.types.asset.BalanceAsset;
@@ -50,7 +55,13 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected static final String CHANNEL_CLEARING_ACCOUNT_NO = "40010010011560001";
 
     @Autowired
+    protected PaymentRepository paymentRepository;
+
+    @Autowired
     protected GeneralPayOrderRepository generalPayOrderRepository;
+
+    @Autowired
+    protected RefundOrderRepository refundOrderRepository;
 
     @Autowired
     private FluxOrderRepository fluxOrderRepository;
@@ -63,6 +74,9 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
 
     @MockitoBean
     protected AccountingFacade accountingFacade;
+
+    @Autowired
+    protected ModelIntegrityCheck modelIntegrityCheck;
 
     protected void mockFundInSuccess() {
         FundResult fundResult = new FundResult();
@@ -137,6 +151,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     }
 
     protected void assetPayOrder(InstantPaymentRequest request, InstantPaymentResponse response) {
+        modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
         GeneralPayOrder generalPayOrder = generalPayOrderRepository.load(response.getPayOrderId());
         Assert.assertNotNull(generalPayOrder);
         Assert.assertEquals(request.getRequestId(), generalPayOrder.getRequestId());

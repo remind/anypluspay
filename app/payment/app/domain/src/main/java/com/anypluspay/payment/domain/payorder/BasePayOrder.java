@@ -52,7 +52,7 @@ public abstract class BasePayOrder<T extends OrderStatus> extends Entity {
     /**
      * 订单扩展信息
      */
-    private String orderExtension;
+    private String extension;
 
     /**
      * 收款方资金详情
