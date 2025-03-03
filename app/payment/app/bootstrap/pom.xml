@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.payment</groupId>
-            <artifactId>payment-infra-integration</artifactId>
+            <artifactId>payment-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.anypluspay.component</groupId>

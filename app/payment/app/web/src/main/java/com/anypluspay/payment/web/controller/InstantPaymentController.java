@@ -7,6 +7,7 @@ import com.anypluspay.payment.application.instant.response.InstantPaymentRespons
 import com.anypluspay.payment.application.instant.response.RefundResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class InstantPaymentController {
      * @return  支付结果
      */
     @PostMapping("/pay")
-    InstantPaymentResponse pay(InstantPaymentRequest request) {
+    public InstantPaymentResponse pay(@RequestBody InstantPaymentRequest request) {
         return instantPaymentService.pay(request);
     }
 
@@ -38,7 +39,7 @@ public class InstantPaymentController {
      * @return  退款结果
      */
     @PostMapping("/refund")
-    RefundResponse refund(RefundRequest request) {
+    public RefundResponse refund(@RequestBody RefundRequest request) {
         return instantPaymentService.refund(request);
     }
 }

@@ -30,6 +30,11 @@
         <dependencies>
             <dependency>
                 <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
                 <artifactId>payment-types</artifactId>
                 <version>${revision}</version>
             </dependency>
