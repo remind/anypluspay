@@ -4,12 +4,12 @@ import com.anypluspay.account.facade.request.AccountingRequest;
 import com.anypluspay.account.types.enums.CrDr;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.payment.application.instant.InstantPaymentService;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
-import com.anypluspay.payment.facade.InstantPaymentFacade;
-import com.anypluspay.payment.facade.request.FundDetailInfo;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.request.TradeInfo;
-import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.application.instant.request.FundDetailInfo;
+import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
+import com.anypluspay.payment.application.instant.request.TradeInfo;
+import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,7 +35,7 @@ import static org.mockito.Mockito.doAnswer;
 public class MultiMethodPayTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentService instantPaymentService;
 
     /**
      * 渠道 + 余额支付，但余额失败，渠道退款
@@ -70,7 +70,7 @@ public class MultiMethodPayTest extends InstPaymentBaseTest {
         payeeFundDetail.setAssetInfo(new BalanceAsset("payee123", "payee-account"));
         tradeInfo.setPayeeFundDetail(List.of(payeeFundDetail));
         request.setTradeInfos(List.of(tradeInfo));
-        InstantPaymentResponse response = instantPaymentFacade.pay(request);
+        InstantPaymentResponse response = instantPaymentService.pay(request);
         Assert.assertEquals(GeneralPayOrderStatus.FAIL, response.getOrderStatus());
         assetPayOrder(request, response);
     }

@@ -1,4 +1,4 @@
-package com.anypluspay.payment.facade.request;
+package com.anypluspay.payment.application.instant.request;
 
 import lombok.Data;
 

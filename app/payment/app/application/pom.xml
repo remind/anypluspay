@@ -13,10 +13,6 @@
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.payment</groupId>
-            <artifactId>payment-facade</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.anypluspay.payment</groupId>
             <artifactId>payment-domain</artifactId>
         </dependency>
         <dependency>

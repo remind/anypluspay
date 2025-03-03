@@ -1,4 +1,4 @@
-package com.anypluspay.payment.facade.response;
+package com.anypluspay.payment.application.instant.response;
 
 import com.anypluspay.payment.types.PayResult;
 import lombok.Data;

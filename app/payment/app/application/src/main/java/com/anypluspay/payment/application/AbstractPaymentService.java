@@ -5,7 +5,6 @@ import com.anypluspay.payment.domain.payorder.refund.RefundService;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
-import com.anypluspay.payment.domain.service.IdGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -26,9 +25,6 @@ public abstract class AbstractPaymentService {
 
     @Autowired
     protected RefundOrderRepository refundOrderRepository;
-
-    @Autowired
-    protected IdGeneratorService idGeneratorService;
 
     @Autowired
     protected GeneralPayService generalPayService;

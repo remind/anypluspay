@@ -1,11 +1,12 @@
 package com.anypluspay.payment.facade;
 
-import com.anypluspay.payment.facade.request.FundDetailInfo;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.request.TradeInfo;
-import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
+import com.anypluspay.payment.application.instant.InstantPaymentService;
+import com.anypluspay.payment.application.instant.request.FundDetailInfo;
+import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
+import com.anypluspay.payment.application.instant.request.TradeInfo;
+import com.anypluspay.payment.types.asset.BalanceAsset;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,10 +17,10 @@ import java.util.List;
  * @author wxj
  * 2024/1/18
  */
-public class InstantPaymentFacadeTest extends AbstractBaseTest {
+public class InstantPaymentServiceTest extends AbstractBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentService instantPaymentService;
 
     @Test
     public void testPay() {
@@ -46,7 +47,7 @@ public class InstantPaymentFacadeTest extends AbstractBaseTest {
         payeeFundDetail.setAssetInfo(new BalanceAsset("456", "4561"));
         tradeInfo.setPayeeFundDetail(List.of(payeeFundDetail));
         request.setTradeInfos(List.of(tradeInfo));
-        instantPaymentFacade.pay(request);
+        instantPaymentService.pay(request);
     }
 
 

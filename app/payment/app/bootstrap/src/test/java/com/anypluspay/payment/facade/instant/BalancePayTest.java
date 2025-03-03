@@ -1,8 +1,8 @@
 package com.anypluspay.payment.facade.instant;
 
-import com.anypluspay.payment.facade.InstantPaymentFacade;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.application.instant.InstantPaymentService;
+import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
+import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.List;
 public class BalancePayTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentService instantPaymentService;
 
     @Test
     public void testPaySuccess() {
@@ -29,7 +29,7 @@ public class BalancePayTest extends InstPaymentBaseTest {
         InstantPaymentRequest request = buildInstantPaymentRequest(amount);
         request.setPayerFundDetail(List.of(buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
-        InstantPaymentResponse response = instantPaymentFacade.pay(request);
+        InstantPaymentResponse response = instantPaymentService.pay(request);
         assetPayOrder(request, response);
     }
 }

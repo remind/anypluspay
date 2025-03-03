@@ -1,19 +1,17 @@
 package com.anypluspay.payment.facade.instant;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.application.instant.InstantPaymentService;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
-import com.anypluspay.payment.facade.InstantPaymentFacade;
-import com.anypluspay.payment.facade.request.FundDetailInfo;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.request.RefundRequest;
-import com.anypluspay.payment.facade.request.TradeInfo;
-import com.anypluspay.payment.facade.response.InstantPaymentResponse;
-import com.anypluspay.payment.facade.response.RefundResponse;
+import com.anypluspay.payment.application.instant.request.FundDetailInfo;
+import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
+import com.anypluspay.payment.application.instant.request.RefundRequest;
+import com.anypluspay.payment.application.instant.request.TradeInfo;
+import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
+import com.anypluspay.payment.application.instant.response.RefundResponse;
 import com.anypluspay.payment.types.asset.BalanceAsset;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +31,7 @@ import java.util.List;
 public class RefundRequestTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentService instantPaymentService;
 
     @Test
     public void testSuccess() {
@@ -43,7 +41,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         refundRequest.setRequestId(randomId());
         refundRequest.setAmount(new Money(2000));
         refundRequest.setOrigOrderId(response.getPayOrderId());
-        RefundResponse refundResponse = instantPaymentFacade.refund(refundRequest);
+        RefundResponse refundResponse = instantPaymentService.refund(refundRequest);
         Assert.assertNotNull(refundResponse);
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
         RefundOrder refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
@@ -75,7 +73,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         payeeFundDetail.setAssetInfo(new BalanceAsset("payee123", "payee-account"));
         tradeInfo.setPayeeFundDetail(List.of(payeeFundDetail));
         request.setTradeInfos(List.of(tradeInfo));
-        InstantPaymentResponse response = instantPaymentFacade.pay(request);
+        InstantPaymentResponse response = instantPaymentService.pay(request);
         Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
         return response;

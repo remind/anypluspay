@@ -1,9 +1,9 @@
 package com.anypluspay.payment.facade.instant;
 
+import com.anypluspay.payment.application.instant.InstantPaymentService;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
-import com.anypluspay.payment.facade.InstantPaymentFacade;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
+import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import org.junit.Assert;
@@ -23,7 +23,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class ChannelPayTest extends InstPaymentBaseTest {
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentService instantPaymentService;
 
     @Test
     public void testPaySuccess() {
@@ -33,7 +33,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         InstantPaymentRequest request = buildInstantPaymentRequest(amount);
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
-        InstantPaymentResponse response = instantPaymentFacade.pay(request);
+        InstantPaymentResponse response = instantPaymentService.pay(request);
         Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
     }
@@ -46,7 +46,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         InstantPaymentRequest request = buildInstantPaymentRequest(amount);
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, amount)));
         request.setTradeInfos(List.of(buildTradeInfos(amount, List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)))));
-        InstantPaymentResponse response = instantPaymentFacade.pay(request);
+        InstantPaymentResponse response = instantPaymentService.pay(request);
         assetPayOrder(request, response);
         Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();

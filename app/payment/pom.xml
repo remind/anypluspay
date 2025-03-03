@@ -12,8 +12,8 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>app/web</module>
         <module>app/bootstrap</module>
-        <module>app/facade</module>
         <module>app/infra</module>
         <module>app/application</module>
         <module>app/domain</module>
@@ -36,11 +36,6 @@
             <dependency>
                 <groupId>com.anypluspay.payment</groupId>
                 <artifactId>payment-domain</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.anypluspay.payment</groupId>
-                <artifactId>payment-facade</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.anypluspay"})
+@EnableFeignClients
 public class AdminApplicationLauncher {
 
     public static void main(String[] args) {
