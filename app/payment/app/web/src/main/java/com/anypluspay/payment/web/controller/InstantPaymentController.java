@@ -1,10 +1,10 @@
 package com.anypluspay.payment.web.controller;
 
 import com.anypluspay.payment.application.instant.InstantPaymentService;
-import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
-import com.anypluspay.payment.application.instant.request.RefundRequest;
-import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
-import com.anypluspay.payment.application.instant.response.RefundResponse;
+import com.anypluspay.payment.facade.request.InstantPaymentRequest;
+import com.anypluspay.payment.facade.request.RefundRequest;
+import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.facade.response.RefundResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

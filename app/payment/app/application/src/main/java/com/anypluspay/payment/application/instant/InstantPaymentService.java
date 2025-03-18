@@ -1,27 +1,28 @@
 package com.anypluspay.payment.application.instant;
 
-
 import com.anypluspay.payment.application.AbstractPaymentService;
+import com.anypluspay.payment.application.instant.builder.InstantPaymentBuilder;
 import com.anypluspay.payment.application.instant.builder.RefundOrderBuilder;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
-import com.anypluspay.payment.application.instant.builder.InstantPaymentBuilder;
-import com.anypluspay.payment.application.instant.request.InstantPaymentRequest;
-import com.anypluspay.payment.application.instant.request.RefundRequest;
-import com.anypluspay.payment.application.instant.response.InstantPaymentResponse;
-import com.anypluspay.payment.application.instant.response.RefundResponse;
+import com.anypluspay.payment.facade.InstantPaymentFacade;
+import com.anypluspay.payment.facade.request.InstantPaymentRequest;
+import com.anypluspay.payment.facade.request.RefundRequest;
+import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.facade.response.RefundResponse;
 import com.anypluspay.payment.types.PayResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 直接支付服务
+ *
  * @author wxj
  * 2024/1/15
  */
-@Service
-public class InstantPaymentService extends AbstractPaymentService {
+@RestController
+public class InstantPaymentService extends AbstractPaymentService implements InstantPaymentFacade {
 
     @Autowired
     private InstantPaymentBuilder instantPaymentBuilder;

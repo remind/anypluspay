@@ -6,7 +6,7 @@ import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.application.instant.request.RefundRequest;
+import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;

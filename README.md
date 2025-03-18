@@ -59,8 +59,9 @@ anypluspay
          ├── channel-gateway -- 渠道网关目录
                 ├── alipay-gateway -- 支付宝网关
                 ├── wxpay-gateway -- 微信网关
-                └── testbank-gateway -- 测试银行网关
-         └── testbank -- 测试银行服务，用于模拟支付渠道
+                └── test-bank-gateway -- 测试银行网关
+         ├── test-bank -- 测试银行服务，用于模拟支付渠道
+         └── test-trade -- 测试交易服务，用于模拟支付交易侧
     
     ├── framework -- 框架目录
             ├── commons -- 公共
@@ -75,6 +76,21 @@ anypluspay
             └── parent -- 应用父POM
     └── docs -- 文档目录
 ```
+### 服务列表
+
+为了便于本地测试端口是不一样的，如果要在k8s部署，建议都用`80`，端口配置在Nacos中。
+
+| 服务                 | 说明 | 开放方式       | 端口 
+|--------------------|-------|------------|------ 
+| admin              | 运营后台服务| Spring Mvc | 8080 
+| payment            | 支付服务   | Feign  | 8081       
+| account            | 账务服务  | Feign | 8082       
+| channel            | 渠道服务  | Feign | 8083       
+| test-bank-gateway | 测试银行网关| Feign | 8090       
+| alipay-gateway    | 支付宝网关  | Feign| 8091       
+| wxpay-gateway     | 微信网关   | Feign| 8092       
+| test-bank         | 测试银行   | Spring Mvc| 8070       
+| test-trade        | 测试交易   | Feign| 8071       
 
 ### 应用目录结构
 
@@ -132,7 +148,7 @@ admin -- 应用名称
 | [Nacos](https://github.com/alibaba/nacos)                               | 注册中心、配置中心   | 2.4.1      
 | [MyBatis-Plus](https://mp.baomidou.com/)                                | MyBatis增强工具 | 3.5.4.1    
 | [MapStruct](https://mapstruct.org/)                                     | 对象转换        | 1.6.3      
-| [Hutool](https://www.hutool.cn/)                                        | Java工具类库    | 5.8.24     
+| [Hutool](https://www.hutool.cn/)                                        | Java工具类库    | 5.8.24
 
 ## 后台管理功能
 
@@ -141,6 +157,18 @@ admin -- 应用名称
 ![渠道详情](docs/images/admin-channel-detail.png)
 
 ![联合查询](docs/images/admin-union-query.png)
+
+## 测试
+### 单元测试
+`payment`、`account`、`channel`三个服务下都有单元测试，通过`JUnit`和`Mockito`进行测试，位于`app/bootstrap/test`下，依赖数据库和Nacos配置
+### 启动测试
+#### 启动服务
+1、必需要启动的服务有`admin`、`payment`、`account`、`channel`，`test-trade`
+2、测试渠道对应的渠道网关，如果要使用测试渠道，`test-bank`也需要启动。
+#### 开始测试
+1、输入`admin`的地址，如`http://localhost:8080/` 。
+2、左侧展开`支付测试`菜单，点击相应的二级菜单进行测试。
+3、对于产生的测试交易，可在菜单`支付测试`下`交易查询`进行查询。
 
 ## 附录
 

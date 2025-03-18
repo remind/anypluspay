@@ -17,6 +17,7 @@
         <module>app/infra</module>
         <module>app/application</module>
         <module>app/domain</module>
+        <module>app/facade</module>
         <module>app/types</module>
         <module>gen/dalgen</module>
     </modules>
@@ -31,6 +32,11 @@
             <dependency>
                 <groupId>com.anypluspay.payment</groupId>
                 <artifactId>payment-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-facade</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

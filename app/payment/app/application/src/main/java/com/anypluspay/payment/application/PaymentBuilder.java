@@ -2,8 +2,8 @@ package com.anypluspay.payment.application;
 
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.application.instant.request.BasePaymentRequest;
-import com.anypluspay.payment.application.instant.request.FundDetailInfo;
+import com.anypluspay.payment.facade.request.BasePaymentRequest;
+import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.BelongTo;
