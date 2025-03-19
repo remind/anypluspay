@@ -22,10 +22,10 @@ public class InnerAccountManagerFacadeTest extends AbstractBaseTest {
     @Test
     public void createSuccess() {
         InnerAccountRequest request = new InnerAccountRequest();
-        request.setTitleCode("4001001001");
-        request.setAccountName("测试账号4");
+        request.setTitleCode("2020001001");
+        request.setAccountName("其他应付款-入款-过渡户");
         request.setCurrencyCode("CNY");
-        request.setMemo("账号备注");
+        request.setMemo("其他应付款-入款-过渡户");
         innerAccountManagerFacade.create(request);
     }
 }

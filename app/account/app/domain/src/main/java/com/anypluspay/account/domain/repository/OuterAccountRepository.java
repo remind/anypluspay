@@ -17,4 +17,6 @@ public interface OuterAccountRepository {
 
     OuterAccount lock(String accountNo);
 
+    OuterAccount queryByMemberAndAccountTypeId(String memberId, String accountType);
+
 }

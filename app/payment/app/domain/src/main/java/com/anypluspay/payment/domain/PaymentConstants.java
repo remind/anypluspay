@@ -9,7 +9,7 @@ public interface PaymentConstants {
     /**
      * 过渡户
      */
-    String TRANSITION_ACCOUNT = "TRANSITION_ACCOUNT";
+    String TRANSITION_ACCOUNT = "20200010011560001";
 
     /**
      * 账户用户

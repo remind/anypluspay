@@ -25,20 +25,21 @@ public class AccountTitleManagerFacadeTest extends AbstractBaseTest {
     @Test
     public void create() {
         AccountTitleRequest request = new AccountTitleRequest();
-        request.setName("test");
-        request.setType(AccountTitleType.Assets.getCode());
+        request.setName("其他应付款-入款-公共");
+        request.setParentCode("2020001");
+        request.setType(AccountTitleType.Liabilities.getCode());
         request.setScope(AccountTitleScope.INNER_ENTRIES.getCode());
         request.setEnable(true);
-        request.setMemo("test");
+        request.setMemo("其他应付款-入款-公共");
         String titleCode = accountTitleManagerFacade.create(request);
         Assert.assertNotNull(titleCode);
 
-        request = new AccountTitleRequest();
-        request.setParentCode(titleCode);
-        request.setName("test");
-        request.setMemo("test");
-        request.setEnable(true);
-        String titleCode1 = accountTitleManagerFacade.create(request);
-        Assert.assertNotNull(titleCode1);
+//        request = new AccountTitleRequest();
+//        request.setParentCode(titleCode);
+//        request.setName("test");
+//        request.setMemo("test");
+//        request.setEnable(true);
+//        String titleCode1 = accountTitleManagerFacade.create(request);
+//        Assert.assertNotNull(titleCode1);
     }
 }

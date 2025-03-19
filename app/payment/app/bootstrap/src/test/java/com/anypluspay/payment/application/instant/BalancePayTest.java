@@ -21,7 +21,7 @@ import java.util.List;
 public class BalancePayTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Test
     public void testPaySuccess() {

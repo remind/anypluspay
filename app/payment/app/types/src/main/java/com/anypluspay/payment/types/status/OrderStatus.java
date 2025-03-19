@@ -1,4 +1,4 @@
-package com.anypluspay.payment.types;
+package com.anypluspay.payment.types.status;
 
 
 import com.anypluspay.commons.enums.CodeEnum;

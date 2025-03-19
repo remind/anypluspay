@@ -1,6 +1,6 @@
 package com.anypluspay.payment.web.controller;
 
-import com.anypluspay.payment.application.instant.InstantPaymentService;
+import com.anypluspay.payment.application.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InstantPaymentController {
 
     @Autowired
-    private InstantPaymentService instantPaymentService;
+    private InstantPaymentFacadeImpl instantPaymentFacadeImpl;
 
     /**
      * 支付
@@ -30,7 +30,7 @@ public class InstantPaymentController {
      */
     @PostMapping("/pay")
     public InstantPaymentResponse pay(@RequestBody InstantPaymentRequest request) {
-        return instantPaymentService.pay(request);
+        return instantPaymentFacadeImpl.pay(request);
     }
 
     /**
@@ -40,6 +40,6 @@ public class InstantPaymentController {
      */
     @PostMapping("/refund")
     public RefundResponse refund(@RequestBody RefundRequest request) {
-        return instantPaymentService.refund(request);
+        return instantPaymentFacadeImpl.refund(request);
     }
 }

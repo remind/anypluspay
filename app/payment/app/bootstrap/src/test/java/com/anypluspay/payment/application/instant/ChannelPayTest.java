@@ -1,6 +1,6 @@
 package com.anypluspay.payment.application.instant;
 
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -23,7 +23,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 public class ChannelPayTest extends InstPaymentBaseTest {
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Test
     public void testPaySuccess() {

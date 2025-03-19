@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.response;
 
-import com.anypluspay.payment.types.OrderStatus;
+import com.anypluspay.payment.types.status.OrderStatus;
 import lombok.Data;
 
 /**

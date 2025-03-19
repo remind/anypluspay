@@ -1,6 +1,7 @@
 package com.anypluspay.payment.domain.payorder.general;
 
 import com.anypluspay.payment.domain.payorder.BasePayOrder;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 
 /**
  * 普通支付单

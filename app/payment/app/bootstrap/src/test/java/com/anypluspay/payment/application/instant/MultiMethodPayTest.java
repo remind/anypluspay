@@ -7,7 +7,7 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.doAnswer;
 public class MultiMethodPayTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentFacadeImpl instantPaymentFacade;
 
     /**
      * 渠道 + 余额支付，但余额失败，渠道退款

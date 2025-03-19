@@ -1,7 +1,7 @@
 package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
@@ -28,7 +28,7 @@ import java.util.List;
 public class RefundRequestTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Test
     public void testSuccess() {

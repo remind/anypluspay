@@ -21,6 +21,30 @@
             <artifactId>test-trade-facade</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.anypluspay.account</groupId>
+            <artifactId>account-facade</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.anypluspay.payment</groupId>
+            <artifactId>payment-facade</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>

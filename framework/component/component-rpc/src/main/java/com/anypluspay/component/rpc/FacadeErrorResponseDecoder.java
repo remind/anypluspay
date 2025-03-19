@@ -36,7 +36,7 @@ public class FacadeErrorResponseDecoder implements ErrorDecoder {
                 throw new RuntimeException(e);
             }
         }
-        return null;
+        return new ErrorDecoder.Default().decode(methodKey, response);
     }
 
     private String getValue(Map<String, Collection<String>> headers, String key) {

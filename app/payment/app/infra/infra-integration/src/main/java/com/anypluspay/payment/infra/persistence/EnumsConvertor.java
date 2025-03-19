@@ -4,7 +4,7 @@ import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionType;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;

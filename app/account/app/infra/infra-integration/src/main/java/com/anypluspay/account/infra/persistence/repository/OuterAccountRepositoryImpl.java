@@ -92,6 +92,21 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
         return outerAccount;
     }
 
+    @Override
+    public OuterAccount queryByMemberAndAccountTypeId(String memberId, String accountType) {
+        LambdaQueryWrapper<OuterAccountDO> wrapper = Wrappers.lambdaQuery(OuterAccountDO.class)
+                .eq(OuterAccountDO::getMemberId, memberId)
+                .eq(OuterAccountDO::getAccountType, accountType);
+        OuterAccountDO outerAccountDO = outerAccountMapper.selectOne(wrapper);
+        OuterAccount outerAccount = null;
+        if (outerAccountDO != null) {
+            List<OuterSubAccountDO> outerSubAccountDOS = outerSubAccountMapper.selectList(Wrappers.lambdaQuery(OuterSubAccountDO.class)
+                    .eq(OuterSubAccountDO::getAccountNo, outerAccountDO.getAccountNo()));
+            outerAccount = dalConvertor.toEntity(outerAccountDO, outerSubAccountDOS);
+        }
+        return outerAccount;
+    }
+
     private String genAccountNo(String memberId, String accountTitleNo, String currencyCode) {
         String incId = getIncId(memberId, accountTitleNo);
         return accountTitleNo + memberId + Currency.getInstance(currencyCode).getNumericCode() + incId;

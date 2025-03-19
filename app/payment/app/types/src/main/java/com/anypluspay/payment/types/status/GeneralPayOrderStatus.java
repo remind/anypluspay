@@ -1,6 +1,5 @@
-package com.anypluspay.payment.domain.payorder.general;
+package com.anypluspay.payment.types.status;
 
-import com.anypluspay.payment.types.OrderStatus;
 import lombok.Getter;
 
 /**

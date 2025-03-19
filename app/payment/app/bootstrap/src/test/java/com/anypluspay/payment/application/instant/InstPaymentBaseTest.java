@@ -16,7 +16,7 @@ import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
@@ -45,10 +45,10 @@ import static org.mockito.Mockito.*;
  */
 public class InstPaymentBaseTest extends AbstractBaseTest {
 
-    protected static final String MERCHANT_ID = "1000000001";
-    protected static final String PAYER_MEMBER_ID = "1000000002";
+    protected static final String MERCHANT_ID = "100000001";
+    protected static final String PAYER_MEMBER_ID = "100000002";
     protected static final String PAYER_ACCOUNT_NO = "200100200110000000215600001";
-    protected static final String PAYEE_MEMBER_ID = "1000000003";
+    protected static final String PAYEE_MEMBER_ID = "100000003";
     protected static final String PAYEE_ACCOUNT_NO = "200100200110000000315600001";
     protected static final String CHANNEL_CLEARING_ACCOUNT_NO = "40010010011560001";
 
@@ -144,7 +144,8 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         FundDetailInfo fundDetailInfo = new FundDetailInfo();
         fundDetailInfo.setMemberId(memberId);
         fundDetailInfo.setAmount(new Money(amount, Currency.getInstance("CNY")));
-        fundDetailInfo.setAssetInfo(assetInfo);
+        fundDetailInfo.setAssetTypeCode(assetInfo.getAssetType().getCode());
+        fundDetailInfo.setAssetJsonStr(assetInfo.toJsonStr());
         return fundDetailInfo;
     }
 
@@ -167,13 +168,13 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         fundDetailInfos.forEach(fundDetailInfo -> {
             FundDetail fundDetail = fundDetails.stream().filter(fundDetail1 ->
                     fundDetail1.getMemberId().equals(fundDetailInfo.getMemberId())
-                            && fundDetail1.getAssetInfo().getAssetType().equals(fundDetailInfo.getAssetInfo().getAssetType())
-                            && fundDetail1.getAssetInfo().toJsonStr().equals(fundDetailInfo.getAssetInfo().toJsonStr())
+                            && fundDetail1.getAssetInfo().getAssetType().getCode().equals(fundDetailInfo.getAssetTypeCode())
+                            && fundDetail1.getAssetInfo().toJsonStr().equals(fundDetailInfo.getAssetJsonStr())
             ).findFirst().get();
             Assert.assertNotNull(fundDetail);
             Assert.assertEquals(fundDetailInfo.getAmount(), fundDetail.getAmount());
-            Assert.assertEquals(fundDetailInfo.getAssetInfo().getAssetType(), fundDetail.getAssetInfo().getAssetType());
-            Assert.assertEquals(fundDetailInfo.getAssetInfo().toJsonStr(), fundDetail.getAssetInfo().toJsonStr());
+            Assert.assertEquals(fundDetailInfo.getAssetTypeCode(), fundDetail.getAssetInfo().getAssetType().getCode());
+            Assert.assertEquals(fundDetailInfo.getAssetJsonStr(), fundDetail.getAssetInfo().toJsonStr());
         });
     }
 

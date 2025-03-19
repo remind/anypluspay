@@ -3,7 +3,7 @@ package com.anypluspay.payment.application.instant.common;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;

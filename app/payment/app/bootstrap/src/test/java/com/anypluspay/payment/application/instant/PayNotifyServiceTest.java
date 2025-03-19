@@ -4,7 +4,7 @@ import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.payment.application.notify.PayNotifyService;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -34,7 +34,7 @@ import static org.mockito.Mockito.doAnswer;
 public class PayNotifyServiceTest extends InstPaymentBaseTest {
 
     @Autowired
-    private InstantPaymentFacade instantPaymentFacade;
+    private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Autowired
     private PayNotifyService payNotifyService;

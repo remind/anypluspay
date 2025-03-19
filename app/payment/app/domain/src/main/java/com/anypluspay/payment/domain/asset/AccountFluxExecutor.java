@@ -47,7 +47,7 @@ public class AccountFluxExecutor implements AssetFluxExecutor {
             drAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
             crAccountNo = balanceAsset.getAccountNo();
         }
-        AccountingRequest request = buildAccountingRequest(fluxInstruction.getRelationId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
+        AccountingRequest request = buildAccountingRequest(fluxInstruction.getInstructionId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
         return requestAccounting(request);
     }
 
@@ -64,7 +64,7 @@ public class AccountFluxExecutor implements AssetFluxExecutor {
             drAccountNo = balanceAsset.getAccountNo();
             crAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
         }
-        AccountingRequest request = buildAccountingRequest(fluxInstruction.getRelationId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
+        AccountingRequest request = buildAccountingRequest(fluxInstruction.getInstructionId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
         return requestAccounting(request);
     }
 

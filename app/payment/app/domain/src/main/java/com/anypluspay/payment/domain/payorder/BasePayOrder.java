@@ -3,7 +3,7 @@ package com.anypluspay.payment.domain.payorder;
 import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
-import com.anypluspay.payment.types.OrderStatus;
+import com.anypluspay.payment.types.status.OrderStatus;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundDetail;
 import lombok.Data;

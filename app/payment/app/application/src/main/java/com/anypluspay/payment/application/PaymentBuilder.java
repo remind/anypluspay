@@ -6,6 +6,7 @@ import com.anypluspay.payment.facade.request.BasePaymentRequest;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PaymentType;
+import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
@@ -49,7 +50,7 @@ public abstract class PaymentBuilder {
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(info.getAmount());
         fundDetail.setMemberId(info.getMemberId());
-        fundDetail.setAssetInfo(info.getAssetInfo());
+        fundDetail.setAssetInfo(AssetInfo.parse(info.getAssetTypeCode(), info.getAssetJsonStr()));
         fundDetail.setBelongTo(belongTo);
         fundDetail.setFundAction(belongTo == BelongTo.PAYER ? FundAction.DECREASE : FundAction.INCREASE);
         return fundDetail;

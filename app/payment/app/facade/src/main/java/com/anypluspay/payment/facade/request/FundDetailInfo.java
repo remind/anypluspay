@@ -1,6 +1,5 @@
 package com.anypluspay.payment.facade.request;
 
-import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
@@ -23,7 +22,13 @@ public class FundDetailInfo {
     private Money amount;
 
     /**
-     * 资产信息
+     * 资产类型编码
      */
-    private AssetInfo assetInfo;
+    private String assetTypeCode;
+
+    /**
+     * 资产信息json字符串
+     */
+    private String assetJsonStr;
+
 }

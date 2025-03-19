@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 2024/1/15
  */
 @RestController
-public class InstantPaymentService extends AbstractPaymentService implements InstantPaymentFacade {
+public class InstantPaymentFacadeImpl extends AbstractPaymentService implements InstantPaymentFacade {
 
     @Autowired
     private InstantPaymentBuilder instantPaymentBuilder;

@@ -3,7 +3,7 @@ package com.anypluspay.payment.application.instant.builder;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentType;

@@ -92,4 +92,10 @@ public class OuterAccountManagerFacadeImpl implements OuterAccountManagerFacade 
         OuterAccount outerAccount = outerAccountRepository.load(accountNo);
         return outerAccountConvertor.toResponse(outerAccount);
     }
+
+    @Override
+    public OuterAccountResponse queryByMemberAndAccountTypeId(String memberId, String accountType) {
+        OuterAccount outerAccount = outerAccountRepository.queryByMemberAndAccountTypeId(memberId, accountType);
+        return outerAccountConvertor.toResponse(outerAccount);
+    }
 }
