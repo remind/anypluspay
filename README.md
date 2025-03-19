@@ -1,53 +1,53 @@
-## 项目介绍
 
-`anypluspay`是一套基于领域驱动设计（DDD）理念，采用微服务架构构建的高性能、高可用、易扩展的支付系统解决方案。
-项目包含支付服务、账务服务、渠道网关等核心服务，提供从支付接入、交易处理、资金清算到对账管理的完整支付功能，可快速适配各类电商平台、产业互联网平台等场景的支付需求。
+---
 
-### 项目特色
+# AnyPlusPay - 高性能支付系统解决方案
 
-领域驱动设计（DDD）： 采用DDD进行领域建模，将支付业务划分为清晰的限界上下文，确保系统架构清晰、代码可维护性强，并能快速响应业务变化。
+## 项目简介
 
-微服务架构： 系统采用Spring Cloud等主流微服务框架构建，各子系统独立部署、松耦合，可根据业务需求灵活扩展，满足高并发、高可用的支付场景。
+AnyPlusPay 是一套基于领域驱动设计（DDD）理念，采用微服务架构构建的高性能、高可用、易扩展的支付系统解决方案。本项目旨在为电商平台、产业互联网平台等提供从支付接入、交易处理、资金清算到对账管理的完整支付功能，快速适配各类在线支付需求。
 
-高性能、高可用： 采用分布式缓存、消息队列、数据库分库分表等技术，保障系统在高并发场景下的稳定性和性能。
+### 核心优势
 
-灵活可扩展： 系统提供丰富的API接口和插件机制，方便与各类电商平台、第三方支付渠道进行对接，并可根据业务需求灵活扩展功能。
+- **领域驱动设计（DDD）**：通过 DDD 进行领域建模，将复杂的支付业务划分为清晰的限界上下文，确保系统架构清晰、代码可维护性强，并能迅速响应业务变化。
+- **微服务架构**：使用 Spring Cloud 等主流微服务框架，各子系统独立部署、松耦合，满足高并发和高可用性要求。
+- **高性能与高可用性**：集成分布式缓存、消息队列、数据库分库分表等技术，保障系统的稳定性和性能。
+- **灵活可扩展**：提供丰富的 API 接口和插件机制，便于与第三方系统对接，支持按需扩展功能。
 
-### 核心服务
+---
 
-支付服务： 负责支付交易的接入、路由、风控、清算等核心流程，支持多种支付方式（如银行卡、第三方支付等）。
+## 核心功能模块
 
-账务服务： 负责账户管理、资金流水记录、对账等功能，保障资金安全准确。
+### 1. 支付服务
+- 处理支付的接入，并集成外部渠道、账务、营销等资产端。
+- 支持多种支付方式（如余额支付、外部支付、混合支付）。
 
-渠道服务及渠道网关： 负责与第三方支付渠道进行对接，实现支付指令的发送和接收。
+### 2. 账务服务
+- 负责账户管理、资金流水记录及对账等功能。
+- 确保资金安全准确。
 
-运营平台： 提供交易查询、数据分析、报表统计等功能，方便运营人员进行系统管理和业务分析。
+### 3. 渠道服务及渠道网关
+- 实现与第三方支付渠道的对接，发送和接收支付指令。
+- 根据不同场景，提供渠道路由功能。
+- 包括支付宝网关、微信网关、测试银行网关等。
 
-### 适用场景
+### 4. 运营平台
+- 提供订单查询、数据分析、报表统计等功能。
+- 支付方式、渠道等配置管理。
 
-电商平台：为电商平台提供安全、稳定、便捷的支付服务，提升用户支付体验。
+---
 
-产业互联网平台：为产业互联网平台提供定制化的支付解决方案，满足不同行业的支付需求。
+## 适用场景
 
-其他场景：适用于各类需要在线支付的场景，例如在线教育、旅游出行、生活服务等。
+- **电商平台**：提升用户支付体验，保障交易的安全与便捷。
+- **产业互联网平台**：根据行业特性定制支付解决方案，满足多样化支付需求。
+- **其他在线支付场景**：如在线教育、旅游出行、生活服务等。
 
-### 项目愿景
-致力于打造一套开源、易用、功能强大的支付系统解决方案，帮助开发者快速构建安全可靠的支付系统，推动支付行业的技术发展。
+---
 
-## 核心模型
-### 单据模型
-![order-model.png](docs/images/order-model.png)
+## 系统架构
 
-## 核心流程
-### 余额支付
-![img.png](docs/images/balance-pay-sequence.png)
-### 外部支付
-![img.png](docs/images/external-pay-sequence.png)
-### 余额+外部支付
-![external-balance-pay-sequence.png](docs/images/external-balance-pay-sequence.png)
-## 系统介绍
-
-### 系统整体目录结构
+### 1. 目录结构
 
 ``` java
 anypluspay
@@ -66,123 +66,105 @@ anypluspay
     ├── framework -- 框架目录
             ├── commons -- 公共
                     └── commons-lang -- 通用工具和类型
-            ├── commponent -- 组件
-                    ├── commponent-api -- 组件API定义
-                    ├── commponent-core -- 组件核心实现
-                    ├── commponent-sequnce -- 序列号
-                    └── commponent-generator -- 代码生成器
-            ├── dependencies -- 依赖定义pom
-            ├── dependencies-third -- 第三方依赖定义pom
-            └── parent -- 应用父POM
+            ├── component -- 组件
+                    ├── component-api -- 组件 API 定义
+                    ├── component-core -- 组件核心实现
+                    ├── component-sequence -- 序列号
+                    └── component-generator -- 代码生成器
+            ├── dependencies -- 依赖定义 pom
+            ├── dependencies-third -- 第三方依赖定义 pom
+            └── parent -- 应用父 POM
     └── docs -- 文档目录
 ```
-### 服务列表
 
-为了便于本地测试端口是不一样的，如果要在k8s部署，建议都用`80`，端口配置在Nacos中。
+### 2. 核心流程
 
-| 服务                 | 说明 | 开放方式       | 端口 
-|--------------------|-------|------------|------ 
-| admin              | 运营后台服务| Spring Mvc | 8080 
-| payment            | 支付服务   | Feign  | 8081       
-| account            | 账务服务  | Feign | 8082       
-| channel            | 渠道服务  | Feign | 8083       
-| test-bank-gateway | 测试银行网关| Feign | 8090       
-| alipay-gateway    | 支付宝网关  | Feign| 8091       
-| wxpay-gateway     | 微信网关   | Feign| 8092       
-| test-bank         | 测试银行   | Spring Mvc| 8070       
-| test-trade        | 测试交易   | Feign| 8071       
+#### 余额支付
+![balance-pay-sequence.png](docs/images/balance-pay-sequence.png)
 
-### 应用目录结构
+#### 外部支付
+![external-pay-sequence.png](docs/images/external-pay-sequence.png)
 
-#### 后端服务
+#### 余额+外部支付
+![external-balance-pay-sequence.png](docs/images/external-balance-pay-sequence.png)
 
-根据DDD将应用服务进行层次划分
+### 3. 领域模型
 
-以`channel`为例，目录结构：
+#### 单据模型
+![order-model.png](docs/images/order-model.png)
 
-``` java
-channel -- 应用名称
-    ├── app -- 应用代码目录
-         ├── bootstrap -- 启动层，测试用例也在此
-         ├── web -- web层，如果要提供http接口，则放在此
-         ├── infra -- 基础设施层
-                ├── infa-dal -- 数据访问层，涉及admin访问的，可单独提出来以便复用
-                └── infa-integration -- 基础设施集成层
-         ├── application -- 应用层
-         ├── facade -- 对外接口层
-         ├── domain -- 领域层
-         └── types -- 类型层，公共类型、值对象
-    ├── conf -- 配置目录
-    └── gen -- 代码生成器目录
-         └── dalgen -- dal生成器，自动生成数据库访问代码
-```
+---
 
-依赖关系：
+## 技术栈
 
-![应用模块依赖关系](docs/images/app-ddd-dir.png)
+| 软件名称 | 描述 | 版本 |
+| --- | --- | --- |
+| JDK | Java 环境 | 17 |
+| [Spring Boot](https://github.com/spring-projects/spring-boot) | 开发框架 | 3.4.1 |
+| [Spring Cloud](https://spring.io/projects/spring-cloud) | 微服务框架 | 2024.0.0 |
+| MySQL | 数据库 | 8+ |
+| Redis | 缓存 | 最新版本 |
+| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos 依赖 | 2023.0.3.2 |
+| [Nacos](https://github.com/alibaba/nacos) | 注册中心、配置中心 | 2.4.1 |
+| [MyBatis-Plus](https://mp.baomidou.com/) | MyBatis 增强工具 | 3.5.4.1 |
+| [MapStruct](https://mapstruct.org/) | 对象转换 | 1.6.3 |
+| [Hutool](https://www.hutool.cn/) | Java 工具类库 | 5.8.24 |
 
-#### 微服务入口应用
-
-微服务入口应用没有太多逻辑，重在集成，不必严格按照`DDD`来
-
-如`admin`
-
-``` java
-admin -- 应用名称
-    └── app -- 应用代码目录
-         ├── admin-basis -- admin服务公共层，如鉴权、权限等
-         ├── admin-bootstrap -- 启动层
-         └── admin-channel -- 渠道相关管理接口
-```
-
-### 技术栈
-
-| 软件名称                                                                    | 描述          | 版本         
-|-------------------------------------------------------------------------|-------------|------------
-| JDK                                                                     | Java环境      | 17         
-| [Spring Boot](https://github.com/spring-projects/spring-boot)           | 开发框架        | 3.4.1      
-| [Spring Cloud](https://spring.io/projects/spring-cloud)                 | 微服务         | 2024.0.0   
-| MySQL                                                                   | 数据库         | 8+         
-| Redis                                                                   | 缓存          | ?          
-| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos依赖     | 2023.0.3.2 
-| [Nacos](https://github.com/alibaba/nacos)                               | 注册中心、配置中心   | 2.4.1      
-| [MyBatis-Plus](https://mp.baomidou.com/)                                | MyBatis增强工具 | 3.5.4.1    
-| [MapStruct](https://mapstruct.org/)                                     | 对象转换        | 1.6.3      
-| [Hutool](https://www.hutool.cn/)                                        | Java工具类库    | 5.8.24
+---
 
 ## 后台管理功能
 
 ### 渠道管理
 
-![渠道详情](docs/images/admin-channel-detail.png)
+#### 渠道详情
+  ![渠道详情](docs/images/admin-channel-detail.png)
 
-![联合查询](docs/images/admin-union-query.png)
+#### 联合查询
+  ![联合查询](docs/images/admin-union-query.png)
 
-## 测试
+---
+
+## 测试指南
+
 ### 单元测试
-`payment`、`account`、`channel`三个服务下都有单元测试，通过`JUnit`和`Mockito`进行测试，位于`app/bootstrap/test`下，依赖数据库和Nacos配置
-### 启动测试
-#### 启动服务
-1、必需要启动的服务有`admin`、`payment`、`account`、`channel`，`test-trade`
 
-2、测试渠道对应的渠道网关，如果要使用测试渠道，`test-bank`也需要启动。
-#### 开始测试
-1、输入`admin`的地址，如`http://localhost:8080/` 。
+- `payment`、`account`、`channel` 三个服务下都有单元测试。
+- 使用 `JUnit` 和 `Mockito` 进行测试。
+- 测试代码位于所有服务的 `app/bootstrap/test` 下，依赖数据库和 Nacos 配置。
 
-2、左侧展开`支付测试`菜单，点击相应的二级菜单进行测试。
+### 集成测试
 
-3、对于产生的测试交易，可在菜单`支付测试`下`交易查询`进行查询。
+#### 必要服务
+1. 必须启动的服务包括：
+    - `admin`
+    - `payment`
+    - `account`
+    - `channel`
+    - `test-trade`
+
+2. 如果需要测试渠道对应的网关，还需启动 `test-bank`。
+
+#### 测试步骤
+1. 输入 `admin` 的地址，如 `http://localhost:8080/`。
+2. 在左侧菜单中展开 `支付测试`，点击相应的二级菜单进行测试。
+3. 对于产生的测试交易，可在菜单 `支付测试` 下的 `交易查询` 功能中查询。
+
+---
 
 ## 附录
 
 ### 关于支付
 
-1、可关注微信公众号`凤凰牌老熊`,`隐墨星辰`,`刚哥白话`,`陈天宇宙`
+- 可关注以下公众号获取更多支付相关知识：
+    - 凤凰牌老熊
+    - 隐墨星辰
+    - 刚哥白话
+    - 陈天宇宙
 
-### 关于`DDD`
+### 关于 DDD
 
-1、[殷浩详解DDD系列](https://developer.aliyun.com/article/715802)
+- [殷浩详解 DDD 系列](https://developer.aliyun.com/article/715802)
+- [COLA 框架](https://github.com/alibaba/COLA)
+- [COLA 4.0：应用架构的最佳实践](https://blog.csdn.net/significantfrank/article/details/110934799)
 
-2、[COLA框架](https://github.com/alibaba/COLA)
-
-3、[COLA 4.0：应用架构的最佳实践](https://blog.csdn.net/significantfrank/article/details/110934799)
+---
