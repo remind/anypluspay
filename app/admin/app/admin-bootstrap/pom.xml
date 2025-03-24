@@ -21,15 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.admin</groupId>
-            <artifactId>admin-basis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.anypluspay.admin</groupId>
-            <artifactId>admin-channel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.anypluspay.admin</groupId>
-            <artifactId>admin-account</artifactId>
+            <artifactId>admin-application</artifactId>
         </dependency>
         <dependency>
             <groupId>com.anypluspay.component</groupId>

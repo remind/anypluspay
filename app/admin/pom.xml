@@ -12,9 +12,8 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>app/admin-channel</module>
+        <module>app/admin-application</module>
         <module>app/admin-bootstrap</module>
-        <module>app/admin-account</module>
     </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>
@@ -26,17 +25,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.anypluspay.admin</groupId>
-                <artifactId>admin-basis</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.anypluspay.admin</groupId>
-                <artifactId>admin-channel</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.anypluspay.admin</groupId>
-                <artifactId>admin-account</artifactId>
+                <artifactId>admin-application</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

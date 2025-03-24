@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anypluspay.admin.dao.mapper.FundInOrderQueryMapper">
+
+    <resultMap id="queryResult" type="com.anypluspay.admin.channel.model.order.FundInOrderDto">
+        <id column="order_id" property="orderId"/>
+        <result column="request_id" property="requestId"/>
+        <result column="member_id" property="memberId"/>
+        <result column="status" property="status"/>
+        <result column="inst_order_id" property="instOrderId"/>
+        <result column="pay_method" property="payMethod"/>
+        <result column="pay_inst" property="payInst"/>
+        <result column="goods_desc" property="goodsDesc"/>
+        <result column="extra" property="extra"/>
+        <result column="route_extra" property="routeExtra"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <association property="amount" javaType="com.anypluspay.commons.lang.types.Money">
+            <constructor>
+                <arg column="amount" javaType="java.math.BigDecimal"/>
+                <arg column="currency_code" javaType="java.util.Currency"
+                     typeHandler="com.anypluspay.component.dal.mybatis.type.CurrencyTypeHandler"/>
+            </constructor>
+        </association>
+    </resultMap>
+
+    <sql id="column">
+        t.order_id,t.pay_method,t.pay_inst,t.amount,t.currency_code,t.goods_desc,t.terminal_type,t.terminal,t.route_extra,
+        b.request_id,b.member_id,b.request_root_type,b.request_type,b.status,b.inst_order_id,b.extra,b.inst_extra,b.gmt_create,b.gmt_modified
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="query.orderId != null and query.orderId != ''">
+                AND t.order_id = #{query.orderId}
+            </if>
+            <if test="query.status != null and query.status != ''">
+                AND b.status = #{query.status}
+            </if>
+            <if test="query.gmtCreateStart != null">
+                AND b.gmt_create &gt;= #{query.gmtCreateStart}
+            </if>
+            <if test="query.gmtCreateEnd != null">
+                AND b.gmt_create &lt; #{query.gmtCreateEnd}
+            </if>
+        </where>
+    </sql>
+
+    <select id="pageQuery" parameterType="map"
+            resultMap="queryResult">
+        SELECT
+        <include refid="column"/>
+        FROM
+        tb_fund_in_order t
+        inner join tb_biz_order b on t.order_id = b.order_id
+        <include refid="where"/>
+        order by b.gmt_create desc
+    </select>
+
+    <select id="selectByOrderId" resultMap="queryResult">
+        SELECT
+        <include refid="column"/>
+        FROM
+        tb_fund_in_order t
+        inner join tb_biz_order b on t.order_id = b.order_id
+        <where>
+            <if test="orderId != null and orderId != ''">
+                AND t.order_id = #{orderId}
+            </if>
+        </where>
+    </select>
+
+</mapper>
