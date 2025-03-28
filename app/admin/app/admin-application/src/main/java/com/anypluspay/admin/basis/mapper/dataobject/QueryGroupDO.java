@@ -7,20 +7,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
+ * 查询分组
  * @author wxj
- * 2025/3/24
+ * 2025/3/28
  */
 @Data
-@TableName("t_query_define")
-public class QueryDefineDO implements Serializable {
+@TableName("t_query_group")
+public class QueryGroupDO implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-
-    /**
-     * 组ID
-     */
-    private Long groupId;
 
     /**
      * 名称
@@ -28,19 +24,9 @@ public class QueryDefineDO implements Serializable {
     private String name;
 
     /**
-     * 数据源
+     * 备注
      */
-    private String dataSource;
-
-    /**
-     * 查询SQL
-     */
-    private String querySql;
-
-    /**
-     * 可支持参数，不可重复
-     */
-    private String paramName;
+    private String memo;
 
     /**
      * 排序

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class QueryParamDefineDO implements Serializable {
 
     @TableId(value = "id", type = IdType.AUTO)
-    private String id;
+    private Long id;
 
     /**
      * 名称

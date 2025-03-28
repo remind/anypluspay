@@ -65,7 +65,7 @@ public class TradeFacadeImpl implements TradeFacade {
         request.setPayerId(tradeOrderDO.getPayerId());
         request.setPayAmount(new Money(tradeOrderDO.getAmount()));
         request.setPayeeFundDetail(buildPayeeFundDetail(tradeOrderDO));
-        request.setPayerFundDetail(buildPayerFundDetail(tradeOrderDO));
+        request.setPayerFundDetail(buildPayerFundDetail(tradeOrderDO, payRequest.getPayMethods()));
         InstantPaymentResponse instantPaymentResponse = instantPaymentFacade.pay(request);
         if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
             tradeOrderDO.setStatus(TradeStatus.SUCCESS.getCode());
@@ -74,6 +74,8 @@ public class TradeFacadeImpl implements TradeFacade {
             payOrderMapper.updateById(payOrderDO);
         }
         PayResponse response = new PayResponse();
+        response.setPaymentId(instantPaymentResponse.getPaymentId());
+        response.setPayOrderId(instantPaymentResponse.getPayOrderId());
         response.setTradeId(String.valueOf(tradeOrderDO.getId()));
         response.setStatus(tradeOrderDO.getStatus());
         response.setMessage(instantPaymentResponse.getResult().getResultMessage());
@@ -119,15 +121,19 @@ public class TradeFacadeImpl implements TradeFacade {
         return payeeFundDetail;
     }
 
-    private List<FundDetailInfo> buildPayerFundDetail(TradeOrderDO tradeOrderDO) {
+    private List<FundDetailInfo> buildPayerFundDetail(TradeOrderDO tradeOrderDO, List<String> payMethods) {
         List<FundDetailInfo> payeeFundDetail = new ArrayList<>();
-        FundDetailInfo fundDetailInfo = new FundDetailInfo();
-        fundDetailInfo.setAmount(new Money(tradeOrderDO.getAmount()));
-        fundDetailInfo.setMemberId(tradeOrderDO.getPayerId());
-        BalanceAsset balanceAsset = new BalanceAsset(tradeOrderDO.getPayerId(), getBaseAccountNo(tradeOrderDO.getPayerId()));
-        fundDetailInfo.setAssetTypeCode(balanceAsset.getAssetType().getCode());
-        fundDetailInfo.setAssetJsonStr(balanceAsset.toJsonStr());
-        payeeFundDetail.add(fundDetailInfo);
+        payMethods.forEach(payMethod -> {
+            FundDetailInfo fundDetailInfo = new FundDetailInfo();
+            if ("balance".equals(payMethod)) {
+                fundDetailInfo.setAmount(new Money(tradeOrderDO.getAmount()));
+                fundDetailInfo.setMemberId(tradeOrderDO.getPayerId());
+                BalanceAsset balanceAsset = new BalanceAsset(tradeOrderDO.getPayerId(), getBaseAccountNo(tradeOrderDO.getPayerId()));
+                fundDetailInfo.setAssetTypeCode(balanceAsset.getAssetType().getCode());
+                fundDetailInfo.setAssetJsonStr(balanceAsset.toJsonStr());
+            }
+            payeeFundDetail.add(fundDetailInfo);
+        });
         return payeeFundDetail;
     }
 

@@ -45,7 +45,7 @@ public class UnionQueryService {
      * @param inParamName  入参名称
      * @param inParamValue 入参值
      */
-    public List<UnionQueryResult> query(String inParamName, String inParamValue) {
+    public Map<Long, List<UnionQueryResult>> query(String inParamName, String inParamValue) {
         Map<String, ParamQueryStatus> queryParam = new HashMap<>();
         queryParam.put(inParamName, new ParamQueryStatus(Collections.singletonList(inParamValue), false));
         Map<String, QueryResult> queryConfigResultMap = new HashMap<>();
@@ -67,11 +67,18 @@ public class UnionQueryService {
                 .sorted(Comparator.comparingInt(o -> o.getValue().getQueryDefine().getSort()))
                 .map(Map.Entry::getValue)
                 .toList();
-        List<UnionQueryResult> unionQueryResults = new ArrayList<>();
+        Map<Long, List<UnionQueryResult>> groupResult = new HashMap<>();
         queryResults.forEach(v -> {
-            unionQueryResults.add(new UnionQueryResult(v.getQueryDefine().getName(), v.getQueryDefine().getSort(), transferLabel(v.getItem())));
+            UnionQueryResult result = new UnionQueryResult(v.getQueryDefine().getName(), v.getQueryDefine().getSort(), transferLabel(v.getItem()));
+            if (groupResult.containsKey(v.getQueryDefine().getGroupId())) {
+                groupResult.get(v.getQueryDefine().getGroupId()).add(result);
+            } else {
+                List<UnionQueryResult> unionQueryResultList = new ArrayList<>();
+                unionQueryResultList.add(result);
+                groupResult.put(v.getQueryDefine().getGroupId(), unionQueryResultList);
+            }
         });
-        return unionQueryResults;
+        return groupResult;
     }
 
     /**
@@ -84,7 +91,7 @@ public class UnionQueryService {
         List<Map<String, Object>> result = new ArrayList<>();
         if (!CollectionUtils.isEmpty(items)) {
             items.forEach(item -> {
-                Map<String, Object> newItem = new HashMap<>();
+                Map<String, Object> newItem = new LinkedHashMap<>();
                 item.forEach((key, value) -> {
                     if (configMap.containsKey(key)) {
                         QueryParamDefineDO queryParamDefineDO = configMap.get(key).getQueryParamDefineDO();
@@ -127,8 +134,8 @@ public class UnionQueryService {
 
             // 执行查询
             JdbcTemplate jdbcTemplate = jdbcTemplateMap.get(queryDefine.getDataSource());
-            String sql = buildQuerySQL(inParamName, queryDefine.getQuerySql(), inParamValue);
-            List<Map<String, Object>> queryData = jdbcTemplate.queryForList(sql, inParamValue.toArray());
+            String sql = buildQuerySQL(inParamName, queryDefine.getQuerySql(), paramQueryValue);
+            List<Map<String, Object>> queryData = jdbcTemplate.queryForList(sql, paramQueryValue.toArray());
             if (CollectionUtils.isEmpty(queryData)) {
                 continue;
             }
@@ -140,7 +147,9 @@ public class UnionQueryService {
 
                         // 新增生成输出参数
                         if (outParamValueMap.containsKey(outParam)) {
-                            outParamValueMap.get(outParam).add(data.get(outParam).toString());
+                            if (!outParamValueMap.get(outParam).contains(paramStringValue)) {
+                                outParamValueMap.get(outParam).add(paramStringValue);
+                            }
                         } else {
                             outParamValueMap.put(outParam, Lists.newArrayList(paramStringValue));
                         }
@@ -176,6 +185,7 @@ public class UnionQueryService {
 
     /**
      * 构建查询sql
+     *
      * @param inParamName
      * @param sql
      * @param inParamValue

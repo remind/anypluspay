@@ -17,6 +17,16 @@ public class PayResponse {
     private String tradeId;
 
     /**
+     * 支付总单号
+     */
+    private String paymentId;
+
+    /**
+     * 支付单号
+     */
+    private String payOrderId;
+
+    /**
      * 交易状态
      */
     private String status;

@@ -61,5 +61,11 @@
             <groupId>com.anypluspay.account</groupId>
             <artifactId>account-facade</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.anypluspay.test-trade</groupId>
+            <artifactId>test-trade-facade</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
