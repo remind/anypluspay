@@ -70,12 +70,13 @@ public class UnionQueryService {
         Map<Long, List<UnionQueryResult>> groupResult = new HashMap<>();
         queryResults.forEach(v -> {
             UnionQueryResult result = new UnionQueryResult(v.getQueryDefine().getName(), v.getQueryDefine().getSort(), transferLabel(v.getItem()));
-            if (groupResult.containsKey(v.getQueryDefine().getGroupId())) {
-                groupResult.get(v.getQueryDefine().getGroupId()).add(result);
+            Long groupId = v.getQueryDefine().getGroupId();
+            if (groupResult.containsKey(groupId)) {
+                groupResult.get(groupId).add(result);
             } else {
                 List<UnionQueryResult> unionQueryResultList = new ArrayList<>();
                 unionQueryResultList.add(result);
-                groupResult.put(v.getQueryDefine().getGroupId(), unionQueryResultList);
+                groupResult.put(groupId, unionQueryResultList);
             }
         });
         return groupResult;
