@@ -8,7 +8,7 @@ import lombok.Data;
  * 2025/3/18
  */
 @Data
-public class TradeInfo {
+public class TradeRequest {
 
     /**
      * 商户号

@@ -86,7 +86,7 @@ public class AccountFluxExecutor implements AssetFluxExecutor {
         } catch (BizException e) {
             result.setStatus(PayStatus.FAIL);
             result.setResultCode(e.getCode());
-            result.setResultCode(e.getMessage());
+            result.setResultMessage(e.getMessage());
         }
         return result;
     }

@@ -27,6 +27,11 @@ public class PayResponse {
     private String payOrderId;
 
     /**
+     * 支付状态
+     */
+    private String payStatus;
+
+    /**
      * 交易状态
      */
     private String status;

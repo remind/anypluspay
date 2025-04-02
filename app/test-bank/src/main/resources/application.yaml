@@ -1,6 +1,6 @@
 spring:
   application:
-    name: admin
+    name: test-bank
   thymeleaf:
     prefix: classpath:/templates/   # 模板路径
     suffix: .html                  # 模板后缀

@@ -2,6 +2,7 @@ package com.anypluspay.commons.exceptions;
 
 import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.commons.response.ResultCode;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 业务异常
@@ -29,7 +30,7 @@ public class BizException extends RuntimeException {
     }
 
     public BizException(ResultCode resultCode, String message) {
-        this(resultCode == null ? null : resultCode.getCode(), message);
+        this(resultCode == null ? null : resultCode.getCode(), resultCode != null && StringUtils.isBlank(message) ? resultCode.getMessage() : message);
     }
 
     public BizException(String code, String message) {

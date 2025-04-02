@@ -1,5 +1,6 @@
 package com.anypluspay.testtrade.facade.response;
 
+import com.anypluspay.testtrade.facade.request.TradeRequest;
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * 2025/3/18
  */
 @Data
-public class TradeResponse {
+public class TradeResponse extends TradeRequest {
 
     /**
      * 交易id

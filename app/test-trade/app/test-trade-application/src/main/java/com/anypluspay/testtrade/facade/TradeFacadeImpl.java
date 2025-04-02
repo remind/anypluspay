@@ -3,13 +3,14 @@ package com.anypluspay.testtrade.facade;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
-import com.anypluspay.testtrade.facade.request.TradeInfo;
+import com.anypluspay.testtrade.facade.request.TradeRequest;
 import com.anypluspay.testtrade.facade.response.TradeResponse;
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
@@ -47,9 +48,19 @@ public class TradeFacadeImpl implements TradeFacade {
     private InstantPaymentFacade instantPaymentFacade;
 
     @Override
-    public TradeResponse create(TradeInfo tradeInfo) {
-        TradeOrderDO tradeOrderDO = saveTrade(tradeInfo);
+    public TradeResponse create(TradeRequest tradeRequest) {
+        TradeOrderDO tradeOrderDO = saveTrade(tradeRequest);
+        return convertTradeResponse(tradeOrderDO);
+    }
+
+    private static TradeResponse convertTradeResponse(TradeOrderDO tradeOrderDO) {
         TradeResponse response = new TradeResponse();
+        response.setMerchantId(tradeOrderDO.getMerchantId());
+        response.setSubject(tradeOrderDO.getSubject());
+        response.setGoodsDesc(tradeOrderDO.getGoodsDesc());
+        response.setAmount(tradeOrderDO.getAmount().toString());
+        response.setPayerId(tradeOrderDO.getPayerId());
+        response.setPayeeId(tradeOrderDO.getPayeeId());
         response.setTradeId(String.valueOf(tradeOrderDO.getId()));
         response.setStatus(tradeOrderDO.getStatus());
         return response;
@@ -58,6 +69,8 @@ public class TradeFacadeImpl implements TradeFacade {
     @Override
     public PayResponse pay(PayRequest payRequest) {
         TradeOrderDO tradeOrderDO = tradeOrderMapper.selectById(payRequest.getTradeId());
+        AssertUtil.isTrue(tradeOrderDO != null, "交易不存在");
+        AssertUtil.isTrue(tradeOrderDO.getStatus().equals(TradeStatus.INIT.getCode()), "不处于待支付状态");
         PayOrderDO payOrderDO = savePayOrder(payRequest);
         InstantPaymentRequest request = new InstantPaymentRequest();
         request.setRequestId(String.valueOf(payOrderDO.getId()));
@@ -67,31 +80,39 @@ public class TradeFacadeImpl implements TradeFacade {
         request.setPayeeFundDetail(buildPayeeFundDetail(tradeOrderDO));
         request.setPayerFundDetail(buildPayerFundDetail(tradeOrderDO, payRequest.getPayMethods()));
         InstantPaymentResponse instantPaymentResponse = instantPaymentFacade.pay(request);
+
+        PayResponse response = new PayResponse();
+        response.setPaymentId(instantPaymentResponse.getPaymentId());
+        response.setPayOrderId(instantPaymentResponse.getPayOrderId());
+        response.setTradeId(String.valueOf(tradeOrderDO.getId()));
+
         if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
             tradeOrderDO.setStatus(TradeStatus.SUCCESS.getCode());
             payOrderDO.setStatus(PayStatus.SUCCESS.getCode());
             tradeOrderMapper.updateById(tradeOrderDO);
             payOrderMapper.updateById(payOrderDO);
         }
-        PayResponse response = new PayResponse();
-        response.setPaymentId(instantPaymentResponse.getPaymentId());
-        response.setPayOrderId(instantPaymentResponse.getPayOrderId());
-        response.setTradeId(String.valueOf(tradeOrderDO.getId()));
+        response.setPayStatus(instantPaymentResponse.getOrderStatus().getCode());
         response.setStatus(tradeOrderDO.getStatus());
         response.setMessage(instantPaymentResponse.getResult().getResultMessage());
         return response;
     }
 
-    private TradeOrderDO saveTrade(TradeInfo tradeInfo) {
+    @Override
+    public TradeResponse query(String tradeId) {
+        return convertTradeResponse(tradeOrderMapper.selectById(tradeId));
+    }
+
+    private TradeOrderDO saveTrade(TradeRequest tradeRequest) {
         TradeOrderDO tradeOrderDO = new TradeOrderDO();
-        tradeOrderDO.setSubject(tradeInfo.getSubject());
-        tradeOrderDO.setGoodsDesc(tradeInfo.getGoodsDesc());
-        tradeOrderDO.setAmount(new BigDecimal(tradeInfo.getAmount()));
+        tradeOrderDO.setSubject(tradeRequest.getSubject());
+        tradeOrderDO.setGoodsDesc(tradeRequest.getGoodsDesc());
+        tradeOrderDO.setAmount(new BigDecimal(tradeRequest.getAmount()));
         tradeOrderDO.setStatus(TradeStatus.INIT.getCode());
-        tradeOrderDO.setMerchantId(tradeInfo.getMerchantId());
-        tradeOrderDO.setPayeeId(tradeInfo.getPayeeId());
-        tradeOrderDO.setPayeeAccount(getBaseAccountNo(tradeInfo.getPayeeId()));
-        tradeOrderDO.setPayerId(tradeInfo.getPayerId());
+        tradeOrderDO.setMerchantId(tradeRequest.getMerchantId());
+        tradeOrderDO.setPayeeId(tradeRequest.getPayeeId());
+        tradeOrderDO.setPayeeAccount(getBaseAccountNo(tradeRequest.getPayeeId()));
+        tradeOrderDO.setPayerId(tradeRequest.getPayerId());
         tradeOrderMapper.insert(tradeOrderDO);
         return tradeOrderDO;
     }
