@@ -109,8 +109,12 @@ anypluspay
 ## 后台管理功能
 ### 查询
 #### 联合查询
+##### 支付
 ![支付](docs/images/admin-union-query1.png)
+##### 账务
 ![账务](docs/images/admin-union-query2.png)
+##### 渠道
+![渠道](docs/images/admin-union-query-channel.png)
 
 ### 渠道管理
 
