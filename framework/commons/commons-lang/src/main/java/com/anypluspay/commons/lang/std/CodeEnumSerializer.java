@@ -1,4 +1,4 @@
-package com.anypluspay.component.web.json.std;
+package com.anypluspay.commons.lang.std;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import com.fasterxml.jackson.core.JsonGenerator;

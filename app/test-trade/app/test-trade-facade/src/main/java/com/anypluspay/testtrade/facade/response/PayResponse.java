@@ -40,4 +40,9 @@ public class PayResponse {
      * 错误信息
      */
     private String message;
+
+    /**
+     * 机构支付链接
+     */
+    private String instUrl;
 }

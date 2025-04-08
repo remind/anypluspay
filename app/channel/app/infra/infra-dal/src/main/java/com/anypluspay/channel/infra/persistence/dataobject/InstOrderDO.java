@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-19
+ * @since 2025-04-07
  */
 @TableName("ti_inst_order")
 public class InstOrderDO implements Serializable {
@@ -65,12 +65,12 @@ public class InstOrderDO implements Serializable {
     /**
      * 请求扩展信息
      */
-    private String requestExtra;
+    private String requestExt;
 
     /**
      * 响应扩展信息
      */
-    private String responseExtra;
+    private String responseExt;
 
     /**
      * 提交时间
@@ -173,20 +173,20 @@ public class InstOrderDO implements Serializable {
         this.status = status;
     }
 
-    public String getRequestExtra() {
-        return requestExtra;
+    public String getRequestExt() {
+        return requestExt;
     }
 
-    public void setRequestExtra(String requestExtra) {
-        this.requestExtra = requestExtra;
+    public void setRequestExt(String requestExt) {
+        this.requestExt = requestExt;
     }
 
-    public String getResponseExtra() {
-        return responseExtra;
+    public String getResponseExt() {
+        return responseExt;
     }
 
-    public void setResponseExtra(String responseExtra) {
-        this.responseExtra = responseExtra;
+    public void setResponseExt(String responseExt) {
+        this.responseExt = responseExt;
     }
 
     public LocalDateTime getSubmitTime() {
@@ -256,8 +256,8 @@ public class InstOrderDO implements Serializable {
         ", fundChannelCode = " + fundChannelCode +
         ", apiType = " + apiType +
         ", status = " + status +
-        ", requestExtra = " + requestExtra +
-        ", responseExtra = " + responseExtra +
+        ", requestExt = " + requestExt +
+        ", responseExt = " + responseExt +
         ", submitTime = " + submitTime +
         ", bookSubmitTime = " + bookSubmitTime +
         ", nextRetryTime = " + nextRetryTime +

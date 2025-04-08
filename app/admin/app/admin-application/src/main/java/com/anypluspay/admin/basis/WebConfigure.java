@@ -18,10 +18,13 @@ public class WebConfigure {
     @Bean("jdbcTemplateMap")
     public Map<String, JdbcTemplate> sqlSessionFactory(@Qualifier("paymentDataSource") DataSource paymentDataSource,
                                                        @Qualifier("accountDataSource") DataSource accountDataSource,
-                                                       @Qualifier("channelDataSource") DataSource channelDataSource) {
+                                                       @Qualifier("channelDataSource") DataSource channelDataSource,
+                                                       @Qualifier("testtradeDataSource") DataSource testtradeDataSource) {
         return Map.of(
                 "payment", new JdbcTemplate(paymentDataSource),
                 "account", new JdbcTemplate(accountDataSource),
-                "channel", new JdbcTemplate(channelDataSource));
+                "channel", new JdbcTemplate(channelDataSource),
+                "test_trade", new JdbcTemplate(testtradeDataSource)
+        );
     }
 }

@@ -16,12 +16,11 @@ db:
       - ti_
     name:
     # 依次为：表名,业务主键字段(如果也是表主键就不用)
-      - tb_biz_order
+#      - tb_biz_order
 #      - tb_fund_in_order
 #      - tb_refund_order
 #      - tb_fund_out_order
       - ti_inst_order
-#      - ti_inst_delay_order
       - ti_inst_command_order
 #      - tc_api_result_code
 #      - tc_unity_result_code

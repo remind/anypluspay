@@ -1,4 +1,4 @@
-package com.anypluspay.component.web.json.std;
+package com.anypluspay.commons.lang.std;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
  * @author wxj
  * 2024/11/19
  */
-public class LocalDateTimeSerializer extends StdSerializer<LocalDateTime> {
-    protected LocalDateTimeSerializer() {
+public class CustomerLocalDateTimeSerializer extends StdSerializer<LocalDateTime> {
+    protected CustomerLocalDateTimeSerializer() {
         super(LocalDateTime.class);
     }
 

@@ -46,6 +46,7 @@ public class UnionQueryService {
      * @param inParamValue 入参值
      */
     public Map<Long, List<UnionQueryResult>> query(String inParamName, String inParamValue) {
+        init();
         Map<String, ParamQueryStatus> queryParam = new HashMap<>();
         queryParam.put(inParamName, new ParamQueryStatus(Collections.singletonList(inParamValue), false));
         Map<String, QueryResult> queryConfigResultMap = new HashMap<>();

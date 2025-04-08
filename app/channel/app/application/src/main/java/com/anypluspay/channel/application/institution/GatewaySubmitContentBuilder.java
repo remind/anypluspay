@@ -46,7 +46,7 @@ public class GatewaySubmitContentBuilder {
             Class<?> cl = RequestResponseClass.getRequestClass(channelApiContext.getChannelApiType());
             RequestContent requestContent = (RequestContent) cl.getConstructor().newInstance();
             if (requestContent instanceof NormalContent normalContent) {
-                normalContent.setExtra(orderContext.getInstOrder().getRequestExtra());
+                normalContent.setExtension(orderContext.getInstOrder().getRequestExt());
                 normalContent.setInstOrderId(orderContext.getInstOrder().getInstOrderId());
                 normalContent.setInstRequestNo(orderContext.getInstOrder().getInstRequestNo());
                 normalContent.setServerNotifyUrl(combineCallbackUrlService.getServerNotifyUrl(channelApiContext));

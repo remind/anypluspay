@@ -3,6 +3,7 @@ package com.anypluspay.channel.application.route;
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.enums.*;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.terminal.Terminal;
 import lombok.Data;
@@ -71,8 +72,8 @@ public class RouteParam {
     private List<ChannelApiType> channelApiTypes;
 
     /**
-     * 路由扩展参数
+     * 扩展参数
      */
-    private Map<String, String> extra;
+    private Extension extension;
 
 }

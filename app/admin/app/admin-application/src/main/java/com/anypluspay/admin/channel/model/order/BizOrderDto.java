@@ -2,7 +2,7 @@ package com.anypluspay.admin.channel.model.order;
 
 import com.anypluspay.admin.channel.web.json.RequestTypeSerializer;
 import com.anypluspay.channel.types.enums.RequestType;
-import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
+import com.anypluspay.commons.lang.std.CustomerLocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
@@ -64,12 +64,12 @@ public class BizOrderDto {
     /**
      * 创建时间
      */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = CustomerLocalDateTimeSerializer.class)
     private LocalDateTime gmtCreate;
 
     /**
      * 最后修改时间
      */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = CustomerLocalDateTimeSerializer.class)
     private LocalDateTime gmtModified;
 }

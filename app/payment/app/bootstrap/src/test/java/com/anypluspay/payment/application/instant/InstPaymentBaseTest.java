@@ -6,6 +6,7 @@ import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.exceptions.BizException;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
@@ -16,6 +17,8 @@ import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.types.PaymentExtKey;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
@@ -100,9 +103,9 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         FundResult fundResult = new FundResult();
         fundResult.setStatus(BizOrderStatus.PROCESSING);
         fundResult.setUnityCode("P001");
-        Map<String, String> responseExtra = new HashMap<>();
-        responseExtra.put("instUrl", "channel pay url");
-        fundResult.setResponseExtra(responseExtra);
+        Extension responseExt = new Extension();
+        responseExt.add("instUrl", "channel pay url");
+        fundResult.setResponseExt(responseExt);
         when(fundInFacade.apply(any())).thenReturn(fundResult);
     }
 
@@ -123,21 +126,19 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         return request;
     }
 
-    protected TradeInfo buildTradeInfos(double amount, List<FundDetailInfo> payeeFundDetail) {
-        TradeInfo tradeInfo = new TradeInfo();
-        tradeInfo.setTradeAmount(new Money(amount, Currency.getInstance("CNY")));
-        tradeInfo.setTradeId(randomId());
-        tradeInfo.setPayeeId(PAYEE_MEMBER_ID);
-        tradeInfo.setPayeeFundDetail(payeeFundDetail);
-        return tradeInfo;
-    }
-
     protected FundDetailInfo buildBalanceFundDetail(String memberId, String accountNo, double amount) {
-        return buildFundDetailInfo(memberId, amount, new BalanceAsset(memberId, accountNo));
+        FundDetailInfo fundDetailInfo = buildFundDetailInfo(memberId, amount, new BalanceAsset(memberId, accountNo));
+        fundDetailInfo.setPayModel(PayModel.BALANCE.getCode());
+        return fundDetailInfo;
     }
 
     protected FundDetailInfo buildBankCardFundDetail(String memberId, double amount) {
-        return buildFundDetailInfo(memberId, amount, new BankCardAsset("bankCardNo456"));
+        FundDetailInfo fundDetailInfo = buildFundDetailInfo(memberId, amount, new BankCardAsset("bankCardNo456"));
+        fundDetailInfo.setPayModel(PayModel.ONLINE_BANK.getCode());
+        Extension payParam = new Extension();
+        payParam.add(PaymentExtKey.PAY_INST.getCode(), "UNLIMITED");
+        fundDetailInfo.setPayParam(payParam.toJsonString());
+        return fundDetailInfo;
     }
 
     protected FundDetailInfo buildFundDetailInfo(String memberId, double amount, AssetInfo assetInfo) {

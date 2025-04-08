@@ -1,11 +1,10 @@
 package com.anypluspay.payment.application.instant;
 
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
-import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +50,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());
-        Assert.assertNotNull(payResult.getPayParam());
+        Assert.assertNotNull(payResult.getPayResponse());
     }
 
 }

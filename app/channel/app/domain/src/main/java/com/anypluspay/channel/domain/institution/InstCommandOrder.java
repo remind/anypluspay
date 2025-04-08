@@ -3,6 +3,7 @@ package com.anypluspay.channel.domain.institution;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Extension;
 import lombok.Data;
 
 import java.util.Map;
@@ -68,6 +69,6 @@ public class InstCommandOrder extends Entity {
     /**
      * 扩展信息
      */
-    private  Map<String, String> extra;
+    private Extension extension;
 
 }

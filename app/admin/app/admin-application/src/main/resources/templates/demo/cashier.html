@@ -96,7 +96,7 @@
             <span th:text="|可用余额：${availableBalance}|"  class="balance" id="available-balance"></span>
         </label>
         <label>
-            <input type="checkbox" name="payment" value="test-bank">
+            <input type="checkbox" name="payment" value="testBank">
             测试银行支付
         </label>
     </div>
@@ -110,6 +110,20 @@
 
 <script>
     var tradeId = [[${trade.tradeId}]];
+    const allPayMethods = {
+        "balance": {
+            "code": "BALANCE",
+            "payModel":"BALANCE",
+            "assetType": "BALANCE",
+            "payInst": ""
+        },
+        "testBank": {
+            "code": "testBank",
+            "payModel":"ONLINE_BANK",
+            "assetType": "BANKCARD",
+            "payInst": "UNLIMITED"
+        }
+    };
 
     // 模拟异步提交支付
     async function submitPayment() {
@@ -127,6 +141,11 @@
         const resultMessage = document.getElementById('result-message');
         resultMessage.textContent = '正在处理支付请求，请稍候...';
 
+        const payMethods = [];
+        selectedPayments.forEach(sp => {
+            payMethods.push(allPayMethods[sp]);
+        });
+
         try {
             // 模拟异步请求（可以替换为实际的 API 调用）
             const response = await fetch('/demo/cashier/pay', {
@@ -135,7 +154,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    payMethods: selectedPayments,
+                    payMethods: payMethods,
                     tradeId: tradeId
                 })
             });
@@ -152,10 +171,10 @@
                     resultMessage.textContent = `支付成功！`;
                     resultMessage.style.color = 'green';
                 } else {
-                    if (data.formHtml) {
+                    if (data.instUrl) {
                         // 如果返回了 HTML 表单，则动态插入并自动提交
                         const formContainer = document.createElement('div');
-                        formContainer.innerHTML = data.formHtml;
+                        formContainer.innerHTML = data.instUrl;
 
                         // 将表单插入到页面中
                         document.body.appendChild(formContainer);

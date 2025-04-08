@@ -75,14 +75,14 @@ public class UnionQueryController {
      * @return
      */
     @GetMapping("/group")
-    public ResponseResult<Map<Long,String>> getGroup() {
-        Map<Long, String> result = new LinkedHashMap<>();
+    public ResponseResult<Map<String,String>> getGroup() {
+        Map<String, String> result = new LinkedHashMap<>();
         LambdaQueryWrapper<QueryGroupDO> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.orderByAsc(QueryGroupDO::getSort);
         List<QueryGroupDO> queryParamDefineDOS = queryGroupMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(queryParamDefineDOS)) {
             queryParamDefineDOS.forEach(queryParamDefineDO -> {
-                result.put(queryParamDefineDO.getId(), queryParamDefineDO.getName());
+                result.put("g_" + queryParamDefineDO.getId(), queryParamDefineDO.getName());
             });
         }
         return ResponseResult.success(result);

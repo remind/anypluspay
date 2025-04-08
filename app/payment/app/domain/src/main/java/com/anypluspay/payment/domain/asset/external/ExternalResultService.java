@@ -43,7 +43,7 @@ public class ExternalResultService {
         FluxResult result = new FluxResult();
         result.setResultCode(fundResult.getUnityCode());
         result.setResultMessage(fundResult.getUnityMessage());
-        result.setPayParam(fundResult.getResponseExtra());
+        result.setFluxResponse(fundResult.getResponseExt());
 
         if (fundResult.getStatus() == BizOrderStatus.FAILED) {
             result.setStatus(PayStatus.FAIL);

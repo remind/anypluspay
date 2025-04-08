@@ -20,4 +20,9 @@ public interface RouteScorer {
      * 5分，标准可用
      */
     int STANDARD_SCORE = 5;
+
+    /**
+     * 不限制值
+     */
+    String UNLIMITED = "UNLIMITED";
 }

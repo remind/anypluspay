@@ -6,12 +6,13 @@ import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.request.RefundRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.enums.RefundType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.commons.exceptions.BizException;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.response.GlobalResultCode;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +23,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author wxj
@@ -109,9 +107,9 @@ public class RefundTest extends FundInBaseTest {
         refundDTO.setOrigRequestId(origOrder.getRequestId());
         refundDTO.setAmount(refundAmount == null ? origOrder.getAmount() : refundAmount);
         refundDTO.setReason("测试退款");
-        Map<String, String> instExtInfo = new HashMap<>();
-        instExtInfo.put(ExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testFlag, null)));
-        refundDTO.setInstExtra(instExtInfo);
+        Extension instExt = new Extension();
+        instExt.add(ChannelExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testFlag, null)));
+        refundDTO.setInstExt(instExt);
         return refundDTO;
     }
 

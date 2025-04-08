@@ -37,7 +37,7 @@ public class InstOrderBuilder {
         instOrder.setInstRequestNo(bizOrderService.genInstRequestNo(channelApiContext));
         instOrder.setFundChannelCode(channelApiContext.getChannelCode());
         instOrder.setApiType(channelApiContext.getChannelApiType());
-        instOrder.setRequestExtra(bizOrder.getInstExtra());
+        instOrder.setRequestExt(bizOrder.getInstExt());
         instOrder.setSubmitTimeType(submitInstStrategy.getSubmitTimeType(channelApiContext));
         instOrder.setBookSubmitTime(LocalDateTime.now());
         if (instOrder.getSubmitTimeType() == SubmitTimeType.REAL) {

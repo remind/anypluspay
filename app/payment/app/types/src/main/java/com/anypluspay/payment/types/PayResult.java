@@ -17,9 +17,9 @@ public class PayResult {
     private PayStatus payStatus;
 
     /**
-     * 支付参数
+     * 支付响应
      */
-    private Map<String, String> payParam;
+    private String payResponse;
 
     /**
      * 返回结果码

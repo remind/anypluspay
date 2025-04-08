@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-19
+ * @since 2025-04-07
  */
 @TableName("ti_inst_command_order")
 public class InstCommandOrderDO implements Serializable {
@@ -75,7 +75,7 @@ public class InstCommandOrderDO implements Serializable {
     /**
      * 扩展信息
      */
-    private String extra;
+    private String extension;
 
     /**
      * 创建时间
@@ -169,12 +169,12 @@ public class InstCommandOrderDO implements Serializable {
         this.apiMessage = apiMessage;
     }
 
-    public String getExtra() {
-        return extra;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -206,7 +206,7 @@ public class InstCommandOrderDO implements Serializable {
         ", apiCode = " + apiCode +
         ", apiSubCode = " + apiSubCode +
         ", apiMessage = " + apiMessage +
-        ", extra = " + extra +
+        ", extension = " + extension +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

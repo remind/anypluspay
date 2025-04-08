@@ -11,6 +11,11 @@ import lombok.Data;
 public class SignNormalContent extends NormalContent {
 
     /**
+     * 商品主题
+     */
+    private String goodsSubject;
+
+    /**
      * 商品描述
      */
     private String goodsDesc;

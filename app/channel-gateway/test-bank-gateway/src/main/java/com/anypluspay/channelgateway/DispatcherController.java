@@ -1,6 +1,5 @@
 package com.anypluspay.channelgateway;
 
-import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.RequestContent;
@@ -9,6 +8,7 @@ import com.anypluspay.channelgateway.types.RequestResponseClass;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.response.GlobalResultCode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,8 @@ public class DispatcherController {
             String requestBody = getRequestBody(request);
             AssertUtil.notNull(requestBody, "请求报文不能为空");
             Class<? extends RequestContent> requestClass = RequestResponseClass.getRequestClass(apiType);
-            RequestContent content = JSONUtil.toBean(requestBody, requestClass);
+            ObjectMapper objectMapper = new ObjectMapper();
+            RequestContent content = objectMapper.readValue(requestBody, requestClass);
             return invokeBean(bean, channelCode, apiType, content);
         } catch (Exception e) {
             log.error("处理异常", e);

@@ -1,9 +1,11 @@
 package com.anypluspay.payment.types.funds;
 
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Extension;
+import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
-import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import lombok.Data;
 
 /**
@@ -58,4 +60,19 @@ public class FundDetail extends Entity  {
      * 资产信息
      */
     private AssetInfo assetInfo;
+
+    /**
+     * 支付模式
+     */
+    private PayModel payModel;
+
+    /**
+     * 支付参数
+     */
+    private Extension payParam;
+
+    /**
+     * 扩展信息
+     */
+    private Extension extension;
 }

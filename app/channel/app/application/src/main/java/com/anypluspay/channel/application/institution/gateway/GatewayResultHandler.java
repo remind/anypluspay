@@ -12,6 +12,7 @@ import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.domain.repository.InstCommandOrderRepository;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channelgateway.result.GatewayResult;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.ExtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -87,7 +88,7 @@ public class GatewayResultHandler {
         gatewayResult.setReceiveTime(LocalDateTime.now());
 
         if (gatewayResult.isSuccess() && orderContext.getInstOrder() != null) {
-            orderContext.getInstOrder().setResponseExtra(ExtUtil.merge(orderContext.getInstOrder().getResponseExtra(), gatewayResult.getResponseExtra()));
+            orderContext.getInstOrder().getResponseExt().addAll(gatewayResult.getResponseExt());
         }
 
         // 各ApiType个性化处理

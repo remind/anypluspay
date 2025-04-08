@@ -4,12 +4,12 @@ import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
 
 /**
- * 支付方式
+ * 支付模式
  * @author wxj
  * 2024/10/31
  */
 @Data
-public class PayMethod extends Entity {
+public class PayModel extends Entity {
 
     /**
      * 编码

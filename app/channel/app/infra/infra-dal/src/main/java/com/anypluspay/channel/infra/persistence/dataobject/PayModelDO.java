@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 支付方式
+ * 支付模式
  * </p>
  *
  * @author wxj
  * @since 2024-11-12
  */
-@TableName("tc_pay_method")
-public class PayMethodDO implements Serializable {
+@TableName("tc_pay_model")
+public class PayModelDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

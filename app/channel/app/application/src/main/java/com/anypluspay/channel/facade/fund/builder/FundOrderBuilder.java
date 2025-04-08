@@ -39,12 +39,9 @@ public class FundOrderBuilder {
      */
     public FundInOrder buildFundIn(FundInRequest request) {
         FundInOrder fundInOrder = new FundInOrder();
-        fundInOrder.setRouteExtra(request.getRouteExtra());
         fundInOrder.setPayInst(request.getPayInst());
-        fundInOrder.setPayMethod(request.getPayMethod());
-        fundInOrder.setGoodsDesc(request.getGoodsDesc());
+        fundInOrder.setPayModel(request.getPayModel());
         fundInOrder.setAmount(request.getAmount());
-        fundInOrder.setTerminal(request.getTerminal());
         fillBizOrder(fundInOrder, request, IdType.BIZ_FUND_IN);
         return fundInOrder;
     }
@@ -87,8 +84,8 @@ public class FundOrderBuilder {
     private void fillBizOrder(BaseBizOrder bizOrder, FundRequest fundRequest, IdType idType) {
         bizOrder.setRequestId(fundRequest.getRequestId());
         bizOrder.setMemberId(fundRequest.getMemberId());
-        bizOrder.setExtra(fundRequest.getExtra());
-        bizOrder.setInstExtra(fundRequest.getInstExtra());
+        bizOrder.setInstExt(fundRequest.getInstExt());
+        bizOrder.setExtension(fundRequest.getExtension());
         bizOrder.setStatus(BizOrderStatus.PROCESSING);
         bizOrder.setOrderId(sequenceService.getId(fundRequest.getMemberId(), SystemCodeEnums.CHANNEL, idType));
     }

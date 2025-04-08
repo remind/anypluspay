@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 支付总单
+ * 支付资金明细
  * </p>
  *
  * @author wxj
- * @since 2024-01-29
+ * @since 2025-04-08
  */
 @TableName("tp_fund_detail")
 public class FundDetailDO implements Serializable {
@@ -72,6 +72,21 @@ public class FundDetailDO implements Serializable {
      * 资产信息
      */
     private String assetInfo;
+
+    /**
+     * 支付模式
+     */
+    private String payModel;
+
+    /**
+     * 交换参数
+     */
+    private String payParam;
+
+    /**
+     * 扩展字段
+     */
+    private String extension;
 
     /**
      * 创建时间
@@ -165,6 +180,30 @@ public class FundDetailDO implements Serializable {
         this.assetInfo = assetInfo;
     }
 
+    public String getPayModel() {
+        return payModel;
+    }
+
+    public void setPayModel(String payModel) {
+        this.payModel = payModel;
+    }
+
+    public String getPayParam() {
+        return payParam;
+    }
+
+    public void setPayParam(String payParam) {
+        this.payParam = payParam;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -191,9 +230,12 @@ public class FundDetailDO implements Serializable {
         ", memberId = " + memberId +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
-        ", action = " + fundAction +
+        ", fundAction = " + fundAction +
         ", assetType = " + assetType +
         ", assetInfo = " + assetInfo +
+        ", payModel = " + payModel +
+        ", payParam = " + payParam +
+        ", extension = " + extension +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

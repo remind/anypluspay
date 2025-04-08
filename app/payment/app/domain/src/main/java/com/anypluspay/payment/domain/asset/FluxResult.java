@@ -1,5 +1,6 @@
 package com.anypluspay.payment.domain.asset;
 
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.domain.flux.FluxInstruction;
 import com.anypluspay.payment.types.PayStatus;
 import lombok.Data;
@@ -43,12 +44,8 @@ public class FluxResult {
     private String resultMessage;
 
     /**
-     * 支付参数
+     * 交换响应
      */
-    private Map<String, String> payParam = new HashMap<>();
+    private Extension fluxResponse = new Extension();
 
-    /**
-     * 扩展信息
-     */
-    private Map<String, String> extMap = new HashMap<>();
 }

@@ -46,26 +46,26 @@
     <h2>订单信息</h2>
     <div class="field">
         <label>订单号：</label>
-        <span th:text="${generalPayOrder.outTradeNo}"></span>
+        <span th:text="${payOrder.outTradeNo}"></span>
     </div>
     <div class="field">
         <label>金额：</label>
-        <span th:text="${generalPayOrder.amount}"></span>
+        <span th:text="${payOrder.amount}"></span>
     </div>
     <div class="field">
         <label>主题：</label>
-        <span th:text="${generalPayOrder.subject}"></span>
+        <span th:text="${payOrder.subject}"></span>
     </div>
     <div class="field">
         <label>商品信息：</label>
-        <span th:text="${generalPayOrder.goodsDesc}"></span>
+        <span th:text="${payOrder.goodsDesc}"></span>
     </div>
     <div class="field">
         <label>状态：</label>
-        <span th:text="${generalPayOrder.status}"></span>
+        <span th:text="${payOrder.status}"></span>
     </div>
     <div class="actions">
-        <a th:href="${generalPayOrder.returnUrl} + '?out_trade_no=' + ${generalPayOrder.outTradeNo}" target="_blank">跳转回商户页面</a>
+        <a th:href="${payOrder.returnUrl} + '?out_trade_no=' + ${payOrder.outTradeNo}" target="_blank">跳转回商户页面</a>
     </div>
 </div>
 </body>

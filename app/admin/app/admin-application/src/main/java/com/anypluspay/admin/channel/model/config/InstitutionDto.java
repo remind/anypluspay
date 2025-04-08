@@ -1,6 +1,6 @@
 package com.anypluspay.admin.channel.model.config;
 
-import com.anypluspay.component.web.json.std.LocalDateTimeSerializer;
+import com.anypluspay.commons.lang.std.CustomerLocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
@@ -41,12 +41,12 @@ public class InstitutionDto {
     /**
      * 创建时间
      */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = CustomerLocalDateTimeSerializer.class)
     private LocalDateTime gmtCreate;
 
     /**
      * 最后修改时间
      */
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonSerialize(using = CustomerLocalDateTimeSerializer.class)
     private LocalDateTime gmtModified;
 }

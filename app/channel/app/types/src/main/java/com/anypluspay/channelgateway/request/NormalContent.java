@@ -1,12 +1,13 @@
 package com.anypluspay.channelgateway.request;
 
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.commons.lang.std.MoneyDeserializer;
+import com.anypluspay.commons.lang.std.MoneySerializer;
 import com.anypluspay.commons.lang.types.Money;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 常规内容
@@ -35,6 +36,8 @@ public class NormalContent extends RequestContent {
     /**
      * 金额
      */
+    @JsonSerialize(using = MoneySerializer.class)
+    @JsonDeserialize(using = MoneyDeserializer.class)
     private Money amount;
 
     /**

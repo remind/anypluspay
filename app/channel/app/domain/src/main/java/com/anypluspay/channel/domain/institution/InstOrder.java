@@ -5,6 +5,7 @@ import com.anypluspay.channel.types.enums.TaskStatus;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.channel.types.order.SubmitTimeType;
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Extension;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -64,12 +65,12 @@ public class InstOrder extends Entity {
     /**
      * 请求网关API要用到的信息，如微信支付要用到openid
      */
-    private Map<String, String> requestExtra;
+    private Extension requestExt = new Extension();
 
     /**
      * 返回支付时需要用到的信息，如网银支付的URL
      */
-    private Map<String, String> responseExtra;
+    private Extension responseExt = new Extension();
 
     /**
      * 提交时间类型

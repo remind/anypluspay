@@ -17,7 +17,8 @@ public abstract class AssetInfo {
     public abstract AssetType getAssetType();
 
     public String toJsonStr() {
-        return JSONUtil.toJsonStr(this);
+        String jsonString = JSONUtil.toJsonStr(this);
+        return "{}".equals(jsonString) ? null : jsonString;
     }
 
     public static AssetInfo parse(String assetTypeCode, String jsonStr) {

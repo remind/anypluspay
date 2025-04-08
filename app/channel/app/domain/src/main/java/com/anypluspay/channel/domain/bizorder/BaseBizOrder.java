@@ -1,14 +1,11 @@
 package com.anypluspay.channel.domain.bizorder;
 
-import com.anypluspay.channel.types.ExtKey;
 import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Extension;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 基础业务单
@@ -51,30 +48,17 @@ public abstract class BaseBizOrder extends Entity {
     private Long instOrderId;
 
     /**
-     * 扩展字段
+     * 机构扩展信息，仅渠道网关API要使用传到机构，如微信的openid
      */
-    private Map<String, String> extra = new HashMap<>();
+    private Extension instExt;
 
     /**
-     * 机构扩展信息，渠道网关API要使用的
+     * 扩展信息
      */
-    private Map<String, String> instExtra = new HashMap<>();
+    private Extension extension = new Extension();
 
     public BaseBizOrder(RequestType requestType) {
         this.requestType = requestType;
     }
 
-    public void addExtValue(ExtKey extKey, String value) {
-        if (extra == null) {
-            extra = new HashMap<>();
-        }
-        extra.put(extKey.getCode(), value);
-    }
-
-    public void addInstExtValue(ExtKey extKey, String value) {
-        if (instExtra == null) {
-            instExtra = new HashMap<>();
-        }
-        instExtra.put(extKey.getCode(), value);
-    }
 }

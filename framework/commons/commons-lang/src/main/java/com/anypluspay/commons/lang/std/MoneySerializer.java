@@ -1,4 +1,4 @@
-package com.anypluspay.component.web.json.std;
+package com.anypluspay.commons.lang.std;
 
 import com.anypluspay.commons.lang.types.Money;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -18,6 +18,8 @@ public class MoneySerializer extends StdSerializer<Money> {
 
     @Override
     public void serialize(Money value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        gen.writeString(value.getCurrency().getSymbol() + " " + value.getAmount());
+        if (value != null) {
+            gen.writeString("{\"amount\":\"" + value.getAmount() + "\",\"currency\":\"" + value.getCurrency().getCurrencyCode() + "\"}");
+        }
     }
 }

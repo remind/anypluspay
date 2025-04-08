@@ -2,6 +2,8 @@ package com.anypluspay.admin.channel;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -35,9 +37,14 @@ public class ChannelDataSourceConfigure {
     }
 
     @Bean(name = "channelSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("channelDataSource") DataSource dataSource, MybatisPlusInterceptor mybatisPlusInterceptor) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("channelDataSource") DataSource dataSource, MybatisPlusInterceptor mybatisPlusInterceptor,
+                                              @Qualifier("autoFillMetaObjectHandler") MetaObjectHandler autoFillMetaObjectHandler) throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
+
+        GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setMetaObjectHandler(autoFillMetaObjectHandler); // 手动注入 MetaObjectHandler
+        factoryBean.setGlobalConfig(globalConfig);
 
         MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
         mybatisConfiguration.addInterceptor(mybatisPlusInterceptor);

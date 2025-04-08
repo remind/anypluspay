@@ -1,13 +1,12 @@
 package com.anypluspay.channelgateway.result;
 
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.result.ProcessResult;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 网关专用结果，需要映射决策订单状态
@@ -36,7 +35,7 @@ public class GatewayResult extends ProcessResult {
     /**
      * 需要返回给到收银台支付用到的信息
      */
-    private Map<String, String> responseExtra = new HashMap<>();
+    private Extension responseExt = new Extension();
 
     /**
      * 返回时间
@@ -48,12 +47,12 @@ public class GatewayResult extends ProcessResult {
      */
     private Money realAmount;
 
-    public void addExtra(ExtKey extKey, String value) {
-        responseExtra.put(extKey.getCode(), value);
+    public void addExtra(ChannelExtKey channelExtKey, String value) {
+        responseExt.add(channelExtKey.getCode(), value);
     }
 
     public void addExtra(String extKey, String value) {
-        responseExtra.put(extKey, value);
+        responseExt.add(extKey, value);
     }
 
 }

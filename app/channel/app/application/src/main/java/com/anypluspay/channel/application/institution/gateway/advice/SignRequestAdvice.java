@@ -1,6 +1,7 @@
 package com.anypluspay.channel.application.institution.gateway.advice;
 
 import com.anypluspay.channel.domain.SystemConfig;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -25,7 +26,8 @@ public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent
     @Override
     public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, SignNormalContent requestContent) {
         if (orderContext.getBizOrder() instanceof FundInOrder fundInOrder) {
-            requestContent.setGoodsDesc(fundInOrder.getGoodsDesc());
+            requestContent.setGoodsSubject(fundInOrder.getExtension().get(ChannelExtKey.GOODS_SUBJECT.getCode()));
+            requestContent.setGoodsDesc(fundInOrder.getExtension().get(ChannelExtKey.GOODS_DESC.getCode()));
         }
     }
 

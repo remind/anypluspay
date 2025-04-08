@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-11-12
+ * @since 2025-04-07
  */
 @TableName("tb_fund_in_order")
 public class FundInOrderDO implements Serializable {
@@ -29,9 +29,9 @@ public class FundInOrderDO implements Serializable {
     private String orderId;
 
     /**
-     * 支付方式
+     * 支付模式
      */
-    private String payMethod;
+    private String payModel;
 
     /**
      * 支付机构
@@ -47,26 +47,6 @@ public class FundInOrderDO implements Serializable {
      * 币种
      */
     private String currencyCode;
-
-    /**
-     * 商品描述
-     */
-    private String goodsDesc;
-
-    /**
-     * 终端类型
-     */
-    private String terminalType;
-
-    /**
-     * 终端信息
-     */
-    private String terminal;
-
-    /**
-     * 路由信息
-     */
-    private String routeExtra;
 
     /**
      * 创建时间
@@ -88,12 +68,12 @@ public class FundInOrderDO implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getPayMethod() {
-        return payMethod;
+    public String getPayModel() {
+        return payModel;
     }
 
-    public void setPayMethod(String payMethod) {
-        this.payMethod = payMethod;
+    public void setPayModel(String payModel) {
+        this.payModel = payModel;
     }
 
     public String getPayInst() {
@@ -120,38 +100,6 @@ public class FundInOrderDO implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    public String getGoodsDesc() {
-        return goodsDesc;
-    }
-
-    public void setGoodsDesc(String goodsDesc) {
-        this.goodsDesc = goodsDesc;
-    }
-
-    public String getTerminalType() {
-        return terminalType;
-    }
-
-    public void setTerminalType(String terminalType) {
-        this.terminalType = terminalType;
-    }
-
-    public String getTerminal() {
-        return terminal;
-    }
-
-    public void setTerminal(String terminal) {
-        this.terminal = terminal;
-    }
-
-    public String getRouteExtra() {
-        return routeExtra;
-    }
-
-    public void setRouteExtra(String routeExtra) {
-        this.routeExtra = routeExtra;
-    }
-
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -172,14 +120,10 @@ public class FundInOrderDO implements Serializable {
     public String toString() {
         return "FundInOrderDO{" +
         "orderId = " + orderId +
-        ", payMethod = " + payMethod +
+        ", payModel = " + payModel +
         ", payInst = " + payInst +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
-        ", goodsDesc = " + goodsDesc +
-        ", terminalType = " + terminalType +
-        ", terminal = " + terminal +
-        ", routeExtra = " + routeExtra +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

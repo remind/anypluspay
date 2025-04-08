@@ -1,5 +1,7 @@
 package com.anypluspay.payment.application;
 
+import com.anypluspay.commons.lang.types.Extension;
+import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.facade.request.BasePaymentRequest;
@@ -10,6 +12,7 @@ import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -53,6 +56,9 @@ public abstract class PaymentBuilder {
         fundDetail.setAssetInfo(AssetInfo.parse(info.getAssetTypeCode(), info.getAssetJsonStr()));
         fundDetail.setBelongTo(belongTo);
         fundDetail.setFundAction(belongTo == BelongTo.PAYER ? FundAction.DECREASE : FundAction.INCREASE);
+        fundDetail.setPayModel(EnumUtil.getByCode(PayModel.class, info.getPayModel()));
+        fundDetail.setPayParam(new Extension(info.getPayParam()));
+        fundDetail.setExtension(new Extension(info.getExtension()));
         return fundDetail;
     }
 }

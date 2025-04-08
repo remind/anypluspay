@@ -3,6 +3,7 @@ package com.anypluspay.payment.application.instant;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.notify.PayNotifyService;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
@@ -56,9 +57,9 @@ public class PayNotifyServiceTest extends InstPaymentBaseTest {
             FundResult fundResult = new FundResult();
             fundResult.setStatus(BizOrderStatus.PROCESSING);
             fundResult.setUnityCode("P001");
-            Map<String, String> responseExtra = new HashMap<>();
-            responseExtra.put("instUrl", "channel pay url");
-            fundResult.setResponseExtra(responseExtra);
+            Extension responseExt = new Extension();
+            responseExt.add("instUrl", "channel pay url");
+            fundResult.setResponseExt(responseExt);
             FundInRequest request = invocation.getArgument(0);
             requestId.set(request.getRequestId());
             return fundResult;
@@ -78,7 +79,7 @@ public class PayNotifyServiceTest extends InstPaymentBaseTest {
         Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());
-        Assert.assertNotNull(payResult.getPayParam());
+        Assert.assertNotNull(payResult.getPayResponse());
         return response;
     }
 }

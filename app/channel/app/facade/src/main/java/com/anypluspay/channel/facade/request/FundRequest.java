@@ -1,10 +1,13 @@
 package com.anypluspay.channel.facade.request;
 
+import com.anypluspay.commons.lang.types.Extension;
+import com.anypluspay.commons.lang.std.ExtensionDeserializer;
+import com.anypluspay.commons.lang.std.ExtensionSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author wxj
@@ -24,12 +27,17 @@ public class FundRequest implements Serializable {
     private String memberId;
 
     /**
-     * 扩展字段
+     * 扩展信息，可用在特殊判断以及路由
      */
-    private Map<String, String> extra = new HashMap<>();
+    @JsonSerialize(using = ExtensionSerializer.class)
+    @JsonDeserialize(using = ExtensionDeserializer.class)
+    private Extension extension = new Extension();
 
     /**
-     * 机构扩展信息，渠道网关API要使用的
+     * 机构扩展信息，仅渠道网关API要使用传到机构，如微信的openid
      */
-    private Map<String, String> instExtra = new HashMap<>();
+    @JsonSerialize(using = ExtensionSerializer.class)
+    @JsonDeserialize(using = ExtensionDeserializer.class)
+    private Extension instExt = new Extension();
+
 }

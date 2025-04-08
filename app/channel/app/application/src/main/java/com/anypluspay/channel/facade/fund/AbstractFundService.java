@@ -49,7 +49,7 @@ public abstract class AbstractFundService extends AbstractChannelService {
         FundResult fundResult = new FundResult();
         fundResult.setInstRequestNo(instOrder.getInstRequestNo());
         fundResult.setInstResponseNo(instOrder.getInstResponseNo());
-        fundResult.setResponseExtra(instOrder.getResponseExtra());
+        fundResult.setResponseExt(instOrder.getResponseExt());
         return fundResult;
     }
 

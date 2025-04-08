@@ -22,7 +22,7 @@ public class SdTest extends FundInBaseTest {
     @Test
     public void testSuccess() {
         FundInRequest fundInDTO = buildRequest(TestConstants.S, TestConstants.S);
-        fundInDTO.setPayMethod("qpay");
+        fundInDTO.setPayModel("qpay");
         FundResult fundResult = fundInFacade.apply(fundInDTO);
         validateBySdSuccess(fundResult);
     }

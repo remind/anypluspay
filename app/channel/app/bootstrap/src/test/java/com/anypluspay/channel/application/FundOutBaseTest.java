@@ -7,16 +7,15 @@ import com.anypluspay.channel.facade.OrderQueryFacade;
 import com.anypluspay.channel.facade.request.FundOutRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.mock.FundChannelMock;
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.enums.CompanyOrPersonal;
 import com.anypluspay.channel.types.result.CsResultCode;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Map;
 
 /**
  * @author wxj
@@ -59,8 +58,8 @@ public class FundOutBaseTest extends FundChannelMock {
         request.setAccountName("testAccountName");
         request.setAccountType(CompanyOrPersonal.PERSONAL);
         request.setAmount(new Money(100));
-        Map<String, String> instExtra = Map.of(ExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
-        request.setInstExtra(instExtra);
+        Extension instExt = new Extension();
+        instExt.add(ChannelExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
         return request;
     }
 }

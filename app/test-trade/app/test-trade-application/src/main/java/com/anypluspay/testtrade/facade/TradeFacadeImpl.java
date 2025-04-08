@@ -2,22 +2,28 @@ package com.anypluspay.testtrade.facade;
 
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
+import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.types.PayResult;
+import com.anypluspay.payment.types.PaymentExtKey;
 import com.anypluspay.payment.types.asset.BalanceAsset;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.testtrade.facade.request.PayMethod;
+import com.anypluspay.testtrade.facade.request.PayRequest;
 import com.anypluspay.testtrade.facade.request.TradeRequest;
+import com.anypluspay.testtrade.facade.response.PayResponse;
 import com.anypluspay.testtrade.facade.response.TradeResponse;
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import com.anypluspay.testtrade.infra.persistence.mapper.PayOrderMapper;
 import com.anypluspay.testtrade.infra.persistence.mapper.TradeOrderMapper;
-import com.anypluspay.testtrade.facade.request.PayRequest;
-import com.anypluspay.testtrade.facade.response.PayResponse;
 import com.anypluspay.testtrade.types.PayStatus;
 import com.anypluspay.testtrade.types.TradeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,7 @@ import java.util.List;
 
 /**
  * 交易
+ *
  * @author wxj
  * 2025/3/18
  */
@@ -91,6 +98,12 @@ public class TradeFacadeImpl implements TradeFacade {
             payOrderDO.setStatus(PayStatus.SUCCESS.getCode());
             tradeOrderMapper.updateById(tradeOrderDO);
             payOrderMapper.updateById(payOrderDO);
+        } if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
+            PayResult payResult = instantPaymentResponse.getResult();
+            if (payResult.getPayStatus() == com.anypluspay.payment.types.PayStatus.PROCESS) {
+                Extension payResponse = new Extension(payResult.getPayResponse());
+                response.setInstUrl(payResponse.get(ChannelExtKey.INST_URL.getCode()));
+            }
         }
         response.setPayStatus(instantPaymentResponse.getOrderStatus().getCode());
         response.setStatus(tradeOrderDO.getStatus());
@@ -142,20 +155,39 @@ public class TradeFacadeImpl implements TradeFacade {
         return payeeFundDetail;
     }
 
-    private List<FundDetailInfo> buildPayerFundDetail(TradeOrderDO tradeOrderDO, List<String> payMethods) {
+    private List<FundDetailInfo> buildPayerFundDetail(TradeOrderDO tradeOrderDO, List<PayMethod> payMethods) {
         List<FundDetailInfo> payeeFundDetail = new ArrayList<>();
         payMethods.forEach(payMethod -> {
             FundDetailInfo fundDetailInfo = new FundDetailInfo();
-            if ("balance".equals(payMethod)) {
-                fundDetailInfo.setAmount(new Money(tradeOrderDO.getAmount()));
-                fundDetailInfo.setMemberId(tradeOrderDO.getPayerId());
+            fundDetailInfo.setAmount(new Money(tradeOrderDO.getAmount()));
+            fundDetailInfo.setMemberId(tradeOrderDO.getPayerId());
+            fundDetailInfo.setPayModel(payMethod.getPayModel());
+            fundDetailInfo.setAssetTypeCode(payMethod.getAssetType());
+            if (payMethod.getPayModel().equals(PayModel.BALANCE.getCode())) {
                 BalanceAsset balanceAsset = new BalanceAsset(tradeOrderDO.getPayerId(), getBaseAccountNo(tradeOrderDO.getPayerId()));
-                fundDetailInfo.setAssetTypeCode(balanceAsset.getAssetType().getCode());
                 fundDetailInfo.setAssetJsonStr(balanceAsset.toJsonStr());
+            } else if (payMethod.getPayModel().equals(PayModel.ONLINE_BANK.getCode())) {
+                Extension payParam = getPayParam(tradeOrderDO, payMethod);
+                fundDetailInfo.setPayParam(payParam.toJsonString());
             }
             payeeFundDetail.add(fundDetailInfo);
         });
         return payeeFundDetail;
+    }
+
+    private static Extension getPayParam(TradeOrderDO tradeOrderDO, PayMethod payMethod) {
+        Extension payParam = new Extension();
+        payParam.add(PaymentExtKey.PAY_INST.getCode(), payMethod.getPayInst());
+        payParam.add(ChannelExtKey.GOODS_SUBJECT.getCode(), tradeOrderDO.getSubject());
+        payParam.add(ChannelExtKey.GOODS_DESC.getCode(), tradeOrderDO.getGoodsDesc());
+
+        Extension instExt = new Extension();
+        if (payMethod.getInstExtra() != null) {
+            instExt.addAll(new Extension(payMethod.getInstExtra()));
+        }
+        instExt.add("ip", "127.0.0.1");
+        payParam.add(PaymentExtKey.INST_EXT.getCode(), instExt.toJsonString());
+        return payParam;
     }
 
 }

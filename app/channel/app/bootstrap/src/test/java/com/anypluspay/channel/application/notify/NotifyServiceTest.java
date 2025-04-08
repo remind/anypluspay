@@ -6,9 +6,8 @@ import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channelgateway.test.request.LocalBankNotifyResult;
 import com.anypluspay.channel.facade.NotifyFacade;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
-import com.anypluspay.commons.lang.utils.ExtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,7 +37,7 @@ public class NotifyServiceTest extends FundInBaseTest {
         localBankNotifyResult.setResultCode("SUCCESS");
         FundResult notifyResult = notifyFacade.notify(TEST_CHANNEL_CODE, ChannelApiType.VERIFY_SIGN,JSONUtil.toJsonStr(localBankNotifyResult));
         Assert.assertEquals(BizOrderStatus.SUCCESS, notifyResult.getStatus());
-        Assert.assertEquals("SUCCESS", ExtUtil.getStringValue(ExtKey.NOTIFY_RESPONSE_DATA, notifyResult.getResponseExtra()));
+        Assert.assertEquals("SUCCESS", notifyResult.getResponseExt().get(ChannelExtKey.NOTIFY_RESPONSE_DATA.getCode()));
     }
 
     @Test
@@ -50,6 +49,6 @@ public class NotifyServiceTest extends FundInBaseTest {
         localBankNotifyResult.setResultCode("processing");
         FundResult notifyResult = notifyFacade.notify(TEST_CHANNEL_CODE, ChannelApiType.VERIFY_SIGN, JSONUtil.toJsonStr(localBankNotifyResult));
         Assert.assertEquals(BizOrderStatus.PROCESSING, notifyResult.getStatus());
-        Assert.assertEquals("SUCCESS", ExtUtil.getStringValue(ExtKey.NOTIFY_RESPONSE_DATA, notifyResult.getResponseExtra()));
+        Assert.assertEquals("SUCCESS", notifyResult.getResponseExt().get(ChannelExtKey.NOTIFY_RESPONSE_DATA.getCode()));
     }
 }

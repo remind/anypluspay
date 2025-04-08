@@ -25,7 +25,7 @@ public class SingleFundOutAdvice implements GatewayRequestAdvice<FundOutContent,
         requestContent.setAccountType(fundOutOrder.getAccountType());
         requestContent.setInstOrderId(orderContext.getInstOrder().getInstOrderId());
         requestContent.setInstRequestNo(orderContext.getInstOrder().getInstRequestNo());
-        requestContent.setExtra(orderContext.getInstOrder().getRequestExtra());
+        requestContent.setExtension(orderContext.getInstOrder().getRequestExt());
     }
 
     @Override

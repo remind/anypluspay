@@ -44,6 +44,9 @@ public class SupportInstScorer implements ChannelScorer {
      */
     private boolean match(RouteParam routeParam, ChannelSupportInst channelSupportInst) {
         Assert.notNull(routeParam.getPayInst(), "支付机构不能为空");
+        if (routeParam.getPayInst().equals(UNLIMITED)) {
+            return true;
+        }
         if (FieldMatcher.matcherScore(routeParam.getPayInst(), channelSupportInst.getTargetInstCode()) == ZERO_SCORE) {
             return false;
         }
@@ -77,12 +80,12 @@ public class SupportInstScorer implements ChannelScorer {
         if (StrUtil.isBlank(channelSupportInst.getExtra())) {
             return true;
         }
-        if (routeParam.getExtra() == null) {
+        if (routeParam.getExtension().isEmpty()) {
             return false;
         }
         Map<String, String> extraMap = parseStringToMap(channelSupportInst.getExtra());
         for (Map.Entry<String, String> entry : extraMap.entrySet()) {
-            if (!entry.getValue().equals(routeParam.getExtra().get(entry.getKey()))) {
+            if (!entry.getValue().equals(routeParam.getExtension().get(entry.getKey()))) {
                 return false;
             }
         }

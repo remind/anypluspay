@@ -31,4 +31,19 @@ public class FundDetailInfo {
      */
     private String assetJsonStr;
 
+    /**
+     * 支付模式
+     */
+    private String payModel;
+
+    /**
+     * 支付参数
+     */
+    private String payParam;
+
+    /**
+     * 扩展信息
+     */
+    private String extension;
+
 }

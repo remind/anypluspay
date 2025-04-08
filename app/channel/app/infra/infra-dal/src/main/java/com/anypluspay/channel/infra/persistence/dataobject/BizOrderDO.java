@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-12-19
+ * @since 2025-04-07
  */
 @TableName("tb_biz_order")
 public class BizOrderDO implements Serializable {
@@ -60,12 +60,12 @@ public class BizOrderDO implements Serializable {
     /**
      * 扩展信息
      */
-    private String extra;
+    private String extension;
 
     /**
      * 机构扩展信息
      */
-    private String instExtra;
+    private String instExt;
 
     /**
      * 创建时间
@@ -135,20 +135,20 @@ public class BizOrderDO implements Serializable {
         this.instOrderId = instOrderId;
     }
 
-    public String getExtra() {
-        return extra;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setExtra(String extra) {
-        this.extra = extra;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
-    public String getInstExtra() {
-        return instExtra;
+    public String getInstExt() {
+        return instExt;
     }
 
-    public void setInstExtra(String instExtra) {
-        this.instExtra = instExtra;
+    public void setInstExt(String instExt) {
+        this.instExt = instExt;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -177,8 +177,8 @@ public class BizOrderDO implements Serializable {
         ", requestType = " + requestType +
         ", status = " + status +
         ", instOrderId = " + instOrderId +
-        ", extra = " + extra +
-        ", instExtra = " + instExtra +
+        ", extension = " + extension +
+        ", instExt = " + instExt +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

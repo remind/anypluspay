@@ -37,6 +37,10 @@
             <artifactId>payment-facade</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.channel</groupId>
+            <artifactId>channel-facade</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>

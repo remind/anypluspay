@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.anypluspay.commons.enums.CodeEnum;
 import com.anypluspay.commons.enums.EnableEnum;
 import com.anypluspay.commons.enums.ResultStatusEnum;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.terminal.Terminal;
@@ -83,5 +84,13 @@ public interface BaseExpressionConvertor {
 
     default ResultStatusEnum toResultStatusEnum(String code) {
         return EnumUtil.getByCode(ResultStatusEnum.class, code);
+    }
+
+    default Extension toExtension(String jsonString) {
+        return new Extension(jsonString);
+    }
+
+    default String toExtensionJsonString(Extension extension) {
+        return extension != null ? extension.toJsonString() : "";
     }
 }

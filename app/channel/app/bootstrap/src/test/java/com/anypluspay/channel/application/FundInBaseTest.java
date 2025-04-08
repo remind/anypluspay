@@ -7,12 +7,12 @@ import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.OrderQueryFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.commons.lang.utils.ExtUtil;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,7 +37,7 @@ public class FundInBaseTest extends FundChannelMock {
 
     protected FundResult createSuccessFundInOrder() {
         FundInRequest fundInDTO = buildRequest(TestConstants.S, TestConstants.S);
-        fundInDTO.setPayMethod("qpay");
+        fundInDTO.setPayModel("qpay");
         return fundInFacade.apply(fundInDTO);
     }
 
@@ -57,23 +57,14 @@ public class FundInBaseTest extends FundChannelMock {
         request.setMemberId("100000004");
         request.setRequestId(randomId());
         request.setPayInst("TB1");
-        request.setPayMethod("online_bank");
-        request.setGoodsDesc("test");
+        request.setPayModel("online_bank");
         request.setAmount(new Money(100));
-        Map<String, String> instExtra = Map.of(ExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
-        request.setInstExtra(instExtra);
+        Map<String, String> instExtra = Map.of(ChannelExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
+        Extension instExt = new Extension();
+        instExt.add(ChannelExtKey.TEST_FLAG.getCode(), JSONUtil.toJsonStr(new TestFlag(testDFlag, testQFlag)));
+        instExt.add(ChannelExtKey.GOODS_DESC.getCode(), "test");
+        request.setInstExt(instExt);
         return request;
-    }
-
-    /**
-     * 新增路由参数
-     *
-     * @param request
-     * @param extKey
-     * @param value
-     */
-    protected void addRouteExtra(FundInRequest request, ExtKey extKey, String value) {
-        ExtUtil.addValue(request.getRouteExtra(), extKey, value);
     }
 
     /**
@@ -88,8 +79,8 @@ public class FundInBaseTest extends FundChannelMock {
         Assert.assertNotNull(result.getUnityMessage());
         Assert.assertNotNull(result.getInstRequestNo());
         Assert.assertNotNull(result.getInstResponseNo());
-        Assert.assertNotNull(result.getResponseExtra());
-        Assert.assertNotNull(ExtUtil.getStringValue(ExtKey.INST_URL, result.getResponseExtra()));
+        Assert.assertNotNull(result.getResponseExt());
+        Assert.assertNotNull(result.getResponseExt().get(ChannelExtKey.INST_URL.getCode()));
     }
 
     /**

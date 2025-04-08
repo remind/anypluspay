@@ -2,14 +2,14 @@ package com.anypluspay.admin.channel.web.controller.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.admin.channel.dao.convertor.config.PayMethodConvertor;
+import com.anypluspay.channel.infra.persistence.dataobject.PayModelDO;
 import com.anypluspay.commons.validator.AddValidate;
 import com.anypluspay.commons.validator.UpdateValidate;
 import com.anypluspay.admin.channel.model.config.PayMethodDto;
 import com.anypluspay.admin.channel.model.query.PayMethodQuery;
 import com.anypluspay.admin.channel.model.request.PayMethodRequest;
 import com.anypluspay.admin.core.controller.AbstractController;
-import com.anypluspay.channel.infra.persistence.dataobject.PayMethodDO;
-import com.anypluspay.channel.infra.persistence.mapper.PayMethodMapper;
+import com.anypluspay.channel.infra.persistence.mapper.PayModelMapper;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class PayMethodController extends AbstractController  {
 
     @Autowired
-    private PayMethodMapper dalMapper;
+    private PayModelMapper dalMapper;
 
     @Autowired
     private PayMethodConvertor convertor;
@@ -42,12 +42,12 @@ public class PayMethodController extends AbstractController  {
      */
     @GetMapping("/list")
     public ResponseResult<PageResult<PayMethodDto>> list(PayMethodQuery query) {
-        LambdaQueryWrapper<PayMethodDO> queryWrapper = Wrappers.lambdaQuery();
+        LambdaQueryWrapper<PayModelDO> queryWrapper = Wrappers.lambdaQuery();
         if (StrUtil.isNotBlank(query.getCode())) {
-            queryWrapper.like(PayMethodDO::getCode, query.getCode());
+            queryWrapper.like(PayModelDO::getCode, query.getCode());
         }
         if (StrUtil.isNotBlank(query.getName())) {
-            queryWrapper.like(PayMethodDO::getName, query.getName());
+            queryWrapper.like(PayModelDO::getName, query.getName());
         }
         return ResponseResult.success(convertor.toDto(dalMapper.selectPage(getIPage(query), queryWrapper)));
     }

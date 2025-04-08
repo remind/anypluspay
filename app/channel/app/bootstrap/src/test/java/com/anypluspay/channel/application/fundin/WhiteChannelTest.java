@@ -3,10 +3,9 @@ package com.anypluspay.channel.application.fundin;
 import com.anypluspay.channel.application.FundInBaseTest;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.test.TestConstants;
-import com.anypluspay.commons.lang.utils.ExtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,10 +27,10 @@ public class WhiteChannelTest extends FundInBaseTest {
     @Test
     public void applySignSuccess() {
         FundInRequest request = buildRequest(TestConstants.S);
-        addRouteExtra(request, ExtKey.WHITE_CHANNELS, TEST_CHANNEL_CODE);
+        request.getExtension().add(ChannelExtKey.WHITE_CHANNELS.getCode(), TEST_CHANNEL_CODE);
         FundResult fundResult = fundInFacade.apply(request);
         Assert.assertEquals(BizOrderStatus.PROCESSING, fundResult.getStatus());
-        Assert.assertNotNull(fundResult.getResponseExtra());
-        Assert.assertNotNull(ExtUtil.getStringValue(ExtKey.INST_URL, fundResult.getResponseExtra()));
+        Assert.assertNotNull(fundResult.getResponseExt());
+        Assert.assertNotNull(fundResult.getResponseExt().get(ChannelExtKey.INST_URL.getCode()));
     }
 }

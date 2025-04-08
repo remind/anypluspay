@@ -23,7 +23,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
         Map<String, String> parameters = new HashMap<>();
         parameters.put("outTradeNo", signOrderInfo.getInstRequestNo());
         parameters.put("amount", signOrderInfo.getAmount().getAmount().toString());
-        parameters.put("subject", "测试商品");
+        parameters.put("subject", signOrderInfo.getGoodsSubject());
         parameters.put("goodsDesc", signOrderInfo.getGoodsDesc());
         parameters.put("notifyUrl", signOrderInfo.getServerNotifyUrl());
         parameters.put("returnUrl", signOrderInfo.getCallbackPageUrl());

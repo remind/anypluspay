@@ -64,7 +64,7 @@ public class FluxEngineService {
             payResult.setPayStatus(fluxResult.getStatus());
             payResult.setResultMessage(fluxResult.getResultMessage());
             payResult.setResultCode(fluxResult.getResultCode());
-            payResult.setPayParam(fluxResult.getPayParam());
+            payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
         }
         return payResult;
     }

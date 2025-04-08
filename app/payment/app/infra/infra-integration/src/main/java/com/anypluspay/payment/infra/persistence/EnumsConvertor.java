@@ -4,6 +4,7 @@ import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.types.PaymentType;
@@ -66,4 +67,13 @@ public interface EnumsConvertor {
     default String toAssetJsonString(AssetInfo assetInfo) {
         return assetInfo.toJsonStr();
     }
+
+    default String toPayModel(PayModel payModel) {
+        return payModel == null ? "" : payModel.getCode();
+    }
+
+    default PayModel toPayModel(String code) {
+        return EnumUtil.getByCode(PayModel.class, code);
+    }
+
 }

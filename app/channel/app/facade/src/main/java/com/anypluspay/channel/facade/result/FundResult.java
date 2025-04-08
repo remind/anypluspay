@@ -1,5 +1,10 @@
 package com.anypluspay.channel.facade.result;
 
+import com.anypluspay.commons.lang.std.ExtensionDeserializer;
+import com.anypluspay.commons.lang.std.ExtensionSerializer;
+import com.anypluspay.commons.lang.types.Extension;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -25,5 +30,7 @@ public class FundResult extends ChannelResult {
     /**
      * 扩展返回信息，支付时可能会用到的，如网银支付的URL
      */
-    private Map<String, String> responseExtra = new HashMap<>();
+    @JsonSerialize(using = ExtensionSerializer.class)
+    @JsonDeserialize(using = ExtensionDeserializer.class)
+    private Extension responseExt = new Extension();
 }

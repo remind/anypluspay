@@ -1,11 +1,14 @@
 package com.anypluspay.channelgateway.request;
 
-import com.anypluspay.channel.types.ExtKey;
+import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.commons.lang.types.Extension;
+import com.anypluspay.commons.lang.std.ExtensionDeserializer;
+import com.anypluspay.commons.lang.std.ExtensionSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 请求内容
@@ -19,13 +22,15 @@ public class RequestContent implements Serializable {
     /**
      * 扩展信息
      */
-    private Map<String, String> extra = new HashMap<>();
+    @JsonSerialize(using = ExtensionSerializer.class)
+    @JsonDeserialize(using = ExtensionDeserializer.class)
+    private Extension extension = new Extension();
 
-    public String getExtValue(ExtKey extKey) {
-        return extra == null ? null : extra.get(extKey.getCode());
+    public String getExtValue(ChannelExtKey channelExtKey) {
+        return extension.get(channelExtKey.getCode());
     }
 
     public String getExtValue(String extKey) {
-        return extra == null ? null : extra.get(extKey);
+        return extension.get(extKey);
     }
 }

@@ -1,14 +1,12 @@
 package com.anypluspay.channel.facade.fund;
 
-import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.application.route.RouteParam;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.ExtKey;
-import com.anypluspay.commons.lang.utils.ExtUtil;
+import com.anypluspay.channel.types.ChannelExtKey;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
@@ -34,11 +32,11 @@ public class FundInFacadeImpl extends AbstractFundService implements FundInFacad
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(fundInOrder.getRequestType());
         routeParam.setPayInst(fundInOrder.getPayInst());
-        routeParam.setPayMethod(fundInOrder.getPayMethod());
+        routeParam.setPayMethod(fundInOrder.getPayModel());
         routeParam.setAmount(fundInOrder.getAmount());
-        routeParam.setExtra(fundInOrder.getRouteExtra());
-        if (StrUtil.isNotBlank(ExtUtil.getStringValue(ExtKey.WHITE_CHANNELS, fundInOrder.getRouteExtra()))) {
-            routeParam.setWhiteChannels(Arrays.stream(ExtUtil.getStringValue(ExtKey.WHITE_CHANNELS, fundInOrder.getRouteExtra()).split(",")).toList());
+        routeParam.setExtension(fundInOrder.getExtension());
+        if (fundInOrder.getExtension().containsKey(ChannelExtKey.WHITE_CHANNELS.getCode())) {
+            routeParam.setWhiteChannels(Arrays.stream(fundInOrder.getExtension().get(ChannelExtKey.WHITE_CHANNELS.getCode()).split(",")).toList());
         }
         return routeParam;
     }

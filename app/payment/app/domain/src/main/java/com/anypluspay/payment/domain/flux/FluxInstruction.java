@@ -1,9 +1,8 @@
 package com.anypluspay.payment.domain.flux;
 
-import com.anypluspay.payment.types.asset.AssetInfo;
-import com.anypluspay.payment.types.asset.AssetType;
-import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.payment.types.asset.AssetInfo;
+import com.anypluspay.payment.types.funds.FundAction;
 import lombok.Data;
 
 import java.util.HashMap;
