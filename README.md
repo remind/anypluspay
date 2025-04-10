@@ -91,18 +91,19 @@ anypluspay
 
 ## 技术栈
 
-| 软件名称 | 描述 | 版本 |
-| --- | --- | --- |
-| JDK | Java 环境 | 17 |
-| [Spring Boot](https://github.com/spring-projects/spring-boot) | 开发框架 | 3.4.1 |
-| [Spring Cloud](https://spring.io/projects/spring-cloud) | 微服务框架 | 2024.0.0 |
-| MySQL | 数据库 | 8+ |
-| Redis | 缓存 | 最新版本 |
-| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos 依赖 | 2023.0.3.2 |
-| [Nacos](https://github.com/alibaba/nacos) | 注册中心、配置中心 | 2.4.1 |
-| [MyBatis-Plus](https://mp.baomidou.com/) | MyBatis 增强工具 | 3.5.4.1 |
-| [MapStruct](https://mapstruct.org/) | 对象转换 | 1.6.3 |
-| [Hutool](https://www.hutool.cn/) | Java 工具类库 | 5.8.24 |
+| 软件名称                                                                    | 描述           | 版本         |
+|-------------------------------------------------------------------------|--------------|------------|
+| JDK                                                                     | Java 环境      | 17         |
+| [Spring Boot](https://github.com/spring-projects/spring-boot)           | 开发框架         | 3.4.1      |
+| [Spring Cloud](https://spring.io/projects/spring-cloud)                 | 微服务框架        | 2024.0.0   |
+| MySQL                                                                   | 数据库          | 8+         |
+| Redis                                                                   | 缓存           | 最新版本       |
+| [RocketMQ](https://https://github.com/apache/rocketmq)                  | 消息           | 5.0        |
+| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos 依赖     | 2023.0.3.2 |
+| [Nacos](https://github.com/alibaba/nacos)                               | 注册中心、配置中心    | 2.4.1      |
+| [MyBatis-Plus](https://mp.baomidou.com/)                                | MyBatis 增强工具 | 3.5.4.1    |
+| [MapStruct](https://mapstruct.org/)                                     | 对象转换         | 1.6.3      |
+| [Hutool](https://www.hutool.cn/)                                        | Java 工具类库    | 5.8.24     |
 
 ---
 
