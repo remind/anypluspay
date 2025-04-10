@@ -28,6 +28,16 @@ public class FundResult extends ChannelResult {
     private String instResponseNo;
 
     /**
+     * 是否需要清算
+     */
+    private boolean needClearing;
+
+    /**
+     * 清算账户
+     */
+    private String clearingAccountNo;
+
+    /**
      * 扩展返回信息，支付时可能会用到的，如网银支付的URL
      */
     @JsonSerialize(using = ExtensionSerializer.class)

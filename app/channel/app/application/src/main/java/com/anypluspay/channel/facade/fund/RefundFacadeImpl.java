@@ -10,7 +10,6 @@ import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.commons.exceptions.BizException;
-import com.anypluspay.commons.lang.types.Extension;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +31,6 @@ public class RefundFacadeImpl extends AbstractFundService implements RefundFacad
             InstOrder origInstOrder = instOrderRepository.load(fundOrder.getInstOrderId());
             ChannelApiContext channelApiContext = channelRouteService.routeByChannel(origInstOrder.getFundChannelCode(), ChannelApiType.SINGLE_REFUND);
 
-            Extension extension = refundOrder.getExtension();
             refundOrder.getExtension().add(ChannelExtKey.ORIG_INST_ORDER_ID.getCode(), origInstOrder.getInstOrderId().toString());
             refundOrder.getInstExt().add(ChannelExtKey.ORIG_INST_REQUEST_NO.getCode(), origInstOrder.getInstRequestNo());
             refundOrder.getInstExt().add(ChannelExtKey.ORIG_INST_RESPONSE_NO.getCode(), origInstOrder.getInstResponseNo());

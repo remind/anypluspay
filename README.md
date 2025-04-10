@@ -56,7 +56,7 @@ anypluspay
                 ├── wxpay-gateway -- 微信网关
                 └── test-bank-gateway -- 测试银行网关
          ├── test-bank -- 测试银行服务，用于模拟支付渠道
-         └── test-trade -- 测试交易服务，用于模拟支付交易侧
+         └── test-trade -- 测试交易服务，用于模拟交易侧
     
     ├── framework -- 框架目录
             ├── commons -- 公共
@@ -109,10 +109,13 @@ anypluspay
 ## 后台管理功能
 ### 查询
 #### 联合查询
+为一个余额+网银各0.5的组合支付
+##### 交易
+![交易](docs/images/admin-union-query-testtrade.png)
 ##### 支付
-![支付](docs/images/admin-union-query1.png)
+![支付](docs/images/admin-union-query-payment.png)
 ##### 账务
-![账务](docs/images/admin-union-query2.png)
+![账务](docs/images/admin-union-query-account.png)
 ##### 渠道
 ![渠道](docs/images/admin-union-query-channel.png)
 

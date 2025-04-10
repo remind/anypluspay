@@ -1,6 +1,6 @@
 package com.anypluspay.payment.web.controller;
 
-import com.anypluspay.payment.application.instant.InstantPaymentFacadeImpl;
+import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;

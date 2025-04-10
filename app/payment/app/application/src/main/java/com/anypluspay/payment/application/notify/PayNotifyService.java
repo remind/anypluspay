@@ -46,7 +46,9 @@ public class PayNotifyService {
 
     public void process(FundResult fundResult) {
         FluxOrder fluxOrder = fluxOrderRepository.loadByInstructionId(fundResult.getRequestId());
-        Assert.notNull(fluxOrder, "fluxOrder is null");
+        if (fluxOrder == null) {
+            return;
+        }
         FluxInstruction fluxInstruction = fluxOrder.getInstructChain().find(fundResult.getRequestId()).getFluxInstruction();
         FluxResult result = externalResultService.process(fluxInstruction, fundResult);
         result.setExecuteInstruction(fluxInstruction);

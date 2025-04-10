@@ -34,4 +34,9 @@ public class PayMethod {
      * 支付机构扩展信息
      */
     private String instExtra;
+
+    /**
+     * 金额
+     */
+    private String amount;
 }

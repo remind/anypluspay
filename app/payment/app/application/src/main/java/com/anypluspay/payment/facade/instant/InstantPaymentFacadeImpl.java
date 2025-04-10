@@ -1,8 +1,8 @@
-package com.anypluspay.payment.application.instant;
+package com.anypluspay.payment.facade.instant;
 
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.application.instant.builder.InstantPaymentBuilder;
-import com.anypluspay.payment.application.instant.builder.RefundOrderBuilder;
+import com.anypluspay.payment.facade.instant.builder.InstantPaymentBuilder;
+import com.anypluspay.payment.facade.instant.builder.RefundOrderBuilder;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;

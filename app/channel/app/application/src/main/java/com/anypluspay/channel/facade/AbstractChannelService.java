@@ -89,6 +89,35 @@ public abstract class AbstractChannelService {
         return result;
     }
 
+    /**
+     * 首次提交机构处理
+     *
+     * @param channelApiContext
+     * @param bizOrder
+     * @return
+     */
+    protected OrderContext applyInstProcessV2(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
+        AssertUtil.notNull(channelApiContext, CsResultCode.NOT_EXIST_CHANNEL);
+        OrderContext orderContext = createOrderContext(channelApiContext, bizOrder);
+        if (orderContext.getInstCommandOrder() != null) {
+            orderContext = instProcessService.submit(channelApiContext, orderContext);
+        }
+        return orderContext;
+    }
+
+    /**
+     * 提交机构处理
+     *
+     * @param bizOrder
+     * @param apiType
+     * @return
+     */
+    protected OrderContext applyInstProcessV2(BaseBizOrder bizOrder, ChannelApiType apiType) {
+        InstOrder instOrder = instOrderRepository.load(bizOrder.getInstOrderId());
+        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(instOrder.getFundChannelCode(), apiType);
+        return instProcessService.createAndSubmit(channelApiContext, bizOrder, instOrder);
+    }
+
     protected ChannelResult queryResultByOrderId(String orderId) {
         ChannelResult result;
         BaseBizOrder bizOrder = bizOrderRepository.load(orderId);

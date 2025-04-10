@@ -1,5 +1,6 @@
 package com.anypluspay.payment.application.instant;
 
+import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;

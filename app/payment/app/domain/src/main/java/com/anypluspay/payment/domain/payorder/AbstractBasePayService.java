@@ -13,6 +13,7 @@ import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.funds.FundDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
@@ -43,6 +44,9 @@ public abstract class AbstractBasePayService {
 
     @Autowired
     protected PaymentRepository paymentRepository;
+
+    @Autowired
+    protected ApplicationContext applicationContext;
 
     protected FluxOrder createAndStoreFluxOrder(BasePayOrder payOrder) {
         FluxOrder fluxOrder = buildFluxOrder(payOrder);

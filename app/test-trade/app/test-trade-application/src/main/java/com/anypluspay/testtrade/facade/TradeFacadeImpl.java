@@ -24,6 +24,7 @@ import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import com.anypluspay.testtrade.infra.persistence.mapper.PayOrderMapper;
 import com.anypluspay.testtrade.infra.persistence.mapper.TradeOrderMapper;
+import com.anypluspay.testtrade.service.PayService;
 import com.anypluspay.testtrade.types.PayStatus;
 import com.anypluspay.testtrade.types.TradeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,9 @@ public class TradeFacadeImpl implements TradeFacade {
 
     @Autowired
     private InstantPaymentFacade instantPaymentFacade;
+
+    @Autowired
+    private PayService payService;
 
     @Override
     public TradeResponse create(TradeRequest tradeRequest) {
@@ -94,11 +98,9 @@ public class TradeFacadeImpl implements TradeFacade {
         response.setTradeId(String.valueOf(tradeOrderDO.getId()));
 
         if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
-            tradeOrderDO.setStatus(TradeStatus.SUCCESS.getCode());
-            payOrderDO.setStatus(PayStatus.SUCCESS.getCode());
-            tradeOrderMapper.updateById(tradeOrderDO);
-            payOrderMapper.updateById(payOrderDO);
-        } if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
+            payService.processResult(payOrderDO.getId(), PayStatus.SUCCESS);
+        }
+        if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
             PayResult payResult = instantPaymentResponse.getResult();
             if (payResult.getPayStatus() == com.anypluspay.payment.types.PayStatus.PROCESS) {
                 Extension payResponse = new Extension(payResult.getPayResponse());
@@ -157,9 +159,13 @@ public class TradeFacadeImpl implements TradeFacade {
 
     private List<FundDetailInfo> buildPayerFundDetail(TradeOrderDO tradeOrderDO, List<PayMethod> payMethods) {
         List<FundDetailInfo> payeeFundDetail = new ArrayList<>();
-        payMethods.forEach(payMethod -> {
+
+        // 为了方便测试，各个支付方式的金额平分
+        Money[] amounts = new Money(tradeOrderDO.getAmount()).allocate(payMethods.size());
+        for (int i = 0; i < payMethods.size(); i++) {
+            PayMethod payMethod = payMethods.get(i);
             FundDetailInfo fundDetailInfo = new FundDetailInfo();
-            fundDetailInfo.setAmount(new Money(tradeOrderDO.getAmount()));
+            fundDetailInfo.setAmount(amounts[i]);
             fundDetailInfo.setMemberId(tradeOrderDO.getPayerId());
             fundDetailInfo.setPayModel(payMethod.getPayModel());
             fundDetailInfo.setAssetTypeCode(payMethod.getAssetType());
@@ -171,7 +177,7 @@ public class TradeFacadeImpl implements TradeFacade {
                 fundDetailInfo.setPayParam(payParam.toJsonString());
             }
             payeeFundDetail.add(fundDetailInfo);
-        });
+        }
         return payeeFundDetail;
     }
 

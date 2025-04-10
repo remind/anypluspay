@@ -2,6 +2,7 @@ package com.anypluspay.channel.facade.fund;
 
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.channel.api.service.ChannelApiDomainService;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.institution.InstCommandOrder;
@@ -9,6 +10,7 @@ import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.AbstractChannelService;
 import com.anypluspay.channel.facade.fund.builder.FundOrderBuilder;
+import com.anypluspay.channel.facade.fund.builder.FundResultBuilder;
 import com.anypluspay.channel.facade.result.ChannelResult;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
@@ -36,8 +38,15 @@ public abstract class AbstractFundService extends AbstractChannelService {
     @Autowired
     protected ChannelApiDomainService channelApiDomainService;
 
+    @Autowired
+    protected FundResultBuilder fundResultBuilder;
+
     protected FundResult applyInstProcess(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
         return (FundResult) super.applyInstProcess(channelApiContext, bizOrder);
+    }
+
+    protected OrderContext applyInstProcessV2(ChannelApiContext channelApiContext, BaseBizOrder bizOrder) {
+        return super.applyInstProcessV2(channelApiContext, bizOrder);
     }
 
     protected FundResult applyInstProcess(BaseBizOrder bizOrder, ChannelApiType apiType) {

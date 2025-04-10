@@ -32,8 +32,8 @@ public class ExternalResultService {
      */
     public FluxResult process(FluxInstruction fluxInstruction, FundResult fundResult) {
         FluxResult result = convert(fundResult);
-        if (fundResult.getStatus() == BizOrderStatus.SUCCESS) {
-            result.setNewFluxInstructions(List.of(buildClearingFluxInstruct(fluxInstruction, MapUtil.getStr(fundResult.getExtInfo(), PaymentKey.CLEARING_ACCOUNT_NO))));
+        if (fundResult.getStatus() == BizOrderStatus.SUCCESS && fundResult.isNeedClearing()) {
+            result.setNewFluxInstructions(List.of(buildClearingFluxInstruct(fluxInstruction, fundResult.getClearingAccountNo())));
         }
         return result;
     }

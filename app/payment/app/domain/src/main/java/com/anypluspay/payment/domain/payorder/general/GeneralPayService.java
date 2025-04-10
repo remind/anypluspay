@@ -2,6 +2,7 @@ package com.anypluspay.payment.domain.payorder.general;
 
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
+import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 普通支付
+ *
  * @author wxj
  * 2025/2/22
  */
@@ -32,8 +34,8 @@ public class GeneralPayService extends AbstractBasePayService {
     /**
      * 处理交换结果
      *
-     * @param generalPayOrder  支付单
-     * @param payResult 交换结果
+     * @param generalPayOrder 支付单
+     * @param payResult       交换结果
      */
     public void processFluxResult(GeneralPayOrder generalPayOrder, PayResult payResult) {
         transactionTemplate.executeWithoutResult(status -> {
@@ -42,6 +44,11 @@ public class GeneralPayService extends AbstractBasePayService {
                 // 仅支付中状态才处理结果，防止重复处理
                 convertStatus(generalPayOrder, payResult);
                 generalPayOrderRepository.reStore(generalPayOrder);
+
+                if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
+                        || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
+                    applicationContext.publishEvent(new PayOrderResultEvent(generalPayOrder));
+                }
             }
         });
     }
@@ -49,8 +56,8 @@ public class GeneralPayService extends AbstractBasePayService {
     /**
      * 状态转换
      *
-     * @param generalPayOrder  支付订单
-     * @param payResult 支付结果
+     * @param generalPayOrder 支付订单
+     * @param payResult       支付结果
      */
     private void convertStatus(GeneralPayOrder generalPayOrder, PayResult payResult) {
         if (payResult.getPayStatus() == PayStatus.SUCCESS) {

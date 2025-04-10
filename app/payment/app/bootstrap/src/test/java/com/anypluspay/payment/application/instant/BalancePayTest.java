@@ -1,7 +1,7 @@
 package com.anypluspay.payment.application.instant;
 
 import cn.hutool.json.JSONUtil;
-import com.anypluspay.payment.facade.InstantPaymentFacade;
+import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import org.junit.Test;

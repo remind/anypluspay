@@ -15,6 +15,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +30,7 @@ import java.util.stream.Collectors;
 @Service
 public class UnionQueryService {
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     @Autowired
     private QueryDefineMapper queryDefineMapper;
 
@@ -95,17 +99,29 @@ public class UnionQueryService {
             items.forEach(item -> {
                 Map<String, Object> newItem = new LinkedHashMap<>();
                 item.forEach((key, value) -> {
+                    String newKey = key;
+                    Object newValue = value;
                     if (configMap.containsKey(key)) {
                         QueryParamDefineDO queryParamDefineDO = configMap.get(key).getQueryParamDefineDO();
-                        newItem.put(queryParamDefineDO.getLabel(), value);
-                    } else {
-                        newItem.put(key, value);
+                        newKey = queryParamDefineDO.getLabel();
                     }
+                    if (key.endsWith("时间") && value instanceof Timestamp) {
+                        newValue = formatTime((Timestamp) value);
+                    }
+                    newItem.put(newKey, newValue);
                 });
                 result.add(newItem);
             });
         }
         return result;
+    }
+
+    private String formatTime(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        return localDateTime.format(formatter);
     }
 
     /**

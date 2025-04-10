@@ -1,5 +1,6 @@
 package com.anypluspay.channel.application.institution;
 
+import com.anypluspay.channel.application.event.BizOrderCompleteEvent;
 import com.anypluspay.channel.application.institution.validator.InstResultValidator;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.OrderContext;
@@ -18,6 +19,7 @@ import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.exceptions.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 
@@ -46,6 +48,9 @@ public class InstResultService {
     @Autowired
     private InstOrderDomainService instOrderDomainService;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     public void process(ChannelApiContext channelApiContext, OrderContext orderContext, ProcessResult processResult) {
         fillProcessOrderResult(channelApiContext, orderContext, processResult);
         instOrderDomainService.turnToManual(channelApiContext, orderContext.getInstOrder(), orderContext.getInstCommandOrder());
@@ -53,6 +58,7 @@ public class InstResultService {
         instOrderRepository.reStore(orderContext.getInstOrder());
         if (orderContext.getInstCommandOrder().getStatus() == InstOrderStatus.SUCCESS || orderContext.getInstCommandOrder().getStatus() == InstOrderStatus.FAILED) {
             bizOrderService.updateStatus(orderContext.getBizOrder(), orderContext.getInstOrder());
+            applicationContext.publishEvent(new BizOrderCompleteEvent(orderContext));
         }
     }
 

@@ -43,7 +43,7 @@ public class FluxService {
             FluxOrder lockFluxOrder = fluxOrderRepository.lock(fluxOrder.getFluxOrderId());
 
             if (fluxInstruction.getStatus() == InstructStatus.SUCCESS) {
-                addNewRelateInstruction(fluxOrder, fluxInstruction, fluxResult);
+                addNewRelateInstruction(fluxOrder, fluxInstruction, fluxResult.getNewFluxInstructions());
 
                 boolean isEnd = fluxOrder.getInstructChain().getTail().getFluxInstruction().getInstructionId().equals(fluxInstruction.getInstructionId());
                 if (isEnd) {
@@ -108,18 +108,18 @@ public class FluxService {
      *
      * @param fluxOrder
      * @param fluxInstruction
-     * @param fluxResult
+     * @param newFluxInstructions
      */
-    private void addNewRelateInstruction(FluxOrder fluxOrder, FluxInstruction fluxInstruction, FluxResult fluxResult) {
-        if (!CollectionUtils.isEmpty(fluxResult.getNewFluxInstructions())) {
-            for (FluxInstruction newFluxInstruction : fluxResult.getNewFluxInstructions()) {
+    private void addNewRelateInstruction(FluxOrder fluxOrder, FluxInstruction fluxInstruction, List<FluxInstruction> newFluxInstructions) {
+        if (!CollectionUtils.isEmpty(newFluxInstructions)) {
+            for (FluxInstruction newFluxInstruction : newFluxInstructions) {
                 newFluxInstruction.setPaymentId(fluxInstruction.getPaymentId());
                 newFluxInstruction.setPayOrderId(fluxInstruction.getPayOrderId());
                 newFluxInstruction.setFluxOrderId(fluxOrder.getFluxOrderId());
                 newFluxInstruction.setInstructionId(idGeneratorService.genIdByRelateId(fluxInstruction.getInstructionId(), IdType.FLUX_INSTRUCT_ID));
                 newFluxInstruction.setStatus(InstructStatus.INIT);
             }
-            fluxOrderService.insertInstruct(fluxOrder, fluxInstruction, fluxResult.getNewFluxInstructions());
+            fluxOrderService.insertInstruct(fluxOrder, fluxInstruction, newFluxInstructions);
         }
     }
 

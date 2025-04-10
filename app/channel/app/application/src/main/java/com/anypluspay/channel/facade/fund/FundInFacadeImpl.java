@@ -2,6 +2,7 @@ package com.anypluspay.channel.facade.fund;
 
 import com.anypluspay.channel.application.route.RouteParam;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
+import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
@@ -25,7 +26,8 @@ public class FundInFacadeImpl extends AbstractFundService implements FundInFacad
         FundInOrder fundInOrder = fundOrderBuilder.buildFundIn(request);
         RouteParam routeParam = buildRouteParam(fundInOrder);
         ChannelApiContext channelApiContext = channelRouteService.routeOne(routeParam);
-        return applyInstProcess(channelApiContext, fundInOrder);
+        OrderContext orderContext = applyInstProcessV2(channelApiContext, fundInOrder);
+        return fundResultBuilder.buildFundInResult(orderContext.getBizOrder(), orderContext.getInstOrder(), orderContext.getInstCommandOrder());
     }
 
     private RouteParam buildRouteParam(FundInOrder fundInOrder) {

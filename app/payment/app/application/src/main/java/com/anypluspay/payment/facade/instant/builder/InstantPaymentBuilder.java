@@ -1,4 +1,4 @@
-package com.anypluspay.payment.application.instant.builder;
+package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
