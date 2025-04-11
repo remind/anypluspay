@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2024-11-30
+ * @since 2025-04-11
  */
 @TableName("tc_fund_channel")
 public class FundChannelDO implements Serializable {
@@ -46,6 +46,16 @@ public class FundChannelDO implements Serializable {
      * 支持的支付方式
      */
     private String payMethods;
+
+    /**
+     * 流入待清算账户
+     */
+    private String inClearingAccount;
+
+    /**
+     * 流出待清算账户
+     */
+    private String outClearingAccount;
 
     /**
      * 状态，是否可用
@@ -114,6 +124,22 @@ public class FundChannelDO implements Serializable {
         this.payMethods = payMethods;
     }
 
+    public String getInClearingAccount() {
+        return inClearingAccount;
+    }
+
+    public void setInClearingAccount(String inClearingAccount) {
+        this.inClearingAccount = inClearingAccount;
+    }
+
+    public String getOutClearingAccount() {
+        return outClearingAccount;
+    }
+
+    public void setOutClearingAccount(String outClearingAccount) {
+        this.outClearingAccount = outClearingAccount;
+    }
+
     public Boolean getEnable() {
         return enable;
     }
@@ -162,6 +188,8 @@ public class FundChannelDO implements Serializable {
         ", instCode = " + instCode +
         ", requestType = " + requestType +
         ", payMethods = " + payMethods +
+        ", inClearingAccount = " + inClearingAccount +
+        ", outClearingAccount = " + outClearingAccount +
         ", enable = " + enable +
         ", extra = " + extra +
         ", memo = " + memo +

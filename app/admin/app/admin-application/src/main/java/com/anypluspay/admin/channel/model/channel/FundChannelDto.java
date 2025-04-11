@@ -45,6 +45,16 @@ public class FundChannelDto {
     private String payMethods;
 
     /**
+     * 流入待清算账户
+     */
+    private String inClearingAccount;
+
+    /**
+     * 流出待清算账户
+     */
+    private String outClearingAccount;
+
+    /**
      * 状态，是否可用
      */
     private Boolean enable;

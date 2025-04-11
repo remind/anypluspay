@@ -28,4 +28,14 @@ public class FundChannel extends BaseChannel {
      */
     private List<String> payMethods;
 
+    /**
+     * 流入待清算账户
+     */
+    private String inClearingAccount;
+
+    /**
+     * 流出待清算账户
+     */
+    private String outClearingAccount;
+
 }

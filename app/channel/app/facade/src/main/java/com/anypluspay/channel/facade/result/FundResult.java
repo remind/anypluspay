@@ -6,14 +6,13 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author wxj
  * 2024/7/12
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class FundResult extends ChannelResult {
 
@@ -33,7 +32,7 @@ public class FundResult extends ChannelResult {
     private boolean needClearing;
 
     /**
-     * 清算账户
+     * 待清算账户
      */
     private String clearingAccountNo;
 

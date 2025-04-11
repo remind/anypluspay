@@ -2,12 +2,16 @@ package com.anypluspay.channel.facade.fund.builder;
 
 import cn.hutool.core.util.StrUtil;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
+import com.anypluspay.channel.domain.channel.ChannelFullInfo;
 import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
+import com.anypluspay.channel.domain.repository.channel.ChannelFullInfoRepository;
 import com.anypluspay.channel.facade.result.ChannelResult;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.channel.types.result.CsResultCode;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,13 +21,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class FundResultBuilder {
 
+    @Autowired
+    private ChannelFullInfoRepository channelFullInfoRepository;
+
     public FundResult buildFundInResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         FundResult fundResult = new FundResult();
         fundResult.setInstRequestNo(instOrder.getInstRequestNo());
         fundResult.setInstResponseNo(instOrder.getInstResponseNo());
         fundResult.setResponseExt(instOrder.getResponseExt());
-        fundResult.setNeedClearing(true);
-        fundResult.setClearingAccountNo("40010010011560001");
+        ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(instOrder.getFundChannelCode());
+        fundResult.setNeedClearing(StringUtils.isNotBlank(channelFullInfo.getFundChannel().getInClearingAccount()));
+        fundResult.setClearingAccountNo(channelFullInfo.getFundChannel().getInClearingAccount());
         fillChannelResultCommon(fundResult, bizOrder, instOrder, instCommandOrder);
         return fundResult;
     }
