@@ -1,12 +1,12 @@
 package com.anypluspay.payment.domain.flux.service;
 
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.payment.domain.asset.FluxExecutor;
 import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.flux.FluxInstruction;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
-import com.anypluspay.payment.domain.flux.service.FluxService;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,20 @@ public class FluxEngineService {
      * @return
      */
     public PayResult process(FluxOrder fluxOrder) {
-        FluxResult fluxResult = execute(fluxOrder);
-        return convertToPayResult(fluxResult);
+        PayResult payResult;
+        if (fluxOrder.getStatus() == FluxOrderStatus.SUCCESS) {
+            payResult = new PayResult();
+            payResult.setPayStatus(PayStatus.SUCCESS);
+        } else if (fluxOrder.getStatus() == FluxOrderStatus.FAIL || fluxOrder.getStatus() == FluxOrderStatus.CANCEL) {
+            payResult = new PayResult();
+            payResult.setPayStatus(PayStatus.FAIL);
+        } else if (fluxOrder.getStatus() == FluxOrderStatus.PROCESS || fluxOrder.getStatus() == FluxOrderStatus.INIT) {
+            FluxResult fluxResult = execute(fluxOrder);
+            payResult = convertToPayResult(fluxResult);
+        } else {
+            throw new BizException("fluxOrder.status is invalid");
+        }
+        return payResult;
     }
 
     private FluxResult execute(FluxOrder fluxOrder) {
