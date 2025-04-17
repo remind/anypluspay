@@ -39,11 +39,6 @@ public class QueryParamDefineDO implements Serializable {
     private int sort;
 
     /**
-     * 显示类型
-     */
-    private String showType;
-
-    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

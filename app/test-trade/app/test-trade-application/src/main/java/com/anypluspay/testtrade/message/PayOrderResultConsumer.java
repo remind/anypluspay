@@ -23,6 +23,6 @@ public class PayOrderResultConsumer implements RocketMQListener<PayOrderResult> 
     @Override
     public void onMessage(PayOrderResult message) {
         log.info("收到支付订单结果消息:{}", message);
-        payService.processResult(Long.valueOf(message.getRequestId()), "SUCCESS".equals(message.getStatus()) ? PayStatus.SUCCESS : PayStatus.FAIL);
+        payService.processResult(message.getRequestId(), "SUCCESS".equals(message.getStatus()) ? PayStatus.SUCCESS : PayStatus.FAIL);
     }
 }

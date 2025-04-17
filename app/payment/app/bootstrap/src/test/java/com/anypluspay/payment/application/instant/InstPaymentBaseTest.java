@@ -10,26 +10,25 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
-import com.anypluspay.payment.facade.request.FundDetailInfo;
-import com.anypluspay.payment.facade.request.InstantPaymentRequest;
-import com.anypluspay.payment.facade.request.TradeInfo;
-import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
-import com.anypluspay.payment.types.PaymentExtKey;
-import com.anypluspay.payment.types.paymethod.PayModel;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.facade.request.FundDetailInfo;
+import com.anypluspay.payment.facade.request.InstantPaymentRequest;
+import com.anypluspay.payment.facade.response.InstantPaymentResponse;
+import com.anypluspay.payment.types.PaymentExtKey;
 import com.anypluspay.payment.types.PaymentKey;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.AssetTypeCategory;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.asset.BankCardAsset;
 import com.anypluspay.payment.types.funds.FundDetail;
+import com.anypluspay.payment.types.paymethod.PayModel;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -71,7 +70,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected FundInFacade fundInFacade;
 
     @MockitoBean
-    private RefundFacade refundFacade;
+    protected RefundFacade refundFacade;
 
     @MockitoBean
     protected AccountingFacade accountingFacade;
@@ -83,9 +82,8 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         FundResult fundResult = new FundResult();
         fundResult.setStatus(BizOrderStatus.SUCCESS);
         fundResult.setUnityCode("S001");
-        Map<String, Object> extInfo = new HashMap<>();
-        extInfo.put(PaymentKey.CLEARING_ACCOUNT_NO, CHANNEL_CLEARING_ACCOUNT_NO);
-        fundResult.setExtInfo(extInfo);
+        fundResult.setNeedClearing(true);
+        fundResult.setClearingAccountNo(CHANNEL_CLEARING_ACCOUNT_NO);
         when(fundInFacade.apply(any())).thenReturn(fundResult);
     }
 

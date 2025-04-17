@@ -26,9 +26,12 @@ public class PayService {
     @Autowired
     private TransactionTemplate ttransactionTemplate;
 
-    public void processResult(Long payOrderId, PayStatus payStatus) {
+    public void processResult(String payOrderId, PayStatus payStatus) {
         ttransactionTemplate.executeWithoutResult(status -> {
             PayOrderDO payOrderDO = payOrderMapper.lockById(payOrderId);
+            if (payOrderDO == null) {
+                return;
+            }
             TradeOrderDO tradeOrderDO = tradeOrderMapper.lockById(payOrderDO.getTradeId());
             if (payStatus == PayStatus.SUCCESS) {
                 tradeOrderDO.setStatus(TradeStatus.SUCCESS.getCode());

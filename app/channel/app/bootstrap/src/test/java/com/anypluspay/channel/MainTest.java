@@ -21,8 +21,11 @@ public class MainTest {
 
     public static void main(String[] args) throws Exception {
         A a = new A();
-        a.test();
-        Thread.sleep(3000);
+
+        A b = a;
+        a = null;
+        System.out.println(a);
+        System.out.println(b);
     }
 
 

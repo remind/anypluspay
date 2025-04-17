@@ -3,9 +3,9 @@ package com.anypluspay.payment.domain.payorder.general;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
 import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -42,7 +42,7 @@ public class GeneralPayService extends AbstractBasePayService {
             paymentRepository.lock(generalPayOrder.getPaymentId());
             if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
                 // 仅支付中状态才处理结果，防止重复处理
-                convertStatus(generalPayOrder, payResult);
+                generalPayOrder.setOrderStatus(convertStatus(payResult.getPayStatus()));
                 generalPayOrderRepository.reStore(generalPayOrder);
 
                 if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
@@ -56,23 +56,14 @@ public class GeneralPayService extends AbstractBasePayService {
     /**
      * 状态转换
      *
-     * @param generalPayOrder 支付订单
-     * @param payResult       支付结果
+     * @param payStatus 支付状态
+     * @return 支付订单状态
      */
-    private void convertStatus(GeneralPayOrder generalPayOrder, PayResult payResult) {
-        if (payResult.getPayStatus() == PayStatus.SUCCESS) {
-            generalPayOrder.setOrderStatus(GeneralPayOrderStatus.SUCCESS);
-        }
-        switch (payResult.getPayStatus()) {
-            case SUCCESS:
-                generalPayOrder.setOrderStatus(GeneralPayOrderStatus.SUCCESS);
-                break;
-            case FAIL:
-                generalPayOrder.setOrderStatus(GeneralPayOrderStatus.FAIL);
-                break;
-            case PROCESS:
-                generalPayOrder.setOrderStatus(GeneralPayOrderStatus.PAYING);
-                break;
-        }
+    private GeneralPayOrderStatus convertStatus(PayStatus payStatus) {
+        return switch (payStatus) {
+            case SUCCESS -> GeneralPayOrderStatus.SUCCESS;
+            case FAIL -> GeneralPayOrderStatus.FAIL;
+            case PROCESS -> GeneralPayOrderStatus.PAYING;
+        };
     }
 }

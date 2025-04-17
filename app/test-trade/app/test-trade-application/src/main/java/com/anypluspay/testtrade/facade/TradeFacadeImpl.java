@@ -1,5 +1,6 @@
 package com.anypluspay.testtrade.facade;
 
+import cn.hutool.core.lang.UUID;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.channel.types.ChannelExtKey;
@@ -120,6 +121,7 @@ public class TradeFacadeImpl implements TradeFacade {
 
     private TradeOrderDO saveTrade(TradeRequest tradeRequest) {
         TradeOrderDO tradeOrderDO = new TradeOrderDO();
+        tradeOrderDO.setId(UUID.fastUUID().toString(true));
         tradeOrderDO.setSubject(tradeRequest.getSubject());
         tradeOrderDO.setGoodsDesc(tradeRequest.getGoodsDesc());
         tradeOrderDO.setAmount(new BigDecimal(tradeRequest.getAmount()));
@@ -139,6 +141,7 @@ public class TradeFacadeImpl implements TradeFacade {
 
     private PayOrderDO savePayOrder(PayRequest payRequest) {
         PayOrderDO payOrderDO = new PayOrderDO();
+        payOrderDO.setId(UUID.fastUUID().toString(true));
         payOrderDO.setTradeId(payRequest.getTradeId());
         payOrderDO.setStatus(PayStatus.INIT.getCode());
         payOrderMapper.insert(payOrderDO);

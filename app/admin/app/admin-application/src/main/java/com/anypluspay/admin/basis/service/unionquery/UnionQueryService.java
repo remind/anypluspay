@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Service
 public class UnionQueryService {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     @Autowired
     private QueryDefineMapper queryDefineMapper;
 
@@ -52,7 +52,7 @@ public class UnionQueryService {
     public Map<Long, List<UnionQueryResult>> query(String inParamName, String inParamValue) {
         init();
         Map<String, ParamQueryStatus> queryParam = new HashMap<>();
-        queryParam.put(inParamName, new ParamQueryStatus(Collections.singletonList(inParamValue), false));
+        queryParam.put(inParamName, new ParamQueryStatus(Lists.newArrayList(inParamValue), false));
         Map<String, QueryResult> queryConfigResultMap = new HashMap<>();
         while (!isAllQueryFinish(queryParam)) {
             Optional<Map.Entry<String, ParamQueryStatus>> entryOptional = queryParam.entrySet().stream().filter(e -> !e.getValue().isFinish()).findFirst();

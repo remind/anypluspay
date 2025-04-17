@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 交换引擎
+ *
  * @author wxj
  * 2024/1/27
  */
@@ -33,20 +34,25 @@ public class FluxEngineService {
      * @return
      */
     public PayResult process(FluxOrder fluxOrder) {
-        PayResult payResult;
-        if (fluxOrder.getStatus() == FluxOrderStatus.SUCCESS) {
-            payResult = new PayResult();
-            payResult.setPayStatus(PayStatus.SUCCESS);
-        } else if (fluxOrder.getStatus() == FluxOrderStatus.FAIL || fluxOrder.getStatus() == FluxOrderStatus.CANCEL) {
-            payResult = new PayResult();
-            payResult.setPayStatus(PayStatus.FAIL);
-        } else if (fluxOrder.getStatus() == FluxOrderStatus.PROCESS || fluxOrder.getStatus() == FluxOrderStatus.INIT) {
-            FluxResult fluxResult = execute(fluxOrder);
-            payResult = convertToPayResult(fluxResult);
-        } else {
-            throw new BizException("fluxOrder.status is invalid");
+        FluxResult newFluxResult = execute(fluxOrder);
+        return convertToPayResult(fluxOrder.getStatus(), newFluxResult);
+    }
+
+    /**
+     * 根据结果处理交换单
+     * 用于异步回调场景
+     *
+     * @param fluxOrder
+     * @param preFluxResult
+     * @return
+     */
+    public PayResult processByResult(FluxOrder fluxOrder, FluxResult preFluxResult) {
+        fluxService.process(fluxOrder, preFluxResult.getExecuteInstruction(), preFluxResult);
+        FluxResult retFluxResult = execute(fluxOrder);
+        if (retFluxResult == null) {
+            retFluxResult = preFluxResult;
         }
-        return payResult;
+        return convertToPayResult(fluxOrder.getStatus(), retFluxResult);
     }
 
     private FluxResult execute(FluxOrder fluxOrder) {
@@ -67,17 +73,23 @@ public class FluxEngineService {
         return retFluxResult != null ? retFluxResult : fluxResult;
     }
 
-
-    private PayResult convertToPayResult(FluxResult fluxResult) {
+    private PayResult convertToPayResult(FluxOrderStatus orderStatus, FluxResult fluxResult) {
         PayResult payResult = new PayResult();
-        if (fluxResult == null) {
-            payResult.setPayStatus(PayStatus.SUCCESS);
-        } else {
-            payResult.setPayStatus(fluxResult.getStatus());
+        payResult.setPayStatus(convertToPayStatus(orderStatus));
+        if (fluxResult != null) {
             payResult.setResultMessage(fluxResult.getResultMessage());
             payResult.setResultCode(fluxResult.getResultCode());
             payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
         }
         return payResult;
+    }
+
+    private PayStatus convertToPayStatus(FluxOrderStatus orderStatus) {
+        return switch (orderStatus) {
+            case SUCCESS -> PayStatus.SUCCESS;
+            case FAIL, CANCEL -> PayStatus.FAIL;
+            case INIT, PROCESS -> PayStatus.PROCESS;
+        };
+
     }
 }

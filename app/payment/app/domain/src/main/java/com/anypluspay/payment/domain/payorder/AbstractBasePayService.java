@@ -1,6 +1,7 @@
 package com.anypluspay.payment.domain.payorder;
 
 import cn.hutool.core.util.StrUtil;
+import com.anypluspay.payment.domain.asset.FundDetailSortService;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.flux.service.FluxEngineService;
@@ -48,6 +49,10 @@ public abstract class AbstractBasePayService {
     @Autowired
     protected ApplicationContext applicationContext;
 
+    @Autowired
+    protected FundDetailSortService fundDetailSortService;
+
+
     protected FluxOrder createAndStoreFluxOrder(BasePayOrder payOrder) {
         FluxOrder fluxOrder = buildFluxOrder(payOrder);
         transactionTemplate.executeWithoutResult(status -> {
@@ -70,10 +75,12 @@ public abstract class AbstractBasePayService {
     }
 
     protected void fillFluxInstruct(FluxOrder fluxOrder, List<FundDetail> payerFundDetails, List<FundDetail> payeeFundDetails, InstructionType type) {
+        fundDetailSortService.payerSort(payerFundDetails);
         payerFundDetails.forEach(fundDetail -> {
             fillFluxInstruction(fluxOrder, fundDetail, type);
         });
 
+        fundDetailSortService.payeeSort(payeeFundDetails);
         payeeFundDetails.forEach(fundDetail -> {
             fillFluxInstruction(fluxOrder, fundDetail, type);
         });

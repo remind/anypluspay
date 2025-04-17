@@ -62,7 +62,7 @@ public class OnlineBankPayService {
         refundOrderDO.setOutRequestNo(refundDto.getOutRequestNo());
         refundOrderDO.setStatus(OrderStatus.SUCCESS.name());
         refundOrderMapper.insert(refundOrderDO);
-//        notifyByRefund(refundOrderDO);
+        notifyByRefund(refundOrderDO);
         return refundOrderDO;
     }
 
