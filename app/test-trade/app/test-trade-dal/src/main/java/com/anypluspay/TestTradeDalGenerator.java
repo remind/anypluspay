@@ -16,7 +16,7 @@ public class TestTradeDalGenerator {
         GenConfig genConfig = YamlUtil.loadByPath("config.yaml", GenConfig.class);
         DalGenerator dalGenerator = new DalGenerator(genConfig);
         File f = new File(TestTradeDalGenerator.class.getResource("/").getPath());
-        String projectPath = f.getParentFile().getParentFile().getParentFile().getParentFile().getPath() + "/app/test-trade-application";
+        String projectPath = f.getParentFile().getParentFile().getParentFile().getParentFile().getPath() + "/app/test-trade-dal";
         dalGenerator.execute(projectPath, "");
     }
 }

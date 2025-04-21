@@ -29,7 +29,7 @@ public class ChannelRouteServiceTest extends FundChannelMock {
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(RequestType.FUND_IN);
         routeParam.setPayInst("TB1");
-        routeParam.setPayMethod("qpay");
+        routeParam.setPayModel("qpay");
         Assert.assertNotNull(channelRouteService.routeOne(routeParam));
     }
 }

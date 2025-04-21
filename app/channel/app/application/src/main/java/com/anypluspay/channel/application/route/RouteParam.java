@@ -10,7 +10,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 路由参数
@@ -32,9 +31,9 @@ public class RouteParam {
     private String payInst;
 
     /**
-     * 支付方式
+     * 支付模式
      */
-    private String payMethod;
+    private String payModel;
 
     /**
      * 卡类型

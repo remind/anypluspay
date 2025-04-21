@@ -5,7 +5,6 @@ import com.anypluspay.channelgateway.api.refund.RefundContent;
 import com.anypluspay.channelgateway.api.refund.RefundGateway;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.result.GatewayResult;
-import com.anypluspay.channelgateway.testbank.model.RefundOrderResponse;
 import com.anypluspay.commons.lang.types.Money;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +25,15 @@ public class TestBankRefundGateway extends AbstractTestBank implements RefundGat
         params.put("amount", refundOrder.getAmount().getAmount().toString());
         params.put("reason", refundOrder.getReason());
         params.put("notifyUrl", refundOrder.getServerNotifyUrl());
-        RefundOrderResponse response = webClient.post().uri("/online-bank/refund")
+        Map response = webClient.post().uri("/online-bank/refund")
                 .bodyValue(params)
                 .retrieve()
-                .bodyToMono(RefundOrderResponse.class)
+                .bodyToMono(Map.class)
                 .block();
         result.setSuccess(true);
         assert response != null;
-        result.setInstResponseNo(response.getId().toString());
-        result.setApiCode(response.getStatus());
-        result.setRealAmount(new Money(response.getAmount()));
+        result.setInstResponseNo(response.get("refundId").toString());
+        result.setApiCode(response.get("status").toString());
+        result.setRealAmount(new Money(response.get("amount").toString()));
     }
 }

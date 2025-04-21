@@ -8,19 +8,19 @@ import lombok.Getter;
  * 2025/3/18
  */
 @Getter
-public enum TradeStatus implements CodeEnum {
+public enum PayStatus implements CodeEnum {
     INIT("0", "初始"),
 
-    SUCCESS("1", "交易成功"),
+    SUCCESS("1", "成功"),
 
-    FAIL("2", "交易失败"),
+    FAIL("2", "失败"),
 
     ;
 
     private final String code;
     private final String displayName;
 
-    TradeStatus(String code, String displayName) {
+    PayStatus(String code, String displayName) {
         this.code = code;
         this.displayName = displayName;
     }

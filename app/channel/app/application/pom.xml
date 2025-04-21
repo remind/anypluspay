@@ -32,5 +32,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.anypluspay.payment</groupId>
+            <artifactId>payment-types</artifactId>
+        </dependency>
     </dependencies>
 </project>

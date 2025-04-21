@@ -29,7 +29,7 @@ public class FundOutFacadeImpl extends AbstractFundService implements FundOutFac
     private RouteParam buildRouteParam(FundOutOrder fundOutOrder) {
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(fundOutOrder.getRequestType());
-        routeParam.setPayMethod(fundOutOrder.getPayMethod());
+        routeParam.setPayModel(fundOutOrder.getPayMethod());
         routeParam.setPayInst(fundOutOrder.getBankCode());
         routeParam.setAmount(fundOutOrder.getAmount());
         return routeParam;

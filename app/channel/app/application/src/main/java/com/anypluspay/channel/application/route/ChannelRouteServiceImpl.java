@@ -41,7 +41,7 @@ public class ChannelRouteServiceImpl implements ChannelRouteService {
 
     @Override
     public List<ChannelApiContext> route(RouteParam routeParam) {
-        List<ChannelFullInfo> channelFullInfos = channelFullInfoRepository.getAllAvailableChannels(routeParam.getRequestType(), routeParam.getPayMethod());
+        List<ChannelFullInfo> channelFullInfos = channelFullInfoRepository.getAllAvailableChannels(routeParam.getRequestType(), routeParam.getPayModel());
         List<ChannelHolder> channelHolders = new ArrayList<>();
         if (CollectionUtil.isNotEmpty(channelFullInfos)) {
             if (CollectionUtil.isNotEmpty(routeParam.getWhiteChannels())) {

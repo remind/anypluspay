@@ -10,11 +10,20 @@ import lombok.Getter;
  */
 @Getter
 public enum PayModel implements CodeEnum {
+    /**
+     * 跳转类的均可算
+     */
     ONLINE_BANK("ONLINE_BANK", "网银支付"),
+
+    /**
+     * 自建账户余额支付
+     */
     BALANCE("BALANCE", "余额支付"),
+
+    /**
+     * 快捷支付，通常指银行卡需要签约型的
+     */
     QUICK_PAY("QUICK_PAY", "快捷支付"),
-    JSAPI("JSAPI", "jsapi支付"),
-    NATIVE("NATIVE", "APP支付"),
     ;
 
     private final String code;

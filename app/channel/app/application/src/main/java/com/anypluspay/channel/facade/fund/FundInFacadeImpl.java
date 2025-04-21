@@ -34,7 +34,7 @@ public class FundInFacadeImpl extends AbstractFundService implements FundInFacad
         RouteParam routeParam = new RouteParam();
         routeParam.setRequestType(fundInOrder.getRequestType());
         routeParam.setPayInst(fundInOrder.getPayInst());
-        routeParam.setPayMethod(fundInOrder.getPayModel());
+        routeParam.setPayModel(fundInOrder.getPayModel());
         routeParam.setAmount(fundInOrder.getAmount());
         routeParam.setExtension(fundInOrder.getExtension());
         if (fundInOrder.getExtension().containsKey(ChannelExtKey.WHITE_CHANNELS.getCode())) {

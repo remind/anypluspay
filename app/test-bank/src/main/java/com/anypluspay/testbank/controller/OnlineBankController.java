@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 网银支付
  *
@@ -47,8 +50,14 @@ public class OnlineBankController {
 
     @PostMapping("/refund")
     @ResponseBody
-    public RefundOrderDO refund(@RequestBody RefundDto refundDto) {
-        return onlineBankPayService.refund(refundDto);
+    public Map<String, String> refund(@RequestBody RefundDto refundDto) {
+        RefundOrderDO refundOrderDO = onlineBankPayService.refund(refundDto);
+        Map<String, String> response = new HashMap<>();
+        response.put("outRequestNo", refundOrderDO.getOutRequestNo());
+        response.put("refundId", refundOrderDO.getId().toString());
+        response.put("status", refundOrderDO.getStatus());
+        response.put("amount", refundOrderDO.getAmount().toString());
+        return response;
     }
 
     @GetMapping("/start")

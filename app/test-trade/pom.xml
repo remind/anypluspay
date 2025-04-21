@@ -13,6 +13,7 @@
         <module>app/test-trade-facade</module>
         <module>app/test-trade-bootstrap</module>
         <module>app/test-trade-application</module>
+        <module>app/test-trade-dal</module>
     </modules>
 
     <properties>
@@ -24,6 +25,11 @@
             <dependency>
                 <groupId>com.anypluspay.test-trade</groupId>
                 <artifactId>test-trade-facade</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.test-trade</groupId>
+                <artifactId>test-trade-dal</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

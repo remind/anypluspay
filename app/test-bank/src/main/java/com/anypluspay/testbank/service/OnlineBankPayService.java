@@ -60,9 +60,18 @@ public class OnlineBankPayService {
         refundOrderDO.setPayOrderId(refundDto.getOrigOrderId());
         refundOrderDO.setAmount(refundDto.getAmount());
         refundOrderDO.setOutRequestNo(refundDto.getOutRequestNo());
-        refundOrderDO.setStatus(OrderStatus.SUCCESS.name());
+        refundOrderDO.setStatus(OrderStatus.PROCESS.name());
         refundOrderMapper.insert(refundOrderDO);
-        notifyByRefund(refundOrderDO);
+        new Thread(() -> {
+            try {
+                // 10s后自动成功
+                Thread.sleep(10000);
+                refundOrderDO.setStatus(OrderStatus.SUCCESS.name());
+                refundOrderMapper.updateById(refundOrderDO);
+                notifyByRefund(refundOrderDO);
+            } catch (InterruptedException ignored) {
+            }
+        }).start();
         return refundOrderDO;
     }
 

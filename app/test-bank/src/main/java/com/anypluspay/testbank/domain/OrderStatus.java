@@ -8,6 +8,7 @@ public enum OrderStatus {
     WAIT_BUYER_PAY("待支付"),
     TRADE_CLOSED("超时关闭"),
     TRADE_SUCCESS("交易支付成功"),
+    PROCESS("处理中"),
     SUCCESS("成功"),
     ;
 

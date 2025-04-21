@@ -21,6 +21,10 @@
             <artifactId>test-trade-facade</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.test-trade</groupId>
+            <artifactId>test-trade-dal</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.anypluspay.component</groupId>
             <artifactId>component-core</artifactId>
         </dependency>
