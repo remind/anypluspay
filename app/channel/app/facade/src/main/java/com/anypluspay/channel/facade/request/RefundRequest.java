@@ -17,7 +17,6 @@ public class RefundRequest extends FundRequest {
     /**
      * 退款类型
      */
-    @NotNull
     private RefundType refundType;
 
     /**

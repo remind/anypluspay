@@ -4,12 +4,14 @@ import cn.hutool.core.lang.UUID;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
+import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PaymentExtKey;
@@ -18,17 +20,25 @@ import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.testtrade.facade.request.PayMethod;
 import com.anypluspay.testtrade.facade.request.PayRequest;
+import com.anypluspay.testtrade.facade.request.TradeRefundRequest;
 import com.anypluspay.testtrade.facade.request.TradeRequest;
 import com.anypluspay.testtrade.facade.response.PayResponse;
+import com.anypluspay.testtrade.facade.response.RefundResponse;
 import com.anypluspay.testtrade.facade.response.TradeResponse;
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
+import com.anypluspay.testtrade.infra.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import com.anypluspay.testtrade.infra.persistence.mapper.PayOrderMapper;
+import com.anypluspay.testtrade.infra.persistence.mapper.RefundOrderMapper;
 import com.anypluspay.testtrade.infra.persistence.mapper.TradeOrderMapper;
 import com.anypluspay.testtrade.service.PayService;
 import com.anypluspay.testtrade.types.PayStatus;
+import com.anypluspay.testtrade.types.RefundStatus;
 import com.anypluspay.testtrade.types.TradeStatus;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
@@ -51,6 +61,9 @@ public class TradeFacadeImpl implements TradeFacade {
     private PayOrderMapper payOrderMapper;
 
     @Autowired
+    private RefundOrderMapper refundOrderMapper;
+
+    @Autowired
     private OuterAccountManagerFacade outerAccountManagerFacade;
 
     @Autowired
@@ -58,6 +71,9 @@ public class TradeFacadeImpl implements TradeFacade {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     @Override
     public TradeResponse create(TradeRequest tradeRequest) {
@@ -117,6 +133,57 @@ public class TradeFacadeImpl implements TradeFacade {
     @Override
     public TradeResponse query(String tradeId) {
         return convertTradeResponse(tradeOrderMapper.selectById(tradeId));
+    }
+
+    @Override
+    public RefundResponse refund(TradeRefundRequest tradeRefundRequest) {
+        RefundResponse refundResponse = new RefundResponse();
+        transactionTemplate.executeWithoutResult(transactionStatus -> {
+            TradeOrderDO tradeOrderDO = tradeOrderMapper.lockById(tradeRefundRequest.getTradeId());
+            AssertUtil.notNull(tradeOrderDO, "交易不存在");
+            AssertUtil.isTrue(tradeOrderDO.getStatus().equals(TradeStatus.SUCCESS.getCode()), "交易状态不正确");
+
+            LambdaQueryWrapper<RefundOrderDO> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(RefundOrderDO::getTradeId, tradeRefundRequest.getTradeId());
+            queryWrapper.eq(RefundOrderDO::getStatus, RefundStatus.SUCCESS.getCode());
+            List<RefundOrderDO> refundOrderDOS = refundOrderMapper.selectList(queryWrapper);
+            if (!CollectionUtils.isEmpty(refundOrderDOS)) {
+                BigDecimal totalAmount = refundOrderDOS.stream().map(RefundOrderDO::getAmount).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+                if (totalAmount.add(new BigDecimal(tradeRefundRequest.getAmount())).compareTo(tradeOrderDO.getAmount()) > 0) {
+                    throw new BizException("退款金额已经超过可退金额");
+                }
+            }
+
+            RefundOrderDO refundOrderDO = new RefundOrderDO();
+            refundOrderDO.setId(UUID.fastUUID().toString(true));
+            refundOrderDO.setTradeId(tradeRefundRequest.getTradeId());
+            refundOrderDO.setAmount(new BigDecimal(tradeRefundRequest.getAmount()));
+            refundOrderDO.setStatus(RefundStatus.INIT.getCode());
+            refundOrderMapper.insert(refundOrderDO);
+
+            PayOrderDO payOrderDO = selectSuccessPayOrder(tradeRefundRequest.getTradeId());
+
+            RefundRequest request = new RefundRequest();
+            request.setRequestId(refundOrderDO.getId());
+            request.setOrigRequestId(payOrderDO.getId());
+            request.setAmount(new Money(new BigDecimal(tradeRefundRequest.getAmount())));
+            com.anypluspay.payment.facade.response.RefundResponse paymentRefundResponse = instantPaymentFacade.refund(request);
+            if (paymentRefundResponse.getOrderStatus().equals(GeneralPayOrderStatus.SUCCESS.getCode())) {
+                refundOrderDO.setStatus(RefundStatus.SUCCESS.getCode());
+                refundOrderMapper.updateById(refundOrderDO);
+            } else if (paymentRefundResponse.getOrderStatus().equals(GeneralPayOrderStatus.FAIL.getCode())) {
+                refundOrderDO.setStatus(RefundStatus.FAIL.getCode());
+                refundOrderMapper.updateById(refundOrderDO);
+            }
+        });
+        return refundResponse;
+    }
+
+    private PayOrderDO selectSuccessPayOrder(String tradeId) {
+        LambdaQueryWrapper<PayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PayOrderDO::getTradeId, tradeId);
+        queryWrapper.eq(PayOrderDO::getStatus, PayStatus.SUCCESS.getCode());
+        return payOrderMapper.selectOne(queryWrapper);
     }
 
     private TradeOrderDO saveTrade(TradeRequest tradeRequest) {

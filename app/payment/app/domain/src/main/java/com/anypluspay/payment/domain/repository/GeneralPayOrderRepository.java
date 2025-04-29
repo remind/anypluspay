@@ -15,5 +15,7 @@ public interface GeneralPayOrderRepository {
 
     GeneralPayOrder load(String payOrderId);
 
+    GeneralPayOrder loadByRequestId(String requestId);
+
     List<GeneralPayOrder> loadByPaymentId(String paymentId);
 }

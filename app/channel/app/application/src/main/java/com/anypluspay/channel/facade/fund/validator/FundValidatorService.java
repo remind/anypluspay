@@ -38,7 +38,7 @@ public class FundValidatorService {
                 throw new BizException("退款金额不能大于原单金额");
             }
         } else {
-            Money refundMount = allRefundOrders.stream().filter(ro -> ro.getStatus() != BizOrderStatus.FAILED)
+            Money refundMount = allRefundOrders.stream().filter(ro -> ro.getStatus() == BizOrderStatus.SUCCESS)
                     .map(RefundOrder::getAmount)
                     .reduce(Money::add).orElse(new Money(0));
             if (refundMount.add(refundOrder.getAmount()).greaterThan(origOrder.getAmount())) {

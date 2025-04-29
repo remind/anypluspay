@@ -45,6 +45,15 @@ public class GeneralPayOrderRepositoryImpl extends AbstractPayOrderRepository im
     }
 
     @Override
+    public GeneralPayOrder loadByRequestId(String requestId) {
+        LambdaQueryWrapper<GeneralPayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(GeneralPayOrderDO::getRequestId, requestId);
+        GeneralPayOrder generalPayOrder = dalConvertor.toEntity(dalMapper.selectOne(queryWrapper));
+        fillFundDetails(generalPayOrder);
+        return generalPayOrder;
+    }
+
+    @Override
     public List<GeneralPayOrder> loadByPaymentId(String paymentId) {
         LambdaQueryWrapper<GeneralPayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(GeneralPayOrderDO::getPaymentId, paymentId);

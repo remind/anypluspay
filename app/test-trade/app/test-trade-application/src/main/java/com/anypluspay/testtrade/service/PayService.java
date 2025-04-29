@@ -1,6 +1,7 @@
 package com.anypluspay.testtrade.service;
 
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
+import com.anypluspay.testtrade.infra.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import com.anypluspay.testtrade.infra.persistence.mapper.PayOrderMapper;
 import com.anypluspay.testtrade.infra.persistence.mapper.TradeOrderMapper;
@@ -24,10 +25,10 @@ public class PayService {
     private PayOrderMapper payOrderMapper;
 
     @Autowired
-    private TransactionTemplate ttransactionTemplate;
+    private TransactionTemplate transactionTemplate;
 
     public void processResult(String payOrderId, PayStatus payStatus) {
-        ttransactionTemplate.executeWithoutResult(status -> {
+        transactionTemplate.executeWithoutResult(status -> {
             PayOrderDO payOrderDO = payOrderMapper.lockById(payOrderId);
             if (payOrderDO == null) {
                 return;
@@ -43,5 +44,9 @@ public class PayService {
             tradeOrderMapper.updateById(tradeOrderDO);
             payOrderMapper.updateById(payOrderDO);
         });
+    }
+
+    public void refund(TradeOrderDO tradeOrderDO, RefundOrderDO refundOrderDO) {
+
     }
 }

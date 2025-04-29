@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 交易订单表
+ * 交易订单退款表
  * </p>
  *
  * @author wxj
  * @since 2025-04-29
  */
-@TableName("t_trade_order")
-public class TradeOrderDO implements Serializable {
+@TableName("t_refund_order")
+public class RefundOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,37 +29,12 @@ public class TradeOrderDO implements Serializable {
     private String id;
 
     /**
-     * 商户号
+     * 交易单号
      */
-    private String merchantId;
+    private String tradeId;
 
     /**
-     * 收款方ID
-     */
-    private String payeeId;
-
-    /**
-     * 收款方账户号
-     */
-    private String payeeAccount;
-
-    /**
-     * 付款方ID
-     */
-    private String payerId;
-
-    /**
-     * 标题
-     */
-    private String subject;
-
-    /**
-     * 商品描述
-     */
-    private String goodsDesc;
-
-    /**
-     * 金额
+     * 退款金额
      */
     private BigDecimal amount;
 
@@ -85,52 +60,12 @@ public class TradeOrderDO implements Serializable {
         this.id = id;
     }
 
-    public String getMerchantId() {
-        return merchantId;
+    public String getTradeId() {
+        return tradeId;
     }
 
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
-    }
-
-    public String getPayeeId() {
-        return payeeId;
-    }
-
-    public void setPayeeId(String payeeId) {
-        this.payeeId = payeeId;
-    }
-
-    public String getPayeeAccount() {
-        return payeeAccount;
-    }
-
-    public void setPayeeAccount(String payeeAccount) {
-        this.payeeAccount = payeeAccount;
-    }
-
-    public String getPayerId() {
-        return payerId;
-    }
-
-    public void setPayerId(String payerId) {
-        this.payerId = payerId;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getGoodsDesc() {
-        return goodsDesc;
-    }
-
-    public void setGoodsDesc(String goodsDesc) {
-        this.goodsDesc = goodsDesc;
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 
     public BigDecimal getAmount() {
@@ -167,14 +102,9 @@ public class TradeOrderDO implements Serializable {
 
     @Override
     public String toString() {
-        return "TradeOrderDO{" +
+        return "RefundOrderDO{" +
         "id = " + id +
-        ", merchantId = " + merchantId +
-        ", payeeId = " + payeeId +
-        ", payeeAccount = " + payeeAccount +
-        ", payerId = " + payerId +
-        ", subject = " + subject +
-        ", goodsDesc = " + goodsDesc +
+        ", tradeId = " + tradeId +
         ", amount = " + amount +
         ", status = " + status +
         ", gmtCreate = " + gmtCreate +

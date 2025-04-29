@@ -1,6 +1,5 @@
 package com.anypluspay.payment.facade.response;
 
-import com.anypluspay.payment.types.status.OrderStatus;
 import lombok.Data;
 
 /**
@@ -38,7 +37,7 @@ public class RefundResponse {
     /**
      * 退款状态
      */
-    private OrderStatus orderStatus;
+    private String orderStatus;
 
     /**
      * 返回结果码

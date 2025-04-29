@@ -69,7 +69,7 @@ public class FundOrderBuilder {
             originOrder = bizOrderRepository.load(request.getOrigOrderId());
         }
         if (StrUtil.isNotBlank(request.getOrigRequestId())) {
-            originOrder = bizOrderRepository.load(request.getOrigOrderId());
+            originOrder = bizOrderRepository.loadByRequestId(request.getOrigRequestId());
         }
         Assert.notNull(originOrder, "原单不存在");
         Assert.isTrue(originOrder.getStatus() == BizOrderStatus.SUCCESS, "原单未成功");

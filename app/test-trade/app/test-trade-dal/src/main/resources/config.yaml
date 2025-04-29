@@ -13,3 +13,4 @@ db:
     name:
       - t_trade_order
       - t_pay_order
+      - t_refund_order

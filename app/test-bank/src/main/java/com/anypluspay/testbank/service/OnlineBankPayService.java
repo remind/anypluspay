@@ -61,6 +61,7 @@ public class OnlineBankPayService {
         refundOrderDO.setAmount(refundDto.getAmount());
         refundOrderDO.setOutRequestNo(refundDto.getOutRequestNo());
         refundOrderDO.setStatus(OrderStatus.PROCESS.name());
+        refundOrderDO.setNotifyUrl(refundDto.getNotifyUrl());
         refundOrderMapper.insert(refundOrderDO);
         new Thread(() -> {
             try {

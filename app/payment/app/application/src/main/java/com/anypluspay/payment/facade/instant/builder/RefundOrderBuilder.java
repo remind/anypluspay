@@ -49,7 +49,7 @@ public class RefundOrderBuilder extends PaymentBuilder {
         List<FundDetail> refundedPayeeDetails = null;
         Money refunedAmount = new Money();
         List<RefundOrder> allRefundOrders = refundOrderRepository.loadByPayOrderId(generalPayOrder.getOrderId()).stream()
-                .filter(r -> !r.getOrderStatus().equals(RefundOrderStatus.FAIL))
+                .filter(r -> r.getOrderStatus().equals(RefundOrderStatus.SUCCESS))
                 .toList();
         if (!CollectionUtils.isEmpty(allRefundOrders)) {
             refundedPayerDetails = allRefundOrders.stream()

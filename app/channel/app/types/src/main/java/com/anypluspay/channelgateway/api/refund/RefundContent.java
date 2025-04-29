@@ -1,6 +1,5 @@
 package com.anypluspay.channelgateway.api.refund;
 
-import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channelgateway.request.NormalContent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,21 +13,18 @@ import lombok.EqualsAndHashCode;
 public class RefundContent extends NormalContent {
 
     /**
-     * 退款原因
-     */
-    private String reason;
-
-    /**
      * 原机构请求订单号
      */
-    public String getOrigInstRequestNo() {
-        return getExtValue(ChannelExtKey.ORIG_INST_REQUEST_NO);
-    }
+    private String origInstRequestNo;
 
     /**
      * 原机构响应订单号
      */
-    public String getOrigInstResponseNo() {
-        return getExtValue(ChannelExtKey.ORIG_INST_RESPONSE_NO);
-    }
+    private String origInstResponseNo;
+
+    /**
+     * 退款原因
+     */
+    private String reason;
+
 }

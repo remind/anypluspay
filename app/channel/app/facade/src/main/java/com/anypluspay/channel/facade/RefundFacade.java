@@ -4,6 +4,7 @@ import com.anypluspay.channel.facade.request.RefundRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 退款业务处理
@@ -23,6 +24,6 @@ public interface RefundFacade {
      * @return 订单结果
      */
     @PostMapping(PREFIX + "/apply")
-    FundResult apply(RefundRequest request);
+    FundResult apply(@RequestBody RefundRequest request);
 
 }

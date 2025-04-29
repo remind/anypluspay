@@ -1,8 +1,10 @@
 package com.anypluspay.testtrade.facade;
 
 import com.anypluspay.testtrade.facade.request.PayRequest;
+import com.anypluspay.testtrade.facade.request.TradeRefundRequest;
 import com.anypluspay.testtrade.facade.request.TradeRequest;
 import com.anypluspay.testtrade.facade.response.PayResponse;
+import com.anypluspay.testtrade.facade.response.RefundResponse;
 import com.anypluspay.testtrade.facade.response.TradeResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,5 +49,14 @@ public interface TradeFacade {
      */
     @GetMapping(PREFIX + "/query")
     TradeResponse query(@RequestParam String tradeId);
+
+    /**
+     * 退款
+     *
+     * @param tradeRefundRequest 退款请求
+     * @return
+     */
+    @PostMapping(PREFIX + "/refund")
+    RefundResponse refund(@RequestBody TradeRefundRequest tradeRefundRequest);
 
 }

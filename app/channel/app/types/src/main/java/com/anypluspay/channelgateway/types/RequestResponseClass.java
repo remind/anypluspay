@@ -26,6 +26,7 @@ public enum RequestResponseClass {
     SINGLE_REFUND(ChannelApiType.SINGLE_REFUND, RefundContent.class, null),
     SINGLE_FUND_OUT(ChannelApiType.SINGLE_FUND_OUT, FundOutContent.class, null),
     VERIFY_SIGN(ChannelApiType.VERIFY_SIGN, StringContent.class, VerifySignResult.class),
+    REFUND_VERIFY_SIGN(ChannelApiType.REFUND_VERIFY_SIGN, StringContent.class, VerifySignResult.class),
     ;
 
     private final ChannelApiType channelApiType;
