@@ -1,7 +1,6 @@
-package com.anypluspay.testtrade.basis;
+package com.anypluspay.admin.trade;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.anypluspay.admin.basis.TestTradeBeanNameGenerator;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
@@ -24,8 +23,8 @@ import javax.sql.DataSource;
  * 2025/4/8
  */
 @Configuration
-@MapperScan(basePackages = {"com.anypluspay.testtrade.infra.persistence.mapper"}, sqlSessionFactoryRef = "testtradeSqlSessionFactory", nameGenerator = TestTradeBeanNameGenerator.class)
-public class TestTradeDataSourceConfigure {
+@MapperScan(basePackages = {"com.anypluspay.testtrade.infra.persistence.mapper"}, sqlSessionFactoryRef = "testtradeSqlSessionFactory", nameGenerator = TradeBeanNameGenerator.class)
+public class TradeDataSourceConfigure {
     private static final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
 
     @Bean(name = "testtradeDataSource")
@@ -38,14 +37,9 @@ public class TestTradeDataSourceConfigure {
     public SqlSessionFactory sqlSessionFactory(@Qualifier("testtradeDataSource") DataSource dataSource, MybatisPlusInterceptor mybatisPlusInterceptor) throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
-
         MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
         mybatisConfiguration.addInterceptor(mybatisPlusInterceptor);
-
         factoryBean.setConfiguration(mybatisConfiguration);
-//        factoryBean.setMapperLocations(resourceResolver.getResources("classpath*:/mapper/testtrade/*.xml"));
-        factoryBean.setMapperLocations(resourceResolver.getResources("classpath*:/com/anypluspay/testtrade/infra/persistence/mapper/xml/*.xml"));
-
         return factoryBean.getObject();
     }
 

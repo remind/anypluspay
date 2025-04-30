@@ -1,4 +1,4 @@
-package com.anypluspay.admin.basis.testtrade.query;
+package com.anypluspay.admin.trade.query;
 
 import com.anypluspay.commons.response.page.PageQuery;
 import lombok.Data;

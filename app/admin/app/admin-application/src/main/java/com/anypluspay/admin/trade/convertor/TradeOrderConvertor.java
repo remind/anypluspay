@@ -1,6 +1,6 @@
-package com.anypluspay.admin.basis.testtrade.convertor;
+package com.anypluspay.admin.trade.convertor;
 
-import com.anypluspay.admin.basis.testtrade.response.TradeOrderResponse;
+import com.anypluspay.admin.trade.response.TradeOrderResponse;
 import com.anypluspay.component.dal.PageConvertor;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import org.mapstruct.Mapper;

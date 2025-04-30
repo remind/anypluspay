@@ -1,4 +1,4 @@
-package com.anypluspay.admin.basis.testtrade.response;
+package com.anypluspay.admin.trade.response;
 
 import com.anypluspay.commons.lang.std.CustomerLocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @Data
 public class TradeOrderResponse {
 
+    /**
+     * 交易号
+     */
     private String id;
 
     /**
