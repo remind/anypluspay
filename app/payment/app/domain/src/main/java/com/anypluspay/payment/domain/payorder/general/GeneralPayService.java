@@ -3,6 +3,7 @@ package com.anypluspay.payment.domain.payorder.general;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
 import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
@@ -47,7 +48,7 @@ public class GeneralPayService extends AbstractBasePayService {
 
                 if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
                         || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
-                    applicationContext.publishEvent(new PayOrderResultEvent(generalPayOrder));
+                    applicationContext.publishEvent(new PayOrderResultEvent(generalPayOrder.getOrderId(), PayOrderType.PAY));
                 }
             }
         });

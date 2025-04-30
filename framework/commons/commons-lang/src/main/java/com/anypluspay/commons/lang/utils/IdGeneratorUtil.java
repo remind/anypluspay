@@ -56,8 +56,18 @@ public class IdGeneratorUtil {
         return id.substring(14, 16);
     }
 
+    /**
+     * 根据id获取系统编码
+     *
+     * @param id
+     * @return
+     */
     public static String reverseIdGetSystemCode(String id) {
         return id.substring(8, 11);
+    }
+
+    public static String reverseIdGetBizType(String id) {
+        return id.substring(11, 14);
     }
 
     /**

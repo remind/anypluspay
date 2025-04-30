@@ -50,6 +50,15 @@ public enum IdType implements BizIdType {
         return name;
     }
 
+    public static IdType getByBizTypeCode(String bizTypeCode) {
+        for (IdType idType : IdType.values()) {
+            if (idType.getBizTypeCode().equals(bizTypeCode)) {
+                return idType;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getBizTypeCode() {
         return parentCode + code;

@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.payorder.event;
 
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.types.PayOrderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -12,5 +12,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class PayOrderResultEvent {
 
-    private GeneralPayOrder payOrder;
+    /**
+     * 支付子单ID
+     */
+    private String payOrderId;
+
+    /**
+     * 支付子单类型
+     */
+    private PayOrderType payOrderType;
 }

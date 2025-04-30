@@ -1,5 +1,6 @@
 package com.anypluspay.testtrade.message;
 
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.message.PayOrderResult;
 import com.anypluspay.testtrade.service.PayService;
 import com.anypluspay.testtrade.types.PayStatus;
@@ -20,9 +21,14 @@ public class PayOrderResultConsumer implements RocketMQListener<PayOrderResult> 
 
     @Autowired
     private PayService payService;
+
     @Override
     public void onMessage(PayOrderResult message) {
         log.info("收到支付订单结果消息:{}", message);
-        payService.processResult(message.getRequestId(), "SUCCESS".equals(message.getStatus()) ? PayStatus.SUCCESS : PayStatus.FAIL);
+        if (message.getOrderType().equals(PayOrderType.PAY.getCode())) {
+            payService.processResult(message.getRequestId(), "SUCCESS".equals(message.getStatus()) ? PayStatus.SUCCESS : PayStatus.FAIL);
+        } else if (message.getOrderType().equals(PayOrderType.REFUND.getCode())) {
+            payService.processRefundResult(message.getRequestId(), message.getStatus());
+        }
     }
 }

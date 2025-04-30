@@ -2,14 +2,18 @@ package com.anypluspay.payment.domain.payorder.refund;
 
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
+import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * 退款服务
+ *
  * @author wxj
  * 2025/2/18
  */
@@ -45,6 +49,11 @@ public class RefundService extends AbstractBasePayService {
                 // 仅支付中状态才处理结果，防止重复处理
                 convertStatus(refundOrder, payResult);
                 refundOrderRepository.reStore(refundOrder);
+
+                if (refundOrder.getOrderStatus() == RefundOrderStatus.SUCCESS
+                        || refundOrder.getOrderStatus() == RefundOrderStatus.FAIL) {
+                    applicationContext.publishEvent(new PayOrderResultEvent(refundOrder.getOrderId(), PayOrderType.REFUND));
+                }
             }
         });
     }

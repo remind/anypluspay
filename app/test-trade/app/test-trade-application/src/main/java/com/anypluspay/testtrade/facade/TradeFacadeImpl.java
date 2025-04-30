@@ -168,13 +168,7 @@ public class TradeFacadeImpl implements TradeFacade {
             request.setOrigRequestId(payOrderDO.getId());
             request.setAmount(new Money(new BigDecimal(tradeRefundRequest.getAmount())));
             com.anypluspay.payment.facade.response.RefundResponse paymentRefundResponse = instantPaymentFacade.refund(request);
-            if (paymentRefundResponse.getOrderStatus().equals(GeneralPayOrderStatus.SUCCESS.getCode())) {
-                refundOrderDO.setStatus(RefundStatus.SUCCESS.getCode());
-                refundOrderMapper.updateById(refundOrderDO);
-            } else if (paymentRefundResponse.getOrderStatus().equals(GeneralPayOrderStatus.FAIL.getCode())) {
-                refundOrderDO.setStatus(RefundStatus.FAIL.getCode());
-                refundOrderMapper.updateById(refundOrderDO);
-            }
+            payService.processRefundResult(refundOrderDO.getId(), paymentRefundResponse.getOrderStatus());
         });
         return refundResponse;
     }

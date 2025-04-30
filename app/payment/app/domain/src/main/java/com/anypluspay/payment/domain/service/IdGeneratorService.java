@@ -25,4 +25,9 @@ public class IdGeneratorService {
         return sequenceService.getIdByRouteId(IdGeneratorUtil.reverseIdGetDbRouteId(relateId), SystemCodeEnums.PAYMENT, idType);
     }
 
+    public IdType getIdType(String id) {
+        String idTypeCode = IdGeneratorUtil.reverseIdGetBizType(id);
+        return IdType.getByBizTypeCode(idTypeCode);
+    }
+
 }

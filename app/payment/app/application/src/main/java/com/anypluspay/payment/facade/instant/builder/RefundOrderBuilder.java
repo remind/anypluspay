@@ -8,6 +8,7 @@ import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.types.IdType;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
@@ -33,7 +34,7 @@ public class RefundOrderBuilder extends PaymentBuilder {
 
     public RefundOrder build(RefundRequest request, GeneralPayOrder generalPayOrder) {
         RefundOrder refundOrder = new RefundOrder();
-        refundOrder.setOrderId(idGeneratorService.genIdByRelateId(generalPayOrder.getPaymentId(), IdType.REFUND_ORDER_ID));
+        refundOrder.setOrderId(idGeneratorService.genIdByRelateId(generalPayOrder.getPaymentId(), PayOrderType.REFUND.getIdType()));
         refundOrder.setPaymentId(generalPayOrder.getPaymentId());
         refundOrder.setMemberId(generalPayOrder.getMemberId());
         refundOrder.setRequestId(request.getRequestId());

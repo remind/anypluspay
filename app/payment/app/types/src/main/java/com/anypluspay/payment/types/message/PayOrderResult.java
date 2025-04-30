@@ -21,6 +21,11 @@ public class PayOrderResult {
     private String orderId;
 
     /**
+     * 订单类型
+     */
+    private String orderType;
+
+    /**
      * 请求单号
      */
     private String requestId;

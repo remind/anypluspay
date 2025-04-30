@@ -1,11 +1,14 @@
 package com.anypluspay.testtrade.service;
 
+import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
 import com.anypluspay.testtrade.infra.persistence.mapper.PayOrderMapper;
+import com.anypluspay.testtrade.infra.persistence.mapper.RefundOrderMapper;
 import com.anypluspay.testtrade.infra.persistence.mapper.TradeOrderMapper;
 import com.anypluspay.testtrade.types.PayStatus;
+import com.anypluspay.testtrade.types.RefundStatus;
 import com.anypluspay.testtrade.types.TradeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,9 @@ public class PayService {
 
     @Autowired
     private PayOrderMapper payOrderMapper;
+
+    @Autowired
+    private RefundOrderMapper refundOrderMapper;
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -46,7 +52,19 @@ public class PayService {
         });
     }
 
-    public void refund(TradeOrderDO tradeOrderDO, RefundOrderDO refundOrderDO) {
-
+    public void processRefundResult(String refundOrderId, String paymentOrderStatus) {
+        transactionTemplate.executeWithoutResult(status -> {
+            RefundOrderDO refundOrderDO = refundOrderMapper.lockById(refundOrderId);
+            if (refundOrderDO == null) {
+                return;
+            }
+            if (paymentOrderStatus.equals(GeneralPayOrderStatus.SUCCESS.getCode())) {
+                refundOrderDO.setStatus(RefundStatus.SUCCESS.getCode());
+                refundOrderMapper.updateById(refundOrderDO);
+            } else if (paymentOrderStatus.equals(GeneralPayOrderStatus.FAIL.getCode())) {
+                refundOrderDO.setStatus(RefundStatus.FAIL.getCode());
+                refundOrderMapper.updateById(refundOrderDO);
+            }
+        });
     }
 }
