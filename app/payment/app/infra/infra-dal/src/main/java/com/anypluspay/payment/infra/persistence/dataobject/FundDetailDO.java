@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-04-08
+ * @since 2025-05-07
  */
 @TableName("tp_fund_detail")
 public class FundDetailDO implements Serializable {
@@ -37,6 +37,11 @@ public class FundDetailDO implements Serializable {
      * 支付总单ID
      */
     private String paymentId;
+
+    /**
+     * 关联ID，如退款关联的原ID
+     */
+    private String relationId;
 
     /**
      * 归属方
@@ -122,6 +127,14 @@ public class FundDetailDO implements Serializable {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public String getRelationId() {
+        return relationId;
+    }
+
+    public void setRelationId(String relationId) {
+        this.relationId = relationId;
     }
 
     public String getBelongTo() {
@@ -226,6 +239,7 @@ public class FundDetailDO implements Serializable {
         "detailId = " + detailId +
         ", orderId = " + orderId +
         ", paymentId = " + paymentId +
+        ", relationId = " + relationId +
         ", belongTo = " + belongTo +
         ", memberId = " + memberId +
         ", amount = " + amount +

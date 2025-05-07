@@ -121,7 +121,7 @@ public class RefundOrderBuilder extends PaymentBuilder {
     private FundDetail reverseFundDetail(String orderId, Money amount, FundDetail origFundDetail, List<FundDetail> allReverseFundDetails) {
         Money refundAbleAmount;
         if (!CollectionUtils.isEmpty(allReverseFundDetails)) {
-            List<FundDetail> reverseFundDetails = allReverseFundDetails.stream().filter(r -> r.getRelationId().equals(origFundDetail.getRelationId())).toList();
+            List<FundDetail> reverseFundDetails = allReverseFundDetails.stream().filter(r -> r.getRelationId().equals(origFundDetail.getDetailId())).toList();
             Money totalReverseAmount = reverseFundDetails.stream().map(FundDetail::getAmount).reduce(new Money(), Money::add);
             refundAbleAmount = origFundDetail.getAmount().subtract(totalReverseAmount);
             if (!refundAbleAmount.greaterThan(new Money())) {
