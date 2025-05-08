@@ -1,4 +1,4 @@
-package com.anypluspay.admin.basis.demo;
+package com.anypluspay.admin.demo;
 
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;

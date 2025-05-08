@@ -1,4 +1,4 @@
-package com.anypluspay.admin.basis.demo;
+package com.anypluspay.admin.demo;
 
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.testtrade.facade.TradeFacade;

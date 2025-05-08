@@ -52,11 +52,11 @@ public class PayService {
         });
     }
 
-    public void processRefundResult(String refundOrderId, String paymentOrderStatus) {
-        transactionTemplate.executeWithoutResult(status -> {
+    public RefundOrderDO processRefundResult(String refundOrderId, String paymentOrderStatus) {
+        return transactionTemplate.execute(status -> {
             RefundOrderDO refundOrderDO = refundOrderMapper.lockById(refundOrderId);
             if (refundOrderDO == null) {
-                return;
+                return null;
             }
             if (paymentOrderStatus.equals(GeneralPayOrderStatus.SUCCESS.getCode())) {
                 refundOrderDO.setStatus(RefundStatus.SUCCESS.getCode());
@@ -65,6 +65,7 @@ public class PayService {
                 refundOrderDO.setStatus(RefundStatus.FAIL.getCode());
                 refundOrderMapper.updateById(refundOrderDO);
             }
+            return refundOrderDO;
         });
     }
 }

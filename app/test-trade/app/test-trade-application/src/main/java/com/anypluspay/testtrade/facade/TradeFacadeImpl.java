@@ -138,6 +138,7 @@ public class TradeFacadeImpl implements TradeFacade {
     @Override
     public RefundResponse refund(TradeRefundRequest tradeRefundRequest) {
         RefundResponse refundResponse = new RefundResponse();
+        refundResponse.setTradeId(tradeRefundRequest.getTradeId());
         transactionTemplate.executeWithoutResult(transactionStatus -> {
             TradeOrderDO tradeOrderDO = tradeOrderMapper.lockById(tradeRefundRequest.getTradeId());
             AssertUtil.notNull(tradeOrderDO, "交易不存在");
@@ -168,7 +169,12 @@ public class TradeFacadeImpl implements TradeFacade {
             request.setOrigRequestId(payOrderDO.getId());
             request.setAmount(new Money(new BigDecimal(tradeRefundRequest.getAmount())));
             com.anypluspay.payment.facade.response.RefundResponse paymentRefundResponse = instantPaymentFacade.refund(request);
-            payService.processRefundResult(refundOrderDO.getId(), paymentRefundResponse.getOrderStatus());
+            RefundOrderDO newRefundOrderDO = payService.processRefundResult(refundOrderDO.getId(), paymentRefundResponse.getOrderStatus());
+            refundResponse.setRefundId(newRefundOrderDO.getId());
+            refundResponse.setPaymentId(paymentRefundResponse.getPaymentId());
+            refundResponse.setPayOrderId(paymentRefundResponse.getRefundOrderId());
+            refundResponse.setStatus(newRefundOrderDO.getStatus());
+            refundResponse.setMessage(paymentRefundResponse.getResultMessage());
         });
         return refundResponse;
     }
