@@ -26,4 +26,10 @@ public class GlobalConvertorUtils {
     public static Money toMoney(BigDecimal amount, String currencyCode) {
         return new Money(amount, Currency.getInstance(currencyCode));
     }
+
+
+    public static String toDisplayMoney(BigDecimal amount, String currencyCode) {
+        Money money = toMoney(amount, currencyCode);
+        return money.getCurrency().getSymbol() + money.getAmount().toString();
+    }
 }
