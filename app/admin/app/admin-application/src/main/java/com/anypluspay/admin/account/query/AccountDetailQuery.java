@@ -6,11 +6,12 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * 入账明细查询参数
  * @author wxj
  * 2025/5/8
  */
 @Data
-public class OuterAccountDetailQuery extends PageQuery {
+public class AccountDetailQuery extends PageQuery {
 
     /**
      * 账户

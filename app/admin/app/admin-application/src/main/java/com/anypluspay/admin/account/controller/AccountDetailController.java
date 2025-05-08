@@ -1,9 +1,13 @@
 package com.anypluspay.admin.account.controller;
 
+import com.anypluspay.account.infra.persistence.dataobject.InnerAccountDetailDO;
 import com.anypluspay.account.infra.persistence.dataobject.OuterAccountDetailDO;
+import com.anypluspay.account.infra.persistence.mapper.InnerAccountDetailMapper;
 import com.anypluspay.account.infra.persistence.mapper.OuterAccountDetailMapper;
+import com.anypluspay.admin.account.convertor.InnerAccountDetailConvertor;
 import com.anypluspay.admin.account.convertor.OuterAccountDetailConvertor;
-import com.anypluspay.admin.account.query.OuterAccountDetailQuery;
+import com.anypluspay.admin.account.query.AccountDetailQuery;
+import com.anypluspay.admin.account.response.InnerAccountDetailResponse;
 import com.anypluspay.admin.account.response.OuterAccountDetailResponse;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
@@ -17,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 外部户明细
+ * 入账明细
  *
  * @author wxj
  * 2025/5/8
  */
 @RestController
-@RequestMapping("/account/outer-account-detail")
-public class OuterAccountDetailController extends AbstractController {
+@RequestMapping("/account/account-detail")
+public class AccountDetailController extends AbstractController {
 
     @Autowired
     private OuterAccountDetailMapper outerAccountDetailMapper;
@@ -32,14 +36,20 @@ public class OuterAccountDetailController extends AbstractController {
     @Autowired
     private OuterAccountDetailConvertor outerAccountDetailConvertor;
 
+    @Autowired
+    private InnerAccountDetailMapper innerAccountDetailMapper;
+
+    @Autowired
+    private InnerAccountDetailConvertor innerAccountDetailConvertor;
+
     /**
-     * 列表分页查询
+     * 外部户明细列表
      *
      * @param query 查询参数
      * @return 查询结果
      */
-    @GetMapping("/list")
-    public ResponseResult<PageResult<OuterAccountDetailResponse>> list(OuterAccountDetailQuery query) {
+    @GetMapping("/outer-list")
+    public ResponseResult<PageResult<OuterAccountDetailResponse>> outerList(AccountDetailQuery query) {
         LambdaQueryWrapper<OuterAccountDetailDO> queryWrapper = new LambdaQueryWrapper<>();
         if (StringUtils.isNotBlank(query.getAccountNo())) {
             queryWrapper.eq(OuterAccountDetailDO::getAccountNo, query.getAccountNo());
@@ -54,5 +64,29 @@ public class OuterAccountDetailController extends AbstractController {
         queryWrapper.orderByDesc(OuterAccountDetailDO::getGmtCreate);
         IPage<OuterAccountDetailDO> page = getIPage(query);
         return ResponseResult.success(outerAccountDetailConvertor.toEntity(outerAccountDetailMapper.selectPage(page, queryWrapper)));
+    }
+
+    /**
+     * 内部户明细列表
+     *
+     * @param query 查询参数
+     * @return 查询结果
+     */
+    @GetMapping("/inner-list")
+    public ResponseResult<PageResult<InnerAccountDetailResponse>> innerList(AccountDetailQuery query) {
+        LambdaQueryWrapper<InnerAccountDetailDO> queryWrapper = new LambdaQueryWrapper<>();
+        if (StringUtils.isNotBlank(query.getAccountNo())) {
+            queryWrapper.eq(InnerAccountDetailDO::getAccountNo, query.getAccountNo());
+        }
+
+        if (query.getStartDate() != null) {
+            queryWrapper.gt(InnerAccountDetailDO::getGmtCreate, query.getStartDate());
+        }
+        if (query.getEndDate() != null) {
+            queryWrapper.le(InnerAccountDetailDO::getGmtCreate, query.getEndDate());
+        }
+        queryWrapper.orderByDesc(InnerAccountDetailDO::getGmtCreate);
+        IPage<InnerAccountDetailDO> page = getIPage(query);
+        return ResponseResult.success(innerAccountDetailConvertor.toEntity(innerAccountDetailMapper.selectPage(page, queryWrapper)));
     }
 }
