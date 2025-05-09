@@ -1,4 +1,4 @@
-package com.anypluspay.admin.account.model.query;
+package com.anypluspay.admin.account.query;
 
 import lombok.Data;
 

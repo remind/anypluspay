@@ -7,7 +7,7 @@ import com.anypluspay.account.infra.persistence.dataobject.InnerAccountDO;
 import com.anypluspay.account.infra.persistence.mapper.InnerAccountMapper;
 import com.anypluspay.admin.account.convertor.InnerAccountConvertor;
 import com.anypluspay.admin.account.model.dto.InnerAccountDto;
-import com.anypluspay.admin.account.model.query.InnerAccountQuery;
+import com.anypluspay.admin.account.query.InnerAccountQuery;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;

@@ -10,7 +10,7 @@ import com.anypluspay.account.infra.persistence.mapper.OuterSubAccountMapper;
 import com.anypluspay.admin.account.convertor.OuterAccountConvertor;
 import com.anypluspay.admin.account.convertor.OuterSubAccountConvertor;
 import com.anypluspay.admin.account.model.dto.OuterAccountDto;
-import com.anypluspay.admin.account.model.query.OuterAccountQuery;
+import com.anypluspay.admin.account.query.OuterAccountQuery;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;

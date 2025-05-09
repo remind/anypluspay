@@ -7,7 +7,7 @@ import com.anypluspay.account.infra.persistence.dataobject.AccountTitleDO;
 import com.anypluspay.account.infra.persistence.mapper.AccountTitleMapper;
 import com.anypluspay.admin.account.convertor.AccountTitleConvertor;
 import com.anypluspay.admin.account.model.dto.AccountTitleDto;
-import com.anypluspay.admin.account.model.query.AccountTitleQuery;
+import com.anypluspay.admin.account.query.AccountTitleQuery;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;

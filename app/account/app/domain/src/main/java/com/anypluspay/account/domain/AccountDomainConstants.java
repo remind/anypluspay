@@ -1,5 +1,7 @@
 package com.anypluspay.account.domain;
 
+import com.anypluspay.account.types.enums.FundType;
+
 /**
  * @author wxj
  * 2023/12/16
@@ -24,7 +26,7 @@ public interface AccountDomainConstants {
     /**
      * 默认资金类型
      */
-    String DEFAULT_FUND_TYPE = "NORMAL";
+    String DEFAULT_FUND_TYPE = FundType.NORMAL.getCode();
 
     /**
      * 外部户账户自增最大自增值

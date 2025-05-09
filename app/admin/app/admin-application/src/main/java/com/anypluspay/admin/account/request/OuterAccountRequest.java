@@ -1,4 +1,4 @@
-package com.anypluspay.admin.account.model.request;
+package com.anypluspay.admin.account.request;
 
 /**
  * @author wxj

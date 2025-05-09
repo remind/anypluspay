@@ -1,7 +1,7 @@
 package com.anypluspay.admin.account.mapper;
 
 import com.anypluspay.admin.account.model.dto.TitleDailyDto;
-import com.anypluspay.admin.account.model.query.TitleDailyQuery;
+import com.anypluspay.admin.account.query.TitleDailyQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

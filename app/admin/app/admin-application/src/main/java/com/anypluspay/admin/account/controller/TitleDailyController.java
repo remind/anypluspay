@@ -2,7 +2,7 @@ package com.anypluspay.admin.account.controller;
 
 import com.anypluspay.admin.account.model.dto.TitleDailyDto;
 import com.anypluspay.admin.account.mapper.TitleDailyQueryMapper;
-import com.anypluspay.admin.account.model.query.TitleDailyQuery;
+import com.anypluspay.admin.account.query.TitleDailyQuery;
 import com.anypluspay.commons.response.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
