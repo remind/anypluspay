@@ -1,6 +1,5 @@
 package com.anypluspay.payment.domain.asset.external;
 
-import cn.hutool.core.map.MapUtil;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.payment.domain.PaymentConstants;
@@ -8,7 +7,6 @@ import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.flux.FluxInstruction;
 import com.anypluspay.payment.domain.flux.InstructionType;
 import com.anypluspay.payment.types.PayStatus;
-import com.anypluspay.payment.types.PaymentKey;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +57,7 @@ public class ExternalResultService {
         FluxInstruction newFluxInstruct = new FluxInstruction();
         newFluxInstruct.setFluxOrderId(fluxInstruction.getFluxOrderId());
         newFluxInstruct.setType(InstructionType.CLEARING);
+        newFluxInstruct.setDirection(fluxInstruction.getDirection());
         newFluxInstruct.setRelationId(fluxInstruction.getInstructionId());
         newFluxInstruct.setFundDetailId(fluxInstruction.getFundDetailId());
         newFluxInstruct.setAmount(fluxInstruction.getAmount());

@@ -12,9 +12,10 @@ import com.anypluspay.payment.domain.asset.AssetFluxExecutor;
 import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.flux.FluxInstruction;
 import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.domain.flux.InstructionDirection;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FundDetailRepository;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentExtKey;
 import com.anypluspay.payment.types.funds.FundDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,8 @@ public class ExternalExecutor implements AssetFluxExecutor {
 
     @Override
     public FluxResult increase(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
-        if (fluxInstruction.getType() == InstructionType.REFUND) {
+        if (fluxOrder.getPayType() == PayOrderType.REFUND ||
+                (fluxOrder.getPayType() == PayOrderType.PAY && fluxInstruction.getDirection() ==  InstructionDirection.REVOKE)) {
             FluxInstruction origFluxInstruction = fluxInstructionRepository.load(fluxInstruction.getRelationId());
             RefundRequest request = buildRefundOrder(fluxInstruction, origFluxInstruction);
             FundResult fundResult = refundFacade.apply(request);

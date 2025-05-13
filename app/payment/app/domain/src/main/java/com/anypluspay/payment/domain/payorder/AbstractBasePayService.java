@@ -6,12 +6,14 @@ import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.flux.service.FluxEngineService;
 import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.funds.FundDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -68,31 +70,41 @@ public abstract class AbstractBasePayService {
         fluxOrder.setPayOrderId(payOrder.getOrderId());
         fluxOrder.setFluxOrderId(idGeneratorService.genIdByRelateId(payOrder.getPaymentId(), IdType.FLUX_ORDER_ID));
         fluxOrder.setStatus(FluxOrderStatus.PROCESS);
+        fluxOrder.setPayType(getPayOrderType(payOrder));
         fluxOrder.setInstructChain(new InstructChain());
-        InstructionType type = payOrder instanceof GeneralPayOrder ? InstructionType.PAY : InstructionType.REFUND;
-        fillFluxInstruct(fluxOrder, payOrder.getPayerDetails(), payOrder.getPayeeDetails(), type);
+        fillFluxInstruct(fluxOrder, payOrder.getPayerDetails(), payOrder.getPayeeDetails());
         return fluxOrder;
     }
 
-    protected void fillFluxInstruct(FluxOrder fluxOrder, List<FundDetail> payerFundDetails, List<FundDetail> payeeFundDetails, InstructionType type) {
+    protected PayOrderType getPayOrderType(BasePayOrder payOrder) {
+        if (payOrder instanceof GeneralPayOrder) {
+            return PayOrderType.PAY;
+        } else if (payOrder instanceof RefundOrder) {
+            return PayOrderType.REFUND;
+        }
+        return null;
+    }
+
+    protected void fillFluxInstruct(FluxOrder fluxOrder, List<FundDetail> payerFundDetails, List<FundDetail> payeeFundDetails) {
         fundDetailSortService.payerSort(payerFundDetails);
         payerFundDetails.forEach(fundDetail -> {
-            fillFluxInstruction(fluxOrder, fundDetail, type);
+            fillFluxInstruction(fluxOrder, fundDetail);
         });
 
         fundDetailSortService.payeeSort(payeeFundDetails);
         payeeFundDetails.forEach(fundDetail -> {
-            fillFluxInstruction(fluxOrder, fundDetail, type);
+            fillFluxInstruction(fluxOrder, fundDetail);
         });
     }
 
-    private void fillFluxInstruction(FluxOrder fluxOrder, FundDetail fundDetail, InstructionType type) {
+    private void fillFluxInstruction(FluxOrder fluxOrder, FundDetail fundDetail) {
         FluxInstruction fluxInstruction = new FluxInstruction();
         fluxInstruction.setInstructionId(idGeneratorService.genIdByRelateId(fluxOrder.getFluxOrderId(), IdType.FLUX_INSTRUCT_ID));
         fluxInstruction.setPaymentId(fundDetail.getPaymentId());
         fluxInstruction.setPayOrderId(fundDetail.getOrderId());
         fluxInstruction.setStatus(InstructStatus.INIT);
-        fluxInstruction.setType(type);
+        fluxInstruction.setType(InstructionType.NORMAL);
+        fluxInstruction.setDirection(InstructionDirection.APPLY);
         fluxInstruction.setFluxOrderId(fluxOrder.getFluxOrderId());
         fluxInstruction.setAmount(fundDetail.getAmount());
         fluxInstruction.setFundDetailId(fundDetail.getDetailId());

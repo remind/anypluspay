@@ -6,6 +6,7 @@ import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PayStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,27 +81,31 @@ public class FluxService {
      * @param lastInstruction
      */
     private void failProcess(FluxOrder fluxOrder, FluxInstruction lastInstruction) {
-        if (lastInstruction.getType() == InstructionType.PAY) {
+        if (lastInstruction.getDirection() == InstructionDirection.APPLY) {
             // 删除所有后置指令
             fluxOrderService.deleteAfterFluxInstruct(fluxOrder, lastInstruction.getInstructionId());
-            // 生成成功指令的逆向指令
-            addReverseInstruct(fluxOrder);
+
+            // 支付撤消可生成退款单，退款撤消暂不处理
+            if (fluxOrder.getPayType() == PayOrderType.PAY) {
+                addRevokeInstruct(fluxOrder);
+            }
         }
         fluxOrder.setStatus(FluxOrderStatus.FAIL);
     }
 
     /**
-     * 新增逆向指令
+     * 新增撤消指令
      *
      * @param fluxOrder
      */
-    private void addReverseInstruct(FluxOrder fluxOrder) {
+    private void addRevokeInstruct(FluxOrder fluxOrder) {
         List<FluxInstruction> forwardInstructs = fluxOrder.getInstructChain().toList().stream()
-                .filter(assetFluxInstruct -> assetFluxInstruct.getStatus() == InstructStatus.SUCCESS && assetFluxInstruct.getType() == InstructionType.PAY)
+                .filter(assetFluxInstruct -> assetFluxInstruct.getStatus() == InstructStatus.SUCCESS
+                        && assetFluxInstruct.getType() == InstructionType.NORMAL)
                 .toList();
         if (!CollectionUtils.isEmpty(forwardInstructs)) {
             forwardInstructs.forEach(assetFluxInstruct -> {
-                fluxOrderService.createReverseInstruct(fluxOrder, assetFluxInstruct);
+                fluxOrderService.createRevokeInstruct(fluxOrder, assetFluxInstruct);
             });
         }
     }

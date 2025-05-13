@@ -36,7 +36,7 @@ public class FluxInstructionRepositoryImpl implements FluxInstructionRepository 
     public FluxInstruction loadByPayFundDetailId(String fundDetailId) {
         LambdaQueryWrapper<FluxInstructionDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(FluxInstructionDO::getFundDetailId, fundDetailId);
-        queryWrapper.eq(FluxInstructionDO::getType, InstructionType.PAY.getCode());
+        queryWrapper.eq(FluxInstructionDO::getType, InstructionType.NORMAL.getCode());
         return dalConvertor.toEntity(dalMapper.selectOne(queryWrapper));
     }
 

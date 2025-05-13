@@ -1,9 +1,6 @@
 package com.anypluspay.payment.domain.flux.service;
 
-import com.anypluspay.payment.domain.flux.FluxInstruction;
-import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.flux.InstructStatus;
-import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
@@ -49,14 +46,15 @@ public class FluxOrderService {
      * @param fluxInstruction
      * @return
      */
-    public FluxInstruction createReverseInstruct(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxInstruction createRevokeInstruct(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
         FluxInstruction reverseInstruct = new FluxInstruction();
         InstructChain instructChain = fluxOrder.getInstructChain();
         reverseInstruct.setInstructionId(idGeneratorService.genIdByRelateId(fluxInstruction.getFluxOrderId(), IdType.FLUX_INSTRUCT_ID));
         reverseInstruct.setFluxOrderId(fluxInstruction.getFluxOrderId());
         reverseInstruct.setPayOrderId(fluxInstruction.getPayOrderId());
         reverseInstruct.setPaymentId(fluxInstruction.getPaymentId());
-        reverseInstruct.setType(InstructionType.REFUND);
+        reverseInstruct.setType(fluxInstruction.getType());
+        reverseInstruct.setDirection(InstructionDirection.REVOKE);
         reverseInstruct.setAmount(fluxInstruction.getAmount());
         reverseInstruct.setStatus(InstructStatus.INIT);
         reverseInstruct.setFundDetailId(fluxInstruction.getFundDetailId());

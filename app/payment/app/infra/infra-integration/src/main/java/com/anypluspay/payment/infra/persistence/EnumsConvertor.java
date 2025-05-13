@@ -3,7 +3,9 @@ package com.anypluspay.payment.infra.persistence;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
+import com.anypluspay.payment.domain.flux.InstructionDirection;
 import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
@@ -74,6 +76,14 @@ public interface EnumsConvertor {
 
     default PayModel toPayModel(String code) {
         return EnumUtil.getByCode(PayModel.class, code);
+    }
+
+    default PayOrderType toPayOrderType(String code) {
+        return EnumUtil.getByCode(PayOrderType.class, code);
+    }
+
+    default InstructionDirection toInstructionDirection(String code) {
+        return EnumUtil.getByCode(InstructionDirection.class, code);
     }
 
 }

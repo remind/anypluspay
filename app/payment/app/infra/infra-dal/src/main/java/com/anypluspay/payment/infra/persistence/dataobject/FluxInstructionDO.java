@@ -54,6 +54,11 @@ public class FluxInstructionDO implements Serializable {
     private String type;
 
     /**
+     * 指令方向
+     */
+    private String direction;
+
+    /**
      * 资金操作类型
      */
     private String fundAction;
@@ -166,6 +171,14 @@ public class FluxInstructionDO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public String getFundAction() {
@@ -281,6 +294,7 @@ public class FluxInstructionDO implements Serializable {
         ", payOrderId = " + payOrderId +
         ", paymentId = " + paymentId +
         ", type = " + type +
+        ", direction = " + direction +
         ", fundAction = " + fundAction +
         ", status = " + status +
         ", relationId = " + relationId +

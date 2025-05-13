@@ -2,6 +2,7 @@ package com.anypluspay.payment.domain.flux;
 
 import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
+import com.anypluspay.payment.types.PayOrderType;
 import lombok.Data;
 
 /**
@@ -22,6 +23,11 @@ public class FluxOrder extends Entity {
      * 支付订单ID
      */
     private String payOrderId;
+
+    /**
+     * 支付单类型
+     */
+    private PayOrderType payType;
 
     /**
      * 交换ID

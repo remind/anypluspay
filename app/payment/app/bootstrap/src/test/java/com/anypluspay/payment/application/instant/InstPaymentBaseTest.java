@@ -183,7 +183,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         InstructChain instructChain = fluxOrder.getInstructChain();
         List<FluxInstruction> allFluxInstructions = instructChain.toList();
         List<FluxInstruction> fluxInstructions = allFluxInstructions.stream().filter(f -> f.getStatus() == InstructStatus.SUCCESS
-                && f.getType() == InstructionType.PAY
+                && f.getType() == InstructionType.NORMAL
         ).toList();
         fluxInstructions.forEach(fluxInstruction -> {
             if (fluxInstruction.getAssetInfo().getAssetType().getAssetTypeCategory() == AssetTypeCategory.EXTERNAL) {
@@ -204,7 +204,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
             fluxInstructions.forEach(fluxInstruction -> {
                 Assert.assertEquals(1,
                         allFluxInstructions.stream().filter(f -> f.getStatus() == InstructStatus.SUCCESS
-                                && f.getType() == InstructionType.REFUND
+                                && f.getDirection() == InstructionDirection.REVOKE
                                 && f.getRelationId().equals(fluxInstruction.getInstructionId())
                                 && f.getAmount().equals(fluxInstruction.getAmount())
                         ).count());

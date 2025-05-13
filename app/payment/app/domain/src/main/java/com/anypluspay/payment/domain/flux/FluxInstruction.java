@@ -45,6 +45,11 @@ public class FluxInstruction {
     private InstructionType type;
 
     /**
+     * 指令方向
+     */
+    private InstructionDirection direction;
+
+    /**
      * 关联指令，如退款指令关联的支付指令
      */
     private String relationId;
