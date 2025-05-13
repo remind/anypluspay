@@ -52,6 +52,8 @@ public class FluxService {
             } else if (fluxInstruction.getStatus() == InstructStatus.FAIL) {
                 failProcess(fluxOrder, fluxInstruction);
             }
+            fluxInstruction.setResultCode(fluxResult.getResultCode());
+            fluxInstruction.setResultMsg(fluxResult.getResultMessage());
             instructionRepository.reStore(fluxInstruction);
             if (lockFluxOrder.getStatus() != fluxOrder.getStatus() && lockFluxOrder.getStatus() == FluxOrderStatus.PROCESS) {
                 fluxOrderRepository.reStore(fluxOrder);

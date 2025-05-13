@@ -99,7 +99,6 @@ public class ExternalExecutor implements AssetFluxExecutor {
     private RefundRequest buildRefundOrder(FluxInstruction fluxInstruction, FluxInstruction origFluxInstruction) {
         RefundRequest request = new RefundRequest();
         request.setRequestId(fluxInstruction.getInstructionId());
-        request.setMemberId(origFluxInstruction.getExtValue("payerId"));
         request.setRefundType(RefundType.PAYER_REFUND);
         request.setOrigRequestId(origFluxInstruction.getInstructionId());
         request.setAmount(fluxInstruction.getAmount());

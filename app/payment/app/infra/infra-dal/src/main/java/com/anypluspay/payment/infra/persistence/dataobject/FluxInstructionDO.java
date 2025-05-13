@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-02-07
+ * @since 2025-05-13
  */
 @TableName("tp_flux_instruction")
 public class FluxInstructionDO implements Serializable {
@@ -97,6 +97,16 @@ public class FluxInstructionDO implements Serializable {
      * 扩展字段
      */
     private String extension;
+
+    /**
+     * 结果码
+     */
+    private String resultCode;
+
+    /**
+     * 结果信息
+     */
+    private String resultMsg;
 
     /**
      * 创建时间
@@ -230,6 +240,22 @@ public class FluxInstructionDO implements Serializable {
         this.extension = extension;
     }
 
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -264,6 +290,8 @@ public class FluxInstructionDO implements Serializable {
         ", assetType = " + assetType +
         ", assetInfo = " + assetInfo +
         ", extension = " + extension +
+        ", resultCode = " + resultCode +
+        ", resultMsg = " + resultMsg +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

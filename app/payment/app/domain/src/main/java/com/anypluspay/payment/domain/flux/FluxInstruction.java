@@ -1,12 +1,10 @@
 package com.anypluspay.payment.domain.flux;
 
+import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.funds.FundAction;
 import lombok.Data;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 交换指令
@@ -46,12 +44,24 @@ public class FluxInstruction {
      */
     private InstructionType type;
 
+    /**
+     * 关联指令，如退款指令关联的支付指令
+     */
     private String relationId;
 
+    /**
+     * 金额
+     */
     private Money amount;
 
+    /**
+     * 资产详情ID
+     */
     private String fundDetailId;
 
+    /**
+     * 指令状态
+     */
     private InstructStatus status;
 
     /**
@@ -64,14 +74,19 @@ public class FluxInstruction {
      */
     private AssetInfo assetInfo;
 
-    private Map<String, String> extMap = new HashMap<>();
+    /**
+     * 执行结果码
+     */
+    private String resultCode;
 
-    public String getExtValue(String key) {
-        return extMap == null ? null : extMap.get(key);
-    }
+    /**
+     * 执行结果信息
+     */
+    private String resultMsg;
 
-    public void putExtValue(String key, String value) {
-        extMap.put(key, value);
-    }
+    /**
+     * 扩展信息
+     */
+    private Extension extension;
 
 }

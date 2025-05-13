@@ -9,7 +9,7 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
  * </p>
  *
  * @author wxj
- * @since 2025-02-07
+ * @since 2025-05-13
  */
 public interface FluxInstructionMapper extends ExtBaseMapper<FluxInstructionDO> {
 

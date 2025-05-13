@@ -44,7 +44,6 @@ public class PayService {
                 tradeOrderDO.setStatus(TradeStatus.SUCCESS.getCode());
                 payOrderDO.setStatus(PayStatus.SUCCESS.getCode());
             } else if (payStatus == PayStatus.FAIL) {
-                tradeOrderDO.setStatus(TradeStatus.FAIL.getCode());
                 payOrderDO.setStatus(PayStatus.FAIL.getCode());
             }
             tradeOrderMapper.updateById(tradeOrderDO);
