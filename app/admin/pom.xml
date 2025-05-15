@@ -17,6 +17,7 @@
     </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>
+        <payment.version>1.0-SNAPSHOT</payment.version>
         <channel.version>1.0-SNAPSHOT</channel.version>
         <account.version>1.0-SNAPSHOT</account.version>
     </properties>
@@ -32,6 +33,11 @@
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-infra-dal</artifactId>
                 <version>${channel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-facade</artifactId>
+                <version>${payment.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.channel</groupId>

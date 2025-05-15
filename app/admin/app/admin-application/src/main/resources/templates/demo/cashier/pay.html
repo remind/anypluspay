@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>收银台</title>
+    <title>支付收银台</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -148,7 +148,7 @@
 
         try {
             // 模拟异步请求（可以替换为实际的 API 调用）
-            const response = await fetch('/demo/cashier/pay', {
+            const response = await fetch('/api/demo/cashier/pay', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

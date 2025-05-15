@@ -1,4 +1,4 @@
-package com.anypluspay.admin.demo;
+package com.anypluspay.admin.demo.cashier;
 
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/demo/cashier")
-public class CashierController {
+public class PayCashierController {
 
     @Autowired
     private TradeFacade tradeFacade;
@@ -40,7 +40,7 @@ public class CashierController {
         OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberAndAccountTypeId(tradeResponse.getPayerId(), "101");
         model.addAttribute("availableBalance", accountResponse.getAvailableBalance());
 
-        return "demo/cashier";
+        return "demo/cashier/pay";
     }
 
     /**

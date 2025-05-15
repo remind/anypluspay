@@ -1,6 +1,7 @@
 package com.anypluspay.payment.infra.persistence;
 
 import com.anypluspay.commons.lang.utils.EnumUtil;
+import com.anypluspay.payment.domain.deposit.DepositOrderStatus;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionDirection;
@@ -84,6 +85,10 @@ public interface EnumsConvertor {
 
     default InstructionDirection toInstructionDirection(String code) {
         return EnumUtil.getByCode(InstructionDirection.class, code);
+    }
+
+    default DepositOrderStatus toDepositOrderStatus(String code) {
+        return EnumUtil.getByCode(DepositOrderStatus.class, code);
     }
 
 }

@@ -46,6 +46,10 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.payment</groupId>
+            <artifactId>payment-facade</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.anypluspay.channel</groupId>
             <artifactId>channel-facade</artifactId>
         </dependency>

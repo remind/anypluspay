@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值收银台</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .checkout-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .checkout-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .item-list {
+            margin-bottom: 20px;
+        }
+        .item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .payment-methods label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .result-message {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <h2>收银台</h2>
+
+    <!-- 商品信息 -->
+    <div class="item-list">
+        <div class="item">
+            <span>会员ID</span>
+            <span th:text="${request.memberId}"></span>
+        </div>
+        <div class="item">
+            <span>账户号</span>
+            <span th:text="${request.accountNo}"></span>
+        </div>
+        <div class="item">
+            <span>金额</span>
+            <span th:text="${request.amount}"></span>
+        </div>
+        <div class="item">
+            <span>备注</span>
+            <span th:text="${request.memo}"></span>
+        </div>
+    </div>
+
+    <!-- 支付方式 -->
+    <div class="payment-methods">
+        <label>
+            <input type="checkbox" name="payment" value="testBank">
+            测试银行支付
+        </label>
+    </div>
+
+    <!-- 提交按钮 -->
+    <button class="submit-btn" onclick="submitPayment()">提交支付</button>
+
+    <!-- 结果提示 -->
+    <div id="result-message" class="result-message"></div>
+</div>
+
+<script>
+    const allPayMethods = {
+        "balance": {
+            "code": "BALANCE",
+            "payModel":"BALANCE",
+            "assetType": "BALANCE",
+            "payInst": ""
+        },
+        "testBank": {
+            "code": "testBank",
+            "payModel":"ONLINE_BANK",
+            "assetType": "BANKCARD",
+            "payInst": "UNLIMITED"
+        }
+    };
+
+    // 模拟异步提交支付
+    async function submitPayment() {
+        // 获取用户选择的支付方式
+        const selectedPayments = Array.from(
+            document.querySelectorAll('input[name="payment"]:checked')
+        ).map(input => input.value);
+
+        if (selectedPayments.length === 0) {
+            alert('请选择至少一种支付方式！');
+            return;
+        }
+
+        // 显示加载提示
+        const resultMessage = document.getElementById('result-message');
+        resultMessage.textContent = '正在处理支付请求，请稍候...';
+
+        const payMethods = [];
+        selectedPayments.forEach(sp => {
+            payMethods.push(allPayMethods[sp]);
+        });
+
+        try {
+            // 模拟异步请求（可以替换为实际的 API 调用）
+            const response = await fetch('/api/demo/deposit-cashier/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    payMethods: payMethods,
+                    memberId: '[[${request.memberId}]]',
+                    accountNo: '[[${request.accountNo}]]',
+                    amount: '[[${request.amount}]]',
+                    memo: '[[${request.memo}]]'
+                })
+            });
+
+            const result = await response.json();
+
+            // 根据返回结果更新提示信息
+            if (result.success) {
+                const data = result.data;
+                if (data.payStatus == 'FAIL') {
+                    resultMessage.textContent = `支付失败！${data.message}。`;
+                    resultMessage.style.color = 'red';
+                } else if (data.payStatus == 'SUCCESS') {
+                    resultMessage.textContent = `支付成功！`;
+                    resultMessage.style.color = 'green';
+                } else {
+
+                    if (data.instUrl) {
+                        // 如果返回了 HTML 表单，则动态插入并自动提交
+                        const formContainer = document.createElement('div');
+                        formContainer.innerHTML = data.instUrl;
+
+                        // 将表单插入到页面中
+                        document.body.appendChild(formContainer);
+
+                        // 自动提交表单
+                        const form = formContainer.querySelector('form');
+                        if (form) {
+                            form.submit();
+                        } else {
+                            resultMessage.textContent = '支付失败：无效的表单数据。';
+                            resultMessage.style.color = 'red';
+                        }
+                    }
+                }
+            } else {
+                resultMessage.textContent = `支付请求失败：${result.message || '未知错误'}`;
+                resultMessage.style.color = 'red';
+            }
+        } catch (error) {
+            // 处理网络或其他错误
+            resultMessage.textContent = '支付失败：网络错误或服务器无响应。';
+            resultMessage.style.color = 'red';
+        }
+    }
+</script>
+
+</body>
+</html>
