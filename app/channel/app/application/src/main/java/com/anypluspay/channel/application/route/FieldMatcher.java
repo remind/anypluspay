@@ -32,21 +32,32 @@ public class FieldMatcher {
     private static final int DEFAULT_WEIGHT = 1;
 
     /**
+     * 不限制值
+     */
+    private static final String UNLIMITED = "UNLIMITED";
+
+    /**
      * 对匹配值进行打分，完全匹配>默认匹配>没匹配上
      *
-     * @param actualValue   实际值
-     * @param configValue   配置值
-     * @param weight        权重
+     * @param actualValue 实际值
+     * @param configValue 配置值
+     * @param weight      权重
      * @return
      */
     public static int matcherScore(String actualValue, String configValue, int weight) {
-        if (StringUtils.isBlank(configValue)) {
+        if (UNLIMITED.equals(configValue) || UNLIMITED.equals(actualValue)) {
+            if (configValue.equals(actualValue)) {
+                return PERFECT_MATCH_SCORE * weight;
+            } else {
+                return DEFAULT_MATCH_SCORE * weight;
+            }
+        } else if (StringUtils.isBlank(configValue)) {
             if (StringUtils.isBlank(actualValue)) {
                 return PERFECT_MATCH_SCORE * weight;
             } else {
                 return DEFAULT_MATCH_SCORE * weight;
             }
-        } if (configValue.equals(actualValue)) {
+        } else if (configValue.equals(actualValue)) {
             return PERFECT_MATCH_SCORE * weight;
         }
         return NONE_MATCH_SCORE;

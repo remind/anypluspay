@@ -11,6 +11,7 @@ public enum IdType implements BizIdType {
 
     PAYMENT_INSTANT_ID("1", "01", "seq_payment_id", "支付总单-直接支付模式"),
     DEPOSIT_ORDER_ID("1", "02", "seq_payment_id", "支付业务单-充值单"),
+    WITHDRAW_ORDER_ID("1", "03", "seq_payment_id", "支付业务单-提现单"),
     PAY_ORDER_ID("2", "01", "seq_pay_order_id", "支付子单-支付单"),
     REFUND_ORDER_ID("2", "02", "seq_pay_order_id", "支付子单-退款单"),
     FUND_DETAIL_ID("3", "01", "seq_fund_detail_id", "支付明细单ID"),

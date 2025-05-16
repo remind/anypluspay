@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 public enum CardType implements CodeEnum {
 
+    UNLIMITED("UNLIMITED", "无限制"),
     DEBIT("debit", "储蓄卡"),
     CREDIT("credit", "信用卡"),
     ;

@@ -46,6 +46,8 @@ public class GeneralPayService extends AbstractBasePayService {
             if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
                 // 仅支付中状态才处理结果，防止重复处理
                 generalPayOrder.setOrderStatus(convertStatus(payResult.getPayStatus()));
+                generalPayOrder.setResultCode(payResult.getResultCode());
+                generalPayOrder.setResultMsg(payResult.getResultMessage());
                 generalPayOrderRepository.reStore(generalPayOrder);
                 payOrderResultNotifyService.process(generalPayOrder);
             }

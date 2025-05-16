@@ -1,7 +1,11 @@
 package com.anypluspay.channelgateway.request;
 
 import com.anypluspay.channel.types.enums.CompanyOrPersonal;
+import com.anypluspay.commons.lang.std.MoneyDeserializer;
+import com.anypluspay.commons.lang.std.MoneySerializer;
 import com.anypluspay.commons.lang.types.Money;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,6 +37,8 @@ public class FundOutContent extends RequestContent {
     /**
      * 金额
      */
+    @JsonSerialize(using = MoneySerializer.class)
+    @JsonDeserialize(using = MoneyDeserializer.class)
     private Money amount;
 
     /**

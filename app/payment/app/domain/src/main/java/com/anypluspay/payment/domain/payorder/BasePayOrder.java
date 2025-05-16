@@ -55,6 +55,16 @@ public abstract class BasePayOrder<T extends OrderStatus> extends Entity {
     private String extension;
 
     /**
+     * 执行结果码
+     */
+    private String resultCode;
+
+    /**
+     * 执行结果信息
+     */
+    private String resultMsg;
+
+    /**
      * 收款方资金详情
      */
     private List<FundDetail> payeeDetails = new ArrayList<>();

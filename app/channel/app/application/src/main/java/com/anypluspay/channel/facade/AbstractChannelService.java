@@ -16,12 +16,14 @@ import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.builder.InstOrderBuilder;
 import com.anypluspay.channel.facade.fund.validator.FundValidatorService;
 import com.anypluspay.channel.facade.result.ChannelResult;
+import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.channel.types.order.SubmitTimeType;
 import com.anypluspay.channel.types.result.CsResultCode;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
+import com.anypluspay.commons.response.GlobalResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -157,7 +159,29 @@ public abstract class AbstractChannelService {
     protected abstract ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder);
 
     /**
+     * 异常结果处理
+     *
+     * @param requestId
+     * @param e
+     * @return
+     */
+    protected FundResult exceptionResult(String requestId, Exception e) {
+        FundResult fundResult = new FundResult();
+        fundResult.setSuccess(false);
+        fundResult.setRequestId(requestId);
+        if (e instanceof BizException bizException) {
+            fundResult.setResultCode(bizException.getCode());
+            fundResult.setResultMsg(bizException.getMessage());
+        } else {
+            fundResult.setResultCode(GlobalResultCode.FAIL.getCode());
+            fundResult.setResultMsg(e.getMessage());
+        }
+        return fundResult;
+    }
+
+    /**
      * 创建订单
+     *
      * @param channelApiContext
      * @param bizOrder
      * @return

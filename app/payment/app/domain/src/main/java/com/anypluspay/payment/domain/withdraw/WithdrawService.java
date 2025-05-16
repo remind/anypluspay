@@ -1,35 +1,34 @@
-package com.anypluspay.payment.domain.deposit;
+package com.anypluspay.payment.domain.withdraw;
 
-import com.anypluspay.payment.domain.repository.DepositOrderRepository;
+import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
- * 充值服务
  * @author wxj
- * 2025/5/15
+ * 2025/5/16
  */
 @Service
-public class DepositService {
+public class WithdrawService {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
 
     @Autowired
-    private DepositOrderRepository depositOrderRepository;
+    private WithdrawOrderRepository withdrawOrderRepository;
 
     public void processResult(String paymentId, GeneralPayOrderStatus payOrderStatus) {
         transactionTemplate.executeWithoutResult(status -> {
-            DepositOrder depositOrder = depositOrderRepository.lock(paymentId);
-            if (depositOrder.getStatus() == DepositOrderStatus.PAYING) {
+            WithdrawOrder withdrawOrder = withdrawOrderRepository.lock(paymentId);
+            if (withdrawOrder.getStatus() == WithdrawOrderStatus.PAYING) {
                 if (payOrderStatus == GeneralPayOrderStatus.SUCCESS) {
-                    depositOrder.setStatus(DepositOrderStatus.SUCCESS);
+                    withdrawOrder.setStatus(WithdrawOrderStatus.SUCCESS);
                 } else if (payOrderStatus == GeneralPayOrderStatus.FAIL) {
-                    depositOrder.setStatus(DepositOrderStatus.FAIL);
+                    withdrawOrder.setStatus(WithdrawOrderStatus.FAIL);
                 }
-                depositOrderRepository.reStore(depositOrder);
+                withdrawOrderRepository.reStore(withdrawOrder);
             }
         });
     }

@@ -26,6 +26,7 @@ public class FundResultBuilder {
 
     public FundResult buildFundInResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         FundResult fundResult = new FundResult();
+        fundResult.setSuccess(true);
         fundResult.setInstRequestNo(instOrder.getInstRequestNo());
         fundResult.setInstResponseNo(instOrder.getInstResponseNo());
         fundResult.setResponseExt(instOrder.getResponseExt());

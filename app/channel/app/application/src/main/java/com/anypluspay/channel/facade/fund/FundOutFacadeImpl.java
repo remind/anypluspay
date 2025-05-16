@@ -7,12 +7,16 @@ import com.anypluspay.channel.domain.bizorder.fund.FundOutOrder;
 import com.anypluspay.channel.facade.FundOutFacade;
 import com.anypluspay.channel.facade.request.FundOutRequest;
 import com.anypluspay.channel.facade.result.FundResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author wxj
  * 2024/7/18
  */
+@RestController
+@Slf4j
 public class FundOutFacadeImpl extends AbstractFundService implements FundOutFacade {
 
     @Autowired
@@ -20,10 +24,15 @@ public class FundOutFacadeImpl extends AbstractFundService implements FundOutFac
 
     @Override
     public FundResult apply(FundOutRequest request) {
-        FundOutOrder fundOutOrder = fundOrderBuilder.buildFundOut(request);
-        RouteParam routeParam = buildRouteParam(fundOutOrder);
-        ChannelApiContext channelApiContext = channelRouteService.routeOne(routeParam);
-        return applyInstProcess(channelApiContext, fundOutOrder);
+        try {
+            FundOutOrder fundOutOrder = fundOrderBuilder.buildFundOut(request);
+            RouteParam routeParam = buildRouteParam(fundOutOrder);
+            ChannelApiContext channelApiContext = channelRouteService.routeOne(routeParam);
+            return applyInstProcess(channelApiContext, fundOutOrder);
+        } catch (Exception e) {
+            log.error("出款异常", e);
+            return exceptionResult(request.getRequestId(), e);
+        }
     }
 
     private RouteParam buildRouteParam(FundOutOrder fundOutOrder) {

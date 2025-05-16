@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-13
+ * @since 2025-05-16
  */
 @TableName("tp_flux_order")
 public class FluxOrderDO implements Serializable {
@@ -51,6 +51,16 @@ public class FluxOrderDO implements Serializable {
      * 支付单类型
      */
     private String payType;
+
+    /**
+     * 结果码
+     */
+    private String resultCode;
+
+    /**
+     * 结果信息
+     */
+    private String resultMsg;
 
     /**
      * 创建时间
@@ -112,6 +122,22 @@ public class FluxOrderDO implements Serializable {
         this.payType = payType;
     }
 
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getResultMsg() {
+        return resultMsg;
+    }
+
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -137,6 +163,8 @@ public class FluxOrderDO implements Serializable {
         ", status = " + status +
         ", relationId = " + relationId +
         ", payType = " + payType +
+        ", resultCode = " + resultCode +
+        ", resultMsg = " + resultMsg +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * 交换服务
+ *
  * @author wxj
  * 2025/2/22
  */
@@ -43,18 +44,20 @@ public class FluxService {
         transactionTemplate.executeWithoutResult(status -> {
             FluxOrder lockFluxOrder = fluxOrderRepository.lock(fluxOrder.getFluxOrderId());
 
+            fluxInstruction.setResultCode(fluxResult.getResultCode());
+            fluxInstruction.setResultMsg(fluxResult.getResultMessage());
+
             if (fluxInstruction.getStatus() == InstructStatus.SUCCESS) {
                 addNewRelateInstruction(fluxOrder, fluxInstruction, fluxResult.getNewFluxInstructions());
 
                 boolean isEnd = fluxOrder.getInstructChain().getTail().getFluxInstruction().getInstructionId().equals(fluxInstruction.getInstructionId());
                 if (isEnd) {
-                    successProcess(fluxOrder);
+                    successProcess(fluxOrder, fluxInstruction);
                 }
             } else if (fluxInstruction.getStatus() == InstructStatus.FAIL) {
                 failProcess(fluxOrder, fluxInstruction);
             }
-            fluxInstruction.setResultCode(fluxResult.getResultCode());
-            fluxInstruction.setResultMsg(fluxResult.getResultMessage());
+
             instructionRepository.reStore(fluxInstruction);
             if (lockFluxOrder.getStatus() != fluxOrder.getStatus() && lockFluxOrder.getStatus() == FluxOrderStatus.PROCESS) {
                 fluxOrderRepository.reStore(fluxOrder);
@@ -66,11 +69,14 @@ public class FluxService {
      * 成功处理
      *
      * @param fluxOrder
+     * @param lastInstruction
      */
-    private void successProcess(FluxOrder fluxOrder) {
+    private void successProcess(FluxOrder fluxOrder, FluxInstruction lastInstruction) {
         long count = fluxOrder.getInstructChain().toList().stream().filter(i -> i.getStatus() != InstructStatus.SUCCESS).count();
         if (count == 0) {
             fluxOrder.setStatus(FluxOrderStatus.SUCCESS);
+            fluxOrder.setResultCode(lastInstruction.getResultCode());
+            fluxOrder.setResultMsg(lastInstruction.getResultMsg());
         }
     }
 
@@ -91,6 +97,8 @@ public class FluxService {
             }
         }
         fluxOrder.setStatus(FluxOrderStatus.FAIL);
+        fluxOrder.setResultCode(lastInstruction.getResultCode());
+        fluxOrder.setResultMsg(lastInstruction.getResultMsg());
     }
 
     /**

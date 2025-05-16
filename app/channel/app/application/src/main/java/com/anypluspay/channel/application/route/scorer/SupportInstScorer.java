@@ -44,9 +44,6 @@ public class SupportInstScorer implements ChannelScorer {
      */
     private boolean match(RouteParam routeParam, ChannelSupportInst channelSupportInst) {
         Assert.notNull(routeParam.getPayInst(), "支付机构不能为空");
-        if (routeParam.getPayInst().equals(UNLIMITED)) {
-            return true;
-        }
         if (FieldMatcher.matcherScore(routeParam.getPayInst(), channelSupportInst.getTargetInstCode()) == ZERO_SCORE) {
             return false;
         }

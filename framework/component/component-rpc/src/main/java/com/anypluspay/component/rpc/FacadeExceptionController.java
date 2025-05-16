@@ -31,6 +31,7 @@ public class FacadeExceptionController {
         String errorMessage = ex.getMessage() != null ? ex.getMessage() : "Internal Server Error";
         if (ex instanceof BizException bizException) {
             errorCode = bizException.getCode();
+            log.warn("业务异常:", ex);
         } else if (ex instanceof MethodArgumentNotValidException exception) {
             if (exception.getBindingResult().getErrorCount() > 0) {
                 List<ObjectError> objectErrorList = exception.getBindingResult().getAllErrors();

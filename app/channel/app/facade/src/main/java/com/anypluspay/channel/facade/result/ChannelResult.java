@@ -1,6 +1,7 @@
 package com.anypluspay.channel.facade.result;
 
 import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.lang.BaseResult;
 import lombok.Data;
 
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
  * 2024/7/18
  */
 @Data
-public class ChannelResult {
+public class ChannelResult extends BaseResult {
 
     /**
      * 请求号

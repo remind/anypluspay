@@ -45,6 +45,16 @@ public class FluxOrder extends Entity {
     private String relationId;
 
     /**
+     * 执行结果码
+     */
+    private String resultCode;
+
+    /**
+     * 执行结果信息
+     */
+    private String resultMsg;
+
+    /**
      * 指令
      */
     private InstructChain instructChain;

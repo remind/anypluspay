@@ -11,37 +11,37 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 普通支付单
+ * 提现单
  * </p>
  *
  * @author wxj
- * @since 2025-05-16
+ * @since 2025-05-15
  */
-@TableName("tp_general_pay_order")
-public class GeneralPayOrderDO implements Serializable {
+@TableName("t_withdraw_order")
+public class WithdrawOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 支付单号
+     * 充值单号
      */
-    @TableId(value = "order_id", type = IdType.NONE)
-    private String orderId;
-
-    /**
-     * 支付总单ID
-     */
+    @TableId(value = "payment_id", type = IdType.NONE)
     private String paymentId;
 
     /**
-     * 请求ID
+     * 支付单号
      */
-    private String requestId;
+    private String payOrderId;
 
     /**
      * 会员ID
      */
     private String memberId;
+
+    /**
+     * 账户号
+     */
+    private String accountNo;
 
     /**
      * 订单金额
@@ -56,22 +56,37 @@ public class GeneralPayOrderDO implements Serializable {
     /**
      * 订单状态
      */
-    private String orderStatus;
+    private String status;
 
     /**
-     * 结果码
+     * 身份证号码
      */
-    private String resultCode;
+    private String cardIdNo;
 
     /**
-     * 结果信息
+     * 姓名
      */
-    private String resultMsg;
+    private String cardName;
+
+    /**
+     * 银行编码
+     */
+    private String bankCode;
+
+    /**
+     * 卡号
+     */
+    private String cardNo;
 
     /**
      * 扩展信息
      */
     private String extension;
+
+    /**
+     * 备注
+     */
+    private String memo;
 
     /**
      * 创建时间
@@ -85,14 +100,6 @@ public class GeneralPayOrderDO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
     public String getPaymentId() {
         return paymentId;
     }
@@ -101,12 +108,12 @@ public class GeneralPayOrderDO implements Serializable {
         this.paymentId = paymentId;
     }
 
-    public String getRequestId() {
-        return requestId;
+    public String getPayOrderId() {
+        return payOrderId;
     }
 
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
+    public void setPayOrderId(String payOrderId) {
+        this.payOrderId = payOrderId;
     }
 
     public String getMemberId() {
@@ -115,6 +122,14 @@ public class GeneralPayOrderDO implements Serializable {
 
     public void setMemberId(String memberId) {
         this.memberId = memberId;
+    }
+
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public BigDecimal getAmount() {
@@ -133,28 +148,44 @@ public class GeneralPayOrderDO implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getResultCode() {
-        return resultCode;
+    public String getCardIdNo() {
+        return cardIdNo;
     }
 
-    public void setResultCode(String resultCode) {
-        this.resultCode = resultCode;
+    public void setCardIdNo(String cardIdNo) {
+        this.cardIdNo = cardIdNo;
     }
 
-    public String getResultMsg() {
-        return resultMsg;
+    public String getCardName() {
+        return cardName;
     }
 
-    public void setResultMsg(String resultMsg) {
-        this.resultMsg = resultMsg;
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public String getCardNo() {
+        return cardNo;
+    }
+
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
     }
 
     public String getExtension() {
@@ -163,6 +194,14 @@ public class GeneralPayOrderDO implements Serializable {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -183,17 +222,20 @@ public class GeneralPayOrderDO implements Serializable {
 
     @Override
     public String toString() {
-        return "GeneralPayOrderDO{" +
-        "orderId = " + orderId +
-        ", paymentId = " + paymentId +
-        ", requestId = " + requestId +
+        return "WithdrawOrderDO{" +
+        "paymentId = " + paymentId +
+        ", payOrderId = " + payOrderId +
         ", memberId = " + memberId +
+        ", accountNo = " + accountNo +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
-        ", orderStatus = " + orderStatus +
-        ", resultCode = " + resultCode +
-        ", resultMsg = " + resultMsg +
+        ", status = " + status +
+        ", cardIdNo = " + cardIdNo +
+        ", cardName = " + cardName +
+        ", bankCode = " + bankCode +
+        ", cardNo = " + cardNo +
         ", extension = " + extension +
+        ", memo = " + memo +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

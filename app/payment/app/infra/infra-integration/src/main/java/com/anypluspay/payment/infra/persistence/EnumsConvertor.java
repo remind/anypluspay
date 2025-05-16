@@ -6,6 +6,7 @@ import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionDirection;
 import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.domain.withdraw.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
@@ -89,6 +90,10 @@ public interface EnumsConvertor {
 
     default DepositOrderStatus toDepositOrderStatus(String code) {
         return EnumUtil.getByCode(DepositOrderStatus.class, code);
+    }
+
+    default WithdrawOrderStatus toWithdrawOrderStatus(String code) {
+        return EnumUtil.getByCode(WithdrawOrderStatus.class, code);
     }
 
 }

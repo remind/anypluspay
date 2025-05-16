@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author wxj
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient
+@EnableScheduling
 @MapperScan("com.anypluspay.channel.infra.persistence.mapper")
 @ComponentScan(basePackages = {"com.anypluspay.channel", "com.anypluspay.channelgateway"})
 public class ChannelApplicationLauncher {

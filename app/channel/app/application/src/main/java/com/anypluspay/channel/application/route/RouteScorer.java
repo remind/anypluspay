@@ -21,8 +21,4 @@ public interface RouteScorer {
      */
     int STANDARD_SCORE = 5;
 
-    /**
-     * 不限制值
-     */
-    String UNLIMITED = "UNLIMITED";
 }

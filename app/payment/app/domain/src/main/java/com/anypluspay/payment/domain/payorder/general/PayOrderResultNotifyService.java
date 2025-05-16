@@ -3,6 +3,7 @@ package com.anypluspay.payment.domain.payorder.general;
 import com.anypluspay.payment.domain.deposit.DepositService;
 import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
+import com.anypluspay.payment.domain.withdraw.WithdrawService;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
@@ -28,10 +29,15 @@ public class PayOrderResultNotifyService {
     @Autowired
     private DepositService depositService;
 
+    @Autowired
+    private WithdrawService withdrawService;
+
     public void process(GeneralPayOrder generalPayOrder) {
         IdType bizOrderIdType = idGeneratorService.getIdType(generalPayOrder.getPaymentId());
         if (bizOrderIdType == IdType.DEPOSIT_ORDER_ID) {
             depositService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
+        } else if (bizOrderIdType == IdType.WITHDRAW_ORDER_ID) {
+            withdrawService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
         } else {
             if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
                     || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {

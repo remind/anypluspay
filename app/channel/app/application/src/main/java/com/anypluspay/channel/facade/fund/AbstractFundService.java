@@ -14,8 +14,6 @@ import com.anypluspay.channel.facade.fund.builder.FundResultBuilder;
 import com.anypluspay.channel.facade.result.ChannelResult;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.commons.exceptions.BizException;
-import com.anypluspay.commons.response.GlobalResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -56,6 +54,7 @@ public abstract class AbstractFundService extends AbstractChannelService {
     @Override
     protected ChannelResult buildChannelResult(BaseBizOrder bizOrder, InstOrder instOrder, InstCommandOrder instCommandOrder) {
         FundResult fundResult = new FundResult();
+        fundResult.setSuccess(true);
         fundResult.setInstRequestNo(instOrder.getInstRequestNo());
         fundResult.setInstResponseNo(instOrder.getInstResponseNo());
         fundResult.setResponseExt(instOrder.getResponseExt());

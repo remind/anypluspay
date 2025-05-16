@@ -30,7 +30,7 @@ public class ExternalResultService {
      */
     public FluxResult process(FluxInstruction fluxInstruction, FundResult fundResult) {
         FluxResult result = convert(fundResult);
-        if (fundResult.getStatus() == BizOrderStatus.SUCCESS && fundResult.isNeedClearing()) {
+        if (fundResult.isSuccess() && fundResult.getStatus() == BizOrderStatus.SUCCESS && fundResult.isNeedClearing()) {
             result.setNewFluxInstructions(List.of(buildClearingFluxInstruct(fluxInstruction, fundResult.getClearingAccountNo())));
         }
         return result;
@@ -39,16 +39,22 @@ public class ExternalResultService {
 
     private FluxResult convert(FundResult fundResult) {
         FluxResult result = new FluxResult();
-        result.setResultCode(fundResult.getUnityCode());
-        result.setResultMessage(fundResult.getUnityMessage());
-        result.setFluxResponse(fundResult.getResponseExt());
+        if (fundResult.isSuccess()) {
+            result.setResultCode(fundResult.getUnityCode());
+            result.setResultMessage(fundResult.getUnityMessage());
+            result.setFluxResponse(fundResult.getResponseExt());
 
-        if (fundResult.getStatus() == BizOrderStatus.FAILED) {
-            result.setStatus(PayStatus.FAIL);
-        } else if (fundResult.getStatus() == BizOrderStatus.SUCCESS) {
-            result.setStatus(PayStatus.SUCCESS);
+            if (fundResult.getStatus() == BizOrderStatus.FAILED) {
+                result.setStatus(PayStatus.FAIL);
+            } else if (fundResult.getStatus() == BizOrderStatus.SUCCESS) {
+                result.setStatus(PayStatus.SUCCESS);
+            } else {
+                result.setStatus(PayStatus.PROCESS);
+            }
         } else {
-            result.setStatus(PayStatus.PROCESS);
+            result.setResultCode(fundResult.getResultCode());
+            result.setResultMessage(fundResult.getResultMsg());
+            result.setStatus(PayStatus.FAIL);
         }
         return result;
     }
