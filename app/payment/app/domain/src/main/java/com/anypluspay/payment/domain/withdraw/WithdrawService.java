@@ -19,13 +19,13 @@ public class WithdrawService {
     @Autowired
     private WithdrawOrderRepository withdrawOrderRepository;
 
-    public void processResult(String paymentId, GeneralPayOrderStatus payOrderStatus) {
+    public void processResult(String paymentId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
             WithdrawOrder withdrawOrder = withdrawOrderRepository.lock(paymentId);
             if (withdrawOrder.getStatus() == WithdrawOrderStatus.PAYING) {
-                if (payOrderStatus == GeneralPayOrderStatus.SUCCESS) {
+                if (success) {
                     withdrawOrder.setStatus(WithdrawOrderStatus.SUCCESS);
-                } else if (payOrderStatus == GeneralPayOrderStatus.FAIL) {
+                } else {
                     withdrawOrder.setStatus(WithdrawOrderStatus.FAIL);
                 }
                 withdrawOrderRepository.reStore(withdrawOrder);

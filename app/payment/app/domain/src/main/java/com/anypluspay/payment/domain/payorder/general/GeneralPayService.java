@@ -1,5 +1,6 @@
 package com.anypluspay.payment.domain.payorder.general;
 
+import com.anypluspay.payment.domain.biz.PaymentOrderService;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
 import com.anypluspay.payment.types.PayResult;
@@ -17,8 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GeneralPayService extends AbstractBasePayService {
 
-    @Autowired
-    private PayOrderResultNotifyService payOrderResultNotifyService;
+
 
     public PayResult process(GeneralPayOrder generalPayOrder) {
         FluxOrder fluxOrder = buildFluxOrder(generalPayOrder);
@@ -49,7 +49,9 @@ public class GeneralPayService extends AbstractBasePayService {
                 generalPayOrder.setResultCode(payResult.getResultCode());
                 generalPayOrder.setResultMsg(payResult.getResultMessage());
                 generalPayOrderRepository.reStore(generalPayOrder);
-                payOrderResultNotifyService.process(generalPayOrder);
+                if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
+                    paymentOrderService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS);
+                }
             }
         });
     }

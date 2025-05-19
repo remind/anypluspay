@@ -21,7 +21,7 @@ import java.util.List;
 public class DepositFacadeTest extends InstPaymentBaseTest {
 
     @Autowired
-    private DepositFacade depositFacade;
+    private DepositFacadeImpl depositFacade;
 
     @Test
     public void testSuccess() {

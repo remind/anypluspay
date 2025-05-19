@@ -61,4 +61,5 @@ public abstract class PaymentBuilder {
         fundDetail.setExtension(new Extension(info.getExtension()));
         return fundDetail;
     }
+
 }

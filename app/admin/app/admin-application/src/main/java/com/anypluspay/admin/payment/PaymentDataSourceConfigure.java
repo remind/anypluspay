@@ -23,7 +23,7 @@ import javax.sql.DataSource;
  * 2025/3/28
  */
 @Configuration
-@MapperScan(basePackages = {"com.anypluspay.payment.infra.persistence.mapper"}, sqlSessionFactoryRef = "paymentSqlSessionFactory")
+@MapperScan(basePackages = {"com.anypluspay.payment.infra.persistence.mapper"}, sqlSessionFactoryRef = "paymentSqlSessionFactory", nameGenerator = PaymentBeanNameGenerator.class)
 public class PaymentDataSourceConfigure {
     private static final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();
 

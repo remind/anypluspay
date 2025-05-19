@@ -1,12 +1,9 @@
 package com.anypluspay.payment.domain.payorder.general;
 
 import com.anypluspay.payment.domain.deposit.DepositService;
-import com.anypluspay.payment.domain.payorder.event.PayOrderResultEvent;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
+import com.anypluspay.payment.domain.trade.TradeService;
 import com.anypluspay.payment.domain.withdraw.WithdrawService;
-import com.anypluspay.payment.types.IdType;
-import com.anypluspay.payment.types.PayOrderType;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -27,22 +24,27 @@ public class PayOrderResultNotifyService {
     private IdGeneratorService idGeneratorService;
 
     @Autowired
+    private TradeService tradeService;
+
+    @Autowired
     private DepositService depositService;
 
     @Autowired
     private WithdrawService withdrawService;
 
     public void process(GeneralPayOrder generalPayOrder) {
-        IdType bizOrderIdType = idGeneratorService.getIdType(generalPayOrder.getPaymentId());
-        if (bizOrderIdType == IdType.DEPOSIT_ORDER_ID) {
-            depositService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
-        } else if (bizOrderIdType == IdType.WITHDRAW_ORDER_ID) {
-            withdrawService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
-        } else {
-            if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
-                    || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
-                applicationContext.publishEvent(new PayOrderResultEvent(generalPayOrder.getOrderId(), PayOrderType.PAY));
-            }
-        }
+//        IdType bizOrderIdType = idGeneratorService.getIdType(generalPayOrder.getPaymentId());
+//        if (bizOrderIdType == IdType.DEPOSIT_ORDER_ID) {
+//            depositService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
+//        } else if (bizOrderIdType == IdType.WITHDRAW_ORDER_ID) {
+//            withdrawService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
+//        } else if (bizOrderIdType == IdType.TRADE_ORDER_ID) {
+//            tradeService.processResult(generalPayOrder.getPaymentId(), generalPayOrder.getOrderStatus());
+//        } else {
+//            if (generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.SUCCESS
+//                    || generalPayOrder.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
+//                applicationContext.publishEvent(new PayOrderResultEvent(generalPayOrder.getOrderId(), PayOrderType.PAY));
+//            }
+//        }
     }
 }

@@ -40,6 +40,11 @@
                 <version>${payment.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-infra-dal</artifactId>
+                <version>${payment.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-facade</artifactId>
                 <version>${channel.version}</version>

@@ -20,13 +20,13 @@ public class DepositService {
     @Autowired
     private DepositOrderRepository depositOrderRepository;
 
-    public void processResult(String paymentId, GeneralPayOrderStatus payOrderStatus) {
+    public void processResult(String paymentId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
             DepositOrder depositOrder = depositOrderRepository.lock(paymentId);
             if (depositOrder.getStatus() == DepositOrderStatus.PAYING) {
-                if (payOrderStatus == GeneralPayOrderStatus.SUCCESS) {
+                if (success) {
                     depositOrder.setStatus(DepositOrderStatus.SUCCESS);
-                } else if (payOrderStatus == GeneralPayOrderStatus.FAIL) {
+                } else {
                     depositOrder.setStatus(DepositOrderStatus.FAIL);
                 }
                 depositOrderRepository.reStore(depositOrder);

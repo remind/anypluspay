@@ -71,20 +71,16 @@
     <!-- 商品信息 -->
     <div class="item-list">
         <div class="item">
-            <span>交易单号</span>
-            <span th:text="${trade.tradeId}"></span>
+            <span>支付总单号</span>
+            <span th:text="${order.paymentId}"></span>
         </div>
         <div class="item">
             <span>交易标题</span>
-            <span th:text="${trade.subject}"></span>
-        </div>
-        <div class="item">
-            <span>商品描述</span>
-            <span th:text="${trade.goodsDesc}"></span>
+            <span th:text="${order.subject}"></span>
         </div>
         <div class="item">
             <span>支付金额</span>
-            <span th:text="${trade.amount}" id="total-amount"></span>
+            <span th:text="${order.amount}" id="total-amount"></span>
         </div>
     </div>
 
@@ -109,7 +105,6 @@
 </div>
 
 <script>
-    var tradeId = '[[${trade.tradeId}]]';
     const allPayMethods = {
         "balance": {
             "code": "BALANCE",
@@ -155,7 +150,7 @@
                 },
                 body: JSON.stringify({
                     payMethods: payMethods,
-                    tradeId: tradeId
+                    paymentId: '[[${order.paymentId}]]'
                 })
             });
 
@@ -164,14 +159,17 @@
             // 根据返回结果更新提示信息
             if (result.success) {
                 const data = result.data;
-                if (data.payStatus == 'FAIL') {
+                if (data.orderStatus == 'FAIL') {
                     resultMessage.textContent = `支付失败！${data.message}。`;
                     resultMessage.style.color = 'red';
-                } else if (data.payStatus == 'SUCCESS') {
+                } else if (data.orderStatus == 'SUCCESS') {
                     resultMessage.textContent = `支付成功！`;
                     resultMessage.style.color = 'green';
                 } else {
                     if (data.instUrl) {
+                        resultMessage.textContent = `三方支付中，请稍候...`;
+                        resultMessage.style.color = 'green';
+
                         // 如果返回了 HTML 表单，则动态插入并自动提交
                         const formContainer = document.createElement('div');
                         formContainer.innerHTML = data.instUrl;
@@ -187,7 +185,11 @@
                             resultMessage.textContent = '支付失败：无效的表单数据。';
                             resultMessage.style.color = 'red';
                         }
+                    } else {
+                        resultMessage.textContent = `支付异常！无三方支付链接`;
+                        resultMessage.style.color = 'red';
                     }
+
                 }
             } else {
                 resultMessage.textContent = `支付请求失败：${result.message || '未知错误'}`;

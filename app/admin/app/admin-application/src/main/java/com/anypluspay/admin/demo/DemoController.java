@@ -1,11 +1,13 @@
 package com.anypluspay.admin.demo;
 
+import cn.hutool.core.lang.UUID;
+import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
+import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
 import com.anypluspay.commons.response.ResponseResult;
-import com.anypluspay.testtrade.facade.TradeFacade;
-import com.anypluspay.testtrade.facade.request.PayRequest;
-import com.anypluspay.testtrade.facade.request.TradeRequest;
-import com.anypluspay.testtrade.facade.response.PayResponse;
-import com.anypluspay.testtrade.facade.response.TradeResponse;
+import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
+import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
+import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
+import com.anypluspay.payment.types.TradeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,28 +25,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
     @Autowired
-    private TradeFacade tradeFacade;
+    private AcquiringFacade acquiringFacade;
+
+    @Autowired
+    private OuterAccountManagerFacade outerAccountManagerFacade;
 
     /**
      * 创建交易订单
      *
-     * @param tradeRequest
+     * @param request
      * @return
      */
     @PostMapping("/create-trade-order")
-    public ResponseResult<TradeResponse> createTradeOrder(@RequestBody TradeRequest tradeRequest) {
-        return ResponseResult.success(tradeFacade.create(tradeRequest));
+    public ResponseResult<AcquiringCreateResponse> createTradeOrder(@RequestBody AcquiringCreateRequest request) {
+        request.setTradeType(TradeType.INSTANT_ACQUIRING.getCode());
+        request.setOutTradeNo(UUID.randomUUID().toString(true));
+        request.setPayeeAccountNo(getBaseAccountNo(request.getPayeeId()));
+        return ResponseResult.success(acquiringFacade.create(request));
     }
 
-    /**
-     * 支付
-     *
-     * @param payRequest
-     * @return
-     */
-    @PostMapping("/pay")
-    public ResponseResult<PayResponse> pay(@RequestBody PayRequest payRequest) {
-        return ResponseResult.success(tradeFacade.pay(payRequest));
+    private String getBaseAccountNo(String memberId) {
+        OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberAndAccountTypeId(memberId, "101");
+        return accountResponse.getAccountNo();
     }
 
 }
