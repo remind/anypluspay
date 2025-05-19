@@ -4,7 +4,7 @@ import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
-import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrderStatus;
+import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.asset.BalanceAsset;

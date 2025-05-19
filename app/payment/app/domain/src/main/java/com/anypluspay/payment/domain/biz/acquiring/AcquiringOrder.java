@@ -4,7 +4,7 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.biz.PaymentBizOrder;
 import com.anypluspay.payment.types.TradeType;
-import com.anypluspay.payment.types.status.TradeOrderStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import lombok.Data;
 
 /**
@@ -62,7 +62,7 @@ public class AcquiringOrder extends PaymentBizOrder {
     /**
      * 状态
      */
-    private TradeOrderStatus status;
+    private AcquiringOrderStatus status;
 
     /**
      * 扩展信息

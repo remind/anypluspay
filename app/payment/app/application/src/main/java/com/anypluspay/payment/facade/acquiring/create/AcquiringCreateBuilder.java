@@ -5,7 +5,7 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.status.TradeOrderStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.TradeType;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class AcquiringCreateBuilder extends PaymentBuilder {
         acquiringOrder.setPayeeAccountNo(request.getPayeeAccountNo());
         acquiringOrder.setPayerId(request.getPayerId());
         acquiringOrder.setExtension(new Extension(request.getExtension()));
-        acquiringOrder.setStatus(TradeOrderStatus.INIT);
+        acquiringOrder.setStatus(AcquiringOrderStatus.INIT);
         return acquiringOrder;
     }
 

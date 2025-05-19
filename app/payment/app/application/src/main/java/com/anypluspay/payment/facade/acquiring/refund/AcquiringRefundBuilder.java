@@ -10,7 +10,7 @@ import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.status.TradeOrderStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.TradeType;
@@ -58,7 +58,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         acquiringOrder.setPayeeId(origAcquiringOrder.getPayeeId());
         acquiringOrder.setPayeeAccountNo(origAcquiringOrder.getPayeeAccountNo());
         acquiringOrder.setPayerId(origAcquiringOrder.getPayerId());
-        acquiringOrder.setStatus(TradeOrderStatus.INIT);
+        acquiringOrder.setStatus(AcquiringOrderStatus.INIT);
         return acquiringOrder;
     }
 
@@ -66,7 +66,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         List<AcquiringOrder> allRelationOrders = acquiringOrderRepository.loadByRelationPaymentId(origAcquiringOrder.getPaymentId());
         if (!CollectionUtils.isEmpty(allRelationOrders)) {
             Money refundAmount = allRelationOrders.stream()
-                    .filter(r -> r.getStatus().equals(TradeOrderStatus.SUCCESS) && r.getTradeType() == TradeType.REFUND_ACQUIRING)
+                    .filter(r -> r.getStatus().equals(AcquiringOrderStatus.SUCCESS) && r.getTradeType() == TradeType.REFUND_ACQUIRING)
                     .map(AcquiringOrder::getAmount)
                     .reduce(new Money(), Money::add);
             Assert.isTrue(!amount.greaterThan(origAcquiringOrder.getAmount().subtract(refundAmount)), "退款金额超出可退金额");

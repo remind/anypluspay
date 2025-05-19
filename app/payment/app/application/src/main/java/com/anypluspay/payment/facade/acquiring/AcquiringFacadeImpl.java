@@ -7,7 +7,7 @@ import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.status.TradeOrderStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateBuilder;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
@@ -111,7 +111,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
         return transactionTemplate.execute(status -> {
             AcquiringOrder acquiringOrder = lockTradeOrder(request.getPaymentId(), request.getOutTradeNo(), request.getPartnerId());
             AssertUtil.notNull(acquiringOrder, "订单不存在");
-            AssertUtil.isTrue(acquiringOrder.getStatus() == TradeOrderStatus.INIT || acquiringOrder.getStatus() == TradeOrderStatus.PAYING, "订单状态为非待支付");
+            AssertUtil.isTrue(acquiringOrder.getStatus() == AcquiringOrderStatus.INIT || acquiringOrder.getStatus() == AcquiringOrderStatus.PAYING, "订单状态为非待支付");
             GeneralPayOrder payOrder = acquiringPayBuilder.buildPayOrder(acquiringOrder, request);
             generalPayOrderRepository.store(payOrder);
             return payOrder;

@@ -1,21 +1,13 @@
-package com.anypluspay.payment.domain.biz.withdraw;
+package com.anypluspay.admin.payment.response;
 
-import com.anypluspay.commons.lang.Entity;
-import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import lombok.Data;
 
 /**
  * @author wxj
- * 2025/5/15
+ * 2025/5/19
  */
 @Data
-public class WithdrawOrder extends Entity {
-
-    /**
-     * 提现单号
-     */
-    private String paymentId;
+public class WithdrawOrderResponse extends AbstractBizOrderResponse {
 
     /**
      * 支付订单号
@@ -31,16 +23,6 @@ public class WithdrawOrder extends Entity {
      * 出款账户
      */
     private String accountNo;
-
-    /**
-     * 金额
-     */
-    private Money amount;
-
-    /**
-     * 状态
-     */
-    private WithdrawOrderStatus status;
 
     /**
      * 身份证号码

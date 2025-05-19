@@ -1,13 +1,13 @@
 package com.anypluspay.payment.infra.persistence;
 
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.domain.biz.deposit.DepositOrderStatus;
+import com.anypluspay.payment.types.biz.DepositOrderStatus;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.InstructStatus;
 import com.anypluspay.payment.domain.flux.InstructionDirection;
 import com.anypluspay.payment.domain.flux.InstructionType;
-import com.anypluspay.payment.types.status.TradeOrderStatus;
-import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrderStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.TradeType;
 import com.anypluspay.payment.types.paymethod.PayModel;
@@ -102,8 +102,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(TradeType.class, code);
     }
 
-    default TradeOrderStatus toTradeOrderStatus(String code) {
-        return EnumUtil.getByCode(TradeOrderStatus.class, code);
+    default AcquiringOrderStatus toTradeOrderStatus(String code) {
+        return EnumUtil.getByCode(AcquiringOrderStatus.class, code);
     }
 
 }
