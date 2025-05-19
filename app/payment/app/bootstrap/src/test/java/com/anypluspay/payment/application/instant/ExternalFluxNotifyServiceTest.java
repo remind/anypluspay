@@ -4,7 +4,7 @@ import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.types.Extension;
-import com.anypluspay.payment.application.notify.PayNotifyService;
+import com.anypluspay.payment.application.notify.ExternalFluxNotifyService;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
@@ -30,13 +30,13 @@ import static org.mockito.Mockito.doAnswer;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class PayNotifyServiceTest extends InstPaymentBaseTest {
+public class ExternalFluxNotifyServiceTest extends InstPaymentBaseTest {
 
     @Autowired
     private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Autowired
-    private PayNotifyService payNotifyService;
+    private ExternalFluxNotifyService externalFluxNotifyService;
 
     private final AtomicReference<String> requestId = new AtomicReference<>();
 
@@ -46,7 +46,7 @@ public class PayNotifyServiceTest extends InstPaymentBaseTest {
         FundResult fundResult = new FundResult();
         fundResult.setStatus(BizOrderStatus.SUCCESS);
         fundResult.setRequestId(requestId.get());
-        payNotifyService.process(fundResult);
+        externalFluxNotifyService.process(fundResult);
     }
 
 

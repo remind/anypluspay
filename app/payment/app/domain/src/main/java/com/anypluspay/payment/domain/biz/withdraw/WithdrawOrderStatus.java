@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.withdraw;
+package com.anypluspay.payment.domain.biz.withdraw;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;

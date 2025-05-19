@@ -1,6 +1,6 @@
 package com.anypluspay.payment.application;
 
-import com.anypluspay.payment.domain.payorder.general.GeneralPayService;
+import com.anypluspay.payment.domain.payorder.GeneralPayService;
 import com.anypluspay.payment.domain.payorder.refund.RefundService;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;

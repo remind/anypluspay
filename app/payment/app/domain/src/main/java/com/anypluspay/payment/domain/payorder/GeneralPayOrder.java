@@ -1,6 +1,5 @@
-package com.anypluspay.payment.domain.payorder.general;
+package com.anypluspay.payment.domain.payorder;
 
-import com.anypluspay.payment.domain.payorder.BasePayOrder;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 
 /**

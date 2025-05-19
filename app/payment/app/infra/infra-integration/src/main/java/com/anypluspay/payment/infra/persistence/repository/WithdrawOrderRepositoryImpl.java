@@ -1,7 +1,7 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
-import com.anypluspay.payment.domain.withdraw.WithdrawOrder;
+import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 import com.anypluspay.payment.infra.persistence.convertor.WithdrawOrderDalConvertor;
 import com.anypluspay.payment.infra.persistence.mapper.WithdrawOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;

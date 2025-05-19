@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.repository;
 
-import com.anypluspay.payment.domain.withdraw.WithdrawOrder;
+import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 
 /**
  * @author wxj

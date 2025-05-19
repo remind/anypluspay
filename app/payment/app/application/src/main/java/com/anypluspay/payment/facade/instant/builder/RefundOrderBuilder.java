@@ -1,7 +1,7 @@
 package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;

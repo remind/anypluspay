@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring.query;
 
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.BaseResult;
-import com.anypluspay.payment.domain.trade.AcquiringOrder;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.TradeResponse;
 
 /**

@@ -1,7 +1,6 @@
-package com.anypluspay.payment.domain.deposit;
+package com.anypluspay.payment.domain.biz.deposit;
 
 import com.anypluspay.payment.domain.repository.DepositOrderRepository;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;

@@ -1,6 +1,6 @@
 package com.anypluspay.payment.infra.persistence.repository.payorder;
 
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.infra.persistence.convertor.GeneralPayOrderConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.GeneralPayOrderDO;

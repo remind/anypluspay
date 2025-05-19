@@ -20,7 +20,7 @@ import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FundDetailRepository;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.domain.withdraw.WithdrawOrder;
+import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentExtKey;

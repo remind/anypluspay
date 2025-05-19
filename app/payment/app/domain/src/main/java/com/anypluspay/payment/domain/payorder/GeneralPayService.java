@@ -1,12 +1,9 @@
-package com.anypluspay.payment.domain.payorder.general;
+package com.anypluspay.payment.domain.payorder;
 
-import com.anypluspay.payment.domain.biz.PaymentOrderService;
 import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.payorder.AbstractBasePayService;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,8 +14,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GeneralPayService extends AbstractBasePayService {
-
-
 
     public PayResult process(GeneralPayOrder generalPayOrder) {
         FluxOrder fluxOrder = buildFluxOrder(generalPayOrder);

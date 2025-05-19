@@ -10,7 +10,7 @@ import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.application.instant.InstPaymentBaseTest;
-import com.anypluspay.payment.application.notify.PayNotifyService;
+import com.anypluspay.payment.application.notify.ExternalFluxNotifyService;
 import com.anypluspay.payment.domain.asset.FundDetailSortService;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
@@ -47,7 +47,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
     private InstantPaymentFacadeImpl instantPaymentFacade;
 
     @Autowired
-    private PayNotifyService payNotifyService;
+    private ExternalFluxNotifyService externalFluxNotifyService;
 
     @MockitoBean
     private FundDetailSortService fundDetailSortService;
@@ -265,7 +265,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         fundResult.setClearingAccountNo(CHANNEL_CLEARING_ACCOUNT_NO);
         fundResult.setNeedClearing(true);
         fundResult.setUnityCode("S001");
-        payNotifyService.process(fundResult);
+        externalFluxNotifyService.process(fundResult);
     }
 
     private void makeFailNotify() {
@@ -273,7 +273,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         fundResult.setRequestId(channelRequest.get().getRequestId());
         fundResult.setStatus(BizOrderStatus.FAILED);
         fundResult.setUnityCode("S001");
-        payNotifyService.process(fundResult);
+        externalFluxNotifyService.process(fundResult);
     }
 
 }

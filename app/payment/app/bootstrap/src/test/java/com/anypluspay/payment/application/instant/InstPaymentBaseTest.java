@@ -12,7 +12,7 @@ import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;

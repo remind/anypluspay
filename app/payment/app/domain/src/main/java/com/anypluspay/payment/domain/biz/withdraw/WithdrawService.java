@@ -1,7 +1,6 @@
-package com.anypluspay.payment.domain.withdraw;
+package com.anypluspay.payment.domain.biz.withdraw;
 
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;

@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.deposit;
+package com.anypluspay.payment.domain.biz.deposit;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;

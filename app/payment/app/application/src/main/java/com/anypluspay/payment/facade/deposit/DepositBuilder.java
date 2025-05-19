@@ -2,9 +2,9 @@ package com.anypluspay.payment.facade.deposit;
 
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.deposit.DepositOrder;
-import com.anypluspay.payment.domain.deposit.DepositOrderStatus;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
+import com.anypluspay.payment.domain.biz.deposit.DepositOrderStatus;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;

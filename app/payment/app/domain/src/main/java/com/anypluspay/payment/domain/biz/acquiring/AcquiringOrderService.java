@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.trade;
+package com.anypluspay.payment.domain.biz.acquiring;
 
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.types.status.TradeOrderStatus;
@@ -11,7 +11,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * 2025/5/18
  */
 @Service
-public class TradeService {
+public class AcquiringOrderService {
 
     @Autowired
     private TransactionTemplate transactionTemplate;

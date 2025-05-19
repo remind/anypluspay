@@ -1,9 +1,9 @@
 package com.anypluspay.payment.domain.biz;
 
-import com.anypluspay.payment.domain.deposit.DepositService;
+import com.anypluspay.payment.domain.biz.deposit.DepositService;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.domain.trade.TradeService;
-import com.anypluspay.payment.domain.withdraw.WithdrawService;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrderService;
+import com.anypluspay.payment.domain.biz.withdraw.WithdrawService;
 import com.anypluspay.payment.types.IdType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class PaymentOrderService {
     private IdGeneratorService idGeneratorService;
 
     @Autowired
-    private TradeService tradeService;
+    private AcquiringOrderService acquiringOrderService;
 
     @Autowired
     private DepositService depositService;
@@ -37,7 +37,7 @@ public class PaymentOrderService {
         } else if (bizOrderIdType == IdType.WITHDRAW_ORDER_ID) {
             withdrawService.processResult(paymentId, success);
         } else if (bizOrderIdType == IdType.TRADE_ORDER_ID) {
-            tradeService.processResult(paymentId, success);
+            acquiringOrderService.processResult(paymentId, success);
         }
     }
 }

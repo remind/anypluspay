@@ -6,7 +6,6 @@ import com.anypluspay.payment.domain.biz.PaymentOrderService;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.InstructChain;
 import com.anypluspay.payment.domain.flux.service.FluxEngineService;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
 import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
 import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;

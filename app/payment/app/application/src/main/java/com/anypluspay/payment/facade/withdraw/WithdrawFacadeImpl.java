@@ -1,9 +1,9 @@
 package com.anypluspay.payment.facade.withdraw;
 
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
-import com.anypluspay.payment.domain.withdraw.WithdrawOrder;
+import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.PayResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

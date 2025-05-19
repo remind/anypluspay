@@ -1,6 +1,6 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
-import com.anypluspay.payment.domain.deposit.DepositOrder;
+import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
 import com.anypluspay.payment.domain.repository.DepositOrderRepository;
 import com.anypluspay.payment.infra.persistence.convertor.DepositOrderDalConvertor;
 import com.anypluspay.payment.infra.persistence.mapper.DepositOrderMapper;

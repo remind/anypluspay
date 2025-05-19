@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.deposit;
+package com.anypluspay.payment.domain.biz.deposit;
 
 import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Money;

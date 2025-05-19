@@ -1,8 +1,8 @@
 package com.anypluspay.payment.facade.deposit;
 
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.domain.deposit.DepositOrder;
-import com.anypluspay.payment.domain.payorder.general.GeneralPayOrder;
+import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
+import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.domain.repository.DepositOrderRepository;
 import com.anypluspay.payment.types.PayResult;
 import org.springframework.beans.factory.annotation.Autowired;

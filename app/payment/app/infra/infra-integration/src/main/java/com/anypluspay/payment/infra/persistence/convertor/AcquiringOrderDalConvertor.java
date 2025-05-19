@@ -1,7 +1,7 @@
 package com.anypluspay.payment.infra.persistence.convertor;
 
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
-import com.anypluspay.payment.domain.trade.AcquiringOrder;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.infra.persistence.EnumsConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import org.mapstruct.Mapper;

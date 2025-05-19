@@ -1,7 +1,7 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
-import com.anypluspay.payment.domain.trade.AcquiringOrder;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.infra.persistence.convertor.AcquiringOrderDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import com.anypluspay.payment.infra.persistence.mapper.AcquiringOrderMapper;

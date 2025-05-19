@@ -4,7 +4,7 @@ import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.trade.AcquiringOrder;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.status.TradeOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.TradeType;
