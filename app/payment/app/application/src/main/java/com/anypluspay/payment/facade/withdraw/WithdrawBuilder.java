@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.withdraw;
 
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.IdType;
@@ -12,7 +12,7 @@ import com.anypluspay.payment.types.asset.BankCardAsset;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +25,7 @@ public class WithdrawBuilder extends PaymentBuilder {
     public WithdrawOrder buildWithdrawOrder(WithdrawRequest request) {
         WithdrawOrder withdrawOrder = new WithdrawOrder();
         withdrawOrder.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.WITHDRAW_ORDER_ID));
-        withdrawOrder.setPayOrderId(idGeneratorService.genIdByRelateId(withdrawOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
+        withdrawOrder.setPayProcessId(idGeneratorService.genIdByRelateId(withdrawOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
         withdrawOrder.setAmount(request.getAmount());
         withdrawOrder.setMemberId(request.getMemberId());
         withdrawOrder.setAccountNo(request.getAccountNo());
@@ -38,23 +38,23 @@ public class WithdrawBuilder extends PaymentBuilder {
         return withdrawOrder;
     }
 
-    public GeneralPayOrder buildPayOrder(WithdrawOrder withdrawOrder) {
-        GeneralPayOrder generalPayOrder = new GeneralPayOrder();
-        generalPayOrder.setPaymentId(withdrawOrder.getPaymentId());
-        generalPayOrder.setOrderId(withdrawOrder.getPayOrderId());
-        generalPayOrder.setRequestId(UUID.randomUUID().toString(true));
-        generalPayOrder.setAmount(withdrawOrder.getAmount());
-        generalPayOrder.setMemberId(withdrawOrder.getMemberId());
-        generalPayOrder.setOrderStatus(GeneralPayOrderStatus.INIT);
-        generalPayOrder.addPayerFundDetail(buildPayerFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), withdrawOrder));
-        generalPayOrder.addPayeeFundDetail(buildPayeeFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), withdrawOrder));
-        return generalPayOrder;
+    public PayProcess buildPayProcess(WithdrawOrder withdrawOrder) {
+        PayProcess payProcess = new PayProcess();
+        payProcess.setPaymentId(withdrawOrder.getPaymentId());
+        payProcess.setProcessId(withdrawOrder.getPayProcessId());
+        payProcess.setRequestId(UUID.randomUUID().toString(true));
+        payProcess.setAmount(withdrawOrder.getAmount());
+        payProcess.setMemberId(withdrawOrder.getMemberId());
+        payProcess.setStatus(PayProcessStatus.INIT);
+        payProcess.addPayerFundDetail(buildPayerFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), withdrawOrder));
+        payProcess.addPayeeFundDetail(buildPayeeFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), withdrawOrder));
+        return payProcess;
     }
 
     private FundDetail buildPayeeFundDetail(String paymentId, String orderId, WithdrawOrder withdrawOrder) {
         FundDetail fundDetail = new FundDetail();
         fundDetail.setPaymentId(paymentId);
-        fundDetail.setOrderId(orderId);
+        fundDetail.setPayProcessId(orderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(withdrawOrder.getAmount());
         fundDetail.setMemberId(withdrawOrder.getMemberId());
@@ -68,7 +68,7 @@ public class WithdrawBuilder extends PaymentBuilder {
     private FundDetail buildPayerFundDetail(String paymentId, String orderId, WithdrawOrder withdrawOrder) {
         FundDetail fundDetail = new FundDetail();
         fundDetail.setPaymentId(paymentId);
-        fundDetail.setOrderId(orderId);
+        fundDetail.setPayProcessId(orderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(withdrawOrder.getAmount());
         fundDetail.setMemberId(withdrawOrder.getMemberId());

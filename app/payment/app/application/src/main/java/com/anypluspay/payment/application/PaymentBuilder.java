@@ -49,7 +49,7 @@ public abstract class PaymentBuilder {
     protected FundDetail buildFundDetail(String paymentId, String orderId, FundDetailInfo info, BelongTo belongTo) {
         FundDetail fundDetail = new FundDetail();
         fundDetail.setPaymentId(paymentId);
-        fundDetail.setOrderId(orderId);
+        fundDetail.setPayProcessId(orderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(info.getAmount());
         fundDetail.setMemberId(info.getMemberId());

@@ -13,10 +13,10 @@ import com.anypluspay.channel.types.enums.RefundType;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.domain.asset.AssetFluxExecutor;
 import com.anypluspay.payment.domain.asset.FluxResult;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.flux.InstructionDirection;
-import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
+import com.anypluspay.payment.domain.flux.FluxProcessDirection;
+import com.anypluspay.payment.domain.repository.FluxProcessRepository;
 import com.anypluspay.payment.domain.repository.FundDetailRepository;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
@@ -52,7 +52,7 @@ public class ExternalExecutor implements AssetFluxExecutor {
     private ExternalResultService externalResultService;
 
     @Autowired
-    private FluxInstructionRepository fluxInstructionRepository;
+    private FluxProcessRepository fluxProcessRepository;
 
     @Autowired
     private FundDetailRepository fundDetailRepository;
@@ -64,32 +64,32 @@ public class ExternalExecutor implements AssetFluxExecutor {
     private WithdrawOrderRepository withdrawOrderRepository;
 
     @Override
-    public FluxResult increase(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult increase(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         IdType paymentIdType = idGeneratorService.getIdType(fluxOrder.getPaymentId());
         if (paymentIdType == IdType.WITHDRAW_ORDER_ID) {
-            FundOutRequest fundOutRequest = buildFundOutRequest(fluxOrder, fluxInstruction);
+            FundOutRequest fundOutRequest = buildFundOutRequest(fluxOrder, fluxProcess);
             FundResult fundResult = fundOutFacade.apply(fundOutRequest);
-            return externalResultService.process(fluxInstruction, fundResult);
+            return externalResultService.process(fluxProcess, fundResult);
         } else {
             if (fluxOrder.getPayType() == PayOrderType.REFUND ||
-                    (fluxOrder.getPayType() == PayOrderType.PAY && fluxInstruction.getDirection() == InstructionDirection.REVOKE)) {
-                FluxInstruction origFluxInstruction = fluxInstructionRepository.load(fluxInstruction.getRelationId());
-                RefundRequest request = buildRefundOrder(fluxInstruction, origFluxInstruction);
+                    (fluxOrder.getPayType() == PayOrderType.PAY && fluxProcess.getDirection() == FluxProcessDirection.REVOKE)) {
+                FluxProcess origFluxProcess = fluxProcessRepository.load(fluxProcess.getRelationId());
+                RefundRequest request = buildRefundOrder(fluxProcess, origFluxProcess);
                 FundResult fundResult = refundFacade.apply(request);
-                return externalResultService.process(fluxInstruction, fundResult);
+                return externalResultService.process(fluxProcess, fundResult);
             }
         }
         throw new UnsupportedOperationException("不支持的指令");
     }
 
     @Override
-    public FluxResult decrease(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult decrease(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         FundInRequest request = new FundInRequest();
-        request.setRequestId(fluxInstruction.getInstructionId());
-        FundDetail fundDetail = fundDetailRepository.load(fluxInstruction.getFundDetailId());
+        request.setRequestId(fluxProcess.getFluxProcessId());
+        FundDetail fundDetail = fundDetailRepository.load(fluxProcess.getFundDetailId());
         request.setPayModel(fundDetail.getPayModel().getCode());
         request.setMemberId(fundDetail.getMemberId());
-        request.setAmount(fluxInstruction.getAmount());
+        request.setAmount(fluxProcess.getAmount());
 
         Extension payParam = fundDetail.getPayParam();
         request.setPayInst(payParam.get(PaymentExtKey.PAY_INST.getCode()));
@@ -101,44 +101,44 @@ public class ExternalExecutor implements AssetFluxExecutor {
         request.setExtension(requestExt);
 
         FundResult fundResult = fundInFacade.apply(request);
-        return externalResultService.process(fluxInstruction, fundResult);
+        return externalResultService.process(fluxProcess, fundResult);
     }
 
     @Override
-    public FluxResult freeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult freeze(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         throw new UnsupportedOperationException("不支持的指令");
     }
 
     @Override
-    public FluxResult unfreeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult unfreeze(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         throw new UnsupportedOperationException("不支持的指令");
     }
 
     /**
      * 构造退款请求
      *
-     * @param fluxInstruction     退款指令
-     * @param origFluxInstruction 原指令
+     * @param fluxProcess     退款指令
+     * @param origFluxProcess 原指令
      * @return 退款request
      */
-    private RefundRequest buildRefundOrder(FluxInstruction fluxInstruction, FluxInstruction origFluxInstruction) {
+    private RefundRequest buildRefundOrder(FluxProcess fluxProcess, FluxProcess origFluxProcess) {
         RefundRequest request = new RefundRequest();
-        request.setRequestId(fluxInstruction.getInstructionId());
+        request.setRequestId(fluxProcess.getFluxProcessId());
         request.setRefundType(RefundType.PAYER_REFUND);
-        request.setOrigRequestId(origFluxInstruction.getInstructionId());
-        request.setAmount(fluxInstruction.getAmount());
+        request.setOrigRequestId(origFluxProcess.getFluxProcessId());
+        request.setAmount(fluxProcess.getAmount());
         return request;
     }
 
-    private FundOutRequest buildFundOutRequest(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    private FundOutRequest buildFundOutRequest(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         FundOutRequest request = new FundOutRequest();
         WithdrawOrder withdrawOrder = withdrawOrderRepository.load(fluxOrder.getPaymentId());
-        request.setRequestId(fluxInstruction.getInstructionId());
+        request.setRequestId(fluxProcess.getFluxProcessId());
         request.setMemberId(withdrawOrder.getMemberId());
         request.setAccountNo(withdrawOrder.getAccountNo());
         request.setBankCode(withdrawOrder.getBankCode());
         request.setAccountName(withdrawOrder.getCardName());
-        request.setAmount(fluxInstruction.getAmount());
+        request.setAmount(fluxProcess.getAmount());
         request.setAccountType(CompanyOrPersonal.PERSONAL);
         request.setPayMethod("balance");
         return request;

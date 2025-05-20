@@ -11,10 +11,10 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
 import com.anypluspay.payment.domain.flux.*;
-import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.flux.chain.FluxChain;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
-import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
+import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
@@ -28,7 +28,7 @@ import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.asset.BankCardAsset;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.payment.types.paymethod.PayModel;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -58,7 +58,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected PaymentRepository paymentRepository;
 
     @Autowired
-    protected GeneralPayOrderRepository generalPayOrderRepository;
+    protected PayProcessRepository payProcessRepository;
 
     @Autowired
     protected RefundOrderRepository refundOrderRepository;
@@ -150,7 +150,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
 
     protected void assetPayOrder(InstantPaymentRequest request, InstantPaymentResponse response) {
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
-        GeneralPayOrder generalPayOrder = generalPayOrderRepository.load(response.getPayOrderId());
+        PayProcess generalPayOrder = payProcessRepository.load(response.getPayOrderId());
         Assert.assertNotNull(generalPayOrder);
         Assert.assertEquals(request.getRequestId(), generalPayOrder.getRequestId());
         Assert.assertEquals(request.getPayAmount(), generalPayOrder.getAmount());
@@ -180,32 +180,32 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected void assetFlux(InstantPaymentResponse response) {
         FluxOrder fluxOrder = fluxOrderRepository.loadByPayOrderId(response.getPayOrderId());
         Assert.assertNotNull(fluxOrder);
-        InstructChain instructChain = fluxOrder.getInstructChain();
-        List<FluxInstruction> allFluxInstructions = instructChain.toList();
-        List<FluxInstruction> fluxInstructions = allFluxInstructions.stream().filter(f -> f.getStatus() == InstructStatus.SUCCESS
-                && f.getType() == InstructionType.NORMAL
+        FluxChain fluxChain = fluxOrder.getFluxChain();
+        List<FluxProcess> allFluxProcesses = fluxChain.toList();
+        List<FluxProcess> fluxProcesses = allFluxProcesses.stream().filter(f -> f.getStatus() == FluxProcessStatus.SUCCESS
+                && f.getType() == FluxProcessType.NORMAL
         ).toList();
-        fluxInstructions.forEach(fluxInstruction -> {
+        fluxProcesses.forEach(fluxInstruction -> {
             if (fluxInstruction.getAssetInfo().getAssetType().getAssetTypeCategory() == AssetTypeCategory.EXTERNAL) {
                 Assert.assertEquals(1,
-                        allFluxInstructions.stream().filter(f -> f.getStatus() == InstructStatus.SUCCESS
-                                && f.getType() == InstructionType.CLEARING
-                                && f.getRelationId().equals(fluxInstruction.getInstructionId())
+                        allFluxProcesses.stream().filter(f -> f.getStatus() == FluxProcessStatus.SUCCESS
+                                && f.getType() == FluxProcessType.CLEARING
+                                && f.getRelationId().equals(fluxInstruction.getFluxProcessId())
                                 && f.getAmount().equals(fluxInstruction.getAmount())
                         ).count());
             }
         });
 
-        if (response.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
+        if (response.getOrderStatus() == PayProcessStatus.SUCCESS) {
             Assert.assertEquals(FluxOrderStatus.SUCCESS, fluxOrder.getStatus());
-            Assert.assertEquals(0, instructChain.toList().stream().filter(f -> f.getStatus() != InstructStatus.SUCCESS).count());
-        } else if (response.getOrderStatus() == GeneralPayOrderStatus.FAIL) {
+            Assert.assertEquals(0, fluxChain.toList().stream().filter(f -> f.getStatus() != FluxProcessStatus.SUCCESS).count());
+        } else if (response.getOrderStatus() == PayProcessStatus.FAIL) {
             Assert.assertEquals(FluxOrderStatus.FAIL, fluxOrder.getStatus());
-            fluxInstructions.forEach(fluxInstruction -> {
+            fluxProcesses.forEach(fluxInstruction -> {
                 Assert.assertEquals(1,
-                        allFluxInstructions.stream().filter(f -> f.getStatus() == InstructStatus.SUCCESS
-                                && f.getDirection() == InstructionDirection.REVOKE
-                                && f.getRelationId().equals(fluxInstruction.getInstructionId())
+                        allFluxProcesses.stream().filter(f -> f.getStatus() == FluxProcessStatus.SUCCESS
+                                && f.getDirection() == FluxProcessDirection.REVOKE
+                                && f.getRelationId().equals(fluxInstruction.getFluxProcessId())
                                 && f.getAmount().equals(fluxInstruction.getAmount())
                         ).count());
             });

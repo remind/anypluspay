@@ -1,0 +1,78 @@
+package com.anypluspay.payment.domain.process.refund;
+
+import com.anypluspay.payment.domain.flux.FluxOrder;
+import com.anypluspay.payment.domain.process.AbstractBaseProcessService;
+import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.types.PayResult;
+import com.anypluspay.payment.types.PayStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * 退款服务
+ *
+ * @author wxj
+ * 2025/2/18
+ */
+@Service
+public class RefundService extends AbstractBaseProcessService {
+
+    @Autowired
+    private RefundOrderRepository refundOrderRepository;
+
+    public PayResult process(RefundProcess refundOrder) {
+        FluxOrder fluxOrder = buildFluxOrder(refundOrder);
+        transactionTemplate.executeWithoutResult(status -> {
+            fluxOrderRepository.store(fluxOrder);
+            refundOrder.setStatus(RefundOrderStatus.PAYING);
+            refundOrderRepository.reStore(refundOrder);
+        });
+
+        PayResult payResult = fluxEngineService.process(fluxOrder);
+        processFluxResult(refundOrder, payResult);
+        return payResult;
+    }
+
+    /**
+     * 处理 flux 结果
+     *
+     * @param refundProcess 退款订单
+     * @param payResult   支付结果
+     */
+    public void processFluxResult(RefundProcess refundProcess, PayResult payResult) {
+        transactionTemplate.executeWithoutResult(status -> {
+            refundOrderRepository.lock(refundProcess.getProcessId());
+            if (refundProcess.getStatus() == RefundOrderStatus.PAYING) {
+                // 仅支付中状态才处理结果，防止重复处理
+                convertStatus(refundProcess, payResult);
+                refundOrderRepository.reStore(refundProcess);
+                if (refundProcess.getStatus() == RefundOrderStatus.SUCCESS || refundProcess.getStatus() == RefundOrderStatus.FAIL) {
+                    paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
+                }
+            }
+        });
+    }
+
+    /**
+     * 状态转换
+     *
+     * @param refundOrder 退款订单
+     * @param payResult   支付结果
+     */
+    private void convertStatus(RefundProcess refundOrder, PayResult payResult) {
+        if (payResult.getPayStatus() == PayStatus.SUCCESS) {
+            refundOrder.setStatus(RefundOrderStatus.SUCCESS);
+        }
+        switch (payResult.getPayStatus()) {
+            case SUCCESS:
+                refundOrder.setStatus(RefundOrderStatus.SUCCESS);
+                break;
+            case FAIL:
+                refundOrder.setStatus(RefundOrderStatus.FAIL);
+                break;
+            case PROCESS:
+                refundOrder.setStatus(RefundOrderStatus.PAYING);
+                break;
+        }
+    }
+}

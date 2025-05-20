@@ -20,9 +20,9 @@ public class DepositOrder extends Entity {
     private String paymentId;
 
     /**
-     * 支付订单号
+     * 支付指令ID
      */
-    private String payOrderId;
+    private String payProcessId;
 
     /**
      * 发起人会员ID

@@ -5,12 +5,15 @@ import com.anypluspay.admin.basis.mapper.QueryDefineMapper;
 import com.anypluspay.admin.basis.mapper.QueryParamDefineMapper;
 import com.anypluspay.admin.basis.mapper.dataobject.QueryDefineDO;
 import com.anypluspay.admin.basis.mapper.dataobject.QueryParamDefineDO;
+import com.anypluspay.commons.exceptions.BizException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -28,6 +31,7 @@ import java.util.stream.Collectors;
  * 2025/3/20
  */
 @Service
+@Slf4j
 public class UnionQueryService {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -153,7 +157,13 @@ public class UnionQueryService {
             // 执行查询
             JdbcTemplate jdbcTemplate = jdbcTemplateMap.get(queryDefine.getDataSource());
             String sql = buildQuerySQL(inParamName, queryDefine.getQuerySql(), paramQueryValue);
-            List<Map<String, Object>> queryData = jdbcTemplate.queryForList(sql, paramQueryValue.toArray());
+            List<Map<String, Object>> queryData = null;
+            try {
+                queryData = jdbcTemplate.queryForList(sql, paramQueryValue.toArray());
+            } catch (DataAccessException e) {
+                log.error("查询异常,异常SQL=" + sql, e);
+                throw new BizException("查询异常");
+            }
             if (CollectionUtils.isEmpty(queryData)) {
                 continue;
             }

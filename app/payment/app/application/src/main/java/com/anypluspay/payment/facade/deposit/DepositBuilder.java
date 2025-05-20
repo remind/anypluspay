@@ -3,8 +3,8 @@ package com.anypluspay.payment.facade.deposit;
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.types.biz.DepositOrderStatus;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
@@ -12,7 +12,7 @@ import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class DepositBuilder extends PaymentBuilder {
     public DepositOrder buildDepositOrder(DepositRequest request) {
         DepositOrder depositOrder = new DepositOrder();
         depositOrder.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
-        depositOrder.setPayOrderId(idGeneratorService.genIdByRelateId(depositOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
+        depositOrder.setPayProcessId(idGeneratorService.genIdByRelateId(depositOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
         depositOrder.setAmount(request.getAmount());
         depositOrder.setMemberId(request.getMemberId());
         depositOrder.setAccountNo(request.getAccountNo());
@@ -37,23 +37,23 @@ public class DepositBuilder extends PaymentBuilder {
         return depositOrder;
     }
 
-    public GeneralPayOrder buildPayOrder(DepositOrder depositOrder, List<FundDetailInfo> payerFundDetails) {
-        GeneralPayOrder generalPayOrder = new GeneralPayOrder();
-        generalPayOrder.setPaymentId(depositOrder.getPaymentId());
-        generalPayOrder.setOrderId(depositOrder.getPayOrderId());
-        generalPayOrder.setRequestId(UUID.randomUUID().toString(true));
-        generalPayOrder.setAmount(depositOrder.getAmount());
-        generalPayOrder.setMemberId(depositOrder.getMemberId());
-        generalPayOrder.setOrderStatus(GeneralPayOrderStatus.INIT);
-        payerFundDetails.forEach(fundDetailInfo -> generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER)));
-        generalPayOrder.addPayeeFundDetail(buildPayeeFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), depositOrder));
-        return generalPayOrder;
+    public PayProcess buildPayProcess(DepositOrder depositOrder, List<FundDetailInfo> payerFundDetails) {
+        PayProcess payProcess = new PayProcess();
+        payProcess.setPaymentId(depositOrder.getPaymentId());
+        payProcess.setProcessId(depositOrder.getPayProcessId());
+        payProcess.setRequestId(UUID.randomUUID().toString(true));
+        payProcess.setAmount(depositOrder.getAmount());
+        payProcess.setMemberId(depositOrder.getMemberId());
+        payProcess.setStatus(PayProcessStatus.INIT);
+        payerFundDetails.forEach(fundDetailInfo -> payProcess.addPayerFundDetail(buildFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), fundDetailInfo, BelongTo.PAYER)));
+        payProcess.addPayeeFundDetail(buildPayeeFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), depositOrder));
+        return payProcess;
     }
 
     protected FundDetail buildPayeeFundDetail(String paymentId, String orderId, DepositOrder depositOrder) {
         FundDetail fundDetail = new FundDetail();
         fundDetail.setPaymentId(paymentId);
-        fundDetail.setOrderId(orderId);
+        fundDetail.setPayProcessId(orderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(depositOrder.getAmount());
         fundDetail.setMemberId(depositOrder.getMemberId());

@@ -17,7 +17,7 @@ import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PaymentExtKey;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.paymethod.PayModel;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.testtrade.facade.request.PayMethod;
 import com.anypluspay.testtrade.facade.request.PayRequest;
 import com.anypluspay.testtrade.facade.request.TradeRefundRequest;
@@ -114,10 +114,10 @@ public class TradeFacadeImpl implements TradeFacade {
         response.setPayOrderId(instantPaymentResponse.getPayOrderId());
         response.setTradeId(String.valueOf(tradeOrderDO.getId()));
 
-        if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.SUCCESS) {
+        if (instantPaymentResponse.getOrderStatus() == PayProcessStatus.SUCCESS) {
             payService.processResult(payOrderDO.getId(), PayStatus.SUCCESS);
         }
-        if (instantPaymentResponse.getOrderStatus() == GeneralPayOrderStatus.PAYING) {
+        if (instantPaymentResponse.getOrderStatus() == PayProcessStatus.PAYING) {
             PayResult payResult = instantPaymentResponse.getResult();
             if (payResult.getPayStatus() == com.anypluspay.payment.types.PayStatus.PROCESS) {
                 Extension payResponse = new Extension(payResult.getPayResponse());

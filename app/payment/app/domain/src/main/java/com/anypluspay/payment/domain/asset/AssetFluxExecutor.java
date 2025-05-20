@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.asset;
 
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 
 /**
@@ -16,35 +16,35 @@ public interface AssetFluxExecutor {
      * 增加资产
      *
      * @param fluxOrder 交换单
-     * @param fluxInstruction   交换指令
+     * @param fluxProcess   交换指令
      * @return  交换结果
      */
-    FluxResult increase(FluxOrder fluxOrder, FluxInstruction fluxInstruction);
+    FluxResult increase(FluxOrder fluxOrder, FluxProcess fluxProcess);
 
     /**
      * 减少资产
      *
      * @param fluxOrder 交换单
-     * @param fluxInstruction   交换指令
+     * @param fluxProcess   交换指令
      * @return  交换结果
      */
-    FluxResult decrease(FluxOrder fluxOrder, FluxInstruction fluxInstruction);
+    FluxResult decrease(FluxOrder fluxOrder, FluxProcess fluxProcess);
 
     /**
      * 冻结资产
      *
      * @param fluxOrder 交换单
-     * @param fluxInstruction   交换指令
+     * @param fluxProcess   交换指令
      * @return  交换结果
      */
-    FluxResult freeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction);
+    FluxResult freeze(FluxOrder fluxOrder, FluxProcess fluxProcess);
 
     /**
      * 解冻资产
      *
      * @param fluxOrder 交换单
-     * @param fluxInstruction   交换指令
+     * @param fluxProcess   交换指令
      * @return  交换结果
      */
-    FluxResult unfreeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction);
+    FluxResult unfreeze(FluxOrder fluxOrder, FluxProcess fluxProcess);
 }

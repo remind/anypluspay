@@ -15,21 +15,21 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-19
+ * @since 2025-05-20
  */
-@TableName("t_acquiring_order")
+@TableName("tb_acquiring_order")
 public class AcquiringOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 支付业务单号
+     * 支付ID
      */
     @TableId(value = "payment_id", type = IdType.NONE)
     private String paymentId;
 
     /**
-     * 关联支付业务单号
+     * 关联支付ID
      */
     private String relationPaymentId;
 

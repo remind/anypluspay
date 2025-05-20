@@ -8,7 +8,7 @@ import com.anypluspay.payment.application.instant.InstPaymentBaseTest;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +58,7 @@ public class MultiMethodPayTest extends InstPaymentBaseTest {
         }).when(accountingFacade).apply(any());
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 3000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.FAIL, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.FAIL, response.getOrderStatus());
         assetPayOrder(request, response);
     }
 

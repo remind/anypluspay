@@ -2,8 +2,8 @@ package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentType;
@@ -21,16 +21,16 @@ public class InstantPaymentBuilder extends PaymentBuilder {
         return buildPayment(request, PaymentType.INSTANT);
     }
 
-    public GeneralPayOrder buildPayOrder(String paymentId, InstantPaymentRequest request) {
-        GeneralPayOrder generalPayOrder = new GeneralPayOrder();
-        generalPayOrder.setPaymentId(paymentId);
-        generalPayOrder.setOrderId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
-        generalPayOrder.setRequestId(request.getRequestId());
-        generalPayOrder.setAmount(request.getPayAmount());
-        generalPayOrder.setMemberId(request.getPayerId());
-        generalPayOrder.setOrderStatus(GeneralPayOrderStatus.INIT);
-        fillFundDetails(generalPayOrder, request);
-        return generalPayOrder;
+    public PayProcess buildPayProcess(String paymentId, InstantPaymentRequest request) {
+        PayProcess payProcess = new PayProcess();
+        payProcess.setPaymentId(paymentId);
+        payProcess.setProcessId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
+        payProcess.setRequestId(request.getRequestId());
+        payProcess.setAmount(request.getPayAmount());
+        payProcess.setMemberId(request.getPayerId());
+        payProcess.setStatus(PayProcessStatus.INIT);
+        fillFundDetails(payProcess, request);
+        return payProcess;
     }
 
     /**
@@ -38,13 +38,13 @@ public class InstantPaymentBuilder extends PaymentBuilder {
      * @param generalPayOrder
      * @param request
      */
-    private void fillFundDetails(GeneralPayOrder generalPayOrder, InstantPaymentRequest request) {
+    private void fillFundDetails(PayProcess generalPayOrder, InstantPaymentRequest request) {
         request.getPayerFundDetail().forEach(fundDetailInfo -> {
-            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
+            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getProcessId(), fundDetailInfo, BelongTo.PAYER));
         });
 
         request.getPayeeFundDetail().forEach(fundDetailInfo -> {
-            generalPayOrder.addPayeeFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYEE));
+            generalPayOrder.addPayeeFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getProcessId(), fundDetailInfo, BelongTo.PAYEE));
         });
     }
 

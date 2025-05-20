@@ -1,13 +1,11 @@
 package com.anypluspay.payment.domain.asset;
 
 import com.anypluspay.commons.lang.types.Extension;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.types.PayStatus;
 import lombok.Data;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 交换结果
@@ -26,12 +24,12 @@ public class FluxResult {
     /**
      * 执行指令
      */
-    private FluxInstruction executeInstruction;
+    private FluxProcess executeInstruction;
 
     /**
      * 新增交换指令
      */
-    private List<FluxInstruction> newFluxInstructions;
+    private List<FluxProcess> newFluxProcesses;
 
     /**
      * 返回结果码

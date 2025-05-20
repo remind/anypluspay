@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public abstract class AbstractBizOrderResponse {
 
     /**
-     * 支付总单号
+     * 支付单号
      */
     private String paymentId;
 

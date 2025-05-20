@@ -13,7 +13,7 @@ import lombok.Data;
 public class PaymentBizOrder extends Entity {
 
     /**
-     * 支付业务单号
+     * 支付单号
      */
     private String paymentId;
 }

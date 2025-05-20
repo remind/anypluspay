@@ -15,7 +15,7 @@ import lombok.Data;
 public class AcquiringOrder extends PaymentBizOrder {
 
     /**
-     * 关联的支付业务单号
+     * 关联的支付单号
      */
     private String relationPaymentId;
 

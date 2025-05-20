@@ -9,15 +9,15 @@ db:
     password: root
   table:
     prefix:
-      - tp_
+    # 表名前缀
+      - tb_ #支付业务表
       - t_
     name:
-    # 依次为：表名,业务主键字段(如果也是表主键就不用)
-#      - tp_payment,payment_id
-#      - tp_fund_detail,detail_id
-#      - tp_flux_order
-#      - tp_flux_instruction
-#      - tp_refund_order
-#      - tp_general_pay_order
-#      - t_withdraw_order
-      - t_acquiring_order
+#      - tb_acquiring_order
+#      - tb_withdraw_order
+#      - tb_deposit_order
+#      - t_pay_process
+#      - t_refund_process
+      - t_fund_detail
+#      - t_flux_order
+#      - t_flux_process

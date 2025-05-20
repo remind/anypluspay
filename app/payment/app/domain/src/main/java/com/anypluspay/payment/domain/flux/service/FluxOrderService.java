@@ -1,8 +1,8 @@
 package com.anypluspay.payment.domain.flux.service;
 
 import com.anypluspay.payment.domain.flux.*;
-import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
+import com.anypluspay.payment.domain.flux.chain.FluxChain;
+import com.anypluspay.payment.domain.repository.FluxProcessRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.List;
 public class FluxOrderService {
 
     @Autowired
-    private FluxInstructionRepository fluxInstructionRepository;
+    private FluxProcessRepository fluxProcessRepository;
 
     @Autowired
     protected IdGeneratorService idGeneratorService;
@@ -34,8 +34,8 @@ public class FluxOrderService {
      * @return
      */
     public void deleteAfterFluxInstruct(FluxOrder fluxOrder, String instructId) {
-        List<String> deleteIds = fluxOrder.getInstructChain().deleteAfterNode(instructId);
-        fluxInstructionRepository.remove(deleteIds);
+        List<String> deleteIds = fluxOrder.getFluxChain().deleteAfterNode(instructId);
+        fluxProcessRepository.remove(deleteIds);
     }
 
 
@@ -43,26 +43,26 @@ public class FluxOrderService {
      * 创建一个指令的逆向指令
      *
      * @param fluxOrder
-     * @param fluxInstruction
+     * @param fluxProcess
      * @return
      */
-    public FluxInstruction createRevokeInstruct(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
-        FluxInstruction reverseInstruct = new FluxInstruction();
-        InstructChain instructChain = fluxOrder.getInstructChain();
-        reverseInstruct.setInstructionId(idGeneratorService.genIdByRelateId(fluxInstruction.getFluxOrderId(), IdType.FLUX_INSTRUCT_ID));
-        reverseInstruct.setFluxOrderId(fluxInstruction.getFluxOrderId());
-        reverseInstruct.setPayOrderId(fluxInstruction.getPayOrderId());
-        reverseInstruct.setPaymentId(fluxInstruction.getPaymentId());
-        reverseInstruct.setType(fluxInstruction.getType());
-        reverseInstruct.setDirection(InstructionDirection.REVOKE);
-        reverseInstruct.setAmount(fluxInstruction.getAmount());
-        reverseInstruct.setStatus(InstructStatus.INIT);
-        reverseInstruct.setFundDetailId(fluxInstruction.getFundDetailId());
-        reverseInstruct.setRelationId(fluxInstruction.getInstructionId());
-        reverseInstruct.setFundAction(fluxInstruction.getFundAction().reverse());
-        reverseInstruct.setAssetInfo(fluxInstruction.getAssetInfo());
-        instructChain.append(reverseInstruct);
-        fluxInstructionRepository.store(reverseInstruct);
+    public FluxProcess createRevokeInstruct(FluxOrder fluxOrder, FluxProcess fluxProcess) {
+        FluxProcess reverseInstruct = new FluxProcess();
+        FluxChain fluxChain = fluxOrder.getFluxChain();
+        reverseInstruct.setFluxProcessId(idGeneratorService.genIdByRelateId(fluxProcess.getFluxOrderId(), IdType.FLUX_INSTRUCT_ID));
+        reverseInstruct.setFluxOrderId(fluxProcess.getFluxOrderId());
+        reverseInstruct.setPayProcessId(fluxProcess.getPayProcessId());
+        reverseInstruct.setPaymentId(fluxProcess.getPaymentId());
+        reverseInstruct.setType(fluxProcess.getType());
+        reverseInstruct.setDirection(FluxProcessDirection.REVOKE);
+        reverseInstruct.setAmount(fluxProcess.getAmount());
+        reverseInstruct.setStatus(FluxProcessStatus.INIT);
+        reverseInstruct.setFundDetailId(fluxProcess.getFundDetailId());
+        reverseInstruct.setRelationId(fluxProcess.getFluxProcessId());
+        reverseInstruct.setFundAction(fluxProcess.getFundAction().reverse());
+        reverseInstruct.setAssetInfo(fluxProcess.getAssetInfo());
+        fluxChain.append(reverseInstruct);
+        fluxProcessRepository.store(reverseInstruct);
         return reverseInstruct;
     }
 
@@ -70,15 +70,15 @@ public class FluxOrderService {
      * 在指定指令之后插入指令
      *
      * @param fluxOrder
-     * @param fluxInstruction
-     * @param newFluxInstructions
+     * @param fluxProcess
+     * @param newFluxProcesses
      * @return
      */
-    public void insertInstruct(FluxOrder fluxOrder, FluxInstruction fluxInstruction, List<FluxInstruction> newFluxInstructions) {
-        if (!CollectionUtils.isEmpty(newFluxInstructions)) {
-            FluxInstruction changedInstruction = fluxOrder.getInstructChain().insertAfterNode(fluxInstruction, newFluxInstructions);
-            fluxInstructionRepository.reStore(changedInstruction);
-            newFluxInstructions.forEach(fluxInstructionRepository::store);
+    public void insertInstruct(FluxOrder fluxOrder, FluxProcess fluxProcess, List<FluxProcess> newFluxProcesses) {
+        if (!CollectionUtils.isEmpty(newFluxProcesses)) {
+            FluxProcess changedInstruction = fluxOrder.getFluxChain().insertAfterNode(fluxProcess, newFluxProcesses);
+            fluxProcessRepository.reStore(changedInstruction);
+            newFluxProcesses.forEach(fluxProcessRepository::store);
         }
     }
 }

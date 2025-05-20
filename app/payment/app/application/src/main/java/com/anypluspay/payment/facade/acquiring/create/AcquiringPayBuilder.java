@@ -5,7 +5,7 @@ import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
@@ -18,7 +18,7 @@ import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.payment.types.paymethod.PayModel;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,35 +28,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class AcquiringPayBuilder extends PaymentBuilder {
 
-    public GeneralPayOrder buildPayOrder(AcquiringOrder acquiringOrder, AcquiringPayRequest request) {
-        GeneralPayOrder generalPayOrder = new GeneralPayOrder();
-        generalPayOrder.setPaymentId(acquiringOrder.getPaymentId());
-        generalPayOrder.setOrderId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
-        generalPayOrder.setRequestId(UUID.randomUUID().toString(true));
-        generalPayOrder.setAmount(acquiringOrder.getAmount());
-        generalPayOrder.setMemberId(acquiringOrder.getPayerId());
-        generalPayOrder.setOrderStatus(GeneralPayOrderStatus.INIT);
-        fillFundDetails(acquiringOrder, generalPayOrder, request);
-        return generalPayOrder;
+    public PayProcess buildPayProcess(AcquiringOrder acquiringOrder, AcquiringPayRequest request) {
+        PayProcess payProcess = new PayProcess();
+        payProcess.setPaymentId(acquiringOrder.getPaymentId());
+        payProcess.setProcessId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
+        payProcess.setRequestId(UUID.randomUUID().toString(true));
+        payProcess.setAmount(acquiringOrder.getAmount());
+        payProcess.setMemberId(acquiringOrder.getPayerId());
+        payProcess.setStatus(PayProcessStatus.INIT);
+        fillFundDetails(acquiringOrder, payProcess, request);
+        return payProcess;
     }
 
     /**
      * 填充资金明细
      *
-     * @param generalPayOrder
+     * @param payProcess
      * @param request
      */
-    private void fillFundDetails(AcquiringOrder acquiringOrder, GeneralPayOrder generalPayOrder, AcquiringPayRequest request) {
+    private void fillFundDetails(AcquiringOrder acquiringOrder, PayProcess payProcess, AcquiringPayRequest request) {
         request.getPayerFundDetail().forEach(fundDetailInfo -> {
-            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
+            payProcess.addPayerFundDetail(buildFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), fundDetailInfo, BelongTo.PAYER));
         });
-        generalPayOrder.addPayeeFundDetail(buildPayeeFundDetail(acquiringOrder, generalPayOrder.getOrderId()));
+        payProcess.addPayeeFundDetail(buildPayeeFundDetail(acquiringOrder, payProcess.getProcessId()));
     }
 
     private FundDetail buildPayeeFundDetail(AcquiringOrder acquiringOrder, String payOrderId) {
         FundDetail fundDetail = new FundDetail();
         fundDetail.setPaymentId(acquiringOrder.getPaymentId());
-        fundDetail.setOrderId(payOrderId);
+        fundDetail.setPayProcessId(payOrderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(acquiringOrder.getAmount());
         fundDetail.setMemberId(acquiringOrder.getPayeeId());

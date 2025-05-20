@@ -15,23 +15,23 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-15
+ * @since 2025-05-20
  */
-@TableName("t_withdraw_order")
+@TableName("tb_withdraw_order")
 public class WithdrawOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 充值单号
+     * 支付ID
      */
     @TableId(value = "payment_id", type = IdType.NONE)
     private String paymentId;
 
     /**
-     * 支付单号
+     * 支付指令ID
      */
-    private String payOrderId;
+    private String payProcessId;
 
     /**
      * 会员ID
@@ -108,12 +108,12 @@ public class WithdrawOrderDO implements Serializable {
         this.paymentId = paymentId;
     }
 
-    public String getPayOrderId() {
-        return payOrderId;
+    public String getPayProcessId() {
+        return payProcessId;
     }
 
-    public void setPayOrderId(String payOrderId) {
-        this.payOrderId = payOrderId;
+    public void setPayProcessId(String payProcessId) {
+        this.payProcessId = payProcessId;
     }
 
     public String getMemberId() {
@@ -224,7 +224,7 @@ public class WithdrawOrderDO implements Serializable {
     public String toString() {
         return "WithdrawOrderDO{" +
         "paymentId = " + paymentId +
-        ", payOrderId = " + payOrderId +
+        ", payProcessId = " + payProcessId +
         ", memberId = " + memberId +
         ", accountNo = " + accountNo +
         ", amount = " + amount +

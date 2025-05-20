@@ -5,7 +5,7 @@ import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, amount)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
     }
 
@@ -48,7 +48,7 @@ public class ChannelPayTest extends InstPaymentBaseTest {
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
         assetPayOrder(request, response);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());
         Assert.assertNotNull(payResult.getPayResponse());

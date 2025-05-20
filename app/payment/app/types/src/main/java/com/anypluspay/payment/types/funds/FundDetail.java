@@ -22,9 +22,9 @@ public class FundDetail extends Entity  {
     private String paymentId;
 
     /**
-     * 支付单ID
+     * 支付指令ID，来自支付、退款指令
      */
-    private String orderId;
+    private String payProcessId;
 
     /**
      * 详情ID

@@ -48,7 +48,7 @@ public class FundDetailInnerRepository  {
         return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPaymentId, paymentId);
     }
 
-    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String orderId) {
-        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getOrderId, orderId);
+    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String payProcessId) {
+        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPayProcessId, payProcessId);
     }
 }

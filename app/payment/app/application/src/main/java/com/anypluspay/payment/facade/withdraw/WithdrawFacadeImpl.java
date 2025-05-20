@@ -1,7 +1,7 @@
 package com.anypluspay.payment.facade.withdraw;
 
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.PayResult;
@@ -26,12 +26,12 @@ public class WithdrawFacadeImpl extends AbstractPaymentService implements Withdr
     @Override
     public WithdrawResponse apply(WithdrawRequest request) {
         WithdrawOrder withdrawOrder = withdrawBuilder.buildWithdrawOrder(request);
-        GeneralPayOrder payOrder = withdrawBuilder.buildPayOrder(withdrawOrder);
+        PayProcess payOrder = withdrawBuilder.buildPayProcess(withdrawOrder);
         transactionTemplate.executeWithoutResult(status -> {
             withdrawOrderRepository.store(withdrawOrder);
-            generalPayOrderRepository.store(payOrder);
+            payProcessRepository.store(payOrder);
         });
-        PayResult result = generalPayService.process(payOrder);
+        PayResult result = payProcessService.process(payOrder);
         return processResult(withdrawOrder.getPaymentId(), result);
     }
 

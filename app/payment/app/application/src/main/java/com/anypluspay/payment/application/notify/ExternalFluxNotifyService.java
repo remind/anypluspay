@@ -3,15 +3,15 @@ package com.anypluspay.payment.application.notify;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.asset.external.ExternalResultService;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.flux.service.FluxEngineService;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.GeneralPayService;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
-import com.anypluspay.payment.domain.payorder.refund.RefundService;
+import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.process.ProcessProcessService;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.process.refund.RefundService;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
-import com.anypluspay.payment.domain.repository.GeneralPayOrderRepository;
+import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
@@ -39,10 +39,10 @@ public class ExternalFluxNotifyService {
     private FluxEngineService fluxEngineService;
 
     @Autowired
-    private GeneralPayService generalPayService;
+    private ProcessProcessService payProcessService;
 
     @Autowired
-    private GeneralPayOrderRepository generalPayOrderRepository;
+    private PayProcessRepository payProcessRepository;
 
     @Autowired
     private RefundService refundService;
@@ -58,17 +58,17 @@ public class ExternalFluxNotifyService {
         if (fluxOrder == null) {
             return;
         }
-        FluxInstruction fluxInstruction = fluxOrder.getInstructChain().find(fundResult.getRequestId()).getFluxInstruction();
-        FluxResult result = externalResultService.process(fluxInstruction, fundResult);
-        result.setExecuteInstruction(fluxInstruction);
+        FluxProcess fluxProcess = fluxOrder.getFluxChain().find(fundResult.getRequestId()).getFluxProcess();
+        FluxResult result = externalResultService.process(fluxProcess, fundResult);
+        result.setExecuteInstruction(fluxProcess);
         PayResult payResult = fluxEngineService.processByResult(fluxOrder, result);
         if (payResult.getPayStatus() == PayStatus.SUCCESS || payResult.getPayStatus() == PayStatus.FAIL) {
-            IdType idType = idGeneratorService.getIdType(fluxOrder.getPayOrderId());
+            IdType idType = idGeneratorService.getIdType(fluxOrder.getPayProcessId());
             if (idType == IdType.PAY_ORDER_ID) {
-                GeneralPayOrder generalPayOrder = generalPayOrderRepository.load(fluxOrder.getPayOrderId());
-                generalPayService.processFluxResult(generalPayOrder, payResult);
+                PayProcess payProcess = payProcessRepository.load(fluxOrder.getPayProcessId());
+                payProcessService.processFluxResult(payProcess, payResult);
             } else if (idType == IdType.REFUND_ORDER_ID) {
-                RefundOrder refundOrder = refundOrderRepository.load(fluxOrder.getPayOrderId());
+                RefundProcess refundOrder = refundOrderRepository.load(fluxOrder.getPayProcessId());
                 refundService.processFluxResult(refundOrder, payResult);
             }
 

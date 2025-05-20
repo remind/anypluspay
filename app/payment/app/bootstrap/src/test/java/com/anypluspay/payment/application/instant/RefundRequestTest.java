@@ -1,10 +1,10 @@
 package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
+import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -41,9 +41,9 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         RefundResponse refundResponse = instantPaymentFacade.refund(refundRequest);
         Assert.assertNotNull(refundResponse);
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
-        RefundOrder refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
+        RefundProcess refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
         refundOrder.getPayeeDetails().forEach(fundDetail -> {
-            Assert.assertEquals(RefundOrderStatus.SUCCESS, refundOrder.getOrderStatus());
+            Assert.assertEquals(RefundOrderStatus.SUCCESS, refundOrder.getStatus());
         });
     }
 
@@ -60,7 +60,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, 1000), buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, 1000)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 2000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.SUCCESS, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.SUCCESS, response.getOrderStatus());
         assetPayOrder(request, response);
         return response;
     }

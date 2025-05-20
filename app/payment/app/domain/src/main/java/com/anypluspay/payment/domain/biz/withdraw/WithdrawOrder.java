@@ -18,9 +18,9 @@ public class WithdrawOrder extends Entity {
     private String paymentId;
 
     /**
-     * 支付订单号
+     * 支付指令ID
      */
-    private String payOrderId;
+    private String payProcessId;
 
     /**
      * 会员ID

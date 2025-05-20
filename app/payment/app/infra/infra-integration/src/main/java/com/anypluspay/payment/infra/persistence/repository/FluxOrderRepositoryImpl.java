@@ -1,16 +1,16 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
 import com.anypluspay.payment.domain.PaymentConstants;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
 import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.flux.chain.InstructChain;
-import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
+import com.anypluspay.payment.domain.flux.FluxProcess;
+import com.anypluspay.payment.domain.flux.chain.FluxChain;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
+import com.anypluspay.payment.domain.repository.FluxProcessRepository;
 import com.anypluspay.payment.infra.persistence.convertor.FluxOrderDalConvertor;
-import com.anypluspay.payment.infra.persistence.dataobject.FluxInstructionDO;
 import com.anypluspay.payment.infra.persistence.dataobject.FluxOrderDO;
-import com.anypluspay.payment.infra.persistence.mapper.FluxInstructionMapper;
+import com.anypluspay.payment.infra.persistence.dataobject.FluxProcessDO;
 import com.anypluspay.payment.infra.persistence.mapper.FluxOrderMapper;
+import com.anypluspay.payment.infra.persistence.mapper.FluxProcessMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,22 +29,22 @@ public class FluxOrderRepositoryImpl implements FluxOrderRepository {
     private FluxOrderMapper dalMapper;
 
     @Autowired
-    private FluxInstructionMapper instructionMapper;
+    private FluxProcessMapper instructionMapper;
 
     @Autowired
     private FluxOrderDalConvertor dalConvertor;
 
     @Autowired
-    private FluxInstructionRepository instructionRepository;
+    private FluxProcessRepository instructionRepository;
 
     @Override
     public void store(FluxOrder fluxOrder) {
         FluxOrderDO fluxOrderDO = dalConvertor.toDO(fluxOrder);
         dalMapper.insert(fluxOrderDO);
-        List<FluxInstruction> fluxInstructions = fluxOrder.getInstructChain().toList();
-        if (!CollectionUtils.isEmpty(fluxInstructions)) {
-            for (FluxInstruction fluxInstruction : fluxInstructions) {
-                instructionRepository.store(fluxInstruction);
+        List<FluxProcess> fluxProcesses = fluxOrder.getFluxChain().toList();
+        if (!CollectionUtils.isEmpty(fluxProcesses)) {
+            for (FluxProcess fluxProcess : fluxProcesses) {
+                instructionRepository.store(fluxProcess);
             }
         }
     }
@@ -65,34 +65,34 @@ public class FluxOrderRepositoryImpl implements FluxOrderRepository {
     }
 
     @Override
-    public FluxOrder loadByPayOrderId(String payOrderId) {
+    public FluxOrder loadByPayOrderId(String payProcessId) {
         LambdaQueryWrapper<FluxOrderDO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(FluxOrderDO::getPayOrderId, payOrderId);
+        wrapper.eq(FluxOrderDO::getPayProcessId, payProcessId);
         return buildFluxOrder(dalMapper.selectOne(wrapper));
     }
 
     @Override
-    public FluxOrder loadByInstructionId(String instructionId) {
-        FluxInstructionDO fluxInstructionDO = instructionMapper.selectById(instructionId);
-        return fluxInstructionDO != null ? load(fluxInstructionDO.getFluxOrderId()) : null;
+    public FluxOrder loadByInstructionId(String fluxProcessId) {
+        FluxProcessDO fluxProcessDO = instructionMapper.selectById(fluxProcessId);
+        return fluxProcessDO != null ? load(fluxProcessDO.getFluxOrderId()) : null;
     }
 
     private FluxOrder buildFluxOrder(FluxOrderDO fluxOrderDO) {
         FluxOrder fluxOrder = dalConvertor.toEntity(fluxOrderDO);
         if (fluxOrder != null) {
-            List<FluxInstruction> fluxInstructions = instructionRepository.loadByFluxOrderId(fluxOrder.getFluxOrderId());
-            InstructChain instructChain = new InstructChain();
-            if (!CollectionUtils.isEmpty(fluxInstructions)) {
-                FluxInstruction fluxInstruction;
+            List<FluxProcess> fluxProcesses = instructionRepository.loadByFluxOrderId(fluxOrder.getFluxOrderId());
+            FluxChain fluxChain = new FluxChain();
+            if (!CollectionUtils.isEmpty(fluxProcesses)) {
+                FluxProcess fluxProcess;
                 do {
-                    final String nextInstructionId = instructChain.getTail() == null ? PaymentConstants.DEFAULT_NULL_VALUE : instructChain.getTail().getFluxInstruction().getInstructionId();
-                    fluxInstruction = fluxInstructions.stream().filter(fi -> nextInstructionId.equals(fi.getPreInstructionId())).findFirst().orElse(null);
-                    if (fluxInstruction != null) {
-                        instructChain.append(fluxInstruction);
+                    final String nextFluxProcessId = fluxChain.getTail() == null ? PaymentConstants.DEFAULT_NULL_VALUE : fluxChain.getTail().getFluxProcess().getFluxProcessId();
+                    fluxProcess = fluxProcesses.stream().filter(fi -> nextFluxProcessId.equals(fi.getPreProcessId())).findFirst().orElse(null);
+                    if (fluxProcess != null) {
+                        fluxChain.append(fluxProcess);
                     }
-                } while (fluxInstruction != null);
+                } while (fluxProcess != null);
             }
-            fluxOrder.setInstructChain(instructChain);
+            fluxOrder.setFluxChain(fluxChain);
         }
         return fluxOrder;
     }

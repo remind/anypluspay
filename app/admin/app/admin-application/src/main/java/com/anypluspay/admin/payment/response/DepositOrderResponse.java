@@ -10,9 +10,9 @@ import lombok.Data;
 public class DepositOrderResponse extends AbstractBizOrderResponse {
 
     /**
-     * 支付订单号
+     * 支付指令
      */
-    private String payOrderId;
+    private String payProcessId;
 
     /**
      * 发起人会员ID

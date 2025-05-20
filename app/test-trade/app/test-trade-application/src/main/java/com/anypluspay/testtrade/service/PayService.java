@@ -1,6 +1,6 @@
 package com.anypluspay.testtrade.service;
 
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.testtrade.infra.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testtrade.infra.persistence.dataobject.TradeOrderDO;
@@ -57,10 +57,10 @@ public class PayService {
             if (refundOrderDO == null) {
                 return null;
             }
-            if (paymentOrderStatus.equals(GeneralPayOrderStatus.SUCCESS.getCode())) {
+            if (paymentOrderStatus.equals(PayProcessStatus.SUCCESS.getCode())) {
                 refundOrderDO.setStatus(RefundStatus.SUCCESS.getCode());
                 refundOrderMapper.updateById(refundOrderDO);
-            } else if (paymentOrderStatus.equals(GeneralPayOrderStatus.FAIL.getCode())) {
+            } else if (paymentOrderStatus.equals(PayProcessStatus.FAIL.getCode())) {
                 refundOrderDO.setStatus(RefundStatus.FAIL.getCode());
                 refundOrderMapper.updateById(refundOrderDO);
             }

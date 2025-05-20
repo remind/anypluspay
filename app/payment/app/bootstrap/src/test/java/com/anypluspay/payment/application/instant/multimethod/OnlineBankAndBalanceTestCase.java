@@ -17,7 +17,7 @@ import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.asset.AssetTypeCategory;
 import com.anypluspay.payment.types.funds.FundDetail;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,7 +71,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, 1000), buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, 2000)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 3000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
 
         // 2、支付成功通知
         makeSuccessNotify();
@@ -95,7 +95,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, 1000), buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, 2000)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 3000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
 
         // 2、支付失败通知
         makeFailNotify();
@@ -119,7 +119,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, 1000), buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, 2000)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 3000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
 
         // 2、支付成功通知
         makeSuccessNotify();
@@ -161,7 +161,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
         request.setPayerFundDetail(List.of(buildBankCardFundDetail(PAYER_MEMBER_ID, 1000), buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, 2000)));
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, 3000)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
 
         // 2、网银支付成功通知
         makeSuccessNotify();

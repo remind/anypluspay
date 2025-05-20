@@ -2,7 +2,7 @@ package com.anypluspay.payment.domain.flux.service;
 
 import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.flux.*;
-import com.anypluspay.payment.domain.repository.FluxInstructionRepository;
+import com.anypluspay.payment.domain.repository.FluxProcessRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
@@ -28,7 +28,7 @@ public class FluxService {
     private FluxOrderRepository fluxOrderRepository;
 
     @Autowired
-    private FluxInstructionRepository instructionRepository;
+    private FluxProcessRepository instructionRepository;
 
     @Autowired
     private IdGeneratorService idGeneratorService;
@@ -39,26 +39,26 @@ public class FluxService {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
-    public void process(FluxOrder fluxOrder, FluxInstruction fluxInstruction, FluxResult fluxResult) {
-        fluxInstruction.setStatus(convertToInstructStatus(fluxResult.getStatus()));
+    public void process(FluxOrder fluxOrder, FluxProcess fluxProcess, FluxResult fluxResult) {
+        fluxProcess.setStatus(convertToInstructStatus(fluxResult.getStatus()));
         transactionTemplate.executeWithoutResult(status -> {
             FluxOrder lockFluxOrder = fluxOrderRepository.lock(fluxOrder.getFluxOrderId());
 
-            fluxInstruction.setResultCode(fluxResult.getResultCode());
-            fluxInstruction.setResultMsg(fluxResult.getResultMessage());
+            fluxProcess.setResultCode(fluxResult.getResultCode());
+            fluxProcess.setResultMsg(fluxResult.getResultMessage());
 
-            if (fluxInstruction.getStatus() == InstructStatus.SUCCESS) {
-                addNewRelateInstruction(fluxOrder, fluxInstruction, fluxResult.getNewFluxInstructions());
+            if (fluxProcess.getStatus() == FluxProcessStatus.SUCCESS) {
+                addNewRelateInstruction(fluxOrder, fluxProcess, fluxResult.getNewFluxProcesses());
 
-                boolean isEnd = fluxOrder.getInstructChain().getTail().getFluxInstruction().getInstructionId().equals(fluxInstruction.getInstructionId());
+                boolean isEnd = fluxOrder.getFluxChain().getTail().getFluxProcess().getFluxProcessId().equals(fluxProcess.getFluxProcessId());
                 if (isEnd) {
-                    successProcess(fluxOrder, fluxInstruction);
+                    successProcess(fluxOrder, fluxProcess);
                 }
-            } else if (fluxInstruction.getStatus() == InstructStatus.FAIL) {
-                failProcess(fluxOrder, fluxInstruction);
+            } else if (fluxProcess.getStatus() == FluxProcessStatus.FAIL) {
+                failProcess(fluxOrder, fluxProcess);
             }
 
-            instructionRepository.reStore(fluxInstruction);
+            instructionRepository.reStore(fluxProcess);
             if (lockFluxOrder.getStatus() != fluxOrder.getStatus() && lockFluxOrder.getStatus() == FluxOrderStatus.PROCESS) {
                 fluxOrderRepository.reStore(fluxOrder);
             }
@@ -71,8 +71,8 @@ public class FluxService {
      * @param fluxOrder
      * @param lastInstruction
      */
-    private void successProcess(FluxOrder fluxOrder, FluxInstruction lastInstruction) {
-        long count = fluxOrder.getInstructChain().toList().stream().filter(i -> i.getStatus() != InstructStatus.SUCCESS).count();
+    private void successProcess(FluxOrder fluxOrder, FluxProcess lastInstruction) {
+        long count = fluxOrder.getFluxChain().toList().stream().filter(i -> i.getStatus() != FluxProcessStatus.SUCCESS).count();
         if (count == 0) {
             fluxOrder.setStatus(FluxOrderStatus.SUCCESS);
             fluxOrder.setResultCode(lastInstruction.getResultCode());
@@ -86,10 +86,10 @@ public class FluxService {
      * @param fluxOrder
      * @param lastInstruction
      */
-    private void failProcess(FluxOrder fluxOrder, FluxInstruction lastInstruction) {
-        if (lastInstruction.getDirection() == InstructionDirection.APPLY) {
+    private void failProcess(FluxOrder fluxOrder, FluxProcess lastInstruction) {
+        if (lastInstruction.getDirection() == FluxProcessDirection.APPLY) {
             // 删除所有后置指令
-            fluxOrderService.deleteAfterFluxInstruct(fluxOrder, lastInstruction.getInstructionId());
+            fluxOrderService.deleteAfterFluxInstruct(fluxOrder, lastInstruction.getFluxProcessId());
 
             // 支付撤消可生成退款单，退款撤消暂不处理
             if (fluxOrder.getPayType() == PayOrderType.PAY) {
@@ -107,9 +107,9 @@ public class FluxService {
      * @param fluxOrder
      */
     private void addRevokeInstruct(FluxOrder fluxOrder) {
-        List<FluxInstruction> forwardInstructs = fluxOrder.getInstructChain().toList().stream()
-                .filter(assetFluxInstruct -> assetFluxInstruct.getStatus() == InstructStatus.SUCCESS
-                        && assetFluxInstruct.getType() == InstructionType.NORMAL)
+        List<FluxProcess> forwardInstructs = fluxOrder.getFluxChain().toList().stream()
+                .filter(assetFluxInstruct -> assetFluxInstruct.getStatus() == FluxProcessStatus.SUCCESS
+                        && assetFluxInstruct.getType() == FluxProcessType.NORMAL)
                 .toList();
         if (!CollectionUtils.isEmpty(forwardInstructs)) {
             forwardInstructs.forEach(assetFluxInstruct -> {
@@ -122,19 +122,19 @@ public class FluxService {
      * 新增关联指令
      *
      * @param fluxOrder
-     * @param fluxInstruction
-     * @param newFluxInstructions
+     * @param fluxProcess
+     * @param newFluxProcesses
      */
-    private void addNewRelateInstruction(FluxOrder fluxOrder, FluxInstruction fluxInstruction, List<FluxInstruction> newFluxInstructions) {
-        if (!CollectionUtils.isEmpty(newFluxInstructions)) {
-            for (FluxInstruction newFluxInstruction : newFluxInstructions) {
-                newFluxInstruction.setPaymentId(fluxInstruction.getPaymentId());
-                newFluxInstruction.setPayOrderId(fluxInstruction.getPayOrderId());
-                newFluxInstruction.setFluxOrderId(fluxOrder.getFluxOrderId());
-                newFluxInstruction.setInstructionId(idGeneratorService.genIdByRelateId(fluxInstruction.getInstructionId(), IdType.FLUX_INSTRUCT_ID));
-                newFluxInstruction.setStatus(InstructStatus.INIT);
+    private void addNewRelateInstruction(FluxOrder fluxOrder, FluxProcess fluxProcess, List<FluxProcess> newFluxProcesses) {
+        if (!CollectionUtils.isEmpty(newFluxProcesses)) {
+            for (FluxProcess newFluxProcess : newFluxProcesses) {
+                newFluxProcess.setPaymentId(fluxProcess.getPaymentId());
+                newFluxProcess.setPayProcessId(fluxProcess.getPayProcessId());
+                newFluxProcess.setFluxOrderId(fluxOrder.getFluxOrderId());
+                newFluxProcess.setFluxProcessId(idGeneratorService.genIdByRelateId(fluxProcess.getFluxProcessId(), IdType.FLUX_INSTRUCT_ID));
+                newFluxProcess.setStatus(FluxProcessStatus.INIT);
             }
-            fluxOrderService.insertInstruct(fluxOrder, fluxInstruction, newFluxInstructions);
+            fluxOrderService.insertInstruct(fluxOrder, fluxProcess, newFluxProcesses);
         }
     }
 
@@ -144,11 +144,11 @@ public class FluxService {
      * @param payStatus
      * @return
      */
-    private InstructStatus convertToInstructStatus(PayStatus payStatus) {
+    private FluxProcessStatus convertToInstructStatus(PayStatus payStatus) {
         return switch (payStatus) {
-            case SUCCESS -> InstructStatus.SUCCESS;
-            case FAIL -> InstructStatus.FAIL;
-            case PROCESS -> InstructStatus.PROCESS;
+            case SUCCESS -> FluxProcessStatus.SUCCESS;
+            case FAIL -> FluxProcessStatus.FAIL;
+            case PROCESS -> FluxProcessStatus.PROCESS;
         };
     }
 }

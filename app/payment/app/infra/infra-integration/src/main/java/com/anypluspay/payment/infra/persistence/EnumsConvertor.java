@@ -3,16 +3,16 @@ package com.anypluspay.payment.infra.persistence;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.types.biz.DepositOrderStatus;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
-import com.anypluspay.payment.domain.flux.InstructStatus;
-import com.anypluspay.payment.domain.flux.InstructionDirection;
-import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.domain.flux.FluxProcessStatus;
+import com.anypluspay.payment.domain.flux.FluxProcessDirection;
+import com.anypluspay.payment.domain.flux.FluxProcessType;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.TradeType;
 import com.anypluspay.payment.types.paymethod.PayModel;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
+import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
@@ -31,8 +31,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(PaymentType.class, code);
     }
 
-    default GeneralPayOrderStatus toPayOrderStatus(String code) {
-        return EnumUtil.getByCode(GeneralPayOrderStatus.class, code);
+    default PayProcessStatus toPayOrderStatus(String code) {
+        return EnumUtil.getByCode(PayProcessStatus.class, code);
     }
 
     default RefundOrderStatus toRefundOrderStatus(String code) {
@@ -51,12 +51,12 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(FluxOrderStatus.class, code);
     }
 
-    default InstructionType toInstructionType(String code) {
-        return EnumUtil.getByCode(InstructionType.class, code);
+    default FluxProcessType toInstructionType(String code) {
+        return EnumUtil.getByCode(FluxProcessType.class, code);
     }
 
-    default InstructStatus toInstructStatus(String code) {
-        return EnumUtil.getByCode(InstructStatus.class, code);
+    default FluxProcessStatus toInstructStatus(String code) {
+        return EnumUtil.getByCode(FluxProcessStatus.class, code);
     }
 
     default FundAction toFundAction(String code) {
@@ -86,8 +86,8 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(PayOrderType.class, code);
     }
 
-    default InstructionDirection toInstructionDirection(String code) {
-        return EnumUtil.getByCode(InstructionDirection.class, code);
+    default FluxProcessDirection toInstructionDirection(String code) {
+        return EnumUtil.getByCode(FluxProcessDirection.class, code);
     }
 
     default DepositOrderStatus toDepositOrderStatus(String code) {

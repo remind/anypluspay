@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.deposit;
 
 import com.anypluspay.payment.application.AbstractPaymentService;
 import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.repository.DepositOrderRepository;
 import com.anypluspay.payment.types.PayResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +25,12 @@ public class DepositFacadeImpl extends AbstractPaymentService implements Deposit
     @Override
     public DepositResponse apply(DepositRequest request) {
         DepositOrder depositOrder = depositBuilder.buildDepositOrder(request);
-        GeneralPayOrder payOrder = depositBuilder.buildPayOrder(depositOrder, request.getPayerFundDetail());
+        PayProcess payProcess = depositBuilder.buildPayProcess(depositOrder, request.getPayerFundDetail());
         transactionTemplate.executeWithoutResult(status -> {
             depositOrderRepository.store(depositOrder);
-            generalPayOrderRepository.store(payOrder);
+            payProcessRepository.store(payProcess);
         });
-        PayResult result = generalPayService.process(payOrder);
+        PayResult result = payProcessService.process(payProcess);
         return processResult(depositOrder.getPaymentId(), result);
     }
 

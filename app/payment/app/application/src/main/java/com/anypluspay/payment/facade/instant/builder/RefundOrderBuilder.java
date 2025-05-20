@@ -1,9 +1,9 @@
 package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.payorder.GeneralPayOrder;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
-import com.anypluspay.payment.domain.payorder.refund.RefundOrderStatus;
+import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.facade.request.RefundRequest;
@@ -32,40 +32,40 @@ public class RefundOrderBuilder extends PaymentBuilder {
     @Autowired
     private RefundOrderRepository refundOrderRepository;
 
-    public RefundOrder build(RefundRequest request, GeneralPayOrder generalPayOrder) {
-        RefundOrder refundOrder = new RefundOrder();
-        refundOrder.setOrderId(idGeneratorService.genIdByRelateId(generalPayOrder.getPaymentId(), PayOrderType.REFUND.getIdType()));
-        refundOrder.setPaymentId(generalPayOrder.getPaymentId());
-        refundOrder.setMemberId(generalPayOrder.getMemberId());
+    public RefundProcess buildRefundProcess(RefundRequest request, PayProcess payProcess) {
+        RefundProcess refundOrder = new RefundProcess();
+        refundOrder.setProcessId(idGeneratorService.genIdByRelateId(payProcess.getPaymentId(), PayOrderType.REFUND.getIdType()));
+        refundOrder.setPaymentId(payProcess.getPaymentId());
+        refundOrder.setMemberId(payProcess.getMemberId());
         refundOrder.setRequestId(request.getRequestId());
-        refundOrder.setRelationId(generalPayOrder.getOrderId());
+        refundOrder.setRelationId(payProcess.getProcessId());
         refundOrder.setAmount(request.getAmount());
-        refundOrder.setOrderStatus(RefundOrderStatus.INIT);
-        fillFundDetail(request, generalPayOrder, refundOrder);
+        refundOrder.setStatus(RefundOrderStatus.INIT);
+        fillFundDetail(request, payProcess, refundOrder);
         return refundOrder;
     }
 
-    private void fillFundDetail(RefundRequest request, GeneralPayOrder generalPayOrder, RefundOrder refundOrder) {
+    private void fillFundDetail(RefundRequest request, PayProcess payProcess, RefundProcess refundOrder) {
         List<FundDetail> refundedPayerDetails = null;
         List<FundDetail> refundedPayeeDetails = null;
         Money refunedAmount = new Money();
-        List<RefundOrder> allRefundOrders = refundOrderRepository.loadByPayOrderId(generalPayOrder.getOrderId()).stream()
-                .filter(r -> r.getOrderStatus().equals(RefundOrderStatus.SUCCESS))
+        List<RefundProcess> allRefundOrders = refundOrderRepository.loadByPayProcessId(payProcess.getProcessId()).stream()
+                .filter(r -> r.getStatus().equals(RefundOrderStatus.SUCCESS))
                 .toList();
         if (!CollectionUtils.isEmpty(allRefundOrders)) {
             refundedPayerDetails = allRefundOrders.stream()
-                    .map(RefundOrder::getPayerDetails)
+                    .map(RefundProcess::getPayerDetails)
                     .flatMap(List::stream)
                     .toList();
             refundedPayeeDetails = allRefundOrders.stream()
-                    .map(RefundOrder::getPayeeDetails)
+                    .map(RefundProcess::getPayeeDetails)
                     .flatMap(List::stream)
                     .toList();
-            refunedAmount = allRefundOrders.stream().map(RefundOrder::getAmount).reduce(new Money(), Money::add);
+            refunedAmount = allRefundOrders.stream().map(RefundProcess::getAmount).reduce(new Money(), Money::add);
         }
-        Assert.isTrue(!request.getAmount().greaterThan(generalPayOrder.getAmount().subtract(refunedAmount)), "退款金额超出可退金额");
-        refundOrder.setPayeeDetails(buildPayeeDetails(refundOrder.getOrderId(), request.getAmount(), generalPayOrder.getPayerDetails(), refundedPayeeDetails));
-        refundOrder.setPayerDetails(buildPayerDetails(refundOrder.getOrderId(), request.getAmount(), generalPayOrder.getPayeeDetails(), refundedPayerDetails));
+        Assert.isTrue(!request.getAmount().greaterThan(payProcess.getAmount().subtract(refunedAmount)), "退款金额超出可退金额");
+        refundOrder.setPayeeDetails(buildPayeeDetails(refundOrder.getProcessId(), request.getAmount(), payProcess.getPayerDetails(), refundedPayeeDetails));
+        refundOrder.setPayerDetails(buildPayerDetails(refundOrder.getProcessId(), request.getAmount(), payProcess.getPayeeDetails(), refundedPayerDetails));
     }
 
     /**
@@ -133,7 +133,7 @@ public class RefundOrderBuilder extends PaymentBuilder {
         FundDetail reverseFundDetail = new FundDetail();
         reverseFundDetail.setPaymentId(origFundDetail.getPaymentId());
         reverseFundDetail.setPaymentId(origFundDetail.getPaymentId());
-        reverseFundDetail.setOrderId(orderId);
+        reverseFundDetail.setPayProcessId(orderId);
         reverseFundDetail.setDetailId(idGeneratorService.genIdByRelateId(orderId, IdType.FUND_DETAIL_ID));
         reverseFundDetail.setAmount(refundAbleAmount.greaterThan(amount) ? amount : refundAbleAmount);
         reverseFundDetail.setMemberId(origFundDetail.getMemberId());

@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 支付资金明细
+ * 支付指令资金明细
  * </p>
  *
  * @author wxj
- * @since 2025-05-07
+ * @since 2025-05-20
  */
-@TableName("tp_fund_detail")
+@TableName("t_fund_detail")
 public class FundDetailDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,12 +29,12 @@ public class FundDetailDO implements Serializable {
     private String detailId;
 
     /**
-     * 支付单号
+     * 支付指令ID
      */
-    private String orderId;
+    private String payProcessId;
 
     /**
-     * 支付总单ID
+     * 支付单ID
      */
     private String paymentId;
 
@@ -113,12 +113,12 @@ public class FundDetailDO implements Serializable {
         this.detailId = detailId;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getPayProcessId() {
+        return payProcessId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setPayProcessId(String payProcessId) {
+        this.payProcessId = payProcessId;
     }
 
     public String getPaymentId() {
@@ -237,7 +237,7 @@ public class FundDetailDO implements Serializable {
     public String toString() {
         return "FundDetailDO{" +
         "detailId = " + detailId +
-        ", orderId = " + orderId +
+        ", payProcessId = " + payProcessId +
         ", paymentId = " + paymentId +
         ", relationId = " + relationId +
         ", belongTo = " + belongTo +

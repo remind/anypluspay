@@ -4,6 +4,7 @@ import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;
 
 /**
+ * 支付指令类型
  * @author wxj
  * 2024/1/18
  */

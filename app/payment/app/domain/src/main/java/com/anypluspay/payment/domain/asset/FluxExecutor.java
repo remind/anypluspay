@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.asset;
 
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.types.asset.AssetType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +25,16 @@ public class FluxExecutor {
      * 执行交换
      *
      * @param fluxOrder       交换单
-     * @param fluxInstruction 交换指令
+     * @param fluxProcess 交换指令
      * @return 交换结果
      */
-    public FluxResult execute(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
-        AssetFluxExecutor executor = getExecutor(fluxInstruction.getAssetInfo().getAssetType());
-        return switch (fluxInstruction.getFundAction()) {
-            case INCREASE -> executor.increase(fluxOrder, fluxInstruction);
-            case DECREASE -> executor.decrease(fluxOrder, fluxInstruction);
-            case FREEZE -> executor.freeze(fluxOrder, fluxInstruction);
-            case UNFREEZE -> executor.unfreeze(fluxOrder, fluxInstruction);
+    public FluxResult execute(FluxOrder fluxOrder, FluxProcess fluxProcess) {
+        AssetFluxExecutor executor = getExecutor(fluxProcess.getAssetInfo().getAssetType());
+        return switch (fluxProcess.getFundAction()) {
+            case INCREASE -> executor.increase(fluxOrder, fluxProcess);
+            case DECREASE -> executor.decrease(fluxOrder, fluxProcess);
+            case FREEZE -> executor.freeze(fluxOrder, fluxProcess);
+            case UNFREEZE -> executor.unfreeze(fluxOrder, fluxProcess);
         };
     }
 

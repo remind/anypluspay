@@ -10,9 +10,9 @@ import com.anypluspay.account.types.enums.OperationType;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.PaymentConstants;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.flux.InstructionType;
+import com.anypluspay.payment.domain.flux.FluxProcessType;
 import com.anypluspay.payment.types.PayStatus;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,46 +35,46 @@ public class AccountFluxExecutor implements AssetFluxExecutor {
     private AccountingFacade accountingFacade;
 
     @Override
-    public FluxResult increase(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
-        Assert.isTrue(fluxInstruction.getAssetInfo() instanceof BalanceAsset, "不支持的资产");
-        BalanceAsset balanceAsset = (BalanceAsset) fluxInstruction.getAssetInfo();
+    public FluxResult increase(FluxOrder fluxOrder, FluxProcess fluxProcess) {
+        Assert.isTrue(fluxProcess.getAssetInfo() instanceof BalanceAsset, "不支持的资产");
+        BalanceAsset balanceAsset = (BalanceAsset) fluxProcess.getAssetInfo();
         String crAccountNo = "";
         String drAccountNo = "";
-        if (fluxInstruction.getType() == InstructionType.CLEARING) {
+        if (fluxProcess.getType() == FluxProcessType.CLEARING) {
             drAccountNo = balanceAsset.getAccountNo();
             crAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
         } else {
             drAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
             crAccountNo = balanceAsset.getAccountNo();
         }
-        AccountingRequest request = buildAccountingRequest(fluxInstruction.getInstructionId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
+        AccountingRequest request = buildAccountingRequest(fluxProcess.getFluxProcessId(), crAccountNo, drAccountNo, fluxProcess.getAmount());
         return requestAccounting(request);
     }
 
     @Override
-    public FluxResult decrease(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
-        Assert.isTrue(fluxInstruction.getAssetInfo() instanceof BalanceAsset, "不支持的资产");
-        BalanceAsset balanceAsset = (BalanceAsset) fluxInstruction.getAssetInfo();
+    public FluxResult decrease(FluxOrder fluxOrder, FluxProcess fluxProcess) {
+        Assert.isTrue(fluxProcess.getAssetInfo() instanceof BalanceAsset, "不支持的资产");
+        BalanceAsset balanceAsset = (BalanceAsset) fluxProcess.getAssetInfo();
         String crAccountNo = "";
         String drAccountNo = "";
-        if (fluxInstruction.getType() == InstructionType.CLEARING) {
+        if (fluxProcess.getType() == FluxProcessType.CLEARING) {
             drAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
             crAccountNo = balanceAsset.getAccountNo();
         } else {
             drAccountNo = balanceAsset.getAccountNo();
             crAccountNo = PaymentConstants.TRANSITION_ACCOUNT;
         }
-        AccountingRequest request = buildAccountingRequest(fluxInstruction.getInstructionId(), crAccountNo, drAccountNo, fluxInstruction.getAmount());
+        AccountingRequest request = buildAccountingRequest(fluxProcess.getFluxProcessId(), crAccountNo, drAccountNo, fluxProcess.getAmount());
         return requestAccounting(request);
     }
 
     @Override
-    public FluxResult freeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult freeze(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         throw new UnsupportedOperationException("不支持的指令");
     }
 
     @Override
-    public FluxResult unfreeze(FluxOrder fluxOrder, FluxInstruction fluxInstruction) {
+    public FluxResult unfreeze(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         throw new UnsupportedOperationException("不支持的指令");
     }
 

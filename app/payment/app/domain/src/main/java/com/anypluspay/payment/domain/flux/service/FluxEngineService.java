@@ -1,12 +1,11 @@
 package com.anypluspay.payment.domain.flux.service;
 
-import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.payment.domain.asset.FluxExecutor;
 import com.anypluspay.payment.domain.asset.FluxResult;
-import com.anypluspay.payment.domain.flux.FluxInstruction;
+import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
-import com.anypluspay.payment.domain.flux.InstructStatus;
+import com.anypluspay.payment.domain.flux.FluxProcessStatus;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class FluxEngineService {
     }
 
     private FluxResult execute(FluxOrder fluxOrder) {
-        FluxInstruction executeInstruction = fluxOrder.getInstructChain().getExecuteFluxInstruct();
+        FluxProcess executeInstruction = fluxOrder.getFluxChain().getExecuteFluxInstruct();
         FluxResult fluxResult = null;
         FluxResult retFluxResult = null;
         while (executeInstruction != null) {
@@ -64,7 +63,7 @@ public class FluxEngineService {
             fluxResult.setExecuteInstruction(executeInstruction);
             fluxService.process(fluxOrder, executeInstruction, fluxResult);
 
-            executeInstruction = executeInstruction.getStatus() != InstructStatus.PROCESS ? fluxOrder.getInstructChain().getExecuteFluxInstruct() : null;
+            executeInstruction = executeInstruction.getStatus() != FluxProcessStatus.PROCESS ? fluxOrder.getFluxChain().getExecuteFluxInstruct() : null;
             if (fluxOrder.getStatus() == FluxOrderStatus.FAIL && executeInstruction != null && retFluxResult == null) {
                 // 有逆向指令还要执行，则返回最后失败的结果
                 retFluxResult = fluxResult;

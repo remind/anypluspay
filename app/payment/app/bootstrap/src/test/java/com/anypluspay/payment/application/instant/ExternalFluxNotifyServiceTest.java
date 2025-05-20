@@ -6,7 +6,7 @@ import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.notify.ExternalFluxNotifyService;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
-import com.anypluspay.payment.types.status.GeneralPayOrderStatus;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
 import com.anypluspay.payment.types.PayResult;
@@ -74,7 +74,7 @@ public class ExternalFluxNotifyServiceTest extends InstPaymentBaseTest {
         request.setPayeeFundDetail(List.of(buildBalanceFundDetail(PAYEE_MEMBER_ID, PAYEE_ACCOUNT_NO, amount)));
         InstantPaymentResponse response = instantPaymentFacade.pay(request);
         assetPayOrder(request, response);
-        Assert.assertEquals(GeneralPayOrderStatus.PAYING, response.getOrderStatus());
+        Assert.assertEquals(PayProcessStatus.PAYING, response.getOrderStatus());
         PayResult payResult = response.getResult();
         Assert.assertEquals(PayStatus.PROCESS, payResult.getPayStatus());
         Assert.assertNotNull(payResult.getPayResponse());

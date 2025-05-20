@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.repository;
 
-import com.anypluspay.payment.domain.payorder.refund.RefundOrder;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
 
 import java.util.List;
 
@@ -10,10 +10,13 @@ import java.util.List;
  */
 public interface RefundOrderRepository {
 
-    void store(RefundOrder refundOrder);
+    void store(RefundProcess refundProcess);
 
-    void reStore(RefundOrder refundOrder);
+    void reStore(RefundProcess refundProcess);
 
-    RefundOrder load(String refundOrderId);
-    List<RefundOrder> loadByPayOrderId(String payOrderId);
+    RefundProcess load(String refundProcessId);
+
+    RefundProcess lock(String refundProcessId);
+
+    List<RefundProcess> loadByPayProcessId(String payProcessId);
 }
