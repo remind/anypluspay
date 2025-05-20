@@ -3,11 +3,11 @@ package com.anypluspay.payment.facade.instant.builder;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.BelongTo;
+import com.anypluspay.payment.types.status.PayProcessStatus;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,7 +25,6 @@ public class InstantPaymentBuilder extends PaymentBuilder {
         PayProcess payProcess = new PayProcess();
         payProcess.setPaymentId(paymentId);
         payProcess.setProcessId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
-        payProcess.setRequestId(request.getRequestId());
         payProcess.setAmount(request.getPayAmount());
         payProcess.setMemberId(request.getPayerId());
         payProcess.setStatus(PayProcessStatus.INIT);

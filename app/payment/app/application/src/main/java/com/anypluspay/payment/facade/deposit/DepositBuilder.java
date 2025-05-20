@@ -1,6 +1,5 @@
 package com.anypluspay.payment.facade.deposit;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
@@ -41,7 +40,6 @@ public class DepositBuilder extends PaymentBuilder {
         PayProcess payProcess = new PayProcess();
         payProcess.setPaymentId(depositOrder.getPaymentId());
         payProcess.setProcessId(depositOrder.getPayProcessId());
-        payProcess.setRequestId(UUID.randomUUID().toString(true));
         payProcess.setAmount(depositOrder.getAmount());
         payProcess.setMemberId(depositOrder.getMemberId());
         payProcess.setStatus(PayProcessStatus.INIT);

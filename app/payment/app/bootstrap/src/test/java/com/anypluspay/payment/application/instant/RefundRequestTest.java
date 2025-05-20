@@ -41,7 +41,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         RefundResponse refundResponse = instantPaymentFacade.refund(refundRequest);
         Assert.assertNotNull(refundResponse);
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
-        RefundProcess refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
+        RefundProcess refundOrder = refundProcessRepository.load(refundResponse.getRefundOrderId());
         refundOrder.getPayeeDetails().forEach(fundDetail -> {
             Assert.assertEquals(RefundOrderStatus.SUCCESS, refundOrder.getStatus());
         });

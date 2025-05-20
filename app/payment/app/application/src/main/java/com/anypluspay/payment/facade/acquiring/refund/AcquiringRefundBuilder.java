@@ -1,20 +1,19 @@
 package com.anypluspay.payment.facade.acquiring.refund;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
-import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.TradeType;
 import com.anypluspay.payment.types.asset.BelongTo;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
     private AcquiringOrderRepository acquiringOrderRepository;
 
     @Autowired
-    private RefundOrderRepository refundOrderRepository;
+    private RefundProcessRepository refundProcessRepository;
 
     /**
      * 构造交易订单
@@ -78,7 +77,6 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         refundOrder.setProcessId(idGeneratorService.genIdByRelateId(refundAcquiringOrder.getPaymentId(), PayOrderType.REFUND.getIdType()));
         refundOrder.setPaymentId(refundAcquiringOrder.getPaymentId());
         refundOrder.setMemberId(payProcess.getMemberId());
-        refundOrder.setRequestId(UUID.randomUUID().toString(true));
         refundOrder.setRelationId(payProcess.getProcessId());
         refundOrder.setAmount(refundAmount);
         refundOrder.setStatus(RefundOrderStatus.INIT);
@@ -90,7 +88,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         List<FundDetail> refundedPayerDetails = null;
         List<FundDetail> refundedPayeeDetails = null;
         Money refunedAmount = new Money();
-        List<RefundProcess> allRefundOrders = refundOrderRepository.loadByPayProcessId(payProcess.getProcessId()).stream()
+        List<RefundProcess> allRefundOrders = refundProcessRepository.loadByPayProcessId(payProcess.getProcessId()).stream()
                 .filter(r -> r.getStatus().equals(RefundOrderStatus.SUCCESS))
                 .toList();
         if (!CollectionUtils.isEmpty(allRefundOrders)) {

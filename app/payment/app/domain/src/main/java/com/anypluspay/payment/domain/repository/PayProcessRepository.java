@@ -17,7 +17,5 @@ public interface PayProcessRepository {
 
     PayProcess lock(String payProcessId);
 
-    PayProcess loadByRequestId(String requestId);
-
     List<PayProcess> loadByPaymentId(String paymentId);
 }

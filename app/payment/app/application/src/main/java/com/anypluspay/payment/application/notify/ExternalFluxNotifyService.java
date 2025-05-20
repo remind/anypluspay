@@ -12,7 +12,7 @@ import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.process.refund.RefundService;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayResult;
@@ -48,7 +48,7 @@ public class ExternalFluxNotifyService {
     private RefundService refundService;
 
     @Autowired
-    private RefundOrderRepository refundOrderRepository;
+    private RefundProcessRepository refundProcessRepository;
 
     @Autowired
     private IdGeneratorService idGeneratorService;
@@ -68,7 +68,7 @@ public class ExternalFluxNotifyService {
                 PayProcess payProcess = payProcessRepository.load(fluxOrder.getPayProcessId());
                 payProcessService.processFluxResult(payProcess, payResult);
             } else if (idType == IdType.REFUND_ORDER_ID) {
-                RefundProcess refundOrder = refundOrderRepository.load(fluxOrder.getPayProcessId());
+                RefundProcess refundOrder = refundProcessRepository.load(fluxOrder.getPayProcessId());
                 refundService.processFluxResult(refundOrder, payResult);
             }
 

@@ -16,7 +16,7 @@ import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -61,7 +61,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected PayProcessRepository payProcessRepository;
 
     @Autowired
-    protected RefundOrderRepository refundOrderRepository;
+    protected RefundProcessRepository refundProcessRepository;
 
     @Autowired
     private FluxOrderRepository fluxOrderRepository;
@@ -152,7 +152,6 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
         PayProcess generalPayOrder = payProcessRepository.load(response.getPayOrderId());
         Assert.assertNotNull(generalPayOrder);
-        Assert.assertEquals(request.getRequestId(), generalPayOrder.getRequestId());
         Assert.assertEquals(request.getPayAmount(), generalPayOrder.getAmount());
         Assert.assertEquals(request.getPayerId(), generalPayOrder.getMemberId());
         assetDetail(request.getPayerFundDetail(), generalPayOrder.getPayerDetails());

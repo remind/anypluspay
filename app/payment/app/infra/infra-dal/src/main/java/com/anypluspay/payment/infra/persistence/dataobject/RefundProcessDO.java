@@ -39,11 +39,6 @@ public class RefundProcessDO implements Serializable {
     private String relationId;
 
     /**
-     * 请求ID
-     */
-    private String requestId;
-
-    /**
      * 会员ID
      */
     private String memberId;
@@ -102,14 +97,6 @@ public class RefundProcessDO implements Serializable {
 
     public void setRelationId(String relationId) {
         this.relationId = relationId;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
     }
 
     public String getMemberId() {
@@ -174,7 +161,6 @@ public class RefundProcessDO implements Serializable {
         "processId = " + processId +
         ", paymentId = " + paymentId +
         ", relationId = " + relationId +
-        ", requestId = " + requestId +
         ", memberId = " + memberId +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +

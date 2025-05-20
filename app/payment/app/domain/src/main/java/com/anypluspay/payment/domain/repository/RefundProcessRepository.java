@@ -8,7 +8,7 @@ import java.util.List;
  * @author wxj
  * 2025/2/18
  */
-public interface RefundOrderRepository {
+public interface RefundProcessRepository {
 
     void store(RefundProcess refundProcess);
 

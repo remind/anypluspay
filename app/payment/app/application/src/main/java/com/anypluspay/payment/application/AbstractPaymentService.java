@@ -4,7 +4,7 @@ import com.anypluspay.payment.domain.process.ProcessProcessService;
 import com.anypluspay.payment.domain.process.refund.RefundService;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -24,7 +24,7 @@ public abstract class AbstractPaymentService {
     protected PayProcessRepository payProcessRepository;
 
     @Autowired
-    protected RefundOrderRepository refundOrderRepository;
+    protected RefundProcessRepository refundProcessRepository;
 
     @Autowired
     protected ProcessProcessService payProcessService;

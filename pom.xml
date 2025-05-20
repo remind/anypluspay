@@ -17,7 +17,6 @@
         <module>app/account</module>
         <module>app/channel</module>
         <module>app/test-bank</module>
-        <module>app/test-trade</module>
         <module>app/channel-gateway/wxpay-gateway</module>
         <module>app/channel-gateway/alipay-gateway</module>
         <module>app/channel-gateway/test-bank-gateway</module>

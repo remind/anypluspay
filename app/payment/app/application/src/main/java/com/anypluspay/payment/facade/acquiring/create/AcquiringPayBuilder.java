@@ -1,12 +1,11 @@
 package com.anypluspay.payment.facade.acquiring.create;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
 import com.anypluspay.payment.types.IdType;
@@ -32,7 +31,6 @@ public class AcquiringPayBuilder extends PaymentBuilder {
         PayProcess payProcess = new PayProcess();
         payProcess.setPaymentId(acquiringOrder.getPaymentId());
         payProcess.setProcessId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
-        payProcess.setRequestId(UUID.randomUUID().toString(true));
         payProcess.setAmount(acquiringOrder.getAmount());
         payProcess.setMemberId(acquiringOrder.getPayerId());
         payProcess.setStatus(PayProcessStatus.INIT);

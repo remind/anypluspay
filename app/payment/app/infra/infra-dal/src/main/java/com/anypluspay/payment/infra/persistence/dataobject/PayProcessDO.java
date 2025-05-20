@@ -34,11 +34,6 @@ public class PayProcessDO implements Serializable {
     private String paymentId;
 
     /**
-     * 请求ID
-     */
-    private String requestId;
-
-    /**
      * 会员ID
      */
     private String memberId;
@@ -99,14 +94,6 @@ public class PayProcessDO implements Serializable {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
     }
 
     public String getMemberId() {
@@ -186,7 +173,6 @@ public class PayProcessDO implements Serializable {
         return "PayProcessDO{" +
         "processId = " + processId +
         ", paymentId = " + paymentId +
-        ", requestId = " + requestId +
         ", memberId = " + memberId +
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +

@@ -52,15 +52,6 @@ public class PayProcessRepositoryImpl extends AbstractPayOrderRepository impleme
     }
 
     @Override
-    public PayProcess loadByRequestId(String requestId) {
-        LambdaQueryWrapper<PayProcessDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PayProcessDO::getRequestId, requestId);
-        PayProcess payProcess = dalConvertor.toEntity(dalMapper.selectOne(queryWrapper));
-        fillFundDetails(payProcess);
-        return payProcess;
-    }
-
-    @Override
     public List<PayProcess> loadByPaymentId(String paymentId) {
         LambdaQueryWrapper<PayProcessDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(PayProcessDO::getPaymentId, paymentId);

@@ -1,7 +1,7 @@
 package com.anypluspay.payment.infra.persistence.repository.process;
 
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.infra.persistence.convertor.RefundProcessDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.RefundProcessDO;
 import com.anypluspay.payment.infra.persistence.mapper.RefundProcessMapper;
@@ -19,7 +19,7 @@ import java.util.List;
  * 2025/2/22
  */
 @Repository
-public class RefundOrderRepositoryImpl extends AbstractPayOrderRepository implements RefundOrderRepository {
+public class RefundProcessRepositoryImpl extends AbstractPayOrderRepository implements RefundProcessRepository {
 
     @Autowired
     private RefundProcessMapper dalMapper;

@@ -1,15 +1,14 @@
 package com.anypluspay.payment.facade.withdraw;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
-import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
+import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.asset.BankCardAsset;
 import com.anypluspay.payment.types.asset.BelongTo;
+import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.payment.types.status.PayProcessStatus;
@@ -42,7 +41,6 @@ public class WithdrawBuilder extends PaymentBuilder {
         PayProcess payProcess = new PayProcess();
         payProcess.setPaymentId(withdrawOrder.getPaymentId());
         payProcess.setProcessId(withdrawOrder.getPayProcessId());
-        payProcess.setRequestId(UUID.randomUUID().toString(true));
         payProcess.setAmount(withdrawOrder.getAmount());
         payProcess.setMemberId(withdrawOrder.getMemberId());
         payProcess.setStatus(PayProcessStatus.INIT);

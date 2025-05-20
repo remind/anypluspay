@@ -127,7 +127,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
                     .filter(payOrder -> payOrder.getStatus() == PayProcessStatus.SUCCESS).findFirst().get();
             RefundProcess refundOrder = acquiringRefundBuilder.buildRefundOrder(refundAcquiringOrder, new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), originalPayOrder);
             acquiringOrderRepository.store(refundAcquiringOrder);
-            refundOrderRepository.store(refundOrder);
+            refundProcessRepository.store(refundOrder);
             return refundOrder;
         });
     }

@@ -1,11 +1,11 @@
 package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
@@ -30,14 +30,13 @@ import java.util.List;
 public class RefundOrderBuilder extends PaymentBuilder {
 
     @Autowired
-    private RefundOrderRepository refundOrderRepository;
+    private RefundProcessRepository refundProcessRepository;
 
     public RefundProcess buildRefundProcess(RefundRequest request, PayProcess payProcess) {
         RefundProcess refundOrder = new RefundProcess();
         refundOrder.setProcessId(idGeneratorService.genIdByRelateId(payProcess.getPaymentId(), PayOrderType.REFUND.getIdType()));
         refundOrder.setPaymentId(payProcess.getPaymentId());
         refundOrder.setMemberId(payProcess.getMemberId());
-        refundOrder.setRequestId(request.getRequestId());
         refundOrder.setRelationId(payProcess.getProcessId());
         refundOrder.setAmount(request.getAmount());
         refundOrder.setStatus(RefundOrderStatus.INIT);
@@ -49,7 +48,7 @@ public class RefundOrderBuilder extends PaymentBuilder {
         List<FundDetail> refundedPayerDetails = null;
         List<FundDetail> refundedPayeeDetails = null;
         Money refunedAmount = new Money();
-        List<RefundProcess> allRefundOrders = refundOrderRepository.loadByPayProcessId(payProcess.getProcessId()).stream()
+        List<RefundProcess> allRefundOrders = refundProcessRepository.loadByPayProcessId(payProcess.getProcessId()).stream()
                 .filter(r -> r.getStatus().equals(RefundOrderStatus.SUCCESS))
                 .toList();
         if (!CollectionUtils.isEmpty(allRefundOrders)) {

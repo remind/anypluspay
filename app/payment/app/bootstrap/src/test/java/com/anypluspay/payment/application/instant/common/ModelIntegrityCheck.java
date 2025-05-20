@@ -9,7 +9,7 @@ import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
-import com.anypluspay.payment.domain.repository.RefundOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
@@ -37,7 +37,7 @@ public class ModelIntegrityCheck {
     protected PayProcessRepository payProcessRepository;
 
     @Autowired
-    protected RefundOrderRepository refundOrderRepository;
+    protected RefundProcessRepository refundProcessRepository;
 
     @Autowired
     private FluxOrderRepository fluxOrderRepository;
@@ -60,7 +60,6 @@ public class ModelIntegrityCheck {
         Assert.assertNotNull(generalPayOrder);
         Assert.assertNotNull(generalPayOrder.getPaymentId());
         Assert.assertNotNull(generalPayOrder.getProcessId());
-        Assert.assertNotNull(generalPayOrder.getRequestId());
         Assert.assertNotNull(generalPayOrder.getStatus());
         Assert.assertNotNull(generalPayOrder.getAmount());
         Assert.assertNotNull(generalPayOrder.getMemberId());
@@ -73,7 +72,7 @@ public class ModelIntegrityCheck {
     }
 
     public void checkRefundOrder(PayProcess generalPayOrder) {
-        List<RefundProcess> refundOrders = refundOrderRepository.loadByPayProcessId(generalPayOrder.getProcessId());
+        List<RefundProcess> refundOrders = refundProcessRepository.loadByPayProcessId(generalPayOrder.getProcessId());
         if (!CollectionUtils.isEmpty(refundOrders)) {
             Assert.assertEquals(generalPayOrder.getStatus(), PayProcessStatus.SUCCESS);
             refundOrders.forEach(refundOrder -> {
@@ -93,7 +92,6 @@ public class ModelIntegrityCheck {
         Assert.assertNotNull(refundOrder.getAmount());
         Assert.assertNotNull(refundOrder.getMemberId());
         Assert.assertNotNull(refundOrder.getRelationId());
-        Assert.assertNotNull(refundOrder.getRequestId());
         Assert.assertNotNull(refundOrder.getGmtCreate());
         Assert.assertNotNull(refundOrder.getGmtModified());
 

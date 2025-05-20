@@ -55,7 +55,7 @@ public class InstantPaymentFacadeImpl extends AbstractPaymentService implements 
         RefundProcess refundOrder = transactionTemplate.execute(status -> {
             paymentRepository.lock(generalPayOrder.getPaymentId());
             RefundProcess r = refundOrderBuilder.buildRefundProcess(request, generalPayOrder);
-            refundOrderRepository.store(r);
+            refundProcessRepository.store(r);
             return r;
         });
         PayResult payResult = refundService.process(refundOrder);
@@ -72,8 +72,6 @@ public class InstantPaymentFacadeImpl extends AbstractPaymentService implements 
         PayProcess payProcess;
         if (StringUtils.isNotBlank(request.getOrigOrderId())) {
             payProcess = payProcessRepository.load(request.getOrigOrderId());
-        } else if (StringUtils.isNotBlank(request.getOrigRequestId())) {
-            payProcess = payProcessRepository.loadByRequestId(request.getOrigRequestId());
         } else {
             throw new BizException("无法查到原支付指令");
         }

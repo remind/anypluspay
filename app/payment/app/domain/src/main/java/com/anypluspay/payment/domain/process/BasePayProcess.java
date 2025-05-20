@@ -21,11 +21,6 @@ import java.util.List;
 public abstract class BasePayProcess<T extends OrderStatus> extends Entity {
 
     /**
-     * 支付请求流水号
-     */
-    private String requestId;
-
-    /**
      * 支付单号
      */
     private String paymentId;
