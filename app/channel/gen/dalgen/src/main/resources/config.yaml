@@ -24,9 +24,9 @@ db:
 #      - ti_inst_command_order
 #      - tc_api_result_code
 #      - tc_unity_result_code
-      - tc_fund_channel
+#      - tc_fund_channel
 #      - tc_api_request_no_mode
-#      - tc_channel_api
+      - tc_channel_api
 #      - tc_channel_support_inst
 #      - tc_channel_maintain
 #      - tc_fund_channel_limit

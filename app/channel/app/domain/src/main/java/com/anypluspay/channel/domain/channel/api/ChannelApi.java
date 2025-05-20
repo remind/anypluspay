@@ -1,10 +1,9 @@
 package com.anypluspay.channel.domain.channel.api;
 
-import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.channel.ChannelApiProtocol;
+import com.anypluspay.channel.types.channel.ChannelApiType;
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,11 +18,6 @@ public class ChannelApi {
      * 渠道编码
      */
     private String channelCode;
-
-    /**
-     * 适用支付方式
-     */
-    private List<String> payMethods;
 
     /**
      * 类型
