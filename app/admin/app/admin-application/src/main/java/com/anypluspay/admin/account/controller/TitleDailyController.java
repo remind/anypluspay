@@ -4,11 +4,14 @@ import com.anypluspay.admin.account.model.dto.TitleDailyDto;
 import com.anypluspay.admin.account.mapper.TitleDailyQueryMapper;
 import com.anypluspay.admin.account.query.TitleDailyQuery;
 import com.anypluspay.commons.response.ResponseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -21,6 +24,8 @@ import java.util.List;
 @RequestMapping("/account/title-daily")
 public class TitleDailyController {
 
+    private static final DateTimeFormatter ACCOUNTING_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
+
     @Autowired
     private TitleDailyQueryMapper dalMapper;
 
@@ -32,6 +37,13 @@ public class TitleDailyController {
      */
     @GetMapping("/list")
     public ResponseResult<List<TitleDailyDto>> list(TitleDailyQuery query) {
+        if (StringUtils.isBlank(query.getAccountDate())) {
+            query.setAccountDate(getYesterdayAccounting());
+        }
         return ResponseResult.success(dalMapper.list(query));
+    }
+
+    private String getYesterdayAccounting() {
+        return LocalDate.now().plusDays(-1).format(ACCOUNTING_DATE_FORMATTER);
     }
 }

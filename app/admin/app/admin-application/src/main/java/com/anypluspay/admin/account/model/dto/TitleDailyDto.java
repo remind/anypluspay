@@ -42,12 +42,12 @@ public class TitleDailyDto {
     private BigDecimal creditAmount;
 
     /**
-     * 借记次数
+     * 借记笔数
      */
     private Long debitCount;
 
     /**
-     * 贷记次数
+     * 贷记笔数
      */
     private Long creditCount;
 
