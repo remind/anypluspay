@@ -1,7 +1,7 @@
 package com.anypluspay.payment.facade.deposit;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.application.instant.InstPaymentBaseTest;
+import com.anypluspay.payment.facade.BaseMockPaymentTest;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class DepositFacadeTest extends InstPaymentBaseTest {
+public class DepositFacadeTest extends BaseMockPaymentTest {
 
     @Autowired
     private DepositFacadeImpl depositFacade;

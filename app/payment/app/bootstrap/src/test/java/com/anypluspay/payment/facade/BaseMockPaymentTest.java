@@ -1,4 +1,4 @@
-package com.anypluspay.payment.application.instant;
+package com.anypluspay.payment.facade;
 
 import com.anypluspay.account.facade.AccountingFacade;
 import com.anypluspay.channel.facade.FundInFacade;
@@ -12,6 +12,7 @@ import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.FluxChain;
 import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.RefundProcessRepository;
@@ -42,10 +43,9 @@ import static org.mockito.Mockito.when;
 
 /**
  * @author wxj
- * 2025/1/24
+ * 2025/5/20
  */
-public class InstPaymentBaseTest extends AbstractBaseTest {
-
+public class BaseMockPaymentTest extends AbstractBaseTest {
     protected static final String MERCHANT_ID = "100000001";
     protected static final String PAYER_MEMBER_ID = "100000002";
     protected static final String PAYER_ACCOUNT_NO = "200100200110000000215600001";
@@ -202,5 +202,4 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
             });
         }
     }
-
 }

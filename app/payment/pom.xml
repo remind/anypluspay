@@ -12,7 +12,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>app/web</module>
         <module>app/bootstrap</module>
         <module>app/infra</module>
         <module>app/application</module>
