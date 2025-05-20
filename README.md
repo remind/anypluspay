@@ -24,7 +24,7 @@ AnyPlusPay 是一套基于领域驱动设计（DDD）理念，采用微服务架
 - 确保资金安全准确。
 
 ### 3. 渠道服务及渠道网关
-- 实现与第三方支付渠道的对接，发送和接收支付指令。
+- 实现与第三方支付渠道的对接，发送和接收支付交换指令。
 - 根据不同场景，提供渠道路由功能。
 - 包括支付宝网关、微信网关、测试银行网关等。
 
@@ -55,8 +55,7 @@ anypluspay
                 ├── alipay-gateway -- 支付宝网关
                 ├── wxpay-gateway -- 微信网关
                 └── test-bank-gateway -- 测试银行网关
-         ├── test-bank -- 测试银行服务，用于模拟支付渠道
-         └── test-trade -- 测试交易服务，用于模拟交易侧
+         └── test-bank -- 测试银行服务，用于模拟支付渠道
     
     ├── framework -- 框架目录
             ├── commons -- 公共
@@ -83,11 +82,6 @@ anypluspay
 #### 余额+外部支付
 ![external-balance-pay-sequence.png](docs/images/external-balance-pay-sequence.png)
 
-### 3. 领域模型
-
-#### 单据模型
-![order-model.png](docs/images/order-model.png)
-
 
 ## 技术栈
 
@@ -111,8 +105,6 @@ anypluspay
 ### 查询
 #### 联合查询
 为一个余额+网银各0.5的组合支付
-##### 交易
-![交易](docs/images/admin-union-query-testtrade.png)
 ##### 支付
 ![支付](docs/images/admin-union-query-payment.png)
 ##### 账务
@@ -141,7 +133,6 @@ anypluspay
     - `payment`
     - `account`
     - `channel`
-    - `test-trade`
 
 2. 如果需要测试渠道对应的网关，还需启动 `test-bank`。
 
