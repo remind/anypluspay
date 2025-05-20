@@ -14,6 +14,11 @@ public class PayMethod {
     private String code;
 
     /**
+     * 显示名称
+     */
+    private String name;
+
+    /**
      * 支付模式
      */
     private String payModel;
@@ -33,8 +38,4 @@ public class PayMethod {
      */
     private String instExtra;
 
-    /**
-     * 金额
-     */
-    private String amount;
 }

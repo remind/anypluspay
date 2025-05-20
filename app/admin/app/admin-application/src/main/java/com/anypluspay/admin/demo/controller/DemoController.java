@@ -1,4 +1,4 @@
-package com.anypluspay.admin.demo;
+package com.anypluspay.admin.demo.controller;
 
 import cn.hutool.core.lang.UUID;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;

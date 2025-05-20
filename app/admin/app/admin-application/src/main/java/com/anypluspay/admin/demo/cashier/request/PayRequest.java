@@ -18,5 +18,5 @@ public class PayRequest {
     /**
      * 支付方式
      */
-    private List<PayMethod> payMethods;
+    private List<String> payMethods;
 }

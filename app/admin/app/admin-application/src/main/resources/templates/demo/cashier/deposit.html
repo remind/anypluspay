@@ -90,9 +90,10 @@
 
     <!-- 支付方式 -->
     <div class="payment-methods">
-        <label>
-            <input type="checkbox" name="payment" value="testBank">
-            测试银行支付
+        <label th:each="payMethod : ${payMethods}">
+            <input type="checkbox" name="payMethod" th:value="${payMethod.code}">
+            <span th:text="${payMethod.name}"  class="name"></span>
+            <span th:text="${payMethod.title}"  class="title"></span>
         </label>
     </div>
 
@@ -104,29 +105,15 @@
 </div>
 
 <script>
-    const allPayMethods = {
-        "balance": {
-            "code": "BALANCE",
-            "payModel":"BALANCE",
-            "assetType": "BALANCE",
-            "payInst": ""
-        },
-        "testBank": {
-            "code": "testBank",
-            "payModel":"ONLINE_BANK",
-            "assetType": "BANKCARD",
-            "payInst": "UNLIMITED"
-        }
-    };
 
     // 模拟异步提交支付
     async function submitPayment() {
         // 获取用户选择的支付方式
-        const selectedPayments = Array.from(
-            document.querySelectorAll('input[name="payment"]:checked')
+        const selectedPayMethods = Array.from(
+            document.querySelectorAll('input[name="payMethod"]:checked')
         ).map(input => input.value);
 
-        if (selectedPayments.length === 0) {
+        if (selectedPayMethods.length === 0) {
             alert('请选择至少一种支付方式！');
             return;
         }
@@ -134,11 +121,6 @@
         // 显示加载提示
         const resultMessage = document.getElementById('result-message');
         resultMessage.textContent = '正在处理支付请求，请稍候...';
-
-        const payMethods = [];
-        selectedPayments.forEach(sp => {
-            payMethods.push(allPayMethods[sp]);
-        });
 
         try {
             // 模拟异步请求（可以替换为实际的 API 调用）
@@ -148,7 +130,7 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    payMethods: payMethods,
+                    payMethods: selectedPayMethods,
                     memberId: '[[${request.memberId}]]',
                     accountNo: '[[${request.accountNo}]]',
                     amount: '[[${request.amount}]]',

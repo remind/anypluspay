@@ -1,4 +1,4 @@
-package com.anypluspay.admin.demo;
+package com.anypluspay.admin.demo.controller;
 
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.payment.facade.withdraw.WithdrawFacade;
