@@ -25,7 +25,7 @@ public class TestBankRefundGateway extends AbstractTestBank implements RefundGat
         params.put("amount", refundOrder.getAmount().getAmount().toString());
         params.put("reason", refundOrder.getReason());
         params.put("notifyUrl", refundOrder.getServerNotifyUrl());
-        Map response = webClient.post().uri("/online-bank/refund")
+        Map response = getWebClient().post().uri("/online-bank/refund")
                 .bodyValue(params)
                 .retrieve()
                 .bodyToMono(Map.class)

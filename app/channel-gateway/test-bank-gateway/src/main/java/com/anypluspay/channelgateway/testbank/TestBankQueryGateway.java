@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class TestBankQueryGateway extends AbstractTestBank implements QueryGateway {
     @Override
     public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) {
-        PayOrder payOrder = webClient.get().uri("/query")
+        PayOrder payOrder = getWebClient().get().uri("/query")
                 .attribute("outTradeNo", normalContent.getInstRequestNo())
                 .retrieve()
                 .bodyToMono(PayOrder.class)

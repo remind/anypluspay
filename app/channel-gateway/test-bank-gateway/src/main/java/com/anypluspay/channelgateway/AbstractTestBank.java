@@ -1,5 +1,6 @@
 package com.anypluspay.channelgateway;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -8,8 +9,15 @@ import org.springframework.web.reactive.function.client.WebClient;
  */
 public abstract class AbstractTestBank {
 
-    protected static final String  url = "http://localhost:8070";
+    @Autowired
+    protected SysConfig sysConfig;
 
-    protected final WebClient webClient = WebClient.builder().baseUrl(url).build();
+    protected static WebClient webClient = null;
 
+    protected WebClient getWebClient() {
+        if (webClient == null) {
+            webClient = WebClient.builder().baseUrl(sysConfig.getBankUrl()).build();
+        }
+        return webClient;
+    }
 }
