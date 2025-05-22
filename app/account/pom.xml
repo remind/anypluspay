@@ -15,8 +15,6 @@
         <module>app/infra</module>
         <module>app/application</module>
         <module>app/facade</module>
-        <module>app/infra/infra-dal</module>
-        <module>app/infra/infra-integration</module>
         <module>gen/dalgen</module>
         <module>app/bootstrap</module>
     </modules>

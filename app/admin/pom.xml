@@ -12,8 +12,8 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>app/admin-application</module>
-        <module>app/admin-bootstrap</module>
+        <module>app/application</module>
+        <module>app/bootstrap</module>
     </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>

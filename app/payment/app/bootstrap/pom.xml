@@ -13,10 +13,6 @@
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.payment</groupId>
-            <artifactId>payment-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.anypluspay.payment</groupId>
             <artifactId>payment-infra-integration</artifactId>
         </dependency>
         <dependency>
@@ -30,4 +26,22 @@
             <scope>runtime</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>payment-bootstrap</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

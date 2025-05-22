@@ -11,10 +11,6 @@
     <artifactId>channel-application</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.channel</groupId>
