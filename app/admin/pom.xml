@@ -14,6 +14,8 @@
     <modules>
         <module>app/application</module>
         <module>app/bootstrap</module>
+        <module>app/dal</module>
+        <module>gen/dalgen</module>
     </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>
@@ -24,6 +26,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.anypluspay.admin</groupId>
+                <artifactId>admin-dal</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <dependency>
                 <groupId>com.anypluspay.admin</groupId>
                 <artifactId>admin-application</artifactId>

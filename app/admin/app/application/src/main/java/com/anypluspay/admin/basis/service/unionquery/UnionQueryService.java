@@ -1,10 +1,11 @@
 package com.anypluspay.admin.basis.service.unionquery;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.anypluspay.admin.basis.mapper.QueryDefineMapper;
-import com.anypluspay.admin.basis.mapper.QueryParamDefineMapper;
-import com.anypluspay.admin.basis.mapper.dataobject.QueryDefineDO;
-import com.anypluspay.admin.basis.mapper.dataobject.QueryParamDefineDO;
+
+import com.anypluspay.admin.infra.persistence.dataobject.QueryDefineDO;
+import com.anypluspay.admin.infra.persistence.dataobject.QueryParamDefineDO;
+import com.anypluspay.admin.infra.persistence.mapper.QueryDefineMapper;
+import com.anypluspay.admin.infra.persistence.mapper.QueryParamDefineMapper;
 import com.anypluspay.commons.exceptions.BizException;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;

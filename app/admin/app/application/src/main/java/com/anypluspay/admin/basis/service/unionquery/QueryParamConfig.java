@@ -1,7 +1,7 @@
 package com.anypluspay.admin.basis.service.unionquery;
 
-import com.anypluspay.admin.basis.mapper.dataobject.QueryDefineDO;
-import com.anypluspay.admin.basis.mapper.dataobject.QueryParamDefineDO;
+import com.anypluspay.admin.infra.persistence.dataobject.QueryDefineDO;
+import com.anypluspay.admin.infra.persistence.dataobject.QueryParamDefineDO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

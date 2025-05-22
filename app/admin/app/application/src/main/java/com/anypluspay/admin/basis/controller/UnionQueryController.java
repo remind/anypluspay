@@ -1,11 +1,12 @@
 package com.anypluspay.admin.basis.controller;
 
-import com.anypluspay.admin.basis.mapper.QueryGroupMapper;
-import com.anypluspay.admin.basis.mapper.QueryParamDefineMapper;
-import com.anypluspay.admin.basis.mapper.dataobject.QueryGroupDO;
-import com.anypluspay.admin.basis.mapper.dataobject.QueryParamDefineDO;
+
 import com.anypluspay.admin.basis.service.unionquery.UnionQueryResult;
 import com.anypluspay.admin.basis.service.unionquery.UnionQueryService;
+import com.anypluspay.admin.infra.persistence.dataobject.QueryGroupDO;
+import com.anypluspay.admin.infra.persistence.dataobject.QueryParamDefineDO;
+import com.anypluspay.admin.infra.persistence.mapper.QueryGroupMapper;
+import com.anypluspay.admin.infra.persistence.mapper.QueryParamDefineMapper;
 import com.anypluspay.commons.response.ResponseResult;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 /**
  * 联合查询
+ *
  * @author wxj
  * 2025/3/20
  */
@@ -55,10 +57,10 @@ public class UnionQueryController {
      * @return
      */
     @GetMapping("/search-param")
-    public ResponseResult<Map<String,String>> getSearchParam() {
+    public ResponseResult<Map<String, String>> getSearchParam() {
         Map<String, String> result = new LinkedHashMap<>();
         LambdaQueryWrapper<QueryParamDefineDO> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(QueryParamDefineDO::isSearch, true);
+        queryWrapper.eq(QueryParamDefineDO::getSearch, true);
         queryWrapper.orderByAsc(QueryParamDefineDO::getSort);
         List<QueryParamDefineDO> queryParamDefineDOS = queryParamDefineMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(queryParamDefineDOS)) {
@@ -75,13 +77,14 @@ public class UnionQueryController {
      * @return
      */
     @GetMapping("/group")
-    public ResponseResult<Map<String,String>> getGroup() {
+    public ResponseResult<Map<String, String>> getGroup() {
         Map<String, String> result = new LinkedHashMap<>();
         LambdaQueryWrapper<QueryGroupDO> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.orderByAsc(QueryGroupDO::getSort);
         List<QueryGroupDO> queryParamDefineDOS = queryGroupMapper.selectList(queryWrapper);
         if (!CollectionUtils.isEmpty(queryParamDefineDOS)) {
             queryParamDefineDOS.forEach(queryParamDefineDO -> {
+                // 加个字符串防止前端排序
                 result.put("g_" + queryParamDefineDO.getId(), queryParamDefineDO.getName());
             });
         }

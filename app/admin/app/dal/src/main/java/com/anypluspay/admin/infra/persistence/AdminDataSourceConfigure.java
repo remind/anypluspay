@@ -1,4 +1,4 @@
-package com.anypluspay.admin.basis;
+package com.anypluspay.admin.infra.persistence;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
@@ -24,7 +24,7 @@ import javax.sql.DataSource;
  * 2025/3/21
  */
 @Configuration
-@MapperScan(basePackages = {"com.anypluspay.admin.basis.mapper"}, sqlSessionFactoryRef = "adminSqlSessionFactory")
+@MapperScan(basePackages = {"com.anypluspay.admin.infra.persistence.mapper"}, sqlSessionFactoryRef = "adminSqlSessionFactory")
 public class AdminDataSourceConfigure {
 
     private static final ResourcePatternResolver resourceResolver = new PathMatchingResourcePatternResolver();

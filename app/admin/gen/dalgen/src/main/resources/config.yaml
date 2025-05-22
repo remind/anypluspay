@@ -1,0 +1,17 @@
+project:
+  name: admin
+  author: wxj
+
+db:
+  dataSource:
+    url: jdbc:mysql://127.0.0.1:3306/ap_admin?useUnicode=true&characterEncoding=utf8
+    user: root
+    password: root
+  table:
+    prefix:
+    # 表名前缀
+      - t_
+    name:
+      - t_query_define
+      - t_query_group
+      - t_query_param_define

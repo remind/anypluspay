@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.anypluspay.admin</groupId>
+            <artifactId>admin-dal</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.anypluspay.component</groupId>
             <artifactId>component-config</artifactId>
         </dependency>
@@ -77,6 +82,11 @@
                     <artifactId>component-sequence</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
         </dependency>
 
     </dependencies>
