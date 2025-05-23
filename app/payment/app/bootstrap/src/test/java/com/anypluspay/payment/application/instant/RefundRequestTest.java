@@ -4,7 +4,7 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.types.status.PayProcessStatus;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.RefundRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;

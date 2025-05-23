@@ -5,7 +5,7 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
-import com.anypluspay.payment.types.TradeType;
+import com.anypluspay.payment.types.biz.TradeType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

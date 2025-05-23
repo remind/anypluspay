@@ -1,11 +1,13 @@
 package com.anypluspay.payment.domain.flux.service;
 
+import com.anypluspay.payment.domain.PayChannelParamService;
 import com.anypluspay.payment.domain.asset.FluxExecutor;
 import com.anypluspay.payment.domain.asset.FluxResult;
 import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
 import com.anypluspay.payment.domain.flux.FluxProcessStatus;
+import com.anypluspay.payment.domain.process.ProcessResultService;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,12 @@ public class FluxEngineService {
     @Autowired
     private FluxService fluxService;
 
+    @Autowired
+    private ProcessResultService processResultService;
+
+    @Autowired
+    private PayChannelParamService payChannelParamService;
+
     /**
      * 处理交换单
      *
@@ -34,7 +42,9 @@ public class FluxEngineService {
      */
     public PayResult process(FluxOrder fluxOrder) {
         FluxResult newFluxResult = execute(fluxOrder);
-        return convertToPayResult(fluxOrder.getStatus(), newFluxResult);
+        PayResult payResult = convertToPayResult(fluxOrder.getStatus(), newFluxResult);
+        processResultService.process(fluxOrder.getPayProcessId(), payResult);
+        return payResult;
     }
 
     /**
@@ -51,7 +61,9 @@ public class FluxEngineService {
         if (retFluxResult == null) {
             retFluxResult = preFluxResult;
         }
-        return convertToPayResult(fluxOrder.getStatus(), retFluxResult);
+        PayResult payResult = convertToPayResult(fluxOrder.getStatus(), retFluxResult);
+        processResultService.process(fluxOrder.getPayProcessId(), payResult);
+        return payResult;
     }
 
     private FluxResult execute(FluxOrder fluxOrder) {
@@ -78,7 +90,8 @@ public class FluxEngineService {
         if (fluxResult != null) {
             payResult.setResultMessage(fluxResult.getResultMessage());
             payResult.setResultCode(fluxResult.getResultCode());
-            payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
+//            payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
+            payChannelParamService.store(fluxResult.getExecuteInstruction().getPayProcessId(), fluxResult.getFluxResponse().toJsonString());
         }
         return payResult;
     }

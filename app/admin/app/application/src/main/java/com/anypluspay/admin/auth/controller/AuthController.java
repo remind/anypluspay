@@ -21,13 +21,12 @@ import java.util.Map;
 public class AuthController {
 
     @PostMapping("/auth/login")
-    public ResponseResult<String> login() {
+    public ResponseResult login() {
         Map<String, Object> map = new HashMap<>();
         map.put("accessToken", UUID.fastUUID().toString(true));
         map.put("roles", List.of("super"));
         map.put("username", "admin");
-        StpUtil.login(10001);
-        return ResponseResult.success(StpUtil.getTokenValue());
+        return ResponseResult.success(map);
     }
 
     @GetMapping("/user/info")

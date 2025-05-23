@@ -2,7 +2,7 @@ package com.anypluspay.admin.payment.convertor;
 
 import com.anypluspay.commons.convertor.GlobalConvertorUtils;
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.types.TradeType;
+import com.anypluspay.payment.types.biz.TradeType;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.biz.DepositOrderStatus;
 

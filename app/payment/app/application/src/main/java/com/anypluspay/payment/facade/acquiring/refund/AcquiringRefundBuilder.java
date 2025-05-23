@@ -5,13 +5,13 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
-import com.anypluspay.payment.types.TradeType;
+import com.anypluspay.payment.types.biz.TradeType;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.funds.FundAction;
@@ -72,10 +72,18 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         }
     }
 
-    public RefundProcess buildRefundOrder(AcquiringOrder refundAcquiringOrder, Money refundAmount, PayProcess payProcess) {
+    /**
+     * 构造退款指令
+     *
+     * @param paymentId    支付单ID
+     * @param refundAmount 退款金额
+     * @param payProcess   原支付指令
+     * @return 退款指令
+     */
+    public RefundProcess buildRefundOrder(String paymentId, Money refundAmount, PayProcess payProcess) {
         RefundProcess refundOrder = new RefundProcess();
-        refundOrder.setProcessId(idGeneratorService.genIdByRelateId(refundAcquiringOrder.getPaymentId(), PayOrderType.REFUND.getIdType()));
-        refundOrder.setPaymentId(refundAcquiringOrder.getPaymentId());
+        refundOrder.setProcessId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.REFUND.getIdType()));
+        refundOrder.setPaymentId(paymentId);
         refundOrder.setMemberId(payProcess.getMemberId());
         refundOrder.setRelationId(payProcess.getProcessId());
         refundOrder.setAmount(refundAmount);
@@ -84,6 +92,13 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         return refundOrder;
     }
 
+    /**
+     * 填充退款资金信息
+     *
+     * @param refundAmount 退款金额
+     * @param payProcess   原支付指令
+     * @param refundOrder  退款指令
+     */
     private void fillFundDetail(Money refundAmount, PayProcess payProcess, RefundProcess refundOrder) {
         List<FundDetail> refundedPayerDetails = null;
         List<FundDetail> refundedPayeeDetails = null;
@@ -110,28 +125,39 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
     /**
      * 构造退款收款方明细
      *
-     * @param orderId              订单号
+     * @param paymentId            支付单号
+     * @param orderId              支付指令号
      * @param totalAmount          退款总金额
      * @param origPayerDetails     原支付付款方明细
      * @param refundedPayeeDetails 已经退款的收款方明细
-     * @return
+     * @return 收款方明细
      */
     private List<FundDetail> buildPayeeDetails(String paymentId, String orderId, Money totalAmount, List<FundDetail> origPayerDetails, List<FundDetail> refundedPayeeDetails) {
         List<FundDetail> fundDetails = new ArrayList<>();
-        Money requestRefundAmount = totalAmount.clone();
-        origPayerDetails.forEach(payerDetail -> {
-            if (requestRefundAmount.greaterThan(new Money(0, requestRefundAmount.getCurrency()))) {
-                FundDetail refundPayeeDetail = reverseFundDetail(paymentId, orderId, requestRefundAmount.clone(), payerDetail, refundedPayeeDetails);
+        Money refundAbleAmount = totalAmount.clone();
+        origPayerDetails.forEach(origPayerDetail -> {
+            if (refundAbleAmount.greaterThan(new Money(0, refundAbleAmount.getCurrency()))) {
+                FundDetail refundPayeeDetail = reverseFundDetail(paymentId, orderId, refundAbleAmount.clone(), origPayerDetail, refundedPayeeDetails);
                 if (refundPayeeDetail != null) {
                     fundDetails.add(refundPayeeDetail);
-                    requestRefundAmount.subtractFrom(refundPayeeDetail.getAmount());
+                    refundAbleAmount.subtractFrom(refundPayeeDetail.getAmount());
                 }
             }
         });
-        Assert.isTrue(requestRefundAmount.equals(new Money(0, requestRefundAmount.getCurrency())), "退款金额超限");
+        Assert.isTrue(refundAbleAmount.equals(new Money(0, refundAbleAmount.getCurrency())), "退款金额超限");
         return fundDetails;
     }
 
+    /**
+     * 构造退款付款方明细
+     *
+     * @param paymentId            支付单号
+     * @param orderId              支付指令号
+     * @param totalAmount          退款总金额
+     * @param origPayeeDetails     原支付收款方明细
+     * @param refundedPayerDetails 已经退款的付款方明细
+     * @return 收款指令资金明细
+     */
     private List<FundDetail> buildPayerDetails(String paymentId, String orderId, Money totalAmount, List<FundDetail> origPayeeDetails, List<FundDetail> refundedPayerDetails) {
         List<FundDetail> fundDetails = new ArrayList<>();
         Money requestRefundAmount = totalAmount.clone();
@@ -151,18 +177,18 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
     /**
      * 反转原资金明细
      *
-     * @param orderId               订单号
-     * @param amount                退款金额
-     * @param origFundDetail        原始资金明细
-     * @param allReverseFundDetails 所有已经退款的资金明细
-     * @return
+     * @param orderId          订单号
+     * @param amount           退款金额
+     * @param origFundDetail   原始资金明细
+     * @param allFundedDetails 所有已退款的资金明细
+     * @return 退款指令资金明细
      */
-    private FundDetail reverseFundDetail(String paymentId, String orderId, Money amount, FundDetail origFundDetail, List<FundDetail> allReverseFundDetails) {
+    private FundDetail reverseFundDetail(String paymentId, String orderId, Money amount, FundDetail origFundDetail, List<FundDetail> allFundedDetails) {
         Money refundAbleAmount;
-        if (!CollectionUtils.isEmpty(allReverseFundDetails)) {
-            List<FundDetail> reverseFundDetails = allReverseFundDetails.stream().filter(r -> r.getRelationId().equals(origFundDetail.getDetailId())).toList();
-            Money totalReverseAmount = reverseFundDetails.stream().map(FundDetail::getAmount).reduce(new Money(), Money::add);
-            refundAbleAmount = origFundDetail.getAmount().subtract(totalReverseAmount);
+        if (!CollectionUtils.isEmpty(allFundedDetails)) {
+            List<FundDetail> reverseFundDetails = allFundedDetails.stream().filter(r -> r.getRelationId().equals(origFundDetail.getDetailId())).toList();
+            Money totalRefundedAmount = reverseFundDetails.stream().map(FundDetail::getAmount).reduce(new Money(), Money::add);
+            refundAbleAmount = origFundDetail.getAmount().subtract(totalRefundedAmount);
             if (!refundAbleAmount.greaterThan(new Money())) {
                 return null;
             }

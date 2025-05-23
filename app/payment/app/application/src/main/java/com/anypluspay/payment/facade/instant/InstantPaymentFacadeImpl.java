@@ -58,7 +58,7 @@ public class InstantPaymentFacadeImpl extends AbstractPaymentService implements 
             refundProcessRepository.store(r);
             return r;
         });
-        PayResult payResult = refundService.process(refundOrder);
+        PayResult payResult = refundProcessService.process(refundOrder);
         RefundResponse response = new RefundResponse();
         response.setPaymentId(refundOrder.getPaymentId());
         response.setRefundOrderId(refundOrder.getProcessId());

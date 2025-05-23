@@ -3,7 +3,7 @@ package com.anypluspay.payment.facade.acquiring;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;

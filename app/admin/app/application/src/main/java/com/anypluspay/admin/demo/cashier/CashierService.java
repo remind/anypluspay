@@ -71,9 +71,15 @@ public class CashierService {
         acquiringPayRequest.setPayerFundDetail(buildPayerFundDetail(tradeResponse.getPayerId(), tradeResponse.getAmount(), payMethods));
         AcquiringPayResponse response = acquiringFacade.pay(acquiringPayRequest);
         Map<String, String> result = new HashMap<>();
-        result.put("payStatus", response.getOrderStatus());
-        result.put("message", response.getResultMsg());
-        result.put("instUrl", response.getInstUrl());
+        if (response.isSuccess()) {
+            result.put("payStatus", response.getOrderStatus());
+            result.put("message", response.getResultMsg());
+            result.put("instUrl", response.getInstUrl());
+        } else {
+            result.put("payStatus", response.getResultCode());
+            result.put("message", response.getResultMsg());
+            result.put("instUrl", response.getInstUrl());
+        }
         return result;
     }
 

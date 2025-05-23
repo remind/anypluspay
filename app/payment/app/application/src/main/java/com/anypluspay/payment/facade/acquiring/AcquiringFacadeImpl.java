@@ -3,11 +3,11 @@ package com.anypluspay.payment.facade.acquiring;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.application.AbstractPaymentService;
+import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.process.refund.RefundApplyService;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateBuilder;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
@@ -19,7 +19,7 @@ import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundBuilder;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
 import com.anypluspay.payment.types.PayResult;
-import com.anypluspay.payment.types.status.PayProcessStatus;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +44,9 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
 
     @Autowired
     private AcquiringRefundBuilder acquiringRefundBuilder;
+
+    @Autowired
+    private RefundApplyService refundApplyService;
 
     @Override
     public AcquiringCreateResponse create(AcquiringCreateRequest request) {
@@ -80,7 +83,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
         AcquiringRefundResponse response;
         try {
             RefundProcess refundOrder = saveRefundOrder(request);
-            refundService.process(refundOrder);
+            refundApplyService.apply(refundOrder);
             response = acquiringRefundBuilder.buildResponse(acquiringOrderRepository.load(refundOrder.getPaymentId()));
         } catch (Exception e) {
             log.error("退款异常", e);
@@ -113,19 +116,28 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
             AssertUtil.notNull(acquiringOrder, "订单不存在");
             AssertUtil.isTrue(acquiringOrder.getStatus() == AcquiringOrderStatus.INIT || acquiringOrder.getStatus() == AcquiringOrderStatus.PAYING, "订单状态为非待支付");
             PayProcess payOrder = acquiringPayBuilder.buildPayProcess(acquiringOrder, request);
+            acquiringOrder.setPayOrderId(payOrder.getProcessId());
+            acquiringOrder.setStatus(AcquiringOrderStatus.PAYING);
+            acquiringOrderRepository.reStore(acquiringOrder);
             payProcessRepository.store(payOrder);
             return payOrder;
         });
     }
 
+    /**
+     * 保存退款指令
+     *
+     * @param request
+     * @return
+     */
     private RefundProcess saveRefundOrder(AcquiringRefundRequest request) {
         return transactionTemplate.execute(status -> {
             AcquiringOrder origAcquiringOrder = lockTradeOrder(request.getOrigPaymentId(), request.getOrigOutTradeNo(), request.getPartnerId());
             AssertUtil.notNull(origAcquiringOrder, "原订单不存在");
             AcquiringOrder refundAcquiringOrder = acquiringRefundBuilder.buildTradeOrder(request, origAcquiringOrder);
-            PayProcess originalPayOrder = payProcessRepository.loadByPaymentId(origAcquiringOrder.getPaymentId()).stream()
-                    .filter(payOrder -> payOrder.getStatus() == PayProcessStatus.SUCCESS).findFirst().get();
-            RefundProcess refundOrder = acquiringRefundBuilder.buildRefundOrder(refundAcquiringOrder, new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), originalPayOrder);
+            PayProcess originalPayOrder = payProcessRepository.load(origAcquiringOrder.getPayOrderId());
+            RefundProcess refundOrder = acquiringRefundBuilder.buildRefundOrder(refundAcquiringOrder.getPaymentId(), new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), originalPayOrder);
+            refundAcquiringOrder.setPayOrderId(refundOrder.getProcessId());
             acquiringOrderRepository.store(refundAcquiringOrder);
             refundProcessRepository.store(refundOrder);
             return refundOrder;

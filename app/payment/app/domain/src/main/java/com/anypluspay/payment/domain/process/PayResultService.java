@@ -1,43 +1,44 @@
 package com.anypluspay.payment.domain.process;
 
-import com.anypluspay.payment.domain.flux.FluxOrder;
+import com.anypluspay.payment.domain.biz.PaymentOrderService;
+import com.anypluspay.payment.domain.repository.PayProcessRepository;
+import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
 import com.anypluspay.payment.types.status.PayProcessStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
- * 支付指令处理
- *
+ * 支付指令结果处理
  * @author wxj
- * 2025/2/22
+ * 2025/5/23
  */
 @Service
-public class ProcessProcessService extends AbstractBaseProcessService {
+public class PayResultService {
 
-    public PayResult process(PayProcess payProcess) {
-        FluxOrder fluxOrder = buildFluxOrder(payProcess);
+    @Autowired
+    protected IdGeneratorService idGeneratorService;
 
-        transactionTemplate.executeWithoutResult(status -> {
-            fluxOrderRepository.store(fluxOrder);
-            payProcess.setStatus(PayProcessStatus.PAYING);
-            payProcessRepository.reStore(payProcess);
-        });
+    @Autowired
+    protected PayProcessRepository payProcessRepository;
 
-        PayResult payResult = fluxEngineService.process(fluxOrder);
-        processFluxResult(payProcess, payResult);
-        return payResult;
-    }
+    @Autowired
+    protected TransactionTemplate transactionTemplate;
+
+    @Autowired
+    protected PaymentOrderService paymentOrderService;
 
     /**
      * 处理交换结果
      *
-     * @param payProcess 支付单
-     * @param payResult       交换结果
+     * @param processId 支付单ID
+     * @param payResult 交换结果
      */
-    public void processFluxResult(PayProcess payProcess, PayResult payResult) {
+    public void processFluxResult(String processId, PayResult payResult) {
         transactionTemplate.executeWithoutResult(status -> {
-            payProcessRepository.lock(payProcess.getProcessId());
+            PayProcess payProcess = payProcessRepository.lock(processId);
             if (payProcess.getStatus() == PayProcessStatus.PAYING) {
                 // 仅支付中状态才处理结果，防止重复处理
                 payProcess.setStatus(convertStatus(payResult.getPayStatus()));

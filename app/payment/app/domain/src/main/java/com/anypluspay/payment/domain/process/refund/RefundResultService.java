@@ -1,53 +1,59 @@
 package com.anypluspay.payment.domain.process.refund;
 
-import com.anypluspay.payment.domain.flux.FluxOrder;
-import com.anypluspay.payment.domain.process.AbstractBaseProcessService;
+import com.anypluspay.payment.domain.biz.PaymentOrderService;
+import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.RefundProcessRepository;
+import com.anypluspay.payment.domain.service.IdGeneratorService;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
- * 退款服务
+ * 退款指令结果处理服务
  *
  * @author wxj
- * 2025/2/18
+ * 2025/5/23
  */
 @Service
-public class RefundService extends AbstractBaseProcessService {
+public class RefundResultService {
 
     @Autowired
     private RefundProcessRepository refundProcessRepository;
 
-    public PayResult process(RefundProcess refundOrder) {
-        FluxOrder fluxOrder = buildFluxOrder(refundOrder);
-        transactionTemplate.executeWithoutResult(status -> {
-            fluxOrderRepository.store(fluxOrder);
-            refundOrder.setStatus(RefundOrderStatus.PAYING);
-            refundProcessRepository.reStore(refundOrder);
-        });
+    @Autowired
+    protected IdGeneratorService idGeneratorService;
 
-        PayResult payResult = fluxEngineService.process(fluxOrder);
-        processFluxResult(refundOrder, payResult);
-        return payResult;
-    }
+    @Autowired
+    protected PayProcessRepository payProcessRepository;
+
+    @Autowired
+    protected TransactionTemplate transactionTemplate;
+
+    @Autowired
+    protected PaymentOrderService paymentOrderService;
 
     /**
      * 处理 flux 结果
      *
-     * @param refundProcess 退款订单
-     * @param payResult   支付结果
+     * @param processId 退款指令ID
+     * @param payResult 支付结果
      */
-    public void processFluxResult(RefundProcess refundProcess, PayResult payResult) {
+    public void processFluxResult(String processId, PayResult payResult) {
         transactionTemplate.executeWithoutResult(status -> {
-            refundProcessRepository.lock(refundProcess.getProcessId());
+            RefundProcess refundProcess = refundProcessRepository.lock(processId);
             if (refundProcess.getStatus() == RefundOrderStatus.PAYING) {
                 // 仅支付中状态才处理结果，防止重复处理
                 convertStatus(refundProcess, payResult);
                 refundProcessRepository.reStore(refundProcess);
                 if (refundProcess.getStatus() == RefundOrderStatus.SUCCESS || refundProcess.getStatus() == RefundOrderStatus.FAIL) {
-                    paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
+                    if (refundProcess.getRefundType() == RefundType.BIZ_REQUEST) {
+                        // 仅支付业务请求的才处理业务结果
+                        paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
+                    }
                 }
             }
         });

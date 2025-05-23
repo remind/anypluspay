@@ -3,7 +3,7 @@ package com.anypluspay.payment.facade.instant.builder;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.repository.RefundProcessRepository;
 import com.anypluspay.payment.facade.request.RefundRequest;

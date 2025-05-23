@@ -4,6 +4,7 @@ import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.domain.PayChannelParamService;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
@@ -18,6 +19,7 @@ import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.PayProcessStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,6 +28,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AcquiringPayBuilder extends PaymentBuilder {
+
+    @Autowired
+    private PayChannelParamService payChannelParamService;
 
     public PayProcess buildPayProcess(AcquiringOrder acquiringOrder, AcquiringPayRequest request) {
         PayProcess payProcess = new PayProcess();
@@ -76,7 +81,7 @@ public class AcquiringPayBuilder extends PaymentBuilder {
         }
         if (payResult != null) {
             if (payResult.getPayStatus() == PayStatus.PROCESS) {
-                Extension payResponse = new Extension(payResult.getPayResponse());
+                Extension payResponse = new Extension(payChannelParamService.get(acquiringOrder.getPayOrderId()));
                 response.setInstUrl(payResponse.get(ChannelExtKey.INST_URL.getCode()));
             }
             response.setResultCode(payResult.getResultCode());

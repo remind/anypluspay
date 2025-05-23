@@ -16,4 +16,9 @@ public class PaymentBizOrder extends Entity {
      * 支付单号
      */
     private String paymentId;
+
+    /**
+     * 支付指令ID
+     */
+    private String payOrderId;
 }

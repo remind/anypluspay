@@ -3,7 +3,7 @@ package com.anypluspay.payment.domain.biz.acquiring;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.biz.PaymentBizOrder;
-import com.anypluspay.payment.types.TradeType;
+import com.anypluspay.payment.types.biz.TradeType;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import lombok.Data;
 

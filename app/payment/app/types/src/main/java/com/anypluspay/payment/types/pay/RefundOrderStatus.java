@@ -1,4 +1,4 @@
-package com.anypluspay.payment.domain.process.refund;
+package com.anypluspay.payment.types.pay;
 
 import com.anypluspay.payment.types.status.OrderStatus;
 import lombok.Getter;

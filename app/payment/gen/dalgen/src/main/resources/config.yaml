@@ -13,11 +13,11 @@ db:
       - tb_ #支付业务表
       - t_
     name:
-#      - tb_acquiring_order
+      - tb_acquiring_order
 #      - tb_withdraw_order
 #      - tb_deposit_order
-      - t_pay_process
-      - t_refund_process
+#      - t_pay_process
+#      - t_refund_process
 #      - t_fund_detail
 #      - t_flux_order
 #      - t_flux_process

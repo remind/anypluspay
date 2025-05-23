@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-05-23
  */
 @TableName("tb_acquiring_order")
 public class AcquiringOrderDO implements Serializable {
@@ -32,6 +32,11 @@ public class AcquiringOrderDO implements Serializable {
      * 关联支付ID
      */
     private String relationPaymentId;
+
+    /**
+     * 支付指令ID
+     */
+    private String payOrderId;
 
     /**
      * 交易类型
@@ -111,6 +116,14 @@ public class AcquiringOrderDO implements Serializable {
 
     public void setRelationPaymentId(String relationPaymentId) {
         this.relationPaymentId = relationPaymentId;
+    }
+
+    public String getPayOrderId() {
+        return payOrderId;
+    }
+
+    public void setPayOrderId(String payOrderId) {
+        this.payOrderId = payOrderId;
     }
 
     public String getTradeType() {
@@ -222,6 +235,7 @@ public class AcquiringOrderDO implements Serializable {
         return "AcquiringOrderDO{" +
         "paymentId = " + paymentId +
         ", relationPaymentId = " + relationPaymentId +
+        ", payOrderId = " + payOrderId +
         ", tradeType = " + tradeType +
         ", outTradeNo = " + outTradeNo +
         ", partnerId = " + partnerId +

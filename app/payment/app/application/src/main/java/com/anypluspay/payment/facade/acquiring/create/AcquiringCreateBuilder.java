@@ -7,7 +7,7 @@ import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
-import com.anypluspay.payment.types.TradeType;
+import com.anypluspay.payment.types.biz.TradeType;
 import org.springframework.stereotype.Service;
 
 /**

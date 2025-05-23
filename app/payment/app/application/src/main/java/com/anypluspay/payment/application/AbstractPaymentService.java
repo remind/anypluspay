@@ -1,7 +1,7 @@
 package com.anypluspay.payment.application;
 
-import com.anypluspay.payment.domain.process.ProcessProcessService;
-import com.anypluspay.payment.domain.process.refund.RefundService;
+import com.anypluspay.payment.domain.process.PayProcessService;
+import com.anypluspay.payment.domain.process.refund.RefundProcessService;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
 import com.anypluspay.payment.domain.repository.RefundProcessRepository;
@@ -27,9 +27,9 @@ public abstract class AbstractPaymentService {
     protected RefundProcessRepository refundProcessRepository;
 
     @Autowired
-    protected ProcessProcessService payProcessService;
+    protected PayProcessService payProcessService;
 
     @Autowired
-    protected RefundService refundService;
+    protected RefundProcessService refundProcessService;
 
 }

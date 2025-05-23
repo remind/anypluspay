@@ -136,10 +136,10 @@
             // 根据返回结果更新提示信息
             if (result.success) {
                 const data = result.data;
-                if (data.orderStatus == 'FAIL') {
+                if (data.payStatus == 'FAIL') {
                     resultMessage.textContent = `支付失败！${data.message}。`;
                     resultMessage.style.color = 'red';
-                } else if (data.orderStatus == 'SUCCESS') {
+                } else if (data.payStatus == 'SUCCESS') {
                     resultMessage.textContent = `支付成功！`;
                     resultMessage.style.color = 'green';
                 } else {

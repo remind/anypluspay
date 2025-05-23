@@ -5,7 +5,7 @@ import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.process.PayProcess;
 import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.types.status.PayProcessStatus;
-import com.anypluspay.payment.domain.process.refund.RefundOrderStatus;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
 import com.anypluspay.payment.domain.repository.PayProcessRepository;
 import com.anypluspay.payment.domain.repository.PaymentRepository;
