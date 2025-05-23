@@ -1,11 +1,21 @@
 package com.anypluspay.commons.lang.utils;
 
+import cn.hutool.core.lang.UUID;
+
 /**
  * 字符串处理类
  * @author wxj
  * 2023/12/10
  */
 public class StringUtil {
+
+    /**
+     * 生成随机ID
+     * @return
+     */
+    public static String randomId() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
     /**
      * 从右边补足

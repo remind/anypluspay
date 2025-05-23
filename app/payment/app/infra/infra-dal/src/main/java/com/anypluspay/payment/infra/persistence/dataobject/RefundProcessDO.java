@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-05-23
  */
 @TableName("t_refund_process")
 public class RefundProcessDO implements Serializable {
@@ -32,6 +32,11 @@ public class RefundProcessDO implements Serializable {
      * 支付单ID
      */
     private String paymentId;
+
+    /**
+     * 退款类型
+     */
+    private String refundType;
 
     /**
      * 关联原支付指令ID
@@ -89,6 +94,14 @@ public class RefundProcessDO implements Serializable {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public String getRefundType() {
+        return refundType;
+    }
+
+    public void setRefundType(String refundType) {
+        this.refundType = refundType;
     }
 
     public String getRelationId() {
@@ -160,6 +173,7 @@ public class RefundProcessDO implements Serializable {
         return "RefundProcessDO{" +
         "processId = " + processId +
         ", paymentId = " + paymentId +
+        ", refundType = " + refundType +
         ", relationId = " + relationId +
         ", memberId = " + memberId +
         ", amount = " + amount +

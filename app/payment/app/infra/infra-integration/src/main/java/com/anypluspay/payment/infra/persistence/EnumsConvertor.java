@@ -10,6 +10,7 @@ import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.pay.RefundType;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.payment.types.pay.RefundOrderStatus;
@@ -104,6 +105,10 @@ public interface EnumsConvertor {
 
     default AcquiringOrderStatus toTradeOrderStatus(String code) {
         return EnumUtil.getByCode(AcquiringOrderStatus.class, code);
+    }
+
+    default RefundType toRefundType(String code) {
+        return EnumUtil.getByCode(RefundType.class, code);
     }
 
 }

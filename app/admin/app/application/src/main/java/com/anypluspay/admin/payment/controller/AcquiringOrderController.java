@@ -1,23 +1,31 @@
 package com.anypluspay.admin.payment.controller;
 
+import cn.hutool.core.lang.UUID;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.admin.payment.convertor.AcquiringOrderConvertor;
 import com.anypluspay.admin.payment.query.AcquiringOrderQuery;
+import com.anypluspay.admin.payment.request.RefundRequest;
 import com.anypluspay.admin.payment.response.AcquiringOrderResponse;
+import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.lang.utils.StringUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
+import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
+import com.anypluspay.payment.facade.acquiring.TradeResponse;
+import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
+import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import com.anypluspay.payment.infra.persistence.mapper.AcquiringOrderMapper;
+import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 收单订单
+ *
  * @author wxj
  * 2025/5/19
  */
@@ -30,6 +38,9 @@ public class AcquiringOrderController extends AbstractController {
 
     @Autowired
     private AcquiringOrderConvertor acquiringOrderConvertor;
+
+    @Autowired
+    private AcquiringFacade acquiringFacade;
 
 
     /**
@@ -52,4 +63,35 @@ public class AcquiringOrderController extends AbstractController {
         return ResponseResult.success(acquiringOrderConvertor.toEntity(tradeOrderMapper.selectPage(page, queryWrapper)));
     }
 
+    /**
+     * 退款
+     *
+     * @param request 退款请求参数
+     * @return 退款结果
+     */
+    @PostMapping("/refund")
+    public ResponseResult<String> refund(@RequestBody RefundRequest request) {
+        TradeResponse tradeResponse = acquiringFacade.queryByPaymentId(request.getPaymentId());
+        if (tradeResponse.getStatus().equals(AcquiringOrderStatus.SUCCESS.getCode())) {
+            AcquiringRefundRequest acquiringRefundRequest = new AcquiringRefundRequest();
+            acquiringRefundRequest.setOrigPaymentId(tradeResponse.getPaymentId());
+            acquiringRefundRequest.setOutTradeNo(StringUtil.randomId());
+            acquiringRefundRequest.setAmount(request.getAmount());
+            AcquiringRefundResponse acquiringRefundResponse = acquiringFacade.refund(acquiringRefundRequest);
+            if (acquiringRefundResponse.isSuccess()) {
+                if (acquiringRefundResponse.getOrderStatus().equals(AcquiringOrderStatus.SUCCESS.getCode())) {
+                    return ResponseResult.success("退款成功");
+                } else if (acquiringRefundResponse.getOrderStatus().equals(AcquiringOrderStatus.INIT.getCode())
+                        || acquiringRefundResponse.getOrderStatus().equals(AcquiringOrderStatus.PAYING.getCode())
+                ) {
+                    return ResponseResult.success("提交成功，处理中");
+                } else {
+                    return ResponseResult.fail("退款失败");
+                }
+            } else {
+                return ResponseResult.fail(acquiringRefundResponse.getResultCode(), acquiringRefundResponse.getResultMsg());
+            }
+        }
+        return ResponseResult.fail("订单不是成功状态");
+    }
 }

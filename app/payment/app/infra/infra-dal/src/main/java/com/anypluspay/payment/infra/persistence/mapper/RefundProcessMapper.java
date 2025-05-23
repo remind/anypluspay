@@ -9,7 +9,7 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-05-23
  */
 public interface RefundProcessMapper extends ExtBaseMapper<RefundProcessDO> {
 

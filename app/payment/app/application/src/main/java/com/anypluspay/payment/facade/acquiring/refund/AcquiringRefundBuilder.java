@@ -16,6 +16,7 @@ import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
+import com.anypluspay.payment.types.pay.RefundType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -47,7 +48,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         Money refundAmount = new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency());
         checkRefundAmount(origAcquiringOrder, refundAmount);
         AcquiringOrder acquiringOrder = new AcquiringOrder();
-        acquiringOrder.setPaymentId(idGeneratorService.genPaymentId(request.getPartnerId(), IdType.TRADE_ORDER_ID));
+        acquiringOrder.setPaymentId(idGeneratorService.genPaymentId(origAcquiringOrder.getPaymentId(), IdType.TRADE_ORDER_ID));
         acquiringOrder.setRelationPaymentId(origAcquiringOrder.getPaymentId());
         acquiringOrder.setPartnerId(origAcquiringOrder.getPartnerId());
         acquiringOrder.setOutTradeNo(request.getOutTradeNo());
@@ -88,6 +89,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         refundOrder.setRelationId(payProcess.getProcessId());
         refundOrder.setAmount(refundAmount);
         refundOrder.setStatus(RefundOrderStatus.INIT);
+        refundOrder.setRefundType(RefundType.BIZ_REQUEST);
         fillFundDetail(refundAmount, payProcess, refundOrder);
         return refundOrder;
     }
