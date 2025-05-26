@@ -20,4 +20,9 @@ public interface PaymentConstants {
      * 某些场景的默认值
      */
     String DEFAULT_NULL_VALUE = "0";
+
+    /**
+     * 默认过期时间，分钟
+     */
+    Integer DEFAULT_EXPIRE_MINUTES = 30;
 }

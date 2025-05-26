@@ -7,6 +7,8 @@ import com.anypluspay.payment.types.biz.TradeType;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * @author wxj
  * 2025/5/17
@@ -63,6 +65,11 @@ public class AcquiringOrder extends PaymentBizOrder {
      * 状态
      */
     private AcquiringOrderStatus status;
+
+    /**
+     * 过期时间
+     */
+    private LocalDateTime gmtExpire;
 
     /**
      * 扩展信息

@@ -51,6 +51,11 @@ public class AcquiringCreateRequest {
     private Money amount;
 
     /**
+     * 过期时间，分钟
+     */
+    private Integer expireMinutes;
+
+    /**
      * 扩展信息
      */
     private String extension;

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-23
+ * @since 2025-05-26
  */
 @TableName("tb_acquiring_order")
 public class AcquiringOrderDO implements Serializable {
@@ -87,6 +87,11 @@ public class AcquiringOrderDO implements Serializable {
      * 状态
      */
     private String status;
+
+    /**
+     * 过期时间
+     */
+    private LocalDateTime gmtExpire;
 
     /**
      * 扩展信息
@@ -206,6 +211,14 @@ public class AcquiringOrderDO implements Serializable {
         this.status = status;
     }
 
+    public LocalDateTime getGmtExpire() {
+        return gmtExpire;
+    }
+
+    public void setGmtExpire(LocalDateTime gmtExpire) {
+        this.gmtExpire = gmtExpire;
+    }
+
     public String getExtension() {
         return extension;
     }
@@ -246,6 +259,7 @@ public class AcquiringOrderDO implements Serializable {
         ", amount = " + amount +
         ", currencyCode = " + currencyCode +
         ", status = " + status +
+        ", gmtExpire = " + gmtExpire +
         ", extension = " + extension +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +

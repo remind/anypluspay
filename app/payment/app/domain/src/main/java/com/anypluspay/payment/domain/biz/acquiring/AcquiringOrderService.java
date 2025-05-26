@@ -10,6 +10,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.time.LocalDateTime;
+
 /**
  * @author wxj
  * 2025/5/18
@@ -35,15 +37,24 @@ public class AcquiringOrderService {
             AcquiringOrder acquiringOrder = acquiringOrderRepository.lock(paymentId);
             if (success) {
                 if (acquiringOrder.getStatus() == AcquiringOrderStatus.SUCCESS) {
-                    threadPoolTaskExecutor.execute(() -> refundApplyService.apply(paymentId, orderId, RefundType.REPEAT));
+                    refund(paymentId, orderId, RefundType.REPEAT);
                 } else if (acquiringOrder.getStatus() == AcquiringOrderStatus.CLOSED) {
-                    threadPoolTaskExecutor.execute(() -> refundApplyService.apply(paymentId, orderId, RefundType.ORDER_CLOSE));
+                    refund(paymentId, orderId, RefundType.ORDER_CLOSE);
                 } else {
-                    acquiringOrder.setPayOrderId(orderId);
-                    acquiringOrder.setStatus(AcquiringOrderStatus.SUCCESS);
+                    if (LocalDateTime.now().isAfter(acquiringOrder.getGmtExpire())) {
+                        acquiringOrder.setStatus(AcquiringOrderStatus.CLOSED);
+                        refund(paymentId, orderId, RefundType.ORDER_CLOSE);
+                    } else {
+                        acquiringOrder.setPayOrderId(orderId);
+                        acquiringOrder.setStatus(AcquiringOrderStatus.SUCCESS);
+                    }
                 }
             }
             acquiringOrderRepository.reStore(acquiringOrder);
         });
+    }
+
+    private void refund(String paymentId, String orderId, RefundType refundType) {
+        threadPoolTaskExecutor.execute(() -> refundApplyService.apply(paymentId, orderId, refundType));
     }
 }

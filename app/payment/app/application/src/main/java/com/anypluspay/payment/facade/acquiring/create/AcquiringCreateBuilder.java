@@ -4,11 +4,14 @@ import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.domain.PaymentConstants;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.biz.TradeType;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * 交易创建构造器
@@ -36,7 +39,20 @@ public class AcquiringCreateBuilder extends PaymentBuilder {
         acquiringOrder.setPayerId(request.getPayerId());
         acquiringOrder.setExtension(new Extension(request.getExtension()));
         acquiringOrder.setStatus(AcquiringOrderStatus.INIT);
+        acquiringOrder.setGmtExpire(getExpireTime(request.getExpireMinutes()));
         return acquiringOrder;
+    }
+
+    /**
+     * 获取过期时间
+     * @param expireMinutes
+     * @return
+     */
+    private LocalDateTime getExpireTime(Integer expireMinutes) {
+        if (expireMinutes == null) {
+            expireMinutes = PaymentConstants.DEFAULT_EXPIRE_MINUTES;
+        }
+        return LocalDateTime.now().plusMinutes(expireMinutes);
     }
 
     /**

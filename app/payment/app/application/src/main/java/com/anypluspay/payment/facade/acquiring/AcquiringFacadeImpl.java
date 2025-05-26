@@ -14,6 +14,7 @@ import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringPayBuilder;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
+import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayValidator;
 import com.anypluspay.payment.facade.acquiring.query.TradeResponseBuilder;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundBuilder;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
@@ -48,6 +49,9 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
 
     @Autowired
     private RefundApplyService refundApplyService;
+
+    @Autowired
+    private AcquiringPayValidator acquiringPayValidator;
 
     @Override
     public AcquiringCreateResponse create(AcquiringCreateRequest request) {
@@ -114,8 +118,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
     private PayProcess savePayOrder(AcquiringPayRequest request) {
         return transactionTemplate.execute(status -> {
             AcquiringOrder acquiringOrder = lockTradeOrder(request.getPaymentId(), request.getOutTradeNo(), request.getPartnerId());
-            AssertUtil.notNull(acquiringOrder, "订单不存在");
-            AssertUtil.isTrue(acquiringOrder.getStatus() == AcquiringOrderStatus.INIT || acquiringOrder.getStatus() == AcquiringOrderStatus.PAYING, "订单状态为非待支付");
+            acquiringPayValidator.validate(acquiringOrder);
             PayProcess payOrder = acquiringPayBuilder.buildPayProcess(acquiringOrder, request);
             acquiringOrder.setPayOrderId(payOrder.getProcessId());
             acquiringOrder.setStatus(AcquiringOrderStatus.PAYING);
