@@ -2,7 +2,6 @@ package com.anypluspay.admin.auth.controller;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.anypluspay.admin.account.model.dto.AccountTitleDto;
 import com.anypluspay.admin.auth.SysUserStatus;
 import com.anypluspay.admin.auth.convertor.SysUserConvertor;
 import com.anypluspay.admin.auth.query.SysUserQuery;
