@@ -6,6 +6,7 @@ import com.anypluspay.account.types.accounting.AccountTitleScope;
 import com.anypluspay.account.types.accounting.AccountTitleType;
 import com.anypluspay.account.types.enums.BalanceDirection;
 import com.anypluspay.account.types.enums.DenyStatus;
+import com.anypluspay.admin.auth.SysUserStatus;
 import com.anypluspay.admin.basis.model.EnumObject;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.channel.InstAbility;
@@ -37,6 +38,9 @@ public class EnumValueController {
     static {
         final List<Class<? extends CodeEnum>> CODE_ENUM_LIST = new ArrayList<>();
 
+        // 系统管理
+        CODE_ENUM_LIST.add(SysUserStatus.class);
+
         // 账务相关
         CODE_ENUM_LIST.add(AccountTitleType.class);
         CODE_ENUM_LIST.add(BalanceDirection.class);
@@ -50,7 +54,6 @@ public class EnumValueController {
         CODE_ENUM_LIST.add(CardType.class);
         CODE_ENUM_LIST.add(MaintainTimeType.class);
         CODE_ENUM_LIST.add(InstOrderStatus.class);
-
 
         CODE_ENUM_LIST.forEach(clazz -> CODE_ENUM_CACHE_MAP.put(StrUtil.lowerFirst(clazz.getSimpleName()), Arrays.stream(clazz.getEnumConstants())
                 .map(codeEnum -> new EnumObject(codeEnum.getCode(), codeEnum.getDisplayName()))

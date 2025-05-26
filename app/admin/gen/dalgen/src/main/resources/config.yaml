@@ -12,6 +12,7 @@ db:
     # 表名前缀
       - t_
     name:
-      - t_query_define
-      - t_query_group
-      - t_query_param_define
+#      - t_query_define
+#      - t_query_group
+#      - t_query_param_define
+      - t_sys_user
