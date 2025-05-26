@@ -11,8 +11,9 @@ import lombok.Getter;
  */
 @Getter
 public enum RefundType implements CodeEnum {
-    REPEAT("repeat", "重复支付退款"),
-    BIZ_REQUEST("bizRequest", "业务请求退款"),
+    REPEAT("rp", "重复支付退款"),
+    ORDER_CLOSE("oc", "订单已关闭"),
+    BIZ_REQUEST("br", "业务请求退款"),
     ;
 
     private final String code;

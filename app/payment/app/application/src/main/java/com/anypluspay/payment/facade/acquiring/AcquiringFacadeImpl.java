@@ -20,6 +20,7 @@ import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.pay.RefundType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,7 +137,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
             AssertUtil.notNull(origAcquiringOrder, "原订单不存在");
             AcquiringOrder refundAcquiringOrder = acquiringRefundBuilder.buildTradeOrder(request, origAcquiringOrder);
             PayProcess originalPayOrder = payProcessRepository.load(origAcquiringOrder.getPayOrderId());
-            RefundProcess refundOrder = acquiringRefundBuilder.buildRefundOrder(refundAcquiringOrder.getPaymentId(), new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), originalPayOrder);
+            RefundProcess refundOrder = refundApplyService.buildRefundOrder(refundAcquiringOrder.getPaymentId(), new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), RefundType.BIZ_REQUEST, originalPayOrder);
             refundAcquiringOrder.setPayOrderId(refundOrder.getProcessId());
             acquiringOrderRepository.store(refundAcquiringOrder);
             refundProcessRepository.store(refundOrder);

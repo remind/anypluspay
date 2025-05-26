@@ -32,26 +32,4 @@ public class RefundProcessService extends AbstractBaseProcessService {
         return fluxEngineService.process(fluxOrder);
     }
 
-    /**
-     * 状态转换
-     *
-     * @param refundOrder 退款订单
-     * @param payResult   支付结果
-     */
-    private void convertStatus(RefundProcess refundOrder, PayResult payResult) {
-        if (payResult.getPayStatus() == PayStatus.SUCCESS) {
-            refundOrder.setStatus(RefundOrderStatus.SUCCESS);
-        }
-        switch (payResult.getPayStatus()) {
-            case SUCCESS:
-                refundOrder.setStatus(RefundOrderStatus.SUCCESS);
-                break;
-            case FAIL:
-                refundOrder.setStatus(RefundOrderStatus.FAIL);
-                break;
-            case PROCESS:
-                refundOrder.setStatus(RefundOrderStatus.PAYING);
-                break;
-        }
-    }
 }
