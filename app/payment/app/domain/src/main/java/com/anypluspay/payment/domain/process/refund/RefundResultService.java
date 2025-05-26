@@ -52,7 +52,7 @@ public class RefundResultService {
                 if (refundProcess.getStatus() == RefundOrderStatus.SUCCESS || refundProcess.getStatus() == RefundOrderStatus.FAIL) {
                     if (refundProcess.getRefundType() == RefundType.BIZ_REQUEST) {
                         // 仅支付业务请求的才处理业务结果
-                        paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
+                        paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getProcessId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
                     }
                 }
             }

@@ -29,29 +29,7 @@ public class RefundProcessService extends AbstractBaseProcessService {
             refundProcessRepository.reStore(refundOrder);
         });
 
-        PayResult payResult = fluxEngineService.process(fluxOrder);
-        processFluxResult(refundOrder, payResult);
-        return payResult;
-    }
-
-    /**
-     * 处理 flux 结果
-     *
-     * @param refundProcess 退款订单
-     * @param payResult   支付结果
-     */
-    public void processFluxResult(RefundProcess refundProcess, PayResult payResult) {
-        transactionTemplate.executeWithoutResult(status -> {
-            refundProcessRepository.lock(refundProcess.getProcessId());
-            if (refundProcess.getStatus() == RefundOrderStatus.PAYING) {
-                // 仅支付中状态才处理结果，防止重复处理
-                convertStatus(refundProcess, payResult);
-                refundProcessRepository.reStore(refundProcess);
-                if (refundProcess.getStatus() == RefundOrderStatus.SUCCESS || refundProcess.getStatus() == RefundOrderStatus.FAIL) {
-                    paymentOrderService.processResult(refundProcess.getPaymentId(), refundProcess.getStatus() == RefundOrderStatus.SUCCESS);
-                }
-            }
-        });
+        return fluxEngineService.process(fluxOrder);
     }
 
     /**

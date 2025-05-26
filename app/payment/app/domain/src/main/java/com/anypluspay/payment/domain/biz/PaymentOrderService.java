@@ -29,7 +29,7 @@ public class PaymentOrderService {
     @Autowired
     private WithdrawService withdrawService;
 
-    public void processResult(String paymentId, boolean success) {
+    public void processResult(String paymentId, String orderId, boolean success) {
         log.info("支付业务单结果处理,paymentId={},success={}", paymentId, success);
         IdType bizOrderIdType = idGeneratorService.getIdType(paymentId);
         if (bizOrderIdType == IdType.DEPOSIT_ORDER_ID) {
@@ -37,7 +37,7 @@ public class PaymentOrderService {
         } else if (bizOrderIdType == IdType.WITHDRAW_ORDER_ID) {
             withdrawService.processResult(paymentId, success);
         } else if (bizOrderIdType == IdType.TRADE_ORDER_ID) {
-            acquiringOrderService.processResult(paymentId, success);
+            acquiringOrderService.processResult(paymentId, orderId, success);
         }
     }
 }

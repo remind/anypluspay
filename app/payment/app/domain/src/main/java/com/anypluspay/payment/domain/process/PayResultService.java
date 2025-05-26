@@ -46,7 +46,7 @@ public class PayResultService {
                 payProcess.setResultMsg(payResult.getResultMessage());
                 payProcessRepository.reStore(payProcess);
                 if (payProcess.getStatus() == PayProcessStatus.SUCCESS || payProcess.getStatus() == PayProcessStatus.FAIL) {
-                    paymentOrderService.processResult(payProcess.getPaymentId(), payProcess.getStatus() == PayProcessStatus.SUCCESS);
+                    paymentOrderService.processResult(payProcess.getPaymentId(), payProcess.getProcessId(),payProcess.getStatus() == PayProcessStatus.SUCCESS);
                 }
             }
         });

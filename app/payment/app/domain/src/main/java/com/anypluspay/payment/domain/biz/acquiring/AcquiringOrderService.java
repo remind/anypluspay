@@ -19,7 +19,7 @@ public class AcquiringOrderService {
     @Autowired
     private AcquiringOrderRepository acquiringOrderRepository;
 
-    public void processResult(String paymentId, boolean success) {
+    public void processResult(String paymentId, String orderId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
             AcquiringOrder acquiringOrder = acquiringOrderRepository.lock(paymentId);
             if (success) {
@@ -28,6 +28,7 @@ public class AcquiringOrderService {
                 } else if (acquiringOrder.getStatus() == AcquiringOrderStatus.CLOSED) {
                     // TODO 关闭后支付
                 } else {
+                    acquiringOrder.setPayOrderId(orderId);
                     acquiringOrder.setStatus(AcquiringOrderStatus.SUCCESS);
                 }
             }
