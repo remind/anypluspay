@@ -7,7 +7,9 @@ import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * 2025/5/17
  */
 @FeignClient(name = ApiConstants.SERVICE_NAME, contextId = ApiConstants.SERVICE_NAME + "AcquiringFacade")
+@Validated
 public interface AcquiringFacade {
     String PREFIX = "/acquiring";
 
@@ -30,7 +33,7 @@ public interface AcquiringFacade {
      * @return
      */
     @PostMapping(PREFIX + "/create")
-    AcquiringCreateResponse create(@RequestBody AcquiringCreateRequest request);
+    AcquiringCreateResponse create(@RequestBody @Validated AcquiringCreateRequest request);
 
     /**
      * 交易支付
@@ -39,7 +42,7 @@ public interface AcquiringFacade {
      * @return
      */
     @PostMapping(PREFIX + "/pay")
-    AcquiringPayResponse pay(@RequestBody AcquiringPayRequest request);
+    AcquiringPayResponse pay(@RequestBody @Validated AcquiringPayRequest request);
 
     /**
      * 交易退款
@@ -48,7 +51,7 @@ public interface AcquiringFacade {
      * @return
      */
     @PostMapping(PREFIX + "/refund")
-    AcquiringRefundResponse refund(@RequestBody AcquiringRefundRequest request);
+    AcquiringRefundResponse refund(@RequestBody @Validated AcquiringRefundRequest request);
 
     /**
      * 查询交易
@@ -57,7 +60,7 @@ public interface AcquiringFacade {
      * @return
      */
     @GetMapping(PREFIX + "/query-by-payment-id")
-    TradeResponse queryByPaymentId(@RequestParam String paymentId);
+    TradeResponse queryByPaymentId(@RequestParam @Length(min = 6, max = 32, message = "支付单号长度为6-32") String paymentId);
 
     /**
      * 查询交易
@@ -67,5 +70,6 @@ public interface AcquiringFacade {
      * @return
      */
     @GetMapping(PREFIX + "/query-by-partner")
-    TradeResponse queryByPartner(@RequestParam String partnerId, @RequestParam String outTradeNo);
+    TradeResponse queryByPartner(@RequestParam @Length(min = 6, max = 64, message = "合作方长度为6-64") String partnerId,
+                                 @RequestParam @Length(min = 6, max = 64, message = "外部订单号长度为6-64") String outTradeNo);
 }

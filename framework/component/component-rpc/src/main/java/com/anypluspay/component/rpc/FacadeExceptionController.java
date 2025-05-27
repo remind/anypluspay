@@ -1,6 +1,7 @@
 package com.anypluspay.component.rpc;
 
 import com.anypluspay.commons.exceptions.BizException;
+import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.commons.response.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +28,7 @@ public class FacadeExceptionController {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<ResponseResult<?>> handleAllExceptions(Exception ex) {
-        String errorCode = "";
+        String errorCode = GlobalResultCode.FAIL.getCode();
         String errorMessage = ex.getMessage() != null ? ex.getMessage() : "Internal Server Error";
         if (ex instanceof BizException bizException) {
             errorCode = bizException.getCode();
@@ -37,13 +38,14 @@ public class FacadeExceptionController {
                 List<ObjectError> objectErrorList = exception.getBindingResult().getAllErrors();
                 errorMessage = objectErrorList.get(0).getDefaultMessage();
             }
+            log.warn("参数异常:", ex);
         } else {
             log.error("系统异常:", ex);
         }
         HttpHeaders headers = new HttpHeaders();
         headers.add(RpcConstants.ERROR_STATUS_KEY, RpcConstants.ERROR_STATUS_VALUE);
         ResponseResult<?> result = ResponseResult.fail(errorCode, errorMessage);
-        return new ResponseEntity<>(result, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(result, headers, HttpStatus.OK);
 
     }
 }

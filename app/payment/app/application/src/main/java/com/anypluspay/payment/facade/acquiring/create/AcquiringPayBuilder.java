@@ -3,6 +3,7 @@ package com.anypluspay.payment.facade.acquiring.create;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
+import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.PayChannelParamService;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
@@ -86,6 +87,8 @@ public class AcquiringPayBuilder extends PaymentBuilder {
             }
             response.setResultCode(payResult.getResultCode());
             response.setResultMsg(payResult.getResultMessage());
+        } else {
+            response.setResultCode(GlobalResultCode.SUCCESS.getCode());
         }
         return response;
     }

@@ -2,6 +2,7 @@ package com.anypluspay.payment.facade.acquiring;
 
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
+import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.AbstractPaymentService;
 import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.process.PayProcess;
@@ -21,6 +22,7 @@ import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.biz.TradeType;
 import com.anypluspay.payment.types.pay.RefundType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 收单支付
+ *
  * @author wxj
  * 2025/5/17
  */
@@ -57,6 +61,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
     public AcquiringCreateResponse create(AcquiringCreateRequest request) {
         AcquiringCreateResponse response;
         try {
+            AssertUtil.notNull(EnumUtil.getByCode(TradeType.class, request.getTradeType()), "交易类型不存在");
             AcquiringOrder acquiringOrder = acquiringOrderRepository.load(request.getOutTradeNo(), request.getPartnerId());
             AssertUtil.isNull(acquiringOrder, "订单已存在");
             acquiringOrder = acquiringCreateBuilder.buildTradeOrder(request);
@@ -153,6 +158,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
         if (StringUtils.isNotBlank(paymentId)) {
             acquiringOrder = acquiringOrderRepository.load(paymentId);
         } else {
+            AssertUtil.isTrue(StringUtils.isNotBlank(partnerId) && StringUtils.isNotBlank(outTradeNo), "支付单号或外部交易单号至少传一个");
             acquiringOrder = acquiringOrderRepository.load(partnerId, outTradeNo);
         }
         return acquiringOrder;
@@ -163,6 +169,7 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
         if (StringUtils.isNotBlank(paymentId)) {
             acquiringOrder = acquiringOrderRepository.lock(paymentId);
         } else {
+            AssertUtil.isTrue(StringUtils.isNotBlank(partnerId) && StringUtils.isNotBlank(outTradeNo), "支付单号或外部交易单号至少传一个");
             acquiringOrder = acquiringOrderRepository.lock(partnerId, outTradeNo);
         }
         return acquiringOrder;

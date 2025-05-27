@@ -1,5 +1,6 @@
 package com.anypluspay.payment.facade.acquiring.create;
 
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
@@ -9,6 +10,7 @@ import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.biz.TradeType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
  * 2025/5/17
  */
 @Service
+@Slf4j
 public class AcquiringCreateBuilder extends PaymentBuilder {
 
     /**
@@ -37,7 +40,12 @@ public class AcquiringCreateBuilder extends PaymentBuilder {
         acquiringOrder.setPayeeId(request.getPayeeId());
         acquiringOrder.setPayeeAccountNo(request.getPayeeAccountNo());
         acquiringOrder.setPayerId(request.getPayerId());
-        acquiringOrder.setExtension(new Extension(request.getExtension()));
+        try {
+            acquiringOrder.setExtension(new Extension(request.getExtension()));
+        } catch (Exception e) {
+            log.error("扩展信息转化异常", e);
+            throw new BizException("扩展信息无法转为json");
+        }
         acquiringOrder.setStatus(AcquiringOrderStatus.INIT);
         acquiringOrder.setGmtExpire(getExpireTime(request.getExpireMinutes()));
         return acquiringOrder;
