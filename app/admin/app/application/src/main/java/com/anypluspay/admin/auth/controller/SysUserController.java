@@ -120,7 +120,8 @@ public class SysUserController extends AbstractController {
     public ResponseResult<String> updatePassword(@RequestBody @Validated SysUserUpdatePasswordRequest request) {
         SysUserDO sysUserDO = dalMapper.selectById(request.getId());
         AssertUtil.notNull(sysUserDO, "用户不存在");
-        fillPassword(sysUserDO, request.getPassword());
+        AssertUtil.isTrue(request.getNewPassword().equals(request.getRePassword()), "两次密码不一致");
+        fillPassword(sysUserDO, request.getNewPassword());
         if (dalMapper.updateById(sysUserDO) == 1) {
             return ResponseResult.success();
         } else {
