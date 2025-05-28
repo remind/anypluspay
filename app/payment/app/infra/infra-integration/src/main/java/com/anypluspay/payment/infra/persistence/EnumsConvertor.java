@@ -10,6 +10,8 @@ import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.member.MemberStatus;
+import com.anypluspay.payment.types.member.MemberType;
 import com.anypluspay.payment.types.pay.RefundType;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.PayProcessStatus;
@@ -111,4 +113,11 @@ public interface EnumsConvertor {
         return EnumUtil.getByCode(RefundType.class, code);
     }
 
+    default MemberType  toMemberType(String code) {
+        return EnumUtil.getByCode(MemberType.class, code);
+    }
+
+    default MemberStatus toMemberStatus(String code) {
+        return EnumUtil.getByCode(MemberStatus.class, code);
+    }
 }

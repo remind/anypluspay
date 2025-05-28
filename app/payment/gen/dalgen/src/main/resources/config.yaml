@@ -12,8 +12,9 @@ db:
     # 表名前缀
       - tb_ #支付业务表
       - t_
+      - tm_ #会员表
     name:
-      - tb_acquiring_order
+#      - tb_acquiring_order
 #      - tb_withdraw_order
 #      - tb_deposit_order
 #      - t_pay_process
@@ -21,3 +22,4 @@ db:
 #      - t_fund_detail
 #      - t_flux_order
 #      - t_flux_process
+      - tm_member
