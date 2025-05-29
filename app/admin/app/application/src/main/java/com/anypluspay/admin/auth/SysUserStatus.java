@@ -11,8 +11,8 @@ import lombok.Getter;
  */
 @Getter
 public enum SysUserStatus implements CodeEnum {
-    NORMAL("1", "正常"),
-    DISABLE("2", "禁用"),
+    ENABLE("E", "启用"),
+    DISABLE("D", "禁用"),
     ;
 
     private final String code;
