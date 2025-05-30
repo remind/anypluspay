@@ -1,16 +1,16 @@
 package com.anypluspay.payment.infra.persistence.mapper;
 
-import com.anypluspay.payment.infra.persistence.dataobject.MemberDO;
+import com.anypluspay.payment.infra.persistence.dataobject.PartnerSceneDO;
 import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
 
 /**
  * <p>
- * 会员表 Mapper 接口
+ * 合作方场景 Mapper 接口
  * </p>
  *
  * @author wxj
  * @since 2025-05-28
  */
-public interface MemberMapper extends ExtBaseMapper<MemberDO> {
+public interface PartnerSceneMapper extends ExtBaseMapper<PartnerSceneDO> {
 
 }

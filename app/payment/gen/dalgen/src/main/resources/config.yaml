@@ -13,6 +13,7 @@ db:
       - tb_ #支付业务表
       - t_
       - tm_ #会员表
+      - tc_ #配置类数据
     name:
 #      - tb_acquiring_order
 #      - tb_withdraw_order
@@ -23,3 +24,6 @@ db:
 #      - t_flux_order
 #      - t_flux_process
       - tm_member
+      - tm_partner_scene
+      - tm_scene_pay_method
+      - tc_pay_method

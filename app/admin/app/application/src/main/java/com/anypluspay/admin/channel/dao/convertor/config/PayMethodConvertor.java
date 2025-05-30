@@ -11,7 +11,7 @@ import org.mapstruct.MappingConstants;
  * @author wxj
  * 2024/12/5
  */
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+//@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PayMethodConvertor extends SimpleCrudConvertor<PayMethodDto, PayMethodRequest, PayModelDO> {
 
 }

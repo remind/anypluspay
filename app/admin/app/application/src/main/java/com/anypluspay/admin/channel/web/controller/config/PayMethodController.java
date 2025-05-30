@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.*;
  * @author wxj
  * 2024/11/12
  */
-@RestController
-@RequestMapping("/pay-method")
+//@RestController
+//@RequestMapping("/pay-method")
 public class PayMethodController extends AbstractController  {
 
     @Autowired

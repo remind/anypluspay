@@ -10,47 +10,39 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 会员表
+ * 合作方场景
  * </p>
  *
  * @author wxj
  * @since 2025-05-28
  */
-@TableName("tm_member")
-public class MemberDO implements Serializable {
+@TableName("tm_partner_scene")
+public class PartnerSceneDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 会员ID
-     */
-    @TableId(value = "member_id", type = IdType.NONE)
-    private String memberId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
-     * 会员类型
+     * 合作ID
      */
-    private String memberType;
+    private String partnerId;
 
     /**
-     * 状态
+     * 场景编码
      */
-    private String status;
+    private String code;
 
     /**
-     * 名称
+     * 场景名称
      */
     private String name;
 
     /**
-     * 手机号
+     * 备注
      */
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String email;
+    private String memo;
 
     /**
      * 创建时间
@@ -64,28 +56,28 @@ public class MemberDO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
-    public String getMemberId() {
-        return memberId;
+    public Long getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getMemberType() {
-        return memberType;
+    public String getPartnerId() {
+        return partnerId;
     }
 
-    public void setMemberType(String memberType) {
-        this.memberType = memberType;
+    public void setPartnerId(String partnerId) {
+        this.partnerId = partnerId;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -96,20 +88,12 @@ public class MemberDO implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
     public LocalDateTime getGmtCreate() {
@@ -130,13 +114,12 @@ public class MemberDO implements Serializable {
 
     @Override
     public String toString() {
-        return "MemberDO{" +
-        "memberId = " + memberId +
-        ", memberType = " + memberType +
-        ", status = " + status +
+        return "PartnerSceneDO{" +
+        "id = " + id +
+        ", partnerId = " + partnerId +
+        ", code = " + code +
         ", name = " + name +
-        ", phone = " + phone +
-        ", email = " + email +
+        ", memo = " + memo +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

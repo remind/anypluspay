@@ -16,6 +16,9 @@ import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.commons.enums.CodeEnum;
 import com.anypluspay.commons.response.ResponseResult;
+import com.anypluspay.payment.types.asset.AssetType;
+import com.anypluspay.payment.types.paymethod.PayMethodStatus;
+import com.anypluspay.payment.types.paymethod.PayModel;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +43,11 @@ public class EnumValueController {
 
         // 系统管理
         CODE_ENUM_LIST.add(SysUserStatus.class);
+
+        // 支付相关
+        CODE_ENUM_LIST.add(PayModel.class);
+        CODE_ENUM_LIST.add(AssetType.class);
+        CODE_ENUM_LIST.add(PayMethodStatus.class);
 
         // 账务相关
         CODE_ENUM_LIST.add(AccountTitleType.class);
