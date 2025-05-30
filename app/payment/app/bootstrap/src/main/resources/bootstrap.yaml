@@ -10,4 +10,5 @@ spring:
         namespace: test
   config:
     import:
+      - nacos:datasource.yaml?refreshEnabled=true
       - nacos:${spring.application.name}.yaml?refreshEnabled=true
