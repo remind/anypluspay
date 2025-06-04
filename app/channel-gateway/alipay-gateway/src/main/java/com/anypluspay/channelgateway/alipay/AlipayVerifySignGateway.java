@@ -52,8 +52,8 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
         } else if (CallbackType.SERVER.getCode().equals(verifyModel.getCallbackType())) {
             try {
                 boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, getPublicKey(), AlipayConstants.CHARSET, AlipayConstants.SIGN_TYPE); //调用SDK验证签名
+                result.setInstRequestNo(paramsMap.get("out_trade_no"));
                 if (signVerified) {
-                    result.setInstRequestNo(paramsMap.get("out_trade_no"));
                     result.setApiCode(paramsMap.get("trade_status"));
                     result.setRealAmount(new Money(paramsMap.get("total_amount")));
                     result.setSuccess(true);
