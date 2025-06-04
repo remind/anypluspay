@@ -81,9 +81,9 @@ public class AcquiringPayBuilder extends PaymentBuilder {
             response.setOrderStatus(acquiringOrder.getStatus().getCode());
         }
         if (payResult != null) {
-            if (payResult.getPayStatus() == PayStatus.PROCESS) {
+            if (payResult.getPayStatus() == PayStatus.PROCESS && acquiringOrder != null) {
                 Extension payResponse = new Extension(payChannelParamService.get(acquiringOrder.getPayOrderId()));
-                response.setInstUrl(payResponse.get(ChannelExtKey.INST_URL.getCode()));
+                response.setIrd(payResponse.get(ChannelExtKey.INST_REDIRECTION_DATA.getCode()));
             }
             response.setResultCode(payResult.getResultCode());
             response.setResultMsg(payResult.getResultMessage());

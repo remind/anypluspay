@@ -28,7 +28,7 @@ public abstract class AssetInfo {
             case BALANCE:
                 return JSONUtil.toBean(jsonStr, BalanceAsset.class);
             default:
-                return null;
+                return new DefaultAsset();
         }
     }
 

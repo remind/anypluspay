@@ -2,6 +2,7 @@ package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.payment.application.notify.ExternalFluxNotifyService;
@@ -56,7 +57,7 @@ public class ExternalFluxNotifyServiceTest extends InstPaymentBaseTest {
             fundResult.setStatus(BizOrderStatus.PROCESSING);
             fundResult.setUnityCode("P001");
             Extension responseExt = new Extension();
-            responseExt.add("instUrl", "channel pay url");
+            responseExt.add(ChannelExtKey.INST_REDIRECTION_DATA.getCode(), "channel pay url");
             fundResult.setResponseExt(responseExt);
             FundInRequest request = invocation.getArgument(0);
             requestId.set(request.getRequestId());

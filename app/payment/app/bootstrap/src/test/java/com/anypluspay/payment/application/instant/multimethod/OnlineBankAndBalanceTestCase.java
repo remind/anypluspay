@@ -250,7 +250,7 @@ public class OnlineBankAndBalanceTestCase extends InstPaymentBaseTest {
             FundResult fundResult = new FundResult();
             fundResult.setStatus(BizOrderStatus.PROCESSING);
             Extension responseExt = new Extension();
-            responseExt.add(ChannelExtKey.INST_URL.getCode(), "http://www.testbank.com/pay.do");
+            responseExt.add(ChannelExtKey.INST_REDIRECTION_DATA.getCode(), "http://www.testbank.com/pay.do");
             fundResult.setResponseExt(responseExt);
             fundResult.setUnityCode("P001");
             return fundResult;

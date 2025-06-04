@@ -1,10 +1,11 @@
 -- 订单清理
-delete from ti_inst_delay_order;
-delete from ti_inst_process_order;
-delete from ti_inst_order;
+delete from tb_biz_order;
 delete from tb_fund_in_order;
 delete from tb_refund_order;
-delete from tb_biz_order;
+delete from tb_fund_out_order;
+
+delete from ti_inst_command_order;
+delete from ti_inst_order;
 
 -- 修改渠道编码
 update tc_api_result_code set channel_code = 'LOCALBANK001' where channel_code = 'TESTBANK001';

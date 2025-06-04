@@ -1,9 +1,7 @@
 package com.anypluspay.channelgateway.testbank;
 
 import com.anypluspay.channelgateway.AbstractTestBank;
-import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignNormalContent;
-import com.anypluspay.channelgateway.api.sign.SignResult;
+import com.anypluspay.channelgateway.api.sign.*;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +26,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
         parameters.put("notifyUrl", signOrderInfo.getServerNotifyUrl());
         parameters.put("returnUrl", signOrderInfo.getCallbackPageUrl());
         String formHtml = buildForm(sysConfig.getBankUrl() + "/online-bank/pay", parameters);
-        result.setInstPageUrl(formHtml);
+        result.setRedirectionData(new RedirectionData(RedirectionType.FORM_CONTENT.getCode(), formHtml));
         result.setSuccess(true);
         result.setApiCode("0000");
     }

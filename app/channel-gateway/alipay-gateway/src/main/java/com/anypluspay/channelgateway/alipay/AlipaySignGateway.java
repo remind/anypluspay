@@ -1,13 +1,12 @@
 package com.anypluspay.channelgateway.alipay;
 
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayResponse;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.anypluspay.channelgateway.api.sign.SignGateway;
-import com.anypluspay.channelgateway.api.sign.SignNormalContent;
-import com.anypluspay.channelgateway.api.sign.SignResult;
+import com.alipay.api.domain.AlipayTradePagePayModel;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.anypluspay.channelgateway.api.sign.*;
 import com.anypluspay.channelgateway.request.GatewayRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,27 +17,31 @@ import org.springframework.stereotype.Service;
 public class AlipaySignGateway extends AbstractAlipayGateway implements SignGateway {
     @Override
     public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
-        AlipayTradeAppPayRequest req = getAlipayTradeAppPayRequest(signOrderInfo);
+        AlipayTradePagePayRequest req = getAlipayTradeAppPayRequest(signOrderInfo);
         try {
-            AlipayResponse response = build().sdkExecute(req);
-            result.setApiCode(response.getCode());
-            result.setApiSubCode(response.getSubCode());
+            AlipayTradePagePayResponse response = build().pageExecute(req, "GET");
+
+            result.setRedirectionData(new RedirectionData(RedirectionType.PAGE_URL.getCode(), response.getBody()));
+
             result.setApiMessage(response.getMsg());
-            result.setInstPageUrl(response.getBody());
+            result.setSuccess(true);
+            result.setApiCode("0000");
         } catch (AlipayApiException e) {
             result.setApiCode(e.getErrCode());
             result.setApiMessage(e.getErrMsg());
         }
     }
 
-    private AlipayTradeAppPayRequest getAlipayTradeAppPayRequest(SignNormalContent signOrderInfo) {
-        AlipayTradeAppPayRequest req = new AlipayTradeAppPayRequest();
-        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
+    private AlipayTradePagePayRequest getAlipayTradeAppPayRequest(SignNormalContent signOrderInfo) {
+        AlipayTradePagePayRequest req = new AlipayTradePagePayRequest();
+        AlipayTradePagePayModel model = new AlipayTradePagePayModel();
         model.setOutTradeNo(signOrderInfo.getInstRequestNo());
-        model.setSubject(signOrderInfo.getGoodsDesc()); //订单标题
-        model.setBody(signOrderInfo.getGoodsDesc()); //订单描述信息
+        model.setSubject(StringUtils.isBlank(signOrderInfo.getGoodsDesc()) ? "订单描述" : signOrderInfo.getGoodsDesc()); //订单标题
+        model.setBody(StringUtils.isBlank(signOrderInfo.getGoodsDesc()) ? "订单描述" : signOrderInfo.getGoodsDesc()); //订单描述信息
         model.setTotalAmount(signOrderInfo.getAmount().getAmount().toString());  //支付金额
+        model.setProductCode("FAST_INSTANT_TRADE_PAY");
         req.setNotifyUrl(signOrderInfo.getServerNotifyUrl()); // 设置异步通知地址
+        req.setReturnUrl(signOrderInfo.getCallbackPageUrl());
         req.setBizModel(model);
         return req;
     }

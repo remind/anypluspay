@@ -1,5 +1,6 @@
 package com.anypluspay.channel.application.institution.gateway.advice;
 
+import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.domain.SystemConfig;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
@@ -28,6 +29,7 @@ public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent
         if (orderContext.getBizOrder() instanceof FundInOrder fundInOrder) {
             requestContent.setGoodsSubject(fundInOrder.getExtension().get(ChannelExtKey.GOODS_SUBJECT.getCode()));
             requestContent.setGoodsDesc(fundInOrder.getExtension().get(ChannelExtKey.GOODS_DESC.getCode()));
+            requestContent.setCallbackPageUrl(systemConfig.getNotifyUrl() + "/demo/pay/return");
         }
     }
 
@@ -35,6 +37,7 @@ public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent
     public void afterCompletion(ChannelApiContext channelApiContext, OrderContext orderContext, SignResult result) {
         InstOrder instOrder = orderContext.getInstOrder();
         instOrder.setInstResponseNo(result.getInstResponseNo());
+        instOrder.getResponseExt().add(ChannelExtKey.INST_REDIRECTION_DATA.getCode(), JSONUtil.toJsonStr(result.getRedirectionData()));
     }
 
     @Override

@@ -16,12 +16,12 @@ public class CashierConfig {
     /**
      * 支付时，支持的支付方式
      */
-    public static final List<PayMethod> PAY_METHODS_OF_PAY = List.of(getBalancePayMethod(), getBankCardPayMethod());
+    public static final List<PayMethod> PAY_METHODS_OF_PAY = List.of(getBalancePayMethod(), getBankCardPayMethod(), getAliPayMethod());
 
     /**
      * 充值时，支持的支付方式
      */
-    public static final List<PayMethod> PAY_METHODS_OF_DEPOSIT = List.of(getBankCardPayMethod());
+    public static final List<PayMethod> PAY_METHODS_OF_DEPOSIT = List.of(getBankCardPayMethod(), getAliPayMethod());
 
     /**
      * 获取所有支付时的支付方式
@@ -77,7 +77,17 @@ public class CashierConfig {
         payMethod.setName("银行卡支付");
         payMethod.setPayModel("ONLINE_BANK");
         payMethod.setAssetType(AssetType.BANKCARD.getCode());
-        payMethod.setPayInst("UNLIMITED"); // 不限制银行卡
+        payMethod.setPayInst("ALL_BANKCARD"); // 不限制银行卡
+        return payMethod;
+    }
+
+    private static PayMethod getAliPayMethod() {
+        PayMethod payMethod = new PayMethod();
+        payMethod.setCode("alipay");
+        payMethod.setName("支付宝支付");
+        payMethod.setPayModel("ONLINE_BANK");
+        payMethod.setAssetType(AssetType.ALIPAY.getCode());
+        payMethod.setPayInst("ALIPAY_WEB"); // 不限制银行卡
         return payMethod;
     }
 }

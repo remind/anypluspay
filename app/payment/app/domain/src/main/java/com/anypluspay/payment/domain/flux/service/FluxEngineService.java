@@ -90,7 +90,7 @@ public class FluxEngineService {
         if (fluxResult != null) {
             payResult.setResultMessage(fluxResult.getResultMessage());
             payResult.setResultCode(fluxResult.getResultCode());
-//            payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
+            payResult.setPayResponse(fluxResult.getFluxResponse().toJsonString());
             payChannelParamService.store(fluxResult.getExecuteInstruction().getPayProcessId(), fluxResult.getFluxResponse().toJsonString());
         }
         return payResult;

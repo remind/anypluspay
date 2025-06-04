@@ -27,7 +27,6 @@ public class LocalBankSignGateway extends AbstractLocalBankGateway implements Si
     private void testProcess(NormalContent normalContent, SignResult result) {
         TestFlag testFlag = getTestFlag(normalContent);
         if (TestConstants.S.equals(testFlag.getD())) {
-            result.setInstPageUrl("pay page url");
             result.setInstResponseNo(UUID.fastUUID().toString(true));
             result.setApiCode("200");
         } else if (TestConstants.F.equals(testFlag.getD())) {

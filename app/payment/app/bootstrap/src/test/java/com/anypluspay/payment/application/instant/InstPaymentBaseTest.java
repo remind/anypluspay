@@ -4,6 +4,7 @@ import com.anypluspay.account.facade.AccountingFacade;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.RefundFacade;
 import com.anypluspay.channel.facade.result.FundResult;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
@@ -98,7 +99,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
         fundResult.setStatus(BizOrderStatus.PROCESSING);
         fundResult.setUnityCode("P001");
         Extension responseExt = new Extension();
-        responseExt.add("instUrl", "channel pay url");
+        responseExt.add(ChannelExtKey.INST_REDIRECTION_DATA.getCode(), "channel pay url");
         fundResult.setResponseExt(responseExt);
         when(fundInFacade.apply(any())).thenReturn(fundResult);
     }

@@ -80,7 +80,7 @@ public class FundInBaseTest extends FundChannelMock {
         Assert.assertNotNull(result.getInstRequestNo());
         Assert.assertNotNull(result.getInstResponseNo());
         Assert.assertNotNull(result.getResponseExt());
-        Assert.assertNotNull(result.getResponseExt().get(ChannelExtKey.INST_URL.getCode()));
+        Assert.assertNotNull(result.getResponseExt().get(ChannelExtKey.INST_REDIRECTION_DATA.getCode()));
     }
 
     /**

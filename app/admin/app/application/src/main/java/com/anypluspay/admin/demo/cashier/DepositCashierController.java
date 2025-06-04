@@ -45,7 +45,7 @@ public class DepositCashierController {
      */
     @PostMapping("/pay")
     @ResponseBody
-    public ResponseResult<Map<String, String>> paySubmit(@RequestBody DepositPayRequest request) {
+    public ResponseResult<CashierPayResult> paySubmit(@RequestBody DepositPayRequest request) {
         return ResponseResult.success(cashierService.depositPay(request));
     }
 

@@ -6,7 +6,7 @@ import com.anypluspay.admin.demo.cashier.request.DepositPayRequest;
 import com.anypluspay.admin.demo.cashier.request.PayMethod;
 import com.anypluspay.admin.demo.cashier.request.PayRequest;
 import com.anypluspay.admin.demo.cashier.response.WebPayMethodResponse;
-import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
@@ -24,9 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wxj
@@ -63,24 +61,27 @@ public class CashierService {
      *
      * @param request
      */
-    public Map<String, String> acquiringPay(PayRequest request) {
+    public CashierPayResult acquiringPay(PayRequest request) {
         List<PayMethod> payMethods = convertPayMethods(CashierType.ACQUIRING, request.getPayMethods());
         TradeResponse tradeResponse = acquiringFacade.queryByPaymentId(request.getPaymentId());
         AcquiringPayRequest acquiringPayRequest = new AcquiringPayRequest();
         acquiringPayRequest.setPaymentId(tradeResponse.getPaymentId());
         acquiringPayRequest.setPayerFundDetail(buildPayerFundDetail(tradeResponse.getPayerId(), tradeResponse.getAmount(), payMethods));
         AcquiringPayResponse response = acquiringFacade.pay(acquiringPayRequest);
-        Map<String, String> result = new HashMap<>();
-        if (response.isSuccess()) {
-            result.put("payStatus", response.getOrderStatus());
-            result.put("message", response.getResultMsg());
-            result.put("instUrl", response.getInstUrl());
-        } else {
-            result.put("payStatus", response.getResultCode());
-            result.put("message", response.getResultMsg());
-            result.put("instUrl", response.getInstUrl());
+        return getCashierPayResult(response);
+    }
+
+    private static CashierPayResult getCashierPayResult(AcquiringPayResponse response) {
+        if (!response.isSuccess()) {
+            throw new BizException(response.getResultCode(), response.getResultMsg());
         }
-        return result;
+        CashierPayResult cashierPayResult = new CashierPayResult();
+        cashierPayResult.setPaymentId(response.getPaymentId());
+        cashierPayResult.setResultCode(response.getResultCode());
+        cashierPayResult.setResultMsg(response.getResultMsg());
+        cashierPayResult.setStatus(response.getOrderStatus());
+        cashierPayResult.setIrd(response.getIrd());
+        return cashierPayResult;
     }
 
     /**
@@ -88,7 +89,7 @@ public class CashierService {
      * @param request
      * @return
      */
-    public Map<String, String> depositPay(DepositPayRequest request) {
+    public CashierPayResult depositPay(DepositPayRequest request) {
         DepositRequest depositRequest = new DepositRequest();
         depositRequest.setMemberId(request.getMemberId());
         depositRequest.setAccountNo(request.getAccountNo());
@@ -98,12 +99,20 @@ public class CashierService {
         List<FundDetailInfo> fundDetailInfos = buildPayerFundDetail(depositRequest.getMemberId(), depositRequest.getAmount(), payMethods);
         depositRequest.setPayerFundDetail(fundDetailInfos);
         DepositResponse depositResponse = depositFacade.apply(depositRequest);
-        Map<String, String> result = new HashMap<>();
-        result.put("payStatus", depositResponse.getResult().getPayStatus().getCode());
-        result.put("message", depositResponse.getResult().getResultMessage());
-        Extension payResponse = new Extension(depositResponse.getResult().getPayResponse());
-        result.put("instUrl", payResponse.get(ChannelExtKey.INST_URL.getCode()));
-        return result;
+        return convertResult(depositResponse);
+    }
+
+    private CashierPayResult convertResult(DepositResponse response) {
+        if (!response.isSuccess()) {
+            throw new BizException(response.getResultCode(), response.getResultMsg());
+        }
+        CashierPayResult cashierPayResult = new CashierPayResult();
+        cashierPayResult.setPaymentId(response.getPaymentId());
+        cashierPayResult.setResultCode(response.getResultCode());
+        cashierPayResult.setResultMsg(response.getResultMsg());
+        cashierPayResult.setStatus(response.getOrderStatus());
+        cashierPayResult.setIrd(response.getIrd());
+        return cashierPayResult;
     }
 
     private List<PayMethod> convertPayMethods(CashierType cashierType, List<String> payMethods) {

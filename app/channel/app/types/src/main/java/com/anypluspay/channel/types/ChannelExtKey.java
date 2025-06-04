@@ -13,7 +13,6 @@ public enum ChannelExtKey implements CodeEnum {
     WHITE_CHANNELS("whiteChannels", "白名单渠道编码"),
     CALLBACK_SERVER_URL("callbackServerUrl", "机构服务端回调地址"),
     CALLBACK_PAGE_URL("callbackPageUrl", "机构页面回调地址"),
-    INST_URL("instUrl", "网银支付类的支付页面地址或签名报文"),
     COMPANY_PERSONAL("companyOrPersonal", "对公对私"),
     CARD_TYPE("cardType", "卡类型"),
     ORIG_INST_ORDER_ID("origInstOrderId", "原始机构订单号"),
@@ -23,6 +22,7 @@ public enum ChannelExtKey implements CodeEnum {
     TEST_FLAG("testFlag", "测试标志"),
     GOODS_DESC("goodsDesc", "商品描述"),
     GOODS_SUBJECT("goodsSubject", "商品主题"),
+    INST_REDIRECTION_DATA("ird", "机构跳转参数"),
     ;
 
     private final String code;

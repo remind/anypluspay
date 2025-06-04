@@ -10,26 +10,17 @@
     <groupId>com.anypluspay.channelgateway</groupId>
     <artifactId>alipay-gateway</artifactId>
     <packaging>jar</packaging>
-    <name>channel-alipay-gateway</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <channel.version>1.0-SNAPSHOT</channel.version>
+        <component.gateway.version>1.0-SNAPSHOT</component.gateway.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.anypluspay.channel</groupId>
-            <artifactId>channel-types</artifactId>
-            <version>${channel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-channel-gateway-application</artifactId>
+            <version>${component.gateway.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sdk</groupId>
@@ -37,5 +28,23 @@
             <version>4.38.61.ALL</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>alipay-gateway-bootstrap</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

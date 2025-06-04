@@ -31,6 +31,6 @@ public class WhiteChannelTest extends FundInBaseTest {
         FundResult fundResult = fundInFacade.apply(request);
         Assert.assertEquals(BizOrderStatus.PROCESSING, fundResult.getStatus());
         Assert.assertNotNull(fundResult.getResponseExt());
-        Assert.assertNotNull(fundResult.getResponseExt().get(ChannelExtKey.INST_URL.getCode()));
+        Assert.assertNotNull(fundResult.getResponseExt().get(ChannelExtKey.INST_REDIRECTION_DATA.getCode()));
     }
 }

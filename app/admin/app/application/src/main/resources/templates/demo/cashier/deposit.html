@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>充值收银台</title>
+    <script th:replace="~{demo/cashier/cashierJs :: script}"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -139,40 +140,8 @@
             });
 
             const result = await response.json();
+            processSubmitResult(result, resultMessage);
 
-            // 根据返回结果更新提示信息
-            if (result.success) {
-                const data = result.data;
-                if (data.payStatus == 'FAIL') {
-                    resultMessage.textContent = `支付失败！${data.message}。`;
-                    resultMessage.style.color = 'red';
-                } else if (data.payStatus == 'SUCCESS') {
-                    resultMessage.textContent = `支付成功！`;
-                    resultMessage.style.color = 'green';
-                } else {
-
-                    if (data.instUrl) {
-                        // 如果返回了 HTML 表单，则动态插入并自动提交
-                        const formContainer = document.createElement('div');
-                        formContainer.innerHTML = data.instUrl;
-
-                        // 将表单插入到页面中
-                        document.body.appendChild(formContainer);
-
-                        // 自动提交表单
-                        const form = formContainer.querySelector('form');
-                        if (form) {
-                            form.submit();
-                        } else {
-                            resultMessage.textContent = '支付失败：无效的表单数据。';
-                            resultMessage.style.color = 'red';
-                        }
-                    }
-                }
-            } else {
-                resultMessage.textContent = `支付请求失败：${result.message || '未知错误'}`;
-                resultMessage.style.color = 'red';
-            }
         } catch (error) {
             // 处理网络或其他错误
             resultMessage.textContent = '支付失败：网络错误或服务器无响应。';

@@ -1,6 +1,5 @@
 package com.anypluspay.admin.demo.cashier;
 
-import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.admin.demo.cashier.request.PayRequest;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
@@ -48,7 +47,7 @@ public class PayCashierController {
      */
     @PostMapping("/pay")
     @ResponseBody
-    public ResponseResult<Map<String, String>> pay(@RequestBody PayRequest request) {
+    public ResponseResult<CashierPayResult> pay(@RequestBody PayRequest request) {
         return ResponseResult.success(cashierService.acquiringPay(request));
     }
 

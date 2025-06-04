@@ -32,8 +32,8 @@ public class AcquiringPayResponse extends BaseResult {
     private String orderStatus;
 
     /**
-     * 支付参数
+     * 机构跳转参数
      */
-    private String instUrl;
+    private String ird;
 
 }

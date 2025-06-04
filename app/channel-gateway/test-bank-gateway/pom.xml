@@ -12,30 +12,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <channel.version>1.0-SNAPSHOT</channel.version>
+        <component.gateway.version>1.0-SNAPSHOT</component.gateway.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.anypluspay.channel</groupId>
-            <artifactId>channel-types</artifactId>
-            <version>${channel.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.anypluspay.component</groupId>
-            <artifactId>component-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <artifactId>component-channel-gateway-application</artifactId>
+            <version>${component.gateway.version}</version>
         </dependency>
     </dependencies>
 

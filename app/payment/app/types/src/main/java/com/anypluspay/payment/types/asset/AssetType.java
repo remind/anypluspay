@@ -13,7 +13,9 @@ public enum AssetType implements CodeEnum {
 
     BANKCARD("BANKCARD", AssetTypeCategory.EXTERNAL, "银行卡"),
     BALANCE("BALANCE", AssetTypeCategory.ACCOUNTING, "余额"),
-    WX("WX", AssetTypeCategory.EXTERNAL, "微信");
+    WX("WX", AssetTypeCategory.EXTERNAL, "微信"),
+    ALIPAY("ALIPAY", AssetTypeCategory.EXTERNAL, "支付宝"),
+    DEFAULT("DEFAULT", AssetTypeCategory.EXTERNAL, "默认资产");
 
     private final String code;
 

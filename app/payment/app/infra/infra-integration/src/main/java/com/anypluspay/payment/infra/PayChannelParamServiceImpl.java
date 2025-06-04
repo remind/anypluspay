@@ -8,7 +8,6 @@ import com.google.common.cache.LoadingCache;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -40,7 +39,7 @@ public class PayChannelParamServiceImpl implements PayChannelParamService {
         AssertUtil.notNull(payOrderId, "payOrderId不能为空");
         try {
             return cache.get(payOrderId);
-        } catch (ExecutionException e) {
+        } catch (Exception e) {
             log.error("获取支付参数异常,payOrderId=" + payOrderId, e);
             return null;
         }
