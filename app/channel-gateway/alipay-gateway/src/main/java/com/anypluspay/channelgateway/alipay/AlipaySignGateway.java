@@ -41,7 +41,7 @@ public class AlipaySignGateway extends AbstractAlipayGateway implements SignGate
         model.setTotalAmount(signOrderInfo.getAmount().getAmount().toString());  //支付金额
         model.setProductCode("FAST_INSTANT_TRADE_PAY");
         req.setNotifyUrl(signOrderInfo.getServerNotifyUrl()); // 设置异步通知地址
-        req.setReturnUrl(signOrderInfo.getCallbackPageUrl());
+        req.setReturnUrl(signOrderInfo.getReturnPageUrl());
         req.setBizModel(model);
         return req;
     }

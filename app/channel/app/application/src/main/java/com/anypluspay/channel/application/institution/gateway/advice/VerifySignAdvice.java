@@ -5,8 +5,8 @@ import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channelgateway.api.verify.VerifyModel;
 import com.anypluspay.channelgateway.api.verify.VerifySignResult;
-import com.anypluspay.channelgateway.request.StringContent;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
  * 2024/12/9
  */
 @Service
-public class VerifySignAdvice implements GatewayRequestAdvice<StringContent, VerifySignResult> {
+public class VerifySignAdvice implements GatewayRequestAdvice<VerifyModel, VerifySignResult> {
     @Override
-    public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, StringContent requestContent) {
+    public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, VerifyModel verifyModel) {
 
     }
 

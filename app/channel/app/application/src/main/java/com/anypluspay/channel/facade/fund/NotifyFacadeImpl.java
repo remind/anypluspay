@@ -9,6 +9,7 @@ import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.facade.NotifyFacade;
+import com.anypluspay.channel.facade.request.NotifyRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,8 @@ public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacad
     private BizOrderRepository bizOrderRepository;
 
     @Override
-    public FundResult notify(String channelCode, ChannelApiType apiType, String request) {
-        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(channelCode, apiType);
+    public FundResult notify(NotifyRequest request) {
+        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(request.getChannelCode(), ChannelApiType.getByCode(request.getChannelApiType()));
         Assert.notNull(channelApiContext, "无可用渠道");
         InstCommandOrder instCommandOrder = instProcessService.noneOrderProcess(channelApiContext, request);
         InstOrder instOrder = instOrderRepository.load(instCommandOrder.getInstOrderId());

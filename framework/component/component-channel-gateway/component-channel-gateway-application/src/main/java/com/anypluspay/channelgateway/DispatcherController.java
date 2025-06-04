@@ -37,7 +37,9 @@ public class DispatcherController {
 
     @ResponseBody
     @PostMapping
-    public GatewayResult request(HttpServletRequest request, @RequestParam String bean, @RequestParam String channelCode, @RequestParam String apiTypeCode) {
+    public GatewayResult request(HttpServletRequest request, @RequestParam("bean") String bean,
+                                 @RequestParam("channelCode") String channelCode,
+                                 @RequestParam("apiTypeCode") String apiTypeCode) {
         try {
             ChannelApiType apiType = EnumUtil.getByCode(ChannelApiType.class, apiTypeCode);
             AssertUtil.notNull(apiType, "apiType不能为null");

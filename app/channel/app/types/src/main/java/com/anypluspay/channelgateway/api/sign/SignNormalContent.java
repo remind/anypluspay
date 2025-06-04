@@ -21,7 +21,7 @@ public class SignNormalContent extends NormalContent {
     private String goodsDesc;
 
     /**
-     * 前端页面跳转回调
+     * 前端页面跳转回调地址
      */
-    private String callbackPageUrl;
+    private String returnPageUrl;
 }

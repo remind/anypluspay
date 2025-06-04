@@ -1,9 +1,10 @@
 package com.anypluspay.channel.facade;
 
+import com.anypluspay.channel.facade.request.NotifyRequest;
 import com.anypluspay.channel.facade.result.FundResult;
-import com.anypluspay.channel.types.channel.ChannelApiType;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 通知
@@ -19,11 +20,9 @@ public interface NotifyFacade {
     /**
      * 通知
      *
-     * @param channelCode 渠道编码
-     * @param channelApiType  通知类型
-     * @param request         通知内容
+     * @param request 通知内容
      * @return
      */
-    @PostMapping(PREFIX + "/apply/{channelCode}/{channelApiType}")
-    FundResult notify(@PathVariable("channelCode") String channelCode, @PathVariable("channelApiType") ChannelApiType channelApiType, @RequestBody String request);
+    @PostMapping(PREFIX + "/apply")
+    FundResult notify(@RequestBody NotifyRequest request);
 }

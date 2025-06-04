@@ -9,8 +9,9 @@ import com.anypluspay.channel.domain.institution.InstCommandOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.institution.service.InstOrderDomainService;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
+import com.anypluspay.channel.facade.request.NotifyRequest;
+import com.anypluspay.channelgateway.api.verify.VerifyModel;
 import com.anypluspay.channelgateway.request.RequestContent;
-import com.anypluspay.channelgateway.request.StringContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +67,12 @@ public class InstProcessService {
     /**
      * 无订单处理
      * @param channelApiContext
-     * @param requestBody
+     * @param request
      * @return
      */
-    public InstCommandOrder noneOrderProcess(ChannelApiContext channelApiContext, String requestBody) {
-        GatewayResult gatewayResult = gatewayRequestDispatcher.doDispatch(channelApiContext, new StringContent(requestBody));
+    public InstCommandOrder noneOrderProcess(ChannelApiContext channelApiContext, NotifyRequest request) {
+        VerifyModel verifyModel = new VerifyModel(request.getCallbackType(), request.getRequestBody());
+        GatewayResult gatewayResult = gatewayRequestDispatcher.doDispatch(channelApiContext, verifyModel);
         AssertUtil.notNull(gatewayResult.getInstRequestNo(), "处理异常");
         InstOrder instOrder = instOrderRepository.loadByInstRequestNo(gatewayResult.getInstRequestNo());
         AssertUtil.notNull(instOrder, "订单不存在");

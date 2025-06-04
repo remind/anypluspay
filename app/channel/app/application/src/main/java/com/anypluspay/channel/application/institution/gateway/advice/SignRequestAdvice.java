@@ -1,7 +1,7 @@
 package com.anypluspay.channel.application.institution.gateway.advice;
 
 import cn.hutool.json.JSONUtil;
-import com.anypluspay.channel.domain.SystemConfig;
+import com.anypluspay.channel.application.institution.CombineCallbackUrlService;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
@@ -22,14 +22,14 @@ import org.springframework.stereotype.Service;
 public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent, SignResult> {
 
     @Autowired
-    private SystemConfig systemConfig;
+    private CombineCallbackUrlService combineCallbackUrlService;
 
     @Override
     public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, SignNormalContent requestContent) {
         if (orderContext.getBizOrder() instanceof FundInOrder fundInOrder) {
             requestContent.setGoodsSubject(fundInOrder.getExtension().get(ChannelExtKey.GOODS_SUBJECT.getCode()));
             requestContent.setGoodsDesc(fundInOrder.getExtension().get(ChannelExtKey.GOODS_DESC.getCode()));
-            requestContent.setCallbackPageUrl(systemConfig.getNotifyUrl() + "/demo/pay/return");
+            requestContent.setReturnPageUrl(combineCallbackUrlService.getReturnPageUrl(channelApiContext));
         }
     }
 

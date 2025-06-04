@@ -1,16 +1,16 @@
 package com.anypluspay.channelgateway.types;
 
+import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channel.types.result.ProcessResult;
 import com.anypluspay.channelgateway.api.refund.RefundContent;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
+import com.anypluspay.channelgateway.api.verify.VerifyModel;
 import com.anypluspay.channelgateway.api.verify.VerifySignResult;
 import com.anypluspay.channelgateway.request.FundOutContent;
 import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.request.RequestContent;
-import com.anypluspay.channelgateway.request.StringContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
-import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channel.types.result.ProcessResult;
 import lombok.Getter;
 
 /**
@@ -25,8 +25,8 @@ public enum RequestResponseClass {
     SIGN(ChannelApiType.SIGN, SignNormalContent.class, SignResult.class),
     SINGLE_REFUND(ChannelApiType.SINGLE_REFUND, RefundContent.class, null),
     SINGLE_FUND_OUT(ChannelApiType.SINGLE_FUND_OUT, FundOutContent.class, null),
-    VERIFY_SIGN(ChannelApiType.VERIFY_SIGN, StringContent.class, VerifySignResult.class),
-    REFUND_VERIFY_SIGN(ChannelApiType.REFUND_VERIFY_SIGN, StringContent.class, VerifySignResult.class),
+    VERIFY_SIGN(ChannelApiType.VERIFY_SIGN, VerifyModel.class, VerifySignResult.class),
+    REFUND_VERIFY_SIGN(ChannelApiType.REFUND_VERIFY_SIGN, VerifyModel.class, VerifySignResult.class),
     ;
 
     private final ChannelApiType channelApiType;

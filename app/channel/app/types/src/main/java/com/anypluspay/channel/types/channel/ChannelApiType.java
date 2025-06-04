@@ -2,6 +2,7 @@ package com.anypluspay.channel.types.channel;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author wxj
@@ -34,8 +35,20 @@ ChannelApiType implements CodeEnum {
         this.displayName = displayName;
     }
 
+    public static ChannelApiType getByCode(String code) {
+        if (StringUtils.isNotBlank(code)) {
+            for (ChannelApiType channelApiType : values()) {
+                if (channelApiType.getCode().equals(code)) {
+                    return channelApiType;
+                }
+            }
+        }
+        return null;
+    }
+
     /**
      * 是否人工类
+     *
      * @param channelApiType
      * @return
      */
@@ -45,6 +58,7 @@ ChannelApiType implements CodeEnum {
 
     /**
      * 是否首次指令
+     *
      * @param channelApiType
      * @return
      */

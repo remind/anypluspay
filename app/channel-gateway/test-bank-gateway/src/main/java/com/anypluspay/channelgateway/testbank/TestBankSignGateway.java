@@ -24,7 +24,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
         parameters.put("subject", signOrderInfo.getGoodsSubject());
         parameters.put("goodsDesc", signOrderInfo.getGoodsDesc());
         parameters.put("notifyUrl", signOrderInfo.getServerNotifyUrl());
-        parameters.put("returnUrl", signOrderInfo.getCallbackPageUrl());
+        parameters.put("returnUrl", signOrderInfo.getReturnPageUrl());
         String formHtml = buildForm(sysConfig.getBankUrl() + "/online-bank/pay", parameters);
         result.setRedirectionData(new RedirectionData(RedirectionType.FORM_CONTENT.getCode(), formHtml));
         result.setSuccess(true);
