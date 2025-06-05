@@ -18,6 +18,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
 
     @Override
     public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
+        System.out.println("api param id:" + signOrderInfo.getApiParamId());
         Map<String, String> parameters = new HashMap<>();
         parameters.put("outTradeNo", signOrderInfo.getInstRequestNo());
         parameters.put("amount", signOrderInfo.getAmount().getAmount().toString());

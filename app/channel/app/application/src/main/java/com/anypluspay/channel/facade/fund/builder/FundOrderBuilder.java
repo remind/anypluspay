@@ -91,6 +91,6 @@ public class FundOrderBuilder {
         bizOrder.setInstExt(fundRequest.getInstExt());
         bizOrder.setExtension(fundRequest.getExtension());
         bizOrder.setStatus(BizOrderStatus.PROCESSING);
-        bizOrder.setOrderId(sequenceService.getId(fundRequest.getPartnerId(), SystemCodeEnums.CHANNEL, idType));
+        bizOrder.setOrderId(sequenceService.getId(bizOrder.getPartnerId(), SystemCodeEnums.CHANNEL, idType));
     }
 }

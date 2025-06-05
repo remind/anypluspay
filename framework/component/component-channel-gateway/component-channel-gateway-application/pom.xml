@@ -36,6 +36,10 @@
             <artifactId>component-config</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.anypluspay.component</groupId>
+            <artifactId>component-rpc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-extra</artifactId>
         </dependency>
