@@ -10,6 +10,7 @@ public enum GlobalResultCode implements ResultCode {
     SUCCESS("SUCCESS", "处理成功"),
     FAIL("FAIL", "处理异常"),
     ILLEGAL_PARAM("ILLEGAL_PARAM", "非法参数"),
+    UNKNOWN("UNKNOWN", "未知结果"),
     ;
 
     private final String code;

@@ -5,6 +5,7 @@ import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channelgateway.types.RequestResponseClass;
+import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.commons.response.GlobalResultCode;
@@ -51,15 +52,19 @@ public class DispatcherController {
             return invokeBean(bean, channelCode, apiType, content);
         } catch (Exception e) {
             log.error("处理异常", e);
-            return buildExceptionResult();
+            return buildExceptionResult(e);
         }
     }
 
-    private GatewayResult buildExceptionResult() {
+    private GatewayResult buildExceptionResult(Exception e) {
         GatewayResult gatewayResult = new GatewayResult();
         gatewayResult.setSuccess(false);
-        gatewayResult.setApiCode(GlobalResultCode.FAIL.getCode());
-        gatewayResult.setApiMessage(GlobalResultCode.FAIL.getMessage());
+        if (e instanceof BizException bizException) {
+            gatewayResult.setApiCode(bizException.getCode());
+        } else {
+            gatewayResult.setApiCode(GlobalResultCode.FAIL.getCode());
+        }
+        gatewayResult.setApiMessage(e.getMessage());
         gatewayResult.setReceiveTime(LocalDateTime.now());
         return gatewayResult;
     }
@@ -79,7 +84,7 @@ public class DispatcherController {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private GatewayResult invokeBean(String bean, String channelCode, ChannelApiType channelApiType, RequestContent content) {
+    private GatewayResult invokeBean(String bean, String channelCode, ChannelApiType channelApiType, RequestContent content) throws Exception {
         ChannelGateway channelGateway = applicationContext.getBean(bean, ChannelGateway.class);
         GatewayRequest request = new GatewayRequest();
         request.setChannelCode(channelCode);

@@ -60,7 +60,7 @@ public class CombineCallbackUrlService {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.VERIFY_SIGN)) {
-                return systemConfig.getNotifyUrl() + "/return-page/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + instRequestNo;
+                return systemConfig.getNotifyUrl() + "/return-page/" + instRequestNo;
             }
         }
         return "";

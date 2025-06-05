@@ -42,7 +42,7 @@ public class ApiResultCodeTest extends FundInBaseTest {
     private static final String MOCK_MESSAGE = "mock_message";
 
     @Test
-    public void notExistsBySign() {
+    public void notExistsBySign() throws Exception {
         SignResult result = new SignResult();
         result.setSuccess(true);
         result.setApiCode(MOCK_API_CODE);

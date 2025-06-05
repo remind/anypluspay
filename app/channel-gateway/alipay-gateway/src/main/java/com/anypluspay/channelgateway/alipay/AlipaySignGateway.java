@@ -1,11 +1,12 @@
 package com.anypluspay.channelgateway.alipay;
 
-import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.anypluspay.channelgateway.api.sign.*;
 import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.response.GlobalResultCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,20 +17,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AlipaySignGateway extends AbstractAlipayGateway implements SignGateway {
     @Override
-    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
+    public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) throws Exception {
         AlipayTradePagePayRequest req = getAlipayTradeAppPayRequest(signOrderInfo);
-        try {
-            AlipayTradePagePayResponse response = createAlipayClient(signOrderInfo.getApiParamId()).pageExecute(req, "GET");
+        AlipayTradePagePayResponse response = createAlipayClient(signOrderInfo.getApiParamId()).pageExecute(req, "GET");
+        result.setRedirectionData(new RedirectionData(RedirectionType.PAGE_URL.getCode(), response.getBody()));
+        result.setApiMessage(response.getMsg());
+        result.setApiCode(GlobalResultCode.SUCCESS.getCode());
+        result.setSuccess(true);
 
+        fillResult(response, result, (v) -> {
             result.setRedirectionData(new RedirectionData(RedirectionType.PAGE_URL.getCode(), response.getBody()));
-
             result.setApiMessage(response.getMsg());
-            result.setSuccess(true);
-            result.setApiCode("0000");
-        } catch (AlipayApiException e) {
-            result.setApiCode(e.getErrCode());
-            result.setApiMessage(e.getErrMsg());
-        }
+            result.setApiCode(GlobalResultCode.SUCCESS.getCode());
+        });
+        result.setSuccess(true);
     }
 
     private AlipayTradePagePayRequest getAlipayTradeAppPayRequest(SignNormalContent signOrderInfo) {

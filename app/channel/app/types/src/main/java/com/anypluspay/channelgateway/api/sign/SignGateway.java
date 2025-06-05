@@ -10,12 +10,12 @@ import com.anypluspay.channelgateway.result.GatewayResult;
  */
 public interface SignGateway extends ChannelGateway<SignNormalContent> {
     @Override
-    default GatewayResult call(GatewayRequest<SignNormalContent> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<SignNormalContent> gatewayRequest) throws Exception {
         SignResult result = new SignResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         sign(gatewayRequest, gatewayRequest.getContent(), result);
         return result;
     }
 
-    void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result);
+    void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) throws Exception;
 }

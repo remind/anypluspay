@@ -18,11 +18,6 @@ import lombok.NoArgsConstructor;
 public class VerifyModel extends RequestContent {
 
     /**
-     * 回调类型
-     */
-    private String callbackType;
-
-    /**
      * 请求报文
      */
     private String requestBody;

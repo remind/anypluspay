@@ -36,4 +36,15 @@ public interface OrderQueryFacade {
      */
     @GetMapping(PREFIX + "/query-by-inst-order-id")
     FundResult queryByInstOrderId(@RequestParam Long instOrderId, @RequestParam boolean isInstQuery);
+
+    /**
+     * 根据机构请求号查询
+     *
+     * @param instRequestNo 机构请求号
+     * @param isInstQuery   是否提交到机构查询
+     * @return 订单结果
+     */
+    @GetMapping(PREFIX + "/query-by-inst-request-no")
+    FundResult queryByInstRequestNo(@RequestParam String instRequestNo, @RequestParam boolean isInstQuery);
+
 }

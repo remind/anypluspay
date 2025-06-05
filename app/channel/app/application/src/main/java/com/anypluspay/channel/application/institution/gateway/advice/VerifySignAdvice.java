@@ -23,7 +23,6 @@ public class VerifySignAdvice implements GatewayRequestAdvice<VerifyModel, Verif
     @Override
     public void preHandle(ChannelApiContext channelApiContext, OrderContext orderContext, VerifyModel verifyModel) {
         NotifyRequest request = (NotifyRequest) ChannelContext.get();
-        verifyModel.setCallbackType(request.getCallbackType());
         verifyModel.setRequestBody(request.getRequestBody());
 
         if (orderContext.getInstOrder() != null) {

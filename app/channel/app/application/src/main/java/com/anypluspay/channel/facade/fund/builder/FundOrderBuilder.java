@@ -81,6 +81,7 @@ public class FundOrderBuilder {
         refundOrder.setOrigOrderId(originOrder.getOrderId());
         refundOrder.setOrigRequestId(originOrder.getRequestId());
         fillBizOrder(refundOrder, request, IdType.BIZ_REFUND);
+        refundOrder.setPartnerId(originOrder.getPartnerId());
         return refundOrder;
     }
 

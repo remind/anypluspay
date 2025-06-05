@@ -43,6 +43,7 @@ public class InstProcessService {
 
     /**
      * 创建并提交机构订单指令
+     *
      * @param channelApiContext
      * @param bizOrder
      * @param instOrder
@@ -55,6 +56,7 @@ public class InstProcessService {
 
     /**
      * 提交机构订单指令
+     *
      * @param channelApiContext
      * @param orderContext
      */
@@ -66,12 +68,13 @@ public class InstProcessService {
 
     /**
      * 无订单处理
+     *
      * @param channelApiContext
      * @param request
      * @return
      */
     public InstCommandOrder noneOrderProcess(ChannelApiContext channelApiContext, NotifyRequest request) {
-        VerifyModel verifyModel = new VerifyModel(request.getCallbackType(), request.getRequestBody());
+        VerifyModel verifyModel = new VerifyModel(request.getRequestBody());
         GatewayResult gatewayResult = gatewayRequestDispatcher.doDispatch(channelApiContext, verifyModel);
         AssertUtil.notNull(gatewayResult.getInstRequestNo(), "处理异常");
         InstOrder instOrder = instOrderRepository.loadByInstRequestNo(gatewayResult.getInstRequestNo());

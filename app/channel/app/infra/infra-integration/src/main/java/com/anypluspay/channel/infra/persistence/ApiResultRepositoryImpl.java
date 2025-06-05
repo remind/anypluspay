@@ -33,8 +33,10 @@ public class ApiResultRepositoryImpl implements ApiResultRepository {
         LambdaQueryWrapper<ApiResultCodeDO> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ApiResultCodeDO::getChannelCode, fundChannelCode)
                 .eq(ApiResultCodeDO::getApiType, apiTypeCode)
-                .eq(ApiResultCodeDO::getInstApiCode, apiCode)
-                .eq(ApiResultCodeDO::getInstApiSubCode, StringUtils.isNotBlank(apiSubCode) ? apiSubCode : "");
+                .eq(ApiResultCodeDO::getInstApiCode, apiCode);
+        if (StringUtils.isNotBlank(apiSubCode)) {
+            queryWrapper.eq(ApiResultCodeDO::getInstApiSubCode, apiSubCode);
+        }
         ApiResultCodeDO apiResultCodeDO = apiResultCodeMapper.selectOne(queryWrapper);
         return apiResultCodeDalConvertor.toEntity(apiResultCodeDO);
     }

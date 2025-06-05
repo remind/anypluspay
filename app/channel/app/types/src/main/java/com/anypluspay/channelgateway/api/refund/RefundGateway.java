@@ -10,12 +10,12 @@ import com.anypluspay.channelgateway.result.GatewayResult;
  */
 public interface RefundGateway extends ChannelGateway<RefundContent> {
     @Override
-    default GatewayResult call(GatewayRequest<RefundContent> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<RefundContent> gatewayRequest) throws Exception {
         GatewayResult result = new GatewayResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         refund(gatewayRequest, gatewayRequest.getContent(), result);
         return result;
     }
 
-    void refund(GatewayRequest<RefundContent> gatewayRequest, RefundContent refundOrder, GatewayResult result);
+    void refund(GatewayRequest<RefundContent> gatewayRequest, RefundContent refundOrder, GatewayResult result) throws Exception;
 }

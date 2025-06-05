@@ -10,12 +10,12 @@ import com.anypluspay.channelgateway.result.GatewayResult;
  */
 public interface VerifySignGateway extends ChannelGateway<VerifyModel> {
     @Override
-    default GatewayResult call(GatewayRequest<VerifyModel> gatewayRequest) {
+    default GatewayResult call(GatewayRequest<VerifyModel> gatewayRequest) throws Exception {
         VerifySignResult result = new VerifySignResult();
         notify(gatewayRequest, gatewayRequest.getContent(), result);
         return result;
     }
 
-    void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result);
+    void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result) throws Exception;
 
 }

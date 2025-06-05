@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalBankQueryGateway extends AbstractLocalBankGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) {
+    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) throws Exception {
         result.setSuccess(true);
         if (isTest(normalContent)) {
             testProcess(normalContent, result);
