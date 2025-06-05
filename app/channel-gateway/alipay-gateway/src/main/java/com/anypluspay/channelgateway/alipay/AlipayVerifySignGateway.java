@@ -40,6 +40,7 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
             try {
                 AlipayTradeQueryResponse response = createAlipayClient(verifyModel.getApiParamId()).execute(alipayRequest);
                 result.setInstRequestNo(response.getOutTradeNo());
+                result.setInstResponseNo(response.getTradeNo());
                 result.setApiCode(response.getTradeStatus());
                 result.setRealAmount(new Money(response.getTotalAmount()));
                 result.setSuccess(true);

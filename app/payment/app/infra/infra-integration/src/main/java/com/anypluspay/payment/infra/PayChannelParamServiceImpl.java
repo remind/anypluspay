@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class PayChannelParamServiceImpl implements PayChannelParamService {
 
     LoadingCache<String, String> cache = CacheBuilder.newBuilder()
-            .maximumSize(1000) // 最大容量
+            .maximumSize(100000) // 最大容量
             .expireAfterWrite(30, TimeUnit.MINUTES) // 过期时间
             .build(new CacheLoader<>() {
                 @Override

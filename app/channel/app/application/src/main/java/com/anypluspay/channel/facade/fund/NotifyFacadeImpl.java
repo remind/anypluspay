@@ -1,5 +1,6 @@
 package com.anypluspay.channel.facade.fund;
 
+import com.anypluspay.channel.application.context.ChannelContext;
 import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -38,7 +39,12 @@ public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacad
         ChannelApiType apiType = ChannelApiType.getByCode(request.getChannelApiType());
         AssertUtil.notNull(apiType, "apiType不能为null");
         if (StringUtils.isNotBlank(request.getInstRequestNo())) {
-            return notifyByInstRequestNo(apiType, request.getInstRequestNo());
+            try {
+                ChannelContext.set(request);
+                return notifyByInstRequestNo(apiType, request.getInstRequestNo());
+            } finally {
+                ChannelContext.clear();
+            }
         } else {
             ChannelApiContext channelApiContext = channelRouteService.routeByChannel(request.getChannelCode(), apiType);
             AssertUtil.notNull(channelApiContext, "无可用渠道");
