@@ -36,4 +36,9 @@ public class ChannelApiParamRepositoryImpl implements ChannelApiParamRepository 
                 .eq(ChannelApiParamDO::getChannelCode, channelCode));
         return dalConvertor.toEntity(channelApiParamDO);
     }
+
+    @Override
+    public ChannelApiParam load(String id) {
+        return dalConvertor.toEntity(dalMapper.selectById(id));
+    }
 }

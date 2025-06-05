@@ -17,10 +17,9 @@ import org.springframework.stereotype.Service;
 public class AlipaySignGateway extends AbstractAlipayGateway implements SignGateway {
     @Override
     public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
-        System.out.println("api param id:" + signOrderInfo.getApiParamId());
         AlipayTradePagePayRequest req = getAlipayTradeAppPayRequest(signOrderInfo);
         try {
-            AlipayTradePagePayResponse response = build().pageExecute(req, "GET");
+            AlipayTradePagePayResponse response = createAlipayClient(signOrderInfo.getApiParamId()).pageExecute(req, "GET");
 
             result.setRedirectionData(new RedirectionData(RedirectionType.PAGE_URL.getCode(), response.getBody()));
 

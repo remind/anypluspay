@@ -13,4 +13,6 @@ public interface ChannelApiParamRepository {
     List<ChannelApiParam> loadAllEnable();
 
     ChannelApiParam loadByPartnerIdANdChannelCode(String partnerId, String channelCode);
+
+    ChannelApiParam load(String id);
 }

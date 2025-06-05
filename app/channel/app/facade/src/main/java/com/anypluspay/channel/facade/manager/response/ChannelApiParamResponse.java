@@ -1,4 +1,4 @@
-package com.anypluspay.channel.facade.response;
+package com.anypluspay.channel.facade.manager.response;
 
 import lombok.Data;
 

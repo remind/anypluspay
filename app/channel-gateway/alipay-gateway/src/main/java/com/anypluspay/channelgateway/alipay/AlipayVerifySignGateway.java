@@ -38,7 +38,7 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
             model.setOutTradeNo(paramsMap.get("out_trade_no"));
             alipayRequest.setBizModel(model);
             try {
-                AlipayTradeQueryResponse response = build().execute(alipayRequest);
+                AlipayTradeQueryResponse response = createAlipayClient(verifyModel.getApiParamId()).execute(alipayRequest);
                 result.setInstRequestNo(response.getOutTradeNo());
                 result.setApiCode(response.getTradeStatus());
                 result.setRealAmount(new Money(response.getTotalAmount()));
@@ -51,7 +51,7 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
             }
         } else if (CallbackType.SERVER.getCode().equals(verifyModel.getCallbackType())) {
             try {
-                boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, getPublicKey(), AlipayConstants.CHARSET, AlipayConstants.SIGN_TYPE); //调用SDK验证签名
+                boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, getAlipayParam(verifyModel.getApiParamId()).getAlipayPublicKey(), AlipayConstants.CHARSET, AlipayConstants.SIGN_TYPE); //调用SDK验证签名
                 result.setInstRequestNo(paramsMap.get("out_trade_no"));
                 if (signVerified) {
                     result.setApiCode(paramsMap.get("trade_status"));
