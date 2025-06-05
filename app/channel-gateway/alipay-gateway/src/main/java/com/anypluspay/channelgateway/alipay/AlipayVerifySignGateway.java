@@ -28,8 +28,7 @@ import java.util.Map;
 @Slf4j
 public class AlipayVerifySignGateway extends AbstractAlipayGateway implements VerifySignGateway {
     @Override
-    public void notify(GatewayRequest<VerifyModel> request, VerifySignResult result) {
-        VerifyModel verifyModel = request.getContent();
+    public void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result) {
         Map<String, String> paramsMap = JSONUtil.toBean(verifyModel.getRequestBody(), Map.class);
         if (CallbackType.PAGE.getCode().equals(verifyModel.getCallbackType())) {
             // 构造请求参数以调用接口

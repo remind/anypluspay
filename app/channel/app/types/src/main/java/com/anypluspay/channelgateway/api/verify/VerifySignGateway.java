@@ -12,10 +12,10 @@ public interface VerifySignGateway extends ChannelGateway<VerifyModel> {
     @Override
     default GatewayResult call(GatewayRequest<VerifyModel> gatewayRequest) {
         VerifySignResult result = new VerifySignResult();
-        notify(gatewayRequest, result);
+        notify(gatewayRequest, gatewayRequest.getContent(), result);
         return result;
     }
 
-    void notify(GatewayRequest<VerifyModel> request, VerifySignResult result);
+    void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result);
 
 }

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalBankVerifySignGateway extends AbstractLocalBankGateway implements VerifySignGateway {
     @Override
-    public void notify(GatewayRequest<VerifyModel> request, VerifySignResult result) {
+    public void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result) {
         result.setSuccess(true);
         LocalBankNotifyResult localBankNotifyResult = JSONUtil.toBean(request.getContent().getRequestBody(), LocalBankNotifyResult.class);
         result.setResponseBody("SUCCESS");
