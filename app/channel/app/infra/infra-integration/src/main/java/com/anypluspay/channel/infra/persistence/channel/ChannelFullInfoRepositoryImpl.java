@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 渠道全信息仓库实现，有缓存
  * @author wxj
  * 2024/8/30
  */

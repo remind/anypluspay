@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.anypluspay.channel</groupId>
+            <artifactId>channel-facade</artifactId>
+            <version>${channel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.anypluspay.channel</groupId>
             <artifactId>channel-types</artifactId>
             <version>${channel.version}</version>
         </dependency>

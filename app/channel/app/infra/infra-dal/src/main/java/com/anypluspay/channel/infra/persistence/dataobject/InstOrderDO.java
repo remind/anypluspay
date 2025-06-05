@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-04-07
+ * @since 2025-06-05
  */
 @TableName("ti_inst_order")
 public class InstOrderDO implements Serializable {
@@ -61,6 +61,11 @@ public class InstOrderDO implements Serializable {
      * 状态
      */
     private String status;
+
+    /**
+     * API参数ID
+     */
+    private String apiParamId;
 
     /**
      * 请求扩展信息
@@ -173,6 +178,14 @@ public class InstOrderDO implements Serializable {
         this.status = status;
     }
 
+    public String getApiParamId() {
+        return apiParamId;
+    }
+
+    public void setApiParamId(String apiParamId) {
+        this.apiParamId = apiParamId;
+    }
+
     public String getRequestExt() {
         return requestExt;
     }
@@ -256,6 +269,7 @@ public class InstOrderDO implements Serializable {
         ", fundChannelCode = " + fundChannelCode +
         ", apiType = " + apiType +
         ", status = " + status +
+        ", apiParamId = " + apiParamId +
         ", requestExt = " + requestExt +
         ", responseExt = " + responseExt +
         ", submitTime = " + submitTime +

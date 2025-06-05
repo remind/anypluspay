@@ -36,6 +36,7 @@ public class GatewaySubmitContentBuilder {
 
     /**
      * 构造请求内容
+     *
      * @param channelApiContext
      * @param orderContext
      * @return
@@ -49,12 +50,13 @@ public class GatewaySubmitContentBuilder {
                 normalContent.setExtension(orderContext.getInstOrder().getRequestExt());
                 normalContent.setInstOrderId(orderContext.getInstOrder().getInstOrderId());
                 normalContent.setInstRequestNo(orderContext.getInstOrder().getInstRequestNo());
-                normalContent.setServerNotifyUrl(combineCallbackUrlService.getServerNotifyUrl(channelApiContext));
+                normalContent.setServerNotifyUrl(combineCallbackUrlService.getServerNotifyUrl(channelApiContext, orderContext.getInstOrder().getInstRequestNo()));
                 fillBizOrderInfo(normalContent, orderContext.getBizOrder());
             }
             if (gatewayInterceptorMap.get(channelApiContext.getChannelApiType()) != null) {
                 gatewayInterceptorMap.get(channelApiContext.getChannelApiType()).preHandle(channelApiContext, orderContext, requestContent);
             }
+            requestContent.setApiParamId(orderContext.getInstOrder().getApiParamId());
             return requestContent;
         } catch (Exception e) {
             log.error("构造请求订单参数异常", e);

@@ -12,6 +12,11 @@ import lombok.Data;
 public class NotifyRequest {
 
     /**
+     * 机构请求号
+     */
+    private String instRequestNo;
+
+    /**
      * 渠道编码
      */
     private String channelCode;

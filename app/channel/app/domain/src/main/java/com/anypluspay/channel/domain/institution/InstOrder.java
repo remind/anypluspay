@@ -10,7 +10,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 /**
  * 机构订单
@@ -58,9 +57,9 @@ public class InstOrder extends Entity {
     private InstOrderStatus status;
 
     /**
-     * 密钥ID
+     * api参数ID
      */
-    private String secretId;
+    private String apiParamId;
 
     /**
      * 请求网关API要用到的信息，如微信支付要用到openid

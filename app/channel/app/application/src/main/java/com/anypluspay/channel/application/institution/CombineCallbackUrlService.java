@@ -27,21 +27,22 @@ public class CombineCallbackUrlService {
      * 获取后端异步通知地址
      *
      * @param channelApiContext api上下文
+     * @param instRequestNo     机构请求号
      * @return 地址
      */
-    public String getServerNotifyUrl(ChannelApiContext channelApiContext) {
+    public String getServerNotifyUrl(ChannelApiContext channelApiContext, String instRequestNo) {
         if (channelApiContext.getChannelApiType() == ChannelApiType.SIGN
                 || channelApiContext.getChannelApiType() == ChannelApiType.SINGLE_DEBIT) {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.VERIFY_SIGN)) {
-                return systemConfig.getNotifyUrl() + "/notify/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + channelApiContext.getChannelCode();
+                return systemConfig.getNotifyUrl() + "/notify/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + instRequestNo;
             }
         } else if (channelApiContext.getChannelApiType() == ChannelApiType.SINGLE_REFUND) {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.REFUND_VERIFY_SIGN)) {
-                return systemConfig.getNotifyUrl() + "/notify/" + ChannelApiType.REFUND_VERIFY_SIGN.getCode() + "/" + channelApiContext.getChannelCode();
+                return systemConfig.getNotifyUrl() + "/notify/" + ChannelApiType.REFUND_VERIFY_SIGN.getCode() + "/" + instRequestNo;
             }
         }
         return "";
@@ -51,21 +52,15 @@ public class CombineCallbackUrlService {
      * 获取前端回调地址
      *
      * @param channelApiContext api上下文
+     * @param instRequestNo     机构请求号
      * @return 地址
      */
-    public String getReturnPageUrl(ChannelApiContext channelApiContext) {
-        if (channelApiContext.getChannelApiType() == ChannelApiType.SIGN
-                || channelApiContext.getChannelApiType() == ChannelApiType.SINGLE_DEBIT) {
+    public String getReturnPageUrl(ChannelApiContext channelApiContext, String instRequestNo) {
+        if (channelApiContext.getChannelApiType() == ChannelApiType.SIGN) {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.VERIFY_SIGN)) {
-                return systemConfig.getNotifyUrl() + "/return-page/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + channelApiContext.getChannelCode();
-            }
-        } else if (channelApiContext.getChannelApiType() == ChannelApiType.SINGLE_REFUND) {
-            ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
-            if (channelFullInfo.getChannelApis().stream()
-                    .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.REFUND_VERIFY_SIGN)) {
-                return systemConfig.getNotifyUrl() + "/return-page/" + ChannelApiType.REFUND_VERIFY_SIGN.getCode() + "/" + channelApiContext.getChannelCode();
+                return systemConfig.getNotifyUrl() + "/return-page/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + instRequestNo;
             }
         }
         return "";

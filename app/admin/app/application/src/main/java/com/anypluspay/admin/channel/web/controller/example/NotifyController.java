@@ -35,15 +35,15 @@ public class NotifyController {
     /**
      * 异步通知
      *
-     * @param apiType     接口类型
-     * @param channelCode 渠道编码
-     * @param request     请求参数
+     * @param apiType       接口类型
+     * @param instRequestNo 机构请求号
+     * @param request       请求参数
      * @return 结果
      */
-    @RequestMapping("/notify/{apiType}/{channelCode}")
-    public String notify(@Validated @NotBlank @PathVariable String apiType, @Validated @NotBlank @PathVariable String channelCode, HttpServletRequest request) {
+    @RequestMapping("/notify/{apiType}/{instRequestNo}")
+    public String notify(@Validated @NotBlank @PathVariable String apiType, @Validated @NotBlank @PathVariable String instRequestNo, HttpServletRequest request) {
         Map<String, String> requestData = getPostRequestParams(request);
-        FundResult fundResult = notifyFacade.notify(buildNotifyRequest(channelCode, apiType, CallbackType.SERVER, requestData));
+        FundResult fundResult = notifyFacade.notify(buildNotifyRequest(apiType, instRequestNo, CallbackType.SERVER, requestData));
         return fundResult.getResponseExt().get(ChannelExtKey.NOTIFY_RESPONSE_DATA.getCode());
     }
 
@@ -51,22 +51,22 @@ public class NotifyController {
      * 前端同步返回页面
      * alipay:http://local.anypluspay.com/api/demo/pay/return?charset=UTF-8&out_trade_no=TFI00125060400026604&method=alipay.trade.page.pay.return&total_amount=50.00&sign=hE8MjqAHtSihaRgPR5gJlL2IG7MPy291GdXdaXcXZUIQ%2FYhMGROVMBlvaKDES%2BoM8a7YqCgmHlO4EJLtRqqvZZtuZX8nsszcIbxcQ3IE%2FwRE%2BPCFHd4yA%2FqcmMK3rndarEyLqwadNityyw9GeS%2BB96cOfJX40WVzdfMxm9OedKnAdAfgvi9weKnrq%2FWN6RoneIXw1NHTf21IR%2FU0BlfCzhLWcJo8DAy%2BJGX95KBVjw0GWbNXPhDLBW4NhiqDxm5FixZ04a4PQwkpq4CtcE5tkzGQNO8YSfxEzpxfR4oVAy4Eov7Yl9RcnisQo30hb7T27Zka6WjHimwJCutd47ibfQ%3D%3D&trade_no=2025060422001460380505960218&auth_app_id=2021000149640040&version=1.0&app_id=2021000149640040&sign_type=RSA2&seller_id=2088721069460375&timestamp=2025-06-04+11%3A52%3A07
      *
-     * @param apiType     接口类型
-     * @param channelCode 渠道编码
-     * @param request     请求参数
+     * @param apiType       接口类型
+     * @param instRequestNo 机构请求号
+     * @param request       请求参数
      * @return 结果
      */
-    @RequestMapping("/return-page/{apiType}/{channelCode}")
+    @RequestMapping("/return-page/{apiType}/{instRequestNo}")
     @ResponseBody
-    public String returnPage(@Validated @NotBlank @PathVariable String apiType, @Validated @NotBlank @PathVariable String channelCode, HttpServletRequest request) {
+    public String returnPage(@Validated @NotBlank @PathVariable String apiType, @Validated @NotBlank @PathVariable String instRequestNo, HttpServletRequest request) {
         Map<String, String> requestData = getGetRequestParams(request);
-        FundResult fundResult = notifyFacade.notify(buildNotifyRequest(channelCode, apiType, CallbackType.PAGE, requestData));
+        FundResult fundResult = notifyFacade.notify(buildNotifyRequest(apiType, instRequestNo, CallbackType.PAGE, requestData));
         return ToStringBuilder.reflectionToString(fundResult);
     }
 
-    private NotifyRequest buildNotifyRequest(String channelCode, String apiType, CallbackType callbackType, Map<String, String> requestData) {
+    private NotifyRequest buildNotifyRequest(String apiType, String instRequestNo, CallbackType callbackType, Map<String, String> requestData) {
         NotifyRequest notifyRequest = new NotifyRequest();
-        notifyRequest.setChannelCode(channelCode);
+        notifyRequest.setInstRequestNo(instRequestNo);
         notifyRequest.setChannelApiType(apiType);
         notifyRequest.setCallbackType(callbackType.getCode());
         notifyRequest.setRequestBody(JSONUtil.toJsonStr(requestData));

@@ -28,6 +28,11 @@ public abstract class BaseBizOrder extends Entity {
     private String requestId;
 
     /**
+     * 合作方ID
+     */
+    private String partnerId;
+
+    /**
      * 会员ID
      */
     private String memberId;

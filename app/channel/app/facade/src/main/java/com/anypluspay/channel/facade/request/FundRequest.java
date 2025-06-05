@@ -22,6 +22,11 @@ public class FundRequest implements Serializable {
     private String requestId;
 
     /**
+     * 合作方ID
+     */
+    private String partnerId;
+
+    /**
      * 会员ID
      */
     private String memberId;

@@ -20,6 +20,26 @@ import java.io.Serializable;
 public class RequestContent implements Serializable {
 
     /**
+     * api参数ID
+     */
+    private String apiParamId;
+
+    /**
+     * 机构订单ID
+     */
+    private Long instOrderId;
+
+    /**
+     * 机构请求号
+     */
+    private String instRequestNo;
+
+    /**
+     * 目标机构
+     */
+    private String targetInst;
+
+    /**
      * 扩展信息
      */
     @JsonSerialize(using = ExtensionSerializer.class)

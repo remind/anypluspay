@@ -25,4 +25,5 @@ public interface NotifyFacade {
      */
     @PostMapping(PREFIX + "/apply")
     FundResult notify(@RequestBody NotifyRequest request);
+
 }

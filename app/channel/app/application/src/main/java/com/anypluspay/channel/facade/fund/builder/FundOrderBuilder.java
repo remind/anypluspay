@@ -14,6 +14,7 @@ import com.anypluspay.channel.facade.request.RefundRequest;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.commons.enums.SystemCodeEnums;
 import com.anypluspay.component.sequence.SequenceService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -31,6 +32,8 @@ public class FundOrderBuilder {
 
     @Autowired
     private BizOrderRepository bizOrderRepository;
+
+    private static final String DEFAULT_PARTNER_ID = "100000000";
 
     /**
      * 构建资金流入订单
@@ -83,10 +86,11 @@ public class FundOrderBuilder {
 
     private void fillBizOrder(BaseBizOrder bizOrder, FundRequest fundRequest, IdType idType) {
         bizOrder.setRequestId(fundRequest.getRequestId());
+        bizOrder.setPartnerId(StringUtils.isNotBlank(fundRequest.getPartnerId()) ? fundRequest.getPartnerId() : DEFAULT_PARTNER_ID);
         bizOrder.setMemberId(fundRequest.getMemberId());
         bizOrder.setInstExt(fundRequest.getInstExt());
         bizOrder.setExtension(fundRequest.getExtension());
         bizOrder.setStatus(BizOrderStatus.PROCESSING);
-        bizOrder.setOrderId(sequenceService.getId(fundRequest.getMemberId(), SystemCodeEnums.CHANNEL, idType));
+        bizOrder.setOrderId(sequenceService.getId(fundRequest.getPartnerId(), SystemCodeEnums.CHANNEL, idType));
     }
 }

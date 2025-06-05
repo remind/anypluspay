@@ -29,7 +29,7 @@ public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent
         if (orderContext.getBizOrder() instanceof FundInOrder fundInOrder) {
             requestContent.setGoodsSubject(fundInOrder.getExtension().get(ChannelExtKey.GOODS_SUBJECT.getCode()));
             requestContent.setGoodsDesc(fundInOrder.getExtension().get(ChannelExtKey.GOODS_DESC.getCode()));
-            requestContent.setReturnPageUrl(combineCallbackUrlService.getReturnPageUrl(channelApiContext));
+            requestContent.setReturnPageUrl(combineCallbackUrlService.getReturnPageUrl(channelApiContext, orderContext.getInstOrder().getInstRequestNo()));
         }
     }
 

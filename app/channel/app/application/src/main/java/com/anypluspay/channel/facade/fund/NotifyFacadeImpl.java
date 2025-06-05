@@ -1,6 +1,5 @@
 package com.anypluspay.channel.facade.fund;
 
-import cn.hutool.core.lang.Assert;
 import com.anypluspay.channel.application.institution.InstProcessService;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
@@ -12,6 +11,9 @@ import com.anypluspay.channel.facade.NotifyFacade;
 import com.anypluspay.channel.facade.request.NotifyRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.commons.lang.utils.AssertUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,14 +35,34 @@ public class NotifyFacadeImpl extends AbstractFundService implements NotifyFacad
 
     @Override
     public FundResult notify(NotifyRequest request) {
-        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(request.getChannelCode(), ChannelApiType.getByCode(request.getChannelApiType()));
-        Assert.notNull(channelApiContext, "无可用渠道");
-        InstCommandOrder instCommandOrder = instProcessService.noneOrderProcess(channelApiContext, request);
-        InstOrder instOrder = instOrderRepository.load(instCommandOrder.getInstOrderId());
+        ChannelApiType apiType = ChannelApiType.getByCode(request.getChannelApiType());
+        AssertUtil.notNull(apiType, "apiType不能为null");
+        if (StringUtils.isNotBlank(request.getInstRequestNo())) {
+            return notifyByInstRequestNo(apiType, request.getInstRequestNo());
+        } else {
+            ChannelApiContext channelApiContext = channelRouteService.routeByChannel(request.getChannelCode(), apiType);
+            AssertUtil.notNull(channelApiContext, "无可用渠道");
+            InstCommandOrder instCommandOrder = instProcessService.noneOrderProcess(channelApiContext, request);
+            InstOrder instOrder = instOrderRepository.load(instCommandOrder.getInstOrderId());
+            BaseBizOrder bizOrder = bizOrderRepository.load(instOrder.getBizOrderId());
+            FundResult result = (FundResult) buildChannelResult(bizOrder, instOrder, instCommandOrder);
+            fillChannelResultCommon(result, bizOrder, instOrder, instCommandOrder);
+            return result;
+        }
+    }
+
+    private FundResult notifyByInstRequestNo(ChannelApiType channelApiType, String instRequestNo) {
+        InstOrder instOrder = instOrderRepository.loadByInstRequestNo(instRequestNo);
+        AssertUtil.notNull(instOrder, "机构订单不存在");
         BaseBizOrder bizOrder = bizOrderRepository.load(instOrder.getBizOrderId());
-        FundResult result = (FundResult) buildChannelResult(bizOrder, instOrder, instCommandOrder);
-        fillChannelResultCommon(result, bizOrder, instOrder, instCommandOrder);
-        return result;
+        AssertUtil.notNull(bizOrder, "订单不存在");
+        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(instOrder.getFundChannelCode(), channelApiType);
+        AssertUtil.notNull(channelApiContext, "无可用渠道");
+        if (bizOrder.getStatus() == BizOrderStatus.PROCESSING) {
+            return applyInstProcess(bizOrder, channelApiType);
+        } else {
+            return (FundResult) queryResultByOrderId(bizOrder.getOrderId());
+        }
     }
 
 }

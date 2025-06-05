@@ -26,13 +26,13 @@ db:
 #      - tc_unity_result_code
 #      - tc_fund_channel
 #      - tc_api_request_no_mode
-      - tc_channel_api
+#      - tc_channel_api
 #      - tc_channel_support_inst
 #      - tc_channel_maintain
 #      - tc_fund_channel_limit
 #      - tc_institution
 #      - tc_pay_method
 #      - tc_param_define
-#      - tc_channel_param
+      - tc_channel_api_param
 #      - t_pay_order
 #      - t_refund_order

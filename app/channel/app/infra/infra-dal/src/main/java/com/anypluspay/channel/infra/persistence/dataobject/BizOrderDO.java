@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-04-07
+ * @since 2025-06-05
  */
 @TableName("tb_biz_order")
 public class BizOrderDO implements Serializable {
@@ -31,6 +31,11 @@ public class BizOrderDO implements Serializable {
      * 请求号
      */
     private String requestId;
+
+    /**
+     * 合作方ID
+     */
+    private String partnerId;
 
     /**
      * 会员ID
@@ -93,6 +98,14 @@ public class BizOrderDO implements Serializable {
 
     public void setRequestId(String requestId) {
         this.requestId = requestId;
+    }
+
+    public String getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(String partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getMemberId() {
@@ -172,6 +185,7 @@ public class BizOrderDO implements Serializable {
         return "BizOrderDO{" +
         "orderId = " + orderId +
         ", requestId = " + requestId +
+        ", partnerId = " + partnerId +
         ", memberId = " + memberId +
         ", requestRootType = " + requestRootType +
         ", requestType = " + requestType +
