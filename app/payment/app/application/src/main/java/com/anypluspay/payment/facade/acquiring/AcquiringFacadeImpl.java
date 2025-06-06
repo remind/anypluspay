@@ -4,10 +4,10 @@ import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.refund.RefundApplyService;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
+import com.anypluspay.payment.domain.pay.refund.RefundApplyService;
+import com.anypluspay.payment.domain.pay.refund.RefundOrder;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateBuilder;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
@@ -78,12 +78,12 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
     public AcquiringPayResponse pay(AcquiringPayRequest request) {
         AcquiringPayResponse response;
         try {
-            PayProcess payOrder = savePayOrder(request);
-            PayResult result = payProcessService.process(payOrder);
-            response = acquiringPayBuilder.buildResponse(acquiringOrderRepository.load(payOrder.getPaymentId()), result);
+            PayOrder payOrder = savePayOrder(request);
+            PayResult result = payOrderService.process(payOrder);
+            response = acquiringPayBuilder.buildResponse(acquiringOrderRepository.load(payOrder.getTradeId()), result);
         } catch (Exception e) {
             log.error("支付异常", e);
-            response = acquiringPayBuilder.buildExceptionResponse(loadTradeOrder(request.getPaymentId(), request.getPartnerId(), request.getOutTradeNo()), e);
+            response = acquiringPayBuilder.buildExceptionResponse(loadTradeOrder(request.getTradeId(), request.getPartnerId(), request.getOutTradeNo()), e);
         }
         return response;
     }
@@ -92,9 +92,9 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
     public AcquiringRefundResponse refund(AcquiringRefundRequest request) {
         AcquiringRefundResponse response;
         try {
-            RefundProcess refundOrder = saveRefundOrder(request);
+            RefundOrder refundOrder = saveRefundOrder(request);
             refundApplyService.apply(refundOrder);
-            response = acquiringRefundBuilder.buildResponse(acquiringOrderRepository.load(refundOrder.getPaymentId()));
+            response = acquiringRefundBuilder.buildResponse(acquiringOrderRepository.load(refundOrder.getTradeId()));
         } catch (Exception e) {
             log.error("退款异常", e);
             response = acquiringRefundBuilder.buildExceptionResponse(request, e);
@@ -103,8 +103,8 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
     }
 
     @Override
-    public TradeResponse queryByPaymentId(String paymentId) {
-        AcquiringOrder acquiringOrder = loadTradeOrder(paymentId, null, null);
+    public TradeResponse queryByTradeId(String tradeId) {
+        AcquiringOrder acquiringOrder = loadTradeOrder(tradeId, null, null);
         if (acquiringOrder == null) {
             return TradeResponseBuilder.buildNotExists();
         }
@@ -120,15 +120,15 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
         return TradeResponseBuilder.build(acquiringOrder);
     }
 
-    private PayProcess savePayOrder(AcquiringPayRequest request) {
+    private PayOrder savePayOrder(AcquiringPayRequest request) {
         return transactionTemplate.execute(status -> {
-            AcquiringOrder acquiringOrder = lockTradeOrder(request.getPaymentId(), request.getOutTradeNo(), request.getPartnerId());
+            AcquiringOrder acquiringOrder = lockTradeOrder(request.getTradeId(), request.getOutTradeNo(), request.getPartnerId());
             acquiringPayValidator.validate(acquiringOrder);
-            PayProcess payOrder = acquiringPayBuilder.buildPayProcess(acquiringOrder, request);
-            acquiringOrder.setPayOrderId(payOrder.getProcessId());
+            PayOrder payOrder = acquiringPayBuilder.buildPayProcess(acquiringOrder, request);
+            acquiringOrder.setOrderId(payOrder.getOrderId());
             acquiringOrder.setStatus(AcquiringOrderStatus.PAYING);
             acquiringOrderRepository.reStore(acquiringOrder);
-            payProcessRepository.store(payOrder);
+            payOrderRepository.store(payOrder);
             return payOrder;
         });
     }
@@ -139,16 +139,16 @@ public class AcquiringFacadeImpl extends AbstractPaymentService implements Acqui
      * @param request
      * @return
      */
-    private RefundProcess saveRefundOrder(AcquiringRefundRequest request) {
+    private RefundOrder saveRefundOrder(AcquiringRefundRequest request) {
         return transactionTemplate.execute(status -> {
             AcquiringOrder origAcquiringOrder = lockTradeOrder(request.getOrigPaymentId(), request.getOrigOutTradeNo(), request.getPartnerId());
             AssertUtil.notNull(origAcquiringOrder, "原订单不存在");
             AcquiringOrder refundAcquiringOrder = acquiringRefundBuilder.buildTradeOrder(request, origAcquiringOrder);
-            PayProcess originalPayOrder = payProcessRepository.load(origAcquiringOrder.getPayOrderId());
-            RefundProcess refundOrder = refundApplyService.buildRefundOrder(refundAcquiringOrder.getPaymentId(), new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), RefundType.BIZ_REQUEST, originalPayOrder);
-            refundAcquiringOrder.setPayOrderId(refundOrder.getProcessId());
+            PayOrder originalPayOrder = payOrderRepository.load(origAcquiringOrder.getOrderId());
+            RefundOrder refundOrder = refundApplyService.buildRefundOrder(refundAcquiringOrder.getTradeId(), new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency()), RefundType.BIZ_REQUEST, originalPayOrder);
+            refundAcquiringOrder.setOrderId(refundOrder.getOrderId());
             acquiringOrderRepository.store(refundAcquiringOrder);
-            refundProcessRepository.store(refundOrder);
+            refundOrderRepository.store(refundOrder);
             return refundOrder;
         });
     }

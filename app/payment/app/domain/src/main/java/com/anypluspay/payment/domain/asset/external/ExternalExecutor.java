@@ -20,7 +20,7 @@ import com.anypluspay.payment.domain.repository.FluxProcessRepository;
 import com.anypluspay.payment.domain.repository.FundDetailRepository;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.domain.biz.withdraw.WithdrawOrder;
+import com.anypluspay.payment.domain.trade.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentExtKey;
@@ -65,7 +65,7 @@ public class ExternalExecutor implements AssetFluxExecutor {
 
     @Override
     public FluxResult increase(FluxOrder fluxOrder, FluxProcess fluxProcess) {
-        IdType paymentIdType = idGeneratorService.getIdType(fluxOrder.getPaymentId());
+        IdType paymentIdType = idGeneratorService.getIdType(fluxOrder.getTradeId());
         if (paymentIdType == IdType.WITHDRAW_ORDER_ID) {
             FundOutRequest fundOutRequest = buildFundOutRequest(fluxOrder, fluxProcess);
             FundResult fundResult = fundOutFacade.apply(fundOutRequest);
@@ -132,7 +132,7 @@ public class ExternalExecutor implements AssetFluxExecutor {
 
     private FundOutRequest buildFundOutRequest(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         FundOutRequest request = new FundOutRequest();
-        WithdrawOrder withdrawOrder = withdrawOrderRepository.load(fluxOrder.getPaymentId());
+        WithdrawOrder withdrawOrder = withdrawOrderRepository.load(fluxOrder.getTradeId());
         request.setRequestId(fluxProcess.getFluxProcessId());
         request.setMemberId(withdrawOrder.getMemberId());
         request.setAccountNo(withdrawOrder.getAccountNo());

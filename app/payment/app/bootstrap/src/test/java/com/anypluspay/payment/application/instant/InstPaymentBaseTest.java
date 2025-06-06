@@ -12,10 +12,10 @@ import com.anypluspay.component.test.AbstractBaseTest;
 import com.anypluspay.payment.application.instant.common.ModelIntegrityCheck;
 import com.anypluspay.payment.domain.flux.*;
 import com.anypluspay.payment.domain.flux.chain.FluxChain;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
-import com.anypluspay.payment.domain.repository.PayProcessRepository;
-import com.anypluspay.payment.domain.repository.RefundProcessRepository;
+import com.anypluspay.payment.domain.repository.PayOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.response.InstantPaymentResponse;
@@ -55,10 +55,10 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
     protected static final String CHANNEL_CLEARING_ACCOUNT_NO = "40010010011560001";
 
     @Autowired
-    protected PayProcessRepository payProcessRepository;
+    protected PayOrderRepository payOrderRepository;
 
     @Autowired
-    protected RefundProcessRepository refundProcessRepository;
+    protected RefundOrderRepository refundOrderRepository;
 
     @Autowired
     private FluxOrderRepository fluxOrderRepository;
@@ -143,7 +143,7 @@ public class InstPaymentBaseTest extends AbstractBaseTest {
 
     protected void assetPayOrder(InstantPaymentRequest request, InstantPaymentResponse response) {
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
-        PayProcess generalPayOrder = payProcessRepository.load(response.getPayOrderId());
+        PayOrder generalPayOrder = payOrderRepository.load(response.getPayOrderId());
         Assert.assertNotNull(generalPayOrder);
         Assert.assertEquals(request.getPayAmount(), generalPayOrder.getAmount());
         Assert.assertEquals(request.getPayerId(), generalPayOrder.getMemberId());

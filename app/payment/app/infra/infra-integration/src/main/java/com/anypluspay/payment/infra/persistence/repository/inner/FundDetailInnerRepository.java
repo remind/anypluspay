@@ -25,7 +25,7 @@ public class FundDetailInnerRepository  {
     private FundDetailDalConvertor dalConvertor;
 
     public List<FundDetail> loadByPaymentId(String paymentId) {
-        return dalConvertor.toEntity(dalMapper.selectList(buildPaymentIdQueryWrapper(paymentId)));
+        return dalConvertor.toEntity(dalMapper.selectList(buildTradeIdQueryWrapper(paymentId)));
     }
 
     public List<FundDetail> loadByOrderId(String orderId) {
@@ -44,11 +44,11 @@ public class FundDetailInnerRepository  {
         });
     }
 
-    private Wrapper<FundDetailDO> buildPaymentIdQueryWrapper(String paymentId) {
-        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPaymentId, paymentId);
+    private Wrapper<FundDetailDO> buildTradeIdQueryWrapper(String tradeId) {
+        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getTradeId, tradeId);
     }
 
-    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String payProcessId) {
-        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPayProcessId, payProcessId);
+    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String orderId) {
+        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getOrderId, orderId);
     }
 }

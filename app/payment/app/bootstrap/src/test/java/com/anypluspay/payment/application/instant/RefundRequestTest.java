@@ -1,7 +1,7 @@
 package com.anypluspay.payment.application.instant;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.pay.refund.RefundOrder;
 import com.anypluspay.payment.facade.instant.InstantPaymentFacadeImpl;
 import com.anypluspay.payment.types.status.PayProcessStatus;
 import com.anypluspay.payment.types.pay.RefundOrderStatus;
@@ -41,7 +41,7 @@ public class RefundRequestTest extends InstPaymentBaseTest {
         RefundResponse refundResponse = instantPaymentFacade.refund(refundRequest);
         Assert.assertNotNull(refundResponse);
         modelIntegrityCheck.checkInstantPayment(response.getPaymentId());
-        RefundProcess refundOrder = refundProcessRepository.load(refundResponse.getRefundOrderId());
+        RefundOrder refundOrder = refundOrderRepository.load(refundResponse.getRefundOrderId());
         refundOrder.getPayeeDetails().forEach(fundDetail -> {
             Assert.assertEquals(RefundOrderStatus.SUCCESS, refundOrder.getStatus());
         });

@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.instant.builder;
 
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.Payment;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.PaymentType;
@@ -21,15 +21,15 @@ public class InstantPaymentBuilder extends PaymentBuilder {
         return buildPayment(request, PaymentType.INSTANT);
     }
 
-    public PayProcess buildPayProcess(String paymentId, InstantPaymentRequest request) {
-        PayProcess payProcess = new PayProcess();
-        payProcess.setPaymentId(paymentId);
-        payProcess.setProcessId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
-        payProcess.setAmount(request.getPayAmount());
-        payProcess.setMemberId(request.getPayerId());
-        payProcess.setStatus(PayProcessStatus.INIT);
-        fillFundDetails(payProcess, request);
-        return payProcess;
+    public PayOrder buildPayProcess(String paymentId, InstantPaymentRequest request) {
+        PayOrder payOrder = new PayOrder();
+        payOrder.setTradeId(paymentId);
+        payOrder.setOrderId(idGeneratorService.genIdByRelateId(paymentId, PayOrderType.PAY.getIdType()));
+        payOrder.setAmount(request.getPayAmount());
+        payOrder.setMemberId(request.getPayerId());
+        payOrder.setStatus(PayProcessStatus.INIT);
+        fillFundDetails(payOrder, request);
+        return payOrder;
     }
 
     /**
@@ -37,13 +37,13 @@ public class InstantPaymentBuilder extends PaymentBuilder {
      * @param generalPayOrder
      * @param request
      */
-    private void fillFundDetails(PayProcess generalPayOrder, InstantPaymentRequest request) {
+    private void fillFundDetails(PayOrder generalPayOrder, InstantPaymentRequest request) {
         request.getPayerFundDetail().forEach(fundDetailInfo -> {
-            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getProcessId(), fundDetailInfo, BelongTo.PAYER));
+            generalPayOrder.addPayerFundDetail(buildFundDetail(generalPayOrder.getTradeId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
         });
 
         request.getPayeeFundDetail().forEach(fundDetailInfo -> {
-            generalPayOrder.addPayeeFundDetail(buildFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getProcessId(), fundDetailInfo, BelongTo.PAYEE));
+            generalPayOrder.addPayeeFundDetail(buildFundDetail(generalPayOrder.getTradeId(), generalPayOrder.getOrderId(), fundDetailInfo, BelongTo.PAYEE));
         });
     }
 

@@ -29,10 +29,10 @@ public class AcquiringPayRequest {
     private String outTradeNo;
 
     /**
-     * 支付单号
+     * 交易单号
      */
-    @Length(min = 6, max = 32, message = "支付单号长度为6-32")
-    private String paymentId;
+    @Length(min = 6, max = 32, message = "交易单号长度为6-32")
+    private String tradeId;
 
     /**
      * 付款资金明细

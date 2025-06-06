@@ -15,28 +15,28 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-26
+ * @since 2025-06-06
  */
-@TableName("tb_acquiring_order")
+@TableName("tt_acquiring_order")
 public class AcquiringOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 交易ID
+     */
+    @TableId(value = "trade_id", type = IdType.NONE)
+    private String tradeId;
+
+    /**
+     * 关联交易ID
+     */
+    private String relationTradeId;
+
+    /**
      * 支付ID
      */
-    @TableId(value = "payment_id", type = IdType.NONE)
-    private String paymentId;
-
-    /**
-     * 关联支付ID
-     */
-    private String relationPaymentId;
-
-    /**
-     * 支付指令ID
-     */
-    private String payOrderId;
+    private String orderId;
 
     /**
      * 交易类型
@@ -107,28 +107,28 @@ public class AcquiringOrderDO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
-    public String getPaymentId() {
-        return paymentId;
+    public String getTradeId() {
+        return tradeId;
     }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 
-    public String getRelationPaymentId() {
-        return relationPaymentId;
+    public String getRelationTradeId() {
+        return relationTradeId;
     }
 
-    public void setRelationPaymentId(String relationPaymentId) {
-        this.relationPaymentId = relationPaymentId;
+    public void setRelationTradeId(String relationTradeId) {
+        this.relationTradeId = relationTradeId;
     }
 
-    public String getPayOrderId() {
-        return payOrderId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setPayOrderId(String payOrderId) {
-        this.payOrderId = payOrderId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getTradeType() {
@@ -246,9 +246,9 @@ public class AcquiringOrderDO implements Serializable {
     @Override
     public String toString() {
         return "AcquiringOrderDO{" +
-        "paymentId = " + paymentId +
-        ", relationPaymentId = " + relationPaymentId +
-        ", payOrderId = " + payOrderId +
+        "tradeId = " + tradeId +
+        ", relationTradeId = " + relationTradeId +
+        ", orderId = " + orderId +
         ", tradeType = " + tradeType +
         ", outTradeNo = " + outTradeNo +
         ", partnerId = " + partnerId +

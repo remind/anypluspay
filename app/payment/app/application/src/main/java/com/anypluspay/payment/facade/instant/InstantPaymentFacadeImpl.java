@@ -3,11 +3,11 @@ package com.anypluspay.payment.facade.instant;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.application.AbstractPaymentService;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.facade.instant.builder.InstantPaymentBuilder;
 import com.anypluspay.payment.facade.instant.builder.RefundOrderBuilder;
 import com.anypluspay.payment.domain.Payment;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
+import com.anypluspay.payment.domain.pay.refund.RefundOrder;
 import com.anypluspay.payment.facade.InstantPaymentFacade;
 import com.anypluspay.payment.facade.request.InstantPaymentRequest;
 import com.anypluspay.payment.facade.request.RefundRequest;
@@ -36,48 +36,48 @@ public class InstantPaymentFacadeImpl extends AbstractPaymentService implements 
 
     public InstantPaymentResponse pay(InstantPaymentRequest request) {
         Payment payment = instantPaymentBuilder.buildPayment(request);
-        PayProcess payOrder = instantPaymentBuilder.buildPayProcess(payment.getPaymentId(), request);
+        PayOrder payOrder = instantPaymentBuilder.buildPayProcess(payment.getPaymentId(), request);
         transactionTemplate.executeWithoutResult(status -> {
             paymentRepository.store(payment);
-            payProcessRepository.store(payOrder);
+            payOrderRepository.store(payOrder);
         });
-        PayResult result = payProcessService.process(payOrder);
+        PayResult result = payOrderService.process(payOrder);
         InstantPaymentResponse response = new InstantPaymentResponse();
-        response.setPaymentId(payOrder.getPaymentId());
-        response.setPayOrderId(payOrder.getProcessId());
+        response.setPaymentId(payOrder.getTradeId());
+        response.setPayOrderId(payOrder.getOrderId());
         response.setOrderStatus(payOrder.getStatus());
         response.setResult(result);
         return response;
     }
 
     public RefundResponse refund(RefundRequest request) {
-        PayProcess generalPayOrder = getOrigProcess(request);
-        RefundProcess refundOrder = transactionTemplate.execute(status -> {
-            paymentRepository.lock(generalPayOrder.getPaymentId());
-            RefundProcess r = refundOrderBuilder.buildRefundProcess(request, generalPayOrder);
-            refundProcessRepository.store(r);
+        PayOrder generalPayOrder = getOrigProcess(request);
+        RefundOrder refundOrder = transactionTemplate.execute(status -> {
+            paymentRepository.lock(generalPayOrder.getTradeId());
+            RefundOrder r = refundOrderBuilder.buildRefundProcess(request, generalPayOrder);
+            refundOrderRepository.store(r);
             return r;
         });
-        PayResult payResult = refundProcessService.process(refundOrder);
+        PayResult payResult = refundOrderService.process(refundOrder);
         RefundResponse response = new RefundResponse();
-        response.setPaymentId(refundOrder.getPaymentId());
-        response.setRefundOrderId(refundOrder.getProcessId());
+        response.setPaymentId(refundOrder.getTradeId());
+        response.setRefundOrderId(refundOrder.getOrderId());
         response.setOrderStatus(refundOrder.getStatus().getCode());
         response.setResultCode(payResult.getResultCode());
         response.setResultMessage(payResult.getResultMessage());
         return response;
     }
 
-    private PayProcess getOrigProcess(RefundRequest request) {
-        PayProcess payProcess;
+    private PayOrder getOrigProcess(RefundRequest request) {
+        PayOrder payOrder;
         if (StringUtils.isNotBlank(request.getOrigOrderId())) {
-            payProcess = payProcessRepository.load(request.getOrigOrderId());
+            payOrder = payOrderRepository.load(request.getOrigOrderId());
         } else {
             throw new BizException("无法查到原支付指令");
         }
-        AssertUtil.notNull(payProcess, "无法查到原支付指令");
-        AssertUtil.isTrue(payProcess.getStatus() == PayProcessStatus.SUCCESS, "原单未成功");
-        return payProcess;
+        AssertUtil.notNull(payOrder, "无法查到原支付指令");
+        AssertUtil.isTrue(payOrder.getStatus() == PayProcessStatus.SUCCESS, "原单未成功");
+        return payOrder;
     }
 
 }

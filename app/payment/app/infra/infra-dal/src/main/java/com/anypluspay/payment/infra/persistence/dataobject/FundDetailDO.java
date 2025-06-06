@@ -11,13 +11,13 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 支付指令资金明细
+ * 支付单资金明细
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-06-06
  */
-@TableName("t_fund_detail")
+@TableName("tp_fund_detail")
 public class FundDetailDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,14 +29,14 @@ public class FundDetailDO implements Serializable {
     private String detailId;
 
     /**
-     * 支付指令ID
+     * 支付ID
      */
-    private String payProcessId;
+    private String orderId;
 
     /**
-     * 支付单ID
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 关联ID，如退款关联的原ID
@@ -113,20 +113,20 @@ public class FundDetailDO implements Serializable {
         this.detailId = detailId;
     }
 
-    public String getPayProcessId() {
-        return payProcessId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setPayProcessId(String payProcessId) {
-        this.payProcessId = payProcessId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public String getPaymentId() {
-        return paymentId;
+    public String getTradeId() {
+        return tradeId;
     }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 
     public String getRelationId() {
@@ -237,8 +237,8 @@ public class FundDetailDO implements Serializable {
     public String toString() {
         return "FundDetailDO{" +
         "detailId = " + detailId +
-        ", payProcessId = " + payProcessId +
-        ", paymentId = " + paymentId +
+        ", orderId = " + orderId +
+        ", tradeId = " + tradeId +
         ", relationId = " + relationId +
         ", belongTo = " + belongTo +
         ", memberId = " + memberId +

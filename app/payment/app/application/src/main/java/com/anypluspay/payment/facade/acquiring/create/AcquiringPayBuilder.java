@@ -6,8 +6,8 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.PayChannelParamService;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
 import com.anypluspay.payment.types.IdType;
@@ -33,35 +33,35 @@ public class AcquiringPayBuilder extends PaymentBuilder {
     @Autowired
     private PayChannelParamService payChannelParamService;
 
-    public PayProcess buildPayProcess(AcquiringOrder acquiringOrder, AcquiringPayRequest request) {
-        PayProcess payProcess = new PayProcess();
-        payProcess.setPaymentId(acquiringOrder.getPaymentId());
-        payProcess.setProcessId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
-        payProcess.setAmount(acquiringOrder.getAmount());
-        payProcess.setMemberId(acquiringOrder.getPayerId());
-        payProcess.setStatus(PayProcessStatus.INIT);
-        fillFundDetails(acquiringOrder, payProcess, request);
-        return payProcess;
+    public PayOrder buildPayProcess(AcquiringOrder acquiringOrder, AcquiringPayRequest request) {
+        PayOrder payOrder = new PayOrder();
+        payOrder.setTradeId(acquiringOrder.getTradeId());
+        payOrder.setOrderId(idGeneratorService.genIdByRelateId(acquiringOrder.getTradeId(), PayOrderType.PAY.getIdType()));
+        payOrder.setAmount(acquiringOrder.getAmount());
+        payOrder.setMemberId(acquiringOrder.getPayerId());
+        payOrder.setStatus(PayProcessStatus.INIT);
+        fillFundDetails(acquiringOrder, payOrder, request);
+        return payOrder;
     }
 
     /**
      * 填充资金明细
      *
-     * @param payProcess
+     * @param payOrder
      * @param request
      */
-    private void fillFundDetails(AcquiringOrder acquiringOrder, PayProcess payProcess, AcquiringPayRequest request) {
+    private void fillFundDetails(AcquiringOrder acquiringOrder, PayOrder payOrder, AcquiringPayRequest request) {
         request.getPayerFundDetail().forEach(fundDetailInfo -> {
-            payProcess.addPayerFundDetail(buildFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), fundDetailInfo, BelongTo.PAYER));
+            payOrder.addPayerFundDetail(buildFundDetail(payOrder.getTradeId(), payOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER));
         });
-        payProcess.addPayeeFundDetail(buildPayeeFundDetail(acquiringOrder, payProcess.getProcessId()));
+        payOrder.addPayeeFundDetail(buildPayeeFundDetail(acquiringOrder, payOrder.getOrderId()));
     }
 
     private FundDetail buildPayeeFundDetail(AcquiringOrder acquiringOrder, String payOrderId) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setPaymentId(acquiringOrder.getPaymentId());
-        fundDetail.setPayProcessId(payOrderId);
-        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(acquiringOrder.getPaymentId(), IdType.FUND_DETAIL_ID));
+        fundDetail.setTradeId(acquiringOrder.getTradeId());
+        fundDetail.setOrderId(payOrderId);
+        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(acquiringOrder.getTradeId(), IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(acquiringOrder.getAmount());
         fundDetail.setMemberId(acquiringOrder.getPayeeId());
         fundDetail.setAssetInfo(new BalanceAsset(acquiringOrder.getPayeeId(), acquiringOrder.getPayeeAccountNo()));
@@ -75,14 +75,14 @@ public class AcquiringPayBuilder extends PaymentBuilder {
         AcquiringPayResponse response = new AcquiringPayResponse();
         response.setSuccess(true);
         if (acquiringOrder != null) {
-            response.setPaymentId(acquiringOrder.getPaymentId());
+            response.setTradeId(acquiringOrder.getTradeId());
             response.setPartnerId(acquiringOrder.getPartnerId());
             response.setOutTradeNo(acquiringOrder.getOutTradeNo());
             response.setOrderStatus(acquiringOrder.getStatus().getCode());
         }
         if (payResult != null) {
             if (payResult.getPayStatus() == PayStatus.PROCESS && acquiringOrder != null) {
-                Extension payResponse = new Extension(payChannelParamService.get(acquiringOrder.getPayOrderId()));
+                Extension payResponse = new Extension(payChannelParamService.get(acquiringOrder.getOrderId()));
                 response.setIrd(payResponse.get(ChannelExtKey.INST_REDIRECTION_DATA.getCode()));
             }
             response.setResultCode(payResult.getResultCode());

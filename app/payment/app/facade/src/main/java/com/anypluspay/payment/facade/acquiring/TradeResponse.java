@@ -17,14 +17,14 @@ import lombok.Data;
 public class TradeResponse extends BaseResult {
 
     /**
-     * 支付单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
-     * 关联的支付业务单号
+     * 关联交易ID
      */
-    private String relationPaymentId;
+    private String relationTradeId;
 
     /**
      * 交易类型

@@ -11,9 +11,9 @@ import lombok.Data;
 public class DepositResponse extends BaseResult {
 
     /**
-     * 支付总单号
+     * 充值ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 状态

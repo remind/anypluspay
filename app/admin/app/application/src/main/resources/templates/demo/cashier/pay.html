@@ -72,8 +72,8 @@
     <!-- 商品信息 -->
     <div class="item-list">
         <div class="item">
-            <span>支付单号</span>
-            <span th:text="${order.paymentId}"></span>
+            <span>交易单号</span>
+            <span th:text="${order.tradeId}"></span>
         </div>
         <div class="item">
             <span>交易标题</span>
@@ -128,7 +128,7 @@
                 },
                 body: JSON.stringify({
                     payMethods: selectedPayMethods,
-                    paymentId: '[[${order.paymentId}]]'
+                    tradeId: '[[${order.tradeId}]]'
                 })
             });
 

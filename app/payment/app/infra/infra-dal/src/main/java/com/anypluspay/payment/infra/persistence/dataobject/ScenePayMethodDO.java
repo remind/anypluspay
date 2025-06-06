@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-28
+ * @since 2025-06-06
  */
 @TableName("tm_scene_pay_method")
 public class ScenePayMethodDO implements Serializable {

@@ -25,14 +25,14 @@ public class FluxProcess {
     private String preProcessId;
 
     /**
-     * 支付总单ID
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
-     * 支付指令ID
+     * 支付ID
      */
-    private String payProcessId;
+    private String orderId;
 
     /**
      * 资产交换订单ID

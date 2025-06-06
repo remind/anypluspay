@@ -1,6 +1,6 @@
 package com.anypluspay.admin.payment.convertor;
 
-import com.anypluspay.admin.payment.response.DepositOrderResponse;
+import com.anypluspay.admin.payment.response.trade.DepositOrderResponse;
 import com.anypluspay.component.dal.PageConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.DepositOrderDO;
 import org.mapstruct.Mapper;

@@ -2,8 +2,8 @@ package com.anypluspay.admin.payment.controller;
 
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.admin.payment.convertor.DepositOrderConvertor;
-import com.anypluspay.admin.payment.query.DepositOrderQuery;
-import com.anypluspay.admin.payment.response.DepositOrderResponse;
+import com.anypluspay.admin.payment.query.trade.DepositOrderQuery;
+import com.anypluspay.admin.payment.response.trade.DepositOrderResponse;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.anypluspay.payment.infra.persistence.dataobject.DepositOrderDO;
@@ -41,8 +41,8 @@ public class DepositOrderController extends AbstractController {
     @GetMapping("/list")
     public ResponseResult<PageResult<DepositOrderResponse>> list(DepositOrderQuery query) {
         LambdaQueryWrapper<DepositOrderDO> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(query.getPaymentId())) {
-            queryWrapper.eq(DepositOrderDO::getPaymentId, query.getPaymentId());
+        if (StringUtils.isNotBlank(query.getTradeId())) {
+            queryWrapper.eq(DepositOrderDO::getTradeId, query.getTradeId());
         }
         queryWrapper.orderByDesc(DepositOrderDO::getGmtCreate);
         IPage<DepositOrderDO> page = getIPage(query);

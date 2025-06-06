@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring;
 
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
 import com.anypluspay.payment.types.biz.TradeType;

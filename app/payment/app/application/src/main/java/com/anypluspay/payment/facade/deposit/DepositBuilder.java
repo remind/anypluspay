@@ -1,8 +1,8 @@
 package com.anypluspay.payment.facade.deposit;
 
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.trade.deposit.DepositOrder;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.types.biz.DepositOrderStatus;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
@@ -26,8 +26,8 @@ public class DepositBuilder extends PaymentBuilder {
 
     public DepositOrder buildDepositOrder(DepositRequest request) {
         DepositOrder depositOrder = new DepositOrder();
-        depositOrder.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
-        depositOrder.setPayProcessId(idGeneratorService.genIdByRelateId(depositOrder.getPaymentId(), PayOrderType.PAY.getIdType()));
+        depositOrder.setTradeId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
+        depositOrder.setOrderId(idGeneratorService.genIdByRelateId(depositOrder.getTradeId(), PayOrderType.PAY.getIdType()));
         depositOrder.setAmount(request.getAmount());
         depositOrder.setMemberId(request.getMemberId());
         depositOrder.setAccountNo(request.getAccountNo());
@@ -36,22 +36,22 @@ public class DepositBuilder extends PaymentBuilder {
         return depositOrder;
     }
 
-    public PayProcess buildPayProcess(DepositOrder depositOrder, List<FundDetailInfo> payerFundDetails) {
-        PayProcess payProcess = new PayProcess();
-        payProcess.setPaymentId(depositOrder.getPaymentId());
-        payProcess.setProcessId(depositOrder.getPayProcessId());
-        payProcess.setAmount(depositOrder.getAmount());
-        payProcess.setMemberId(depositOrder.getMemberId());
-        payProcess.setStatus(PayProcessStatus.INIT);
-        payerFundDetails.forEach(fundDetailInfo -> payProcess.addPayerFundDetail(buildFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), fundDetailInfo, BelongTo.PAYER)));
-        payProcess.addPayeeFundDetail(buildPayeeFundDetail(payProcess.getPaymentId(), payProcess.getProcessId(), depositOrder));
-        return payProcess;
+    public PayOrder buildPayProcess(DepositOrder depositOrder, List<FundDetailInfo> payerFundDetails) {
+        PayOrder payOrder = new PayOrder();
+        payOrder.setTradeId(depositOrder.getTradeId());
+        payOrder.setOrderId(depositOrder.getOrderId());
+        payOrder.setAmount(depositOrder.getAmount());
+        payOrder.setMemberId(depositOrder.getMemberId());
+        payOrder.setStatus(PayProcessStatus.INIT);
+        payerFundDetails.forEach(fundDetailInfo -> payOrder.addPayerFundDetail(buildFundDetail(payOrder.getTradeId(), payOrder.getOrderId(), fundDetailInfo, BelongTo.PAYER)));
+        payOrder.addPayeeFundDetail(buildPayeeFundDetail(payOrder.getTradeId(), payOrder.getOrderId(), depositOrder));
+        return payOrder;
     }
 
     protected FundDetail buildPayeeFundDetail(String paymentId, String orderId, DepositOrder depositOrder) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setPaymentId(paymentId);
-        fundDetail.setPayProcessId(orderId);
+        fundDetail.setTradeId(paymentId);
+        fundDetail.setOrderId(orderId);
         fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(depositOrder.getAmount());
         fundDetail.setMemberId(depositOrder.getMemberId());

@@ -6,8 +6,8 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.response.GlobalResultCode;
 import com.anypluspay.payment.application.AbstractPaymentService;
 import com.anypluspay.payment.domain.PayChannelParamService;
-import com.anypluspay.payment.domain.biz.deposit.DepositOrder;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
+import com.anypluspay.payment.domain.trade.deposit.DepositOrder;
 import com.anypluspay.payment.domain.repository.DepositOrderRepository;
 import com.anypluspay.payment.types.PayResult;
 import com.anypluspay.payment.types.PayStatus;
@@ -41,14 +41,14 @@ public class DepositFacadeImpl extends AbstractPaymentService implements Deposit
         DepositResponse response;
         try {
             DepositOrder depositOrder = depositBuilder.buildDepositOrder(request);
-            PayProcess payProcess = depositBuilder.buildPayProcess(depositOrder, request.getPayerFundDetail());
+            PayOrder payOrder = depositBuilder.buildPayProcess(depositOrder, request.getPayerFundDetail());
             transactionTemplate.executeWithoutResult(status -> {
                 depositOrderRepository.store(depositOrder);
-                payProcessRepository.store(payProcess);
+                payOrderRepository.store(payOrder);
             });
-            PayResult result = payProcessService.process(payProcess);
-            paymentId = depositOrder.getPaymentId();
-            response = processResult(depositOrder.getPaymentId(), result);
+            PayResult result = payOrderService.process(payOrder);
+            paymentId = depositOrder.getTradeId();
+            response = processResult(depositOrder.getTradeId(), result);
         } catch (TransactionException e) {
             log.error("充值异常", e);
             response = buildExceptionResponse(paymentId, e);
@@ -61,13 +61,13 @@ public class DepositFacadeImpl extends AbstractPaymentService implements Deposit
         DepositResponse response = new DepositResponse();
         response.setSuccess(true);
         if (depositOrder != null) {
-            response.setPaymentId(paymentId);
+            response.setTradeId(paymentId);
             response.setOrderStatus(depositOrder.getStatus().getCode());
         }
 
         if (result != null) {
             if (result.getPayStatus() == PayStatus.PROCESS && depositOrder != null) {
-                Extension payResponse = new Extension(payChannelParamService.get(depositOrder.getPayProcessId()));
+                Extension payResponse = new Extension(payChannelParamService.get(depositOrder.getOrderId()));
                 response.setIrd(payResponse.get(ChannelExtKey.INST_REDIRECTION_DATA.getCode()));
             }
             response.setResultCode(result.getResultCode());

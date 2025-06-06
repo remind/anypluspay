@@ -51,8 +51,8 @@ public class FluxOrderService {
         FluxChain fluxChain = fluxOrder.getFluxChain();
         reverseInstruct.setFluxProcessId(idGeneratorService.genIdByRelateId(fluxProcess.getFluxOrderId(), IdType.FLUX_INSTRUCT_ID));
         reverseInstruct.setFluxOrderId(fluxProcess.getFluxOrderId());
-        reverseInstruct.setPayProcessId(fluxProcess.getPayProcessId());
-        reverseInstruct.setPaymentId(fluxProcess.getPaymentId());
+        reverseInstruct.setOrderId(fluxProcess.getOrderId());
+        reverseInstruct.setTradeId(fluxProcess.getTradeId());
         reverseInstruct.setType(fluxProcess.getType());
         reverseInstruct.setDirection(FluxProcessDirection.REVOKE);
         reverseInstruct.setAmount(fluxProcess.getAmount());

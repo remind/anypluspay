@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 public class PayRequest {
     /**
-     * 支付总单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 支付方式

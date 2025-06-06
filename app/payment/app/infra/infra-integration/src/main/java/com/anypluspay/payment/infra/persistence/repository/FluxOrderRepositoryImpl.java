@@ -65,9 +65,9 @@ public class FluxOrderRepositoryImpl implements FluxOrderRepository {
     }
 
     @Override
-    public FluxOrder loadByPayOrderId(String payProcessId) {
+    public FluxOrder loadByPayOrderId(String orderId) {
         LambdaQueryWrapper<FluxOrderDO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(FluxOrderDO::getPayProcessId, payProcessId);
+        wrapper.eq(FluxOrderDO::getOrderId, orderId);
         return buildFluxOrder(dalMapper.selectOne(wrapper));
     }
 

@@ -2,9 +2,7 @@ package com.anypluspay.admin.payment.convertor;
 
 import com.anypluspay.admin.basis.convertor.SimpleCrudConvertor;
 import com.anypluspay.admin.payment.request.PayMethodRequest;
-import com.anypluspay.admin.payment.response.DepositOrderResponse;
 import com.anypluspay.admin.payment.response.PayMethodResponse;
-import com.anypluspay.payment.infra.persistence.dataobject.DepositOrderDO;
 import com.anypluspay.payment.infra.persistence.dataobject.PayMethodDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

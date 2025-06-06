@@ -128,8 +128,8 @@ public class FluxService {
     private void addNewRelateInstruction(FluxOrder fluxOrder, FluxProcess fluxProcess, List<FluxProcess> newFluxProcesses) {
         if (!CollectionUtils.isEmpty(newFluxProcesses)) {
             for (FluxProcess newFluxProcess : newFluxProcesses) {
-                newFluxProcess.setPaymentId(fluxProcess.getPaymentId());
-                newFluxProcess.setPayProcessId(fluxProcess.getPayProcessId());
+                newFluxProcess.setTradeId(fluxProcess.getTradeId());
+                newFluxProcess.setOrderId(fluxProcess.getOrderId());
                 newFluxProcess.setFluxOrderId(fluxOrder.getFluxOrderId());
                 newFluxProcess.setFluxProcessId(idGeneratorService.genIdByRelateId(fluxProcess.getFluxProcessId(), IdType.FLUX_INSTRUCT_ID));
                 newFluxProcess.setStatus(FluxProcessStatus.INIT);

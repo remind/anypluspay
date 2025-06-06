@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.acquiring;
 
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayRequest;
 import com.anypluspay.payment.facade.acquiring.pay.AcquiringPayResponse;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -23,10 +23,10 @@ public class AcquiringPayTest extends AcquiringBaseTest {
     public void testBalancePaySuccess() {
         AcquiringOrder acquiringOrder = create();
         AcquiringPayRequest request = new AcquiringPayRequest();
-        request.setPaymentId(acquiringOrder.getPaymentId());
+        request.setTradeId(acquiringOrder.getTradeId());
         request.setPayerFundDetail(List.of(buildBalanceFundDetail(PAYER_MEMBER_ID, PAYER_ACCOUNT_NO, acquiringOrder.getAmount().getAmount().doubleValue())));
         AcquiringPayResponse response = tradeFacade.pay(request);
         System.out.println(ToStringBuilder.reflectionToString(response));
-        acquiringIntegrityCheck.checkAcquiringOrder(acquiringOrder.getPaymentId());
+        acquiringIntegrityCheck.checkAcquiringOrder(acquiringOrder.getTradeId());
     }
 }

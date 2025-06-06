@@ -3,7 +3,7 @@ package com.anypluspay.payment.facade.acquiring.refund;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.application.PaymentBuilder;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
@@ -35,8 +35,8 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
         Money refundAmount = new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency());
         checkRefundAmount(origAcquiringOrder, refundAmount);
         AcquiringOrder acquiringOrder = new AcquiringOrder();
-        acquiringOrder.setPaymentId(idGeneratorService.genPaymentId(origAcquiringOrder.getPaymentId(), IdType.TRADE_ORDER_ID));
-        acquiringOrder.setRelationPaymentId(origAcquiringOrder.getPaymentId());
+        acquiringOrder.setTradeId(idGeneratorService.genPaymentId(origAcquiringOrder.getTradeId(), IdType.TRADE_ORDER_ID));
+        acquiringOrder.setRelationTradeId(origAcquiringOrder.getTradeId());
         acquiringOrder.setPartnerId(origAcquiringOrder.getPartnerId());
         acquiringOrder.setOutTradeNo(request.getOutTradeNo());
         acquiringOrder.setTradeType(TradeType.REFUND_ACQUIRING);
@@ -50,7 +50,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
     }
 
     private void checkRefundAmount(AcquiringOrder origAcquiringOrder, Money amount) {
-        List<AcquiringOrder> allRelationOrders = acquiringOrderRepository.loadByRelationPaymentId(origAcquiringOrder.getPaymentId());
+        List<AcquiringOrder> allRelationOrders = acquiringOrderRepository.loadByRelationPaymentId(origAcquiringOrder.getTradeId());
         if (!CollectionUtils.isEmpty(allRelationOrders)) {
             Money refundAmount = allRelationOrders.stream()
                     .filter(r -> r.getStatus().equals(AcquiringOrderStatus.SUCCESS) && r.getTradeType() == TradeType.REFUND_ACQUIRING)
@@ -69,7 +69,7 @@ public class AcquiringRefundBuilder extends PaymentBuilder {
     public AcquiringRefundResponse buildResponse(AcquiringOrder acquiringOrder) {
         AcquiringRefundResponse response = new AcquiringRefundResponse();
         response.setSuccess(true);
-        response.setPaymentId(acquiringOrder.getPaymentId());
+        response.setPaymentId(acquiringOrder.getTradeId());
         response.setPartnerId(acquiringOrder.getPartnerId());
         response.setOutTradeNo(acquiringOrder.getOutTradeNo());
         response.setOrderStatus(acquiringOrder.getStatus().getCode());

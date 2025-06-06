@@ -1,6 +1,6 @@
 package com.anypluspay.admin.payment.convertor;
 
-import com.anypluspay.admin.payment.response.AcquiringOrderResponse;
+import com.anypluspay.admin.payment.response.trade.AcquiringOrderResponse;
 import com.anypluspay.component.dal.PageConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import org.mapstruct.Mapper;

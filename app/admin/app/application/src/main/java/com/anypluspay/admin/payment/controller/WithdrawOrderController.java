@@ -2,8 +2,8 @@ package com.anypluspay.admin.payment.controller;
 
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.admin.payment.convertor.WithdrawOrderConvertor;
-import com.anypluspay.admin.payment.query.WithdrawOrderQuery;
-import com.anypluspay.admin.payment.response.WithdrawOrderResponse;
+import com.anypluspay.admin.payment.query.trade.WithdrawOrderQuery;
+import com.anypluspay.admin.payment.response.trade.WithdrawOrderResponse;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
 import com.anypluspay.payment.infra.persistence.dataobject.WithdrawOrderDO;
@@ -42,8 +42,8 @@ public class WithdrawOrderController extends AbstractController {
     @GetMapping("/list")
     public ResponseResult<PageResult<WithdrawOrderResponse>> list(WithdrawOrderQuery query) {
         LambdaQueryWrapper<WithdrawOrderDO> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(query.getPaymentId())) {
-            queryWrapper.eq(WithdrawOrderDO::getPaymentId, query.getPaymentId());
+        if (StringUtils.isNotBlank(query.getTradeId())) {
+            queryWrapper.eq(WithdrawOrderDO::getTradeId, query.getTradeId());
         }
         queryWrapper.orderByDesc(WithdrawOrderDO::getGmtCreate);
         IPage<WithdrawOrderDO> page = getIPage(query);

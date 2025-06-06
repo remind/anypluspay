@@ -9,8 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 /**
  * @author wxj
  * 2025/4/2
@@ -28,12 +26,12 @@ public class PayCashierController {
     /**
      * 收银台
      *
-     * @param paymentId
+     * @param tradeId
      * @return
      */
     @GetMapping
-    public String cashier(@RequestParam String paymentId, Model model) {
-        TradeResponse tradeResponse = acquiringFacade.queryByPaymentId(paymentId);
+    public String cashier(@RequestParam String tradeId, Model model) {
+        TradeResponse tradeResponse = acquiringFacade.queryByTradeId(tradeId);
         model.addAttribute("order", tradeResponse);
         model.addAttribute("payMethods", cashierService.buildPayMethods(CashierType.ACQUIRING, tradeResponse.getPayerId()));
         return "demo/cashier/pay";

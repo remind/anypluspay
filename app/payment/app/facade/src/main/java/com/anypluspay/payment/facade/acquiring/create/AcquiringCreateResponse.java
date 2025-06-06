@@ -22,8 +22,8 @@ public class AcquiringCreateResponse extends BaseResult {
     private String outTradeNo;
 
     /**
-     * 支付单ID
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
 }

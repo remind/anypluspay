@@ -6,17 +6,13 @@ import com.anypluspay.payment.domain.asset.external.ExternalResultService;
 import com.anypluspay.payment.domain.flux.FluxProcess;
 import com.anypluspay.payment.domain.flux.FluxOrder;
 import com.anypluspay.payment.domain.flux.service.FluxEngineService;
-import com.anypluspay.payment.domain.process.PayProcess;
-import com.anypluspay.payment.domain.process.PayProcessService;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
-import com.anypluspay.payment.domain.process.refund.RefundProcessService;
+import com.anypluspay.payment.domain.pay.pay.PayOrderService;
+import com.anypluspay.payment.domain.pay.refund.RefundOrderService;
 import com.anypluspay.payment.domain.repository.FluxOrderRepository;
-import com.anypluspay.payment.domain.repository.PayProcessRepository;
-import com.anypluspay.payment.domain.repository.RefundProcessRepository;
+import com.anypluspay.payment.domain.repository.PayOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayResult;
-import com.anypluspay.payment.types.PayStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,16 +35,16 @@ public class ExternalFluxNotifyService {
     private FluxEngineService fluxEngineService;
 
     @Autowired
-    private PayProcessService payProcessService;
+    private PayOrderService payOrderService;
 
     @Autowired
-    private PayProcessRepository payProcessRepository;
+    private PayOrderRepository payOrderRepository;
 
     @Autowired
-    private RefundProcessService refundProcessService;
+    private RefundOrderService refundOrderService;
 
     @Autowired
-    private RefundProcessRepository refundProcessRepository;
+    private RefundOrderRepository refundOrderRepository;
 
     @Autowired
     private IdGeneratorService idGeneratorService;

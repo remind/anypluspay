@@ -63,9 +63,9 @@ public class CashierService {
      */
     public CashierPayResult acquiringPay(PayRequest request) {
         List<PayMethod> payMethods = convertPayMethods(CashierType.ACQUIRING, request.getPayMethods());
-        TradeResponse tradeResponse = acquiringFacade.queryByPaymentId(request.getPaymentId());
+        TradeResponse tradeResponse = acquiringFacade.queryByTradeId(request.getTradeId());
         AcquiringPayRequest acquiringPayRequest = new AcquiringPayRequest();
-        acquiringPayRequest.setPaymentId(tradeResponse.getPaymentId());
+        acquiringPayRequest.setTradeId(tradeResponse.getTradeId());
         acquiringPayRequest.setPayerFundDetail(buildPayerFundDetail(tradeResponse.getPayerId(), tradeResponse.getAmount(), payMethods));
         AcquiringPayResponse response = acquiringFacade.pay(acquiringPayRequest);
         return getCashierPayResult(response);
@@ -76,7 +76,7 @@ public class CashierService {
             throw new BizException(response.getResultCode(), response.getResultMsg());
         }
         CashierPayResult cashierPayResult = new CashierPayResult();
-        cashierPayResult.setPaymentId(response.getPaymentId());
+        cashierPayResult.setPaymentId(response.getTradeId());
         cashierPayResult.setResultCode(response.getResultCode());
         cashierPayResult.setResultMsg(response.getResultMsg());
         cashierPayResult.setStatus(response.getOrderStatus());
@@ -107,7 +107,7 @@ public class CashierService {
             throw new BizException(response.getResultCode(), response.getResultMsg());
         }
         CashierPayResult cashierPayResult = new CashierPayResult();
-        cashierPayResult.setPaymentId(response.getPaymentId());
+        cashierPayResult.setPaymentId(response.getTradeId());
         cashierPayResult.setResultCode(response.getResultCode());
         cashierPayResult.setResultMsg(response.getResultMsg());
         cashierPayResult.setStatus(response.getOrderStatus());

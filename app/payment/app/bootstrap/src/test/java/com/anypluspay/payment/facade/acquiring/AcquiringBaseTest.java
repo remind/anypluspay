@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring;
 
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.facade.BaseMockPaymentTest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
@@ -45,6 +45,6 @@ public class AcquiringBaseTest extends BaseMockPaymentTest {
         Assert.assertNotNull(response.getPartnerId());
         Assert.assertEquals(request.getPartnerId(), response.getPartnerId());
         Assert.assertEquals(request.getOutTradeNo(), response.getOutTradeNo());
-        return acquiringOrderRepository.load(response.getPaymentId());
+        return acquiringOrderRepository.load(response.getTradeId());
     }
 }

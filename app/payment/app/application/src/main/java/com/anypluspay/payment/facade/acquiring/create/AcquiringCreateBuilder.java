@@ -6,7 +6,7 @@ import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.PaymentBuilder;
 import com.anypluspay.payment.domain.PaymentConstants;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.biz.TradeType;
@@ -31,7 +31,7 @@ public class AcquiringCreateBuilder extends PaymentBuilder {
      */
     public AcquiringOrder buildTradeOrder(AcquiringCreateRequest request) {
         AcquiringOrder acquiringOrder = new AcquiringOrder();
-        acquiringOrder.setPaymentId(idGeneratorService.genPaymentId(request.getPartnerId(), IdType.TRADE_ORDER_ID));
+        acquiringOrder.setTradeId(idGeneratorService.genPaymentId(request.getPartnerId(), IdType.TRADE_ORDER_ID));
         acquiringOrder.setPartnerId(request.getPartnerId());
         acquiringOrder.setOutTradeNo(request.getOutTradeNo());
         acquiringOrder.setTradeType(EnumUtil.getByCode(TradeType.class, request.getTradeType()));
@@ -71,7 +71,7 @@ public class AcquiringCreateBuilder extends PaymentBuilder {
     public AcquiringCreateResponse buildResponse(AcquiringOrder acquiringOrder) {
         AcquiringCreateResponse response = new AcquiringCreateResponse();
         response.setSuccess(true);
-        response.setPaymentId(acquiringOrder.getPaymentId());
+        response.setTradeId(acquiringOrder.getTradeId());
         response.setPartnerId(acquiringOrder.getPartnerId());
         response.setOutTradeNo(acquiringOrder.getOutTradeNo());
         return response;

@@ -1,6 +1,6 @@
 package com.anypluspay.payment.infra.persistence.repository.process;
 
-import com.anypluspay.payment.domain.process.BasePayProcess;
+import com.anypluspay.payment.domain.pay.BasePayOrder;
 import com.anypluspay.payment.infra.persistence.convertor.FundDetailDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.FundDetailDO;
 import com.anypluspay.payment.infra.persistence.mapper.FundDetailMapper;
@@ -24,9 +24,9 @@ public abstract class AbstractPayOrderRepository {
     @Autowired
     private FundDetailDalConvertor fundDetailDalConvertor;
 
-    protected void fillFundDetails(BasePayProcess payOrder) {
+    protected void fillFundDetails(BasePayOrder payOrder) {
         if (payOrder != null) {
-            List<FundDetail> fundDetails = loadFundDetailByOrderId(payOrder.getProcessId());
+            List<FundDetail> fundDetails = loadFundDetailByOrderId(payOrder.getOrderId());
             payOrder.setPayeeDetails(fundDetails.stream().filter(fundDetail -> fundDetail.getBelongTo() == BelongTo.PAYEE).toList());
             payOrder.setPayerDetails(fundDetails.stream().filter(fundDetail -> fundDetail.getBelongTo() == BelongTo.PAYER).toList());
         }
@@ -48,7 +48,7 @@ public abstract class AbstractPayOrderRepository {
         });
     }
 
-    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String payProcessId) {
-        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getPayProcessId, payProcessId);
+    private Wrapper<FundDetailDO> buildOrderIdQueryWrapper(String orderId) {
+        return new LambdaQueryWrapper<FundDetailDO>().eq(FundDetailDO::getOrderId, orderId);
     }
 }

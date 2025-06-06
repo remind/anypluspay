@@ -5,11 +5,11 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
 
 /**
  * <p>
- * 支付指令资金明细 Mapper 接口
+ * 支付单资金明细 Mapper 接口
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-06-06
  */
 public interface FundDetailMapper extends ExtBaseMapper<FundDetailDO> {
 

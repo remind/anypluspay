@@ -56,11 +56,11 @@ public interface AcquiringFacade {
     /**
      * 查询交易
      *
-     * @param paymentId
+     * @param tradeId
      * @return
      */
-    @GetMapping(PREFIX + "/query-by-payment-id")
-    TradeResponse queryByPaymentId(@RequestParam @Length(min = 6, max = 32, message = "支付单号长度为6-32") String paymentId);
+    @GetMapping(PREFIX + "/query-by-trade-id")
+    TradeResponse queryByTradeId(@RequestParam @Length(min = 6, max = 32, message = "支付单号长度为6-32") String tradeId);
 
     /**
      * 查询交易

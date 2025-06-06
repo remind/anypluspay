@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring.query;
 
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.BaseResult;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.facade.acquiring.TradeResponse;
 
 /**
@@ -14,8 +14,8 @@ public class TradeResponseBuilder {
     public static TradeResponse build(AcquiringOrder order) {
         TradeResponse response = new TradeResponse();
         response.setSuccess(true);
-        response.setPaymentId(order.getPaymentId());
-        response.setRelationPaymentId(order.getRelationPaymentId());
+        response.setTradeId(order.getTradeId());
+        response.setRelationTradeId(order.getRelationTradeId());
         response.setTradeType(order.getTradeType().name());
         response.setOutTradeNo(order.getOutTradeNo());
         response.setPartnerId(order.getPartnerId());

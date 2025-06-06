@@ -1,7 +1,7 @@
 package com.anypluspay.payment.infra.persistence.repository;
 
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.infra.persistence.convertor.AcquiringOrderDalConvertor;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import com.anypluspay.payment.infra.persistence.mapper.AcquiringOrderMapper;
@@ -43,7 +43,7 @@ public class AcquiringOrderRepositoryImpl implements AcquiringOrderRepository {
     @Override
     public List<AcquiringOrder> loadByRelationPaymentId(String paymentId) {
         LambdaQueryWrapper<AcquiringOrderDO> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(AcquiringOrderDO::getRelationPaymentId, paymentId);
+        queryWrapper.eq(AcquiringOrderDO::getRelationTradeId, paymentId);
         return dalConvertor.toEntity(dalMapper.selectList(queryWrapper));
     }
 

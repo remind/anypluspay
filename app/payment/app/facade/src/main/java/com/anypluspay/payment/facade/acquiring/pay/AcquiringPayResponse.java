@@ -12,9 +12,9 @@ import lombok.Data;
 public class AcquiringPayResponse extends BaseResult {
 
     /**
-     * 支付单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 合作方ID

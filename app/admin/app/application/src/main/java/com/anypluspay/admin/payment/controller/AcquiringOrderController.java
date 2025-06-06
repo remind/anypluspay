@@ -1,12 +1,10 @@
 package com.anypluspay.admin.payment.controller;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.admin.core.controller.AbstractController;
 import com.anypluspay.admin.payment.convertor.AcquiringOrderConvertor;
-import com.anypluspay.admin.payment.query.AcquiringOrderQuery;
+import com.anypluspay.admin.payment.query.trade.AcquiringOrderQuery;
 import com.anypluspay.admin.payment.request.RefundRequest;
-import com.anypluspay.admin.payment.response.AcquiringOrderResponse;
-import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.admin.payment.response.trade.AcquiringOrderResponse;
 import com.anypluspay.commons.lang.utils.StringUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
@@ -52,11 +50,11 @@ public class AcquiringOrderController extends AbstractController {
     @GetMapping("/list")
     public ResponseResult<PageResult<AcquiringOrderResponse>> list(AcquiringOrderQuery query) {
         LambdaQueryWrapper<AcquiringOrderDO> queryWrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(query.getPaymentId())) {
-            queryWrapper.eq(AcquiringOrderDO::getPaymentId, query.getPaymentId());
+        if (StringUtils.isNotBlank(query.getTradeId())) {
+            queryWrapper.eq(AcquiringOrderDO::getTradeId, query.getTradeId());
         }
-        if (StringUtils.isNotBlank(query.getRelationPaymentId())) {
-            queryWrapper.eq(AcquiringOrderDO::getRelationPaymentId, query.getRelationPaymentId());
+        if (StringUtils.isNotBlank(query.getRelationTradeId())) {
+            queryWrapper.eq(AcquiringOrderDO::getRelationTradeId, query.getRelationTradeId());
         }
         queryWrapper.orderByDesc(AcquiringOrderDO::getGmtCreate);
         IPage<AcquiringOrderDO> page = getIPage(query);
@@ -71,10 +69,10 @@ public class AcquiringOrderController extends AbstractController {
      */
     @PostMapping("/refund")
     public ResponseResult<String> refund(@RequestBody RefundRequest request) {
-        TradeResponse tradeResponse = acquiringFacade.queryByPaymentId(request.getPaymentId());
+        TradeResponse tradeResponse = acquiringFacade.queryByTradeId(request.getPaymentId());
         if (tradeResponse.getStatus().equals(AcquiringOrderStatus.SUCCESS.getCode())) {
             AcquiringRefundRequest acquiringRefundRequest = new AcquiringRefundRequest();
-            acquiringRefundRequest.setOrigPaymentId(tradeResponse.getPaymentId());
+            acquiringRefundRequest.setOrigPaymentId(tradeResponse.getTradeId());
             acquiringRefundRequest.setOutTradeNo(StringUtil.randomId());
             acquiringRefundRequest.setAmount(request.getAmount());
             AcquiringRefundResponse acquiringRefundResponse = acquiringFacade.refund(acquiringRefundRequest);

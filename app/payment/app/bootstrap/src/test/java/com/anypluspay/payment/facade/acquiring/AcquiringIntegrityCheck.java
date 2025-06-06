@@ -1,13 +1,13 @@
 package com.anypluspay.payment.facade.acquiring;
 
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
-import com.anypluspay.payment.domain.process.PayProcess;
+import com.anypluspay.payment.domain.pay.pay.PayOrder;
+import com.anypluspay.payment.domain.pay.refund.RefundOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.pay.RefundOrderStatus;
-import com.anypluspay.payment.domain.process.refund.RefundProcess;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
-import com.anypluspay.payment.domain.repository.PayProcessRepository;
-import com.anypluspay.payment.domain.repository.RefundProcessRepository;
+import com.anypluspay.payment.domain.repository.PayOrderRepository;
+import com.anypluspay.payment.domain.repository.RefundOrderRepository;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
@@ -30,56 +30,56 @@ public class AcquiringIntegrityCheck {
     private AcquiringOrderRepository acquiringOrderRepository;
 
     @Autowired
-    protected PayProcessRepository payProcessRepository;
+    protected PayOrderRepository payOrderRepository;
 
     @Autowired
-    protected RefundProcessRepository refundProcessRepository;
+    protected RefundOrderRepository refundOrderRepository;
 
     public void checkAcquiringOrder(String paymentId) {
         AcquiringOrder acquiringOrder = acquiringOrderRepository.load(paymentId);
         Assert.assertNotNull(acquiringOrder);
-        Assert.assertNotNull(acquiringOrder.getPaymentId());
+        Assert.assertNotNull(acquiringOrder.getTradeId());
         Assert.assertNotNull(acquiringOrder.getPartnerId());
         Assert.assertNotNull(acquiringOrder.getOutTradeNo());
 
-        List<PayProcess> payProcesses = payProcessRepository.loadByPaymentId(paymentId);
-        Assert.assertNotNull(payProcesses);
-        Assert.assertEquals(1, payProcesses.size());
-        checkPayProcess(paymentId, payProcesses.get(0));
+        List<PayOrder> payOrders = payOrderRepository.loadByTradeId(paymentId);
+        Assert.assertNotNull(payOrders);
+        Assert.assertEquals(1, payOrders.size());
+        checkPayProcess(paymentId, payOrders.get(0));
     }
 
-    public void checkPayProcess(String paymentId, PayProcess generalPayOrder) {
+    public void checkPayProcess(String paymentId, PayOrder generalPayOrder) {
         Assert.assertNotNull(generalPayOrder);
-        Assert.assertNotNull(generalPayOrder.getPaymentId());
-        Assert.assertNotNull(generalPayOrder.getProcessId());
+        Assert.assertNotNull(generalPayOrder.getTradeId());
+        Assert.assertNotNull(generalPayOrder.getOrderId());
         Assert.assertNotNull(generalPayOrder.getStatus());
         Assert.assertNotNull(generalPayOrder.getAmount());
         Assert.assertNotNull(generalPayOrder.getMemberId());
         Assert.assertNotNull(generalPayOrder.getGmtCreate());
         Assert.assertNotNull(generalPayOrder.getGmtModified());
 
-        Assert.assertEquals(paymentId, generalPayOrder.getPaymentId());
-        checkFundDetail(generalPayOrder.getPaymentId(), generalPayOrder.getProcessId(), generalPayOrder.getAmount(), generalPayOrder.getPayerDetails(), generalPayOrder.getPayeeDetails());
+        Assert.assertEquals(paymentId, generalPayOrder.getTradeId());
+        checkFundDetail(generalPayOrder.getTradeId(), generalPayOrder.getOrderId(), generalPayOrder.getAmount(), generalPayOrder.getPayerDetails(), generalPayOrder.getPayeeDetails());
         checkRefundProcess(generalPayOrder);
     }
 
-    public void checkRefundProcess(PayProcess payProcess) {
-        List<RefundProcess> refundOrders = refundProcessRepository.loadByPayProcessId(payProcess.getProcessId());
+    public void checkRefundProcess(PayOrder payOrder) {
+        List<RefundOrder> refundOrders = refundOrderRepository.loadByOrigPayOrderId(payOrder.getOrderId());
         if (!CollectionUtils.isEmpty(refundOrders)) {
-            Assert.assertEquals(payProcess.getStatus(), PayProcessStatus.SUCCESS);
+            Assert.assertEquals(payOrder.getStatus(), PayProcessStatus.SUCCESS);
             refundOrders.forEach(refundOrder -> {
-                checkSingleRefundProcess(refundOrder.getPaymentId(), refundOrder.getProcessId(), refundOrder);
-                checkFundDetail(refundOrder.getPaymentId(), refundOrder.getProcessId(), refundOrder.getAmount(), refundOrder.getPayerDetails(), refundOrder.getPayeeDetails());
+                checkSingleRefundProcess(refundOrder.getTradeId(), refundOrder.getOrderId(), refundOrder);
+                checkFundDetail(refundOrder.getTradeId(), refundOrder.getOrderId(), refundOrder.getAmount(), refundOrder.getPayerDetails(), refundOrder.getPayeeDetails());
             });
-            Money refundMount = refundOrders.stream().filter(ro -> ro.getStatus() != RefundOrderStatus.FAIL).map(RefundProcess::getAmount).reduce(new Money(), Money::add);
-            Assert.assertFalse(refundMount.greaterThan(payProcess.getAmount()));
+            Money refundMount = refundOrders.stream().filter(ro -> ro.getStatus() != RefundOrderStatus.FAIL).map(RefundOrder::getAmount).reduce(new Money(), Money::add);
+            Assert.assertFalse(refundMount.greaterThan(payOrder.getAmount()));
         }
     }
 
-    public void checkSingleRefundProcess(String paymentId, String orderId, RefundProcess refundOrder) {
+    public void checkSingleRefundProcess(String paymentId, String orderId, RefundOrder refundOrder) {
         Assert.assertNotNull(refundOrder);
-        Assert.assertNotNull(refundOrder.getPaymentId());
-        Assert.assertNotNull(refundOrder.getProcessId());
+        Assert.assertNotNull(refundOrder.getTradeId());
+        Assert.assertNotNull(refundOrder.getOrderId());
         Assert.assertNotNull(refundOrder.getStatus());
         Assert.assertNotNull(refundOrder.getAmount());
         Assert.assertNotNull(refundOrder.getMemberId());
@@ -87,9 +87,9 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(refundOrder.getGmtCreate());
         Assert.assertNotNull(refundOrder.getGmtModified());
 
-        Assert.assertEquals(paymentId, refundOrder.getPaymentId());
-        Assert.assertEquals(orderId, refundOrder.getProcessId());
-        checkFundDetail(refundOrder.getPaymentId(), refundOrder.getProcessId(), refundOrder.getAmount(), refundOrder.getPayerDetails(), refundOrder.getPayeeDetails());
+        Assert.assertEquals(paymentId, refundOrder.getTradeId());
+        Assert.assertEquals(orderId, refundOrder.getOrderId());
+        checkFundDetail(refundOrder.getTradeId(), refundOrder.getOrderId(), refundOrder.getAmount(), refundOrder.getPayerDetails(), refundOrder.getPayeeDetails());
 
 
     }
@@ -120,8 +120,8 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(fundDetail);
         Assert.assertNotNull(fundDetail.getDetailId());
         Assert.assertNotNull(fundDetail.getMemberId());
-        Assert.assertNotNull(fundDetail.getPaymentId());
-        Assert.assertNotNull(fundDetail.getPayProcessId());
+        Assert.assertNotNull(fundDetail.getTradeId());
+        Assert.assertNotNull(fundDetail.getOrderId());
         Assert.assertNotNull(fundDetail.getAssetInfo());
         Assert.assertNotNull(fundDetail.getAmount());
         Assert.assertNotNull(fundDetail.getFundAction());
@@ -129,7 +129,7 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(fundDetail.getGmtCreate());
         Assert.assertNotNull(fundDetail.getGmtModified());
 
-        Assert.assertEquals(paymentId, fundDetail.getPaymentId());
-        Assert.assertEquals(orderId, fundDetail.getPayProcessId());
+        Assert.assertEquals(paymentId, fundDetail.getTradeId());
+        Assert.assertEquals(orderId, fundDetail.getOrderId());
     }
 }

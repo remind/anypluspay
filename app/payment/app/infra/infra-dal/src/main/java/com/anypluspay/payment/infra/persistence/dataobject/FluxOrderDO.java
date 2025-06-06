@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-06-06
  */
-@TableName("t_flux_order")
+@TableName("tf_flux_order")
 public class FluxOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,14 +28,14 @@ public class FluxOrderDO implements Serializable {
     private String fluxOrderId;
 
     /**
-     * 支付指令ID
+     * 支付ID
      */
-    private String payProcessId;
+    private String orderId;
 
     /**
-     * 支付单ID
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 交换状态
@@ -82,20 +82,20 @@ public class FluxOrderDO implements Serializable {
         this.fluxOrderId = fluxOrderId;
     }
 
-    public String getPayProcessId() {
-        return payProcessId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setPayProcessId(String payProcessId) {
-        this.payProcessId = payProcessId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public String getPaymentId() {
-        return paymentId;
+    public String getTradeId() {
+        return tradeId;
     }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 
     public String getStatus() {
@@ -158,8 +158,8 @@ public class FluxOrderDO implements Serializable {
     public String toString() {
         return "FluxOrderDO{" +
         "fluxOrderId = " + fluxOrderId +
-        ", payProcessId = " + payProcessId +
-        ", paymentId = " + paymentId +
+        ", orderId = " + orderId +
+        ", tradeId = " + tradeId +
         ", status = " + status +
         ", relationId = " + relationId +
         ", payType = " + payType +

@@ -1,6 +1,6 @@
 package com.anypluspay.payment.domain.repository;
 
-import com.anypluspay.payment.domain.biz.acquiring.AcquiringOrder;
+import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 
 import java.util.List;
 

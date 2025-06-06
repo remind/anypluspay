@@ -15,23 +15,23 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-05-20
+ * @since 2025-06-06
  */
-@TableName("tb_withdraw_order")
+@TableName("tt_withdraw_order")
 public class WithdrawOrderDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 支付ID
+     * 提现ID
      */
-    @TableId(value = "payment_id", type = IdType.NONE)
-    private String paymentId;
+    @TableId(value = "trade_id", type = IdType.NONE)
+    private String tradeId;
 
     /**
-     * 支付指令ID
+     * 支付ID
      */
-    private String payProcessId;
+    private String orderId;
 
     /**
      * 会员ID
@@ -100,20 +100,20 @@ public class WithdrawOrderDO implements Serializable {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime gmtModified;
 
-    public String getPaymentId() {
-        return paymentId;
+    public String getTradeId() {
+        return tradeId;
     }
 
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
+    public void setTradeId(String tradeId) {
+        this.tradeId = tradeId;
     }
 
-    public String getPayProcessId() {
-        return payProcessId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setPayProcessId(String payProcessId) {
-        this.payProcessId = payProcessId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getMemberId() {
@@ -223,8 +223,8 @@ public class WithdrawOrderDO implements Serializable {
     @Override
     public String toString() {
         return "WithdrawOrderDO{" +
-        "paymentId = " + paymentId +
-        ", payProcessId = " + payProcessId +
+        "tradeId = " + tradeId +
+        ", orderId = " + orderId +
         ", memberId = " + memberId +
         ", accountNo = " + accountNo +
         ", amount = " + amount +
