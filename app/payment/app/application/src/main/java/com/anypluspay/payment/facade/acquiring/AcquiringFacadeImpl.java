@@ -3,7 +3,7 @@ package com.anypluspay.payment.facade.acquiring;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.application.AbstractPaymentService;
+import com.anypluspay.payment.application.AbstractTradeService;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.pay.refund.RefundApplyService;
@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class AcquiringFacadeImpl extends AbstractPaymentService implements AcquiringFacade {
+public class AcquiringFacadeImpl extends AbstractTradeService implements AcquiringFacade {
 
     @Autowired
     private AcquiringOrderRepository acquiringOrderRepository;

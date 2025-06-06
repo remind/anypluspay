@@ -4,7 +4,7 @@ import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.PaymentConstants;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
  */
 @Service
 @Slf4j
-public class AcquiringCreateBuilder extends PaymentBuilder {
+public class AcquiringCreateBuilder extends TradeBuilder {
 
     /**
      * 构造交易订单

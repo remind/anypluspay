@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.deposit;
 
-import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.trade.deposit.DepositOrder;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.types.biz.DepositOrderStatus;
@@ -22,7 +22,7 @@ import java.util.List;
  * 2025/5/14
  */
 @Component
-public class DepositBuilder extends PaymentBuilder {
+public class DepositBuilder extends TradeBuilder {
 
     public DepositOrder buildDepositOrder(DepositRequest request) {
         DepositOrder depositOrder = new DepositOrder();

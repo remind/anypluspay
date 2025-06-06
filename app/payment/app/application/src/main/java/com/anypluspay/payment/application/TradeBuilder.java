@@ -2,12 +2,9 @@ package com.anypluspay.payment.application;
 
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.domain.Payment;
 import com.anypluspay.payment.domain.service.IdGeneratorService;
-import com.anypluspay.payment.facade.request.BasePaymentRequest;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
-import com.anypluspay.payment.types.PaymentType;
 import com.anypluspay.payment.types.asset.AssetInfo;
 import com.anypluspay.payment.types.asset.BelongTo;
 import com.anypluspay.payment.types.funds.FundAction;
@@ -19,24 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author wxj
  * 2024/1/15
  */
-public abstract class PaymentBuilder {
+public abstract class TradeBuilder {
 
     @Autowired
     protected IdGeneratorService idGeneratorService;
-
-    /**
-     * 填充支付基础信息
-     * @param request
-     * @param paymentType
-     */
-    protected Payment buildPayment(BasePaymentRequest request, PaymentType paymentType) {
-        Payment payment = new Payment();
-        payment.setPaymentId(idGeneratorService.genPaymentId(request.getMemberId(), paymentType.getIdType()));
-        payment.setMemberId(request.getMemberId());
-        payment.setPaymentType(paymentType);
-        payment.setMerchantId(request.getMerchantId());
-        return payment;
-    }
 
     /**
      * 构造资金明细

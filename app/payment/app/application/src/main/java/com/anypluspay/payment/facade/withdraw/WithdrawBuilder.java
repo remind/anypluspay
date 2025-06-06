@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.withdraw;
 
-import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.trade.withdraw.WithdrawOrder;
 import com.anypluspay.payment.types.IdType;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * 2025/5/15
  */
 @Component
-public class WithdrawBuilder extends PaymentBuilder {
+public class WithdrawBuilder extends TradeBuilder {
 
     public WithdrawOrder buildWithdrawOrder(WithdrawRequest request) {
         WithdrawOrder withdrawOrder = new WithdrawOrder();

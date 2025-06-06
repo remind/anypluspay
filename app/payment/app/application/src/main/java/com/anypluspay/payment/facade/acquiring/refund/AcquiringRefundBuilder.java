@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring.refund;
 
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Money;
-import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.types.IdType;
@@ -20,7 +20,7 @@ import java.util.List;
  * 2025/5/19
  */
 @Service
-public class AcquiringRefundBuilder extends PaymentBuilder {
+public class AcquiringRefundBuilder extends TradeBuilder {
 
     @Autowired
     private AcquiringOrderRepository acquiringOrderRepository;

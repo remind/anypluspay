@@ -1,6 +1,6 @@
 package com.anypluspay.payment.facade.withdraw;
 
-import com.anypluspay.payment.application.AbstractPaymentService;
+import com.anypluspay.payment.application.AbstractTradeService;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.repository.WithdrawOrderRepository;
 import com.anypluspay.payment.domain.trade.withdraw.WithdrawOrder;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 2025/5/15
  */
 @RestController
-public class WithdrawFacadeImpl extends AbstractPaymentService implements WithdrawFacade {
+public class WithdrawFacadeImpl extends AbstractTradeService implements WithdrawFacade {
 
     @Autowired
     private WithdrawBuilder withdrawBuilder;

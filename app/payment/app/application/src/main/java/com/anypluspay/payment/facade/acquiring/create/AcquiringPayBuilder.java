@@ -4,7 +4,7 @@ import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.response.GlobalResultCode;
-import com.anypluspay.payment.application.PaymentBuilder;
+import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.PayChannelParamService;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  * 2025/5/18
  */
 @Component
-public class AcquiringPayBuilder extends PaymentBuilder {
+public class AcquiringPayBuilder extends TradeBuilder {
 
     @Autowired
     private PayChannelParamService payChannelParamService;

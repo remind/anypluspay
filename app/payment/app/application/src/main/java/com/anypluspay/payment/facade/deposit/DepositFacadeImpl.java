@@ -4,7 +4,7 @@ import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.commons.lang.BaseResult;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.response.GlobalResultCode;
-import com.anypluspay.payment.application.AbstractPaymentService;
+import com.anypluspay.payment.application.AbstractTradeService;
 import com.anypluspay.payment.domain.PayChannelParamService;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
 import com.anypluspay.payment.domain.trade.deposit.DepositOrder;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class DepositFacadeImpl extends AbstractPaymentService implements DepositFacade {
+public class DepositFacadeImpl extends AbstractTradeService implements DepositFacade {
 
     @Autowired
     private DepositBuilder depositBuilder;
