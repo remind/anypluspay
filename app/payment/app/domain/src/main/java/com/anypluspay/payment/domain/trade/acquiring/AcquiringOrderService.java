@@ -2,7 +2,7 @@ package com.anypluspay.payment.domain.trade.acquiring;
 
 import com.anypluspay.payment.domain.pay.refund.RefundApplyService;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import com.anypluspay.payment.types.pay.RefundType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

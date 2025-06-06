@@ -2,7 +2,7 @@ package com.anypluspay.payment.facade.acquiring.pay;
 
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

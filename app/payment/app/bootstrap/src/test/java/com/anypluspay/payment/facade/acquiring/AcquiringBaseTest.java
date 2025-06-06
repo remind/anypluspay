@@ -7,7 +7,7 @@ import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.facade.BaseMockPaymentTest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
-import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.trade.TradeType;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 

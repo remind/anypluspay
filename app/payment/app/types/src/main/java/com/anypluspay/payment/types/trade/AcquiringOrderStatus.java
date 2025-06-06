@@ -1,4 +1,4 @@
-package com.anypluspay.payment.types.biz;
+package com.anypluspay.payment.types.trade;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;

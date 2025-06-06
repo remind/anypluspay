@@ -1,26 +1,24 @@
 package com.anypluspay.payment.infra.persistence;
 
 import com.anypluspay.commons.lang.utils.EnumUtil;
-import com.anypluspay.payment.types.biz.DepositOrderStatus;
 import com.anypluspay.payment.domain.flux.FluxOrderStatus;
-import com.anypluspay.payment.domain.flux.FluxProcessStatus;
 import com.anypluspay.payment.domain.flux.FluxProcessDirection;
+import com.anypluspay.payment.domain.flux.FluxProcessStatus;
 import com.anypluspay.payment.domain.flux.FluxProcessType;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
-import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
 import com.anypluspay.payment.types.PayOrderType;
-import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.asset.AssetInfo;
+import com.anypluspay.payment.types.asset.BelongTo;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.DepositOrderStatus;
+import com.anypluspay.payment.types.trade.TradeType;
+import com.anypluspay.payment.types.trade.WithdrawOrderStatus;
+import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.member.MemberStatus;
 import com.anypluspay.payment.types.member.MemberType;
+import com.anypluspay.payment.types.pay.RefundOrderStatus;
 import com.anypluspay.payment.types.pay.RefundType;
 import com.anypluspay.payment.types.paymethod.PayModel;
 import com.anypluspay.payment.types.status.PayProcessStatus;
-import com.anypluspay.payment.types.pay.RefundOrderStatus;
-import com.anypluspay.payment.types.PaymentType;
-import com.anypluspay.payment.types.asset.AssetInfo;
-import com.anypluspay.payment.types.asset.BelongTo;
-import com.anypluspay.payment.types.funds.FundAction;
-import com.anypluspay.payment.types.funds.FundActionType;
 import org.mapstruct.Mapper;
 
 /**
@@ -30,20 +28,12 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface EnumsConvertor {
 
-    default PaymentType toPaymentType(String code) {
-        return EnumUtil.getByCode(PaymentType.class, code);
-    }
-
     default PayProcessStatus toPayOrderStatus(String code) {
         return EnumUtil.getByCode(PayProcessStatus.class, code);
     }
 
     default RefundOrderStatus toRefundOrderStatus(String code) {
         return EnumUtil.getByCode(RefundOrderStatus.class, code);
-    }
-
-    default FundActionType toFundActionType(String code) {
-        return EnumUtil.getByCode(FundActionType.class, code);
     }
 
     default BelongTo toBelongTo(String code) {

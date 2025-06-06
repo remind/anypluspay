@@ -8,7 +8,7 @@ import com.anypluspay.payment.types.PayOrderType;
 import com.anypluspay.payment.types.asset.BalanceAsset;
 import com.anypluspay.payment.types.asset.BankCardAsset;
 import com.anypluspay.payment.types.asset.BelongTo;
-import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
+import com.anypluspay.payment.types.trade.WithdrawOrderStatus;
 import com.anypluspay.payment.types.funds.FundAction;
 import com.anypluspay.payment.types.funds.FundDetail;
 import com.anypluspay.payment.types.status.PayProcessStatus;

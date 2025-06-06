@@ -7,7 +7,7 @@ import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
-import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.trade.TradeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

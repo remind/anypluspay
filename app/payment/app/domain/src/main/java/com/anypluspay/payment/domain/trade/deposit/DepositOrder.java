@@ -2,7 +2,7 @@ package com.anypluspay.payment.domain.trade.deposit;
 
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.trade.BaseTradeOrder;
-import com.anypluspay.payment.types.biz.DepositOrderStatus;
+import com.anypluspay.payment.types.trade.DepositOrderStatus;
 import lombok.Data;
 
 /**

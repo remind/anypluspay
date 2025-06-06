@@ -3,9 +3,9 @@ package com.anypluspay.admin.payment.convertor;
 import com.anypluspay.commons.convertor.GlobalConvertorUtils;
 import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.types.asset.AssetType;
-import com.anypluspay.payment.types.biz.TradeType;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
-import com.anypluspay.payment.types.biz.DepositOrderStatus;
+import com.anypluspay.payment.types.trade.TradeType;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.DepositOrderStatus;
 import com.anypluspay.payment.types.paymethod.PayMethodStatus;
 import com.anypluspay.payment.types.paymethod.PayModel;
 

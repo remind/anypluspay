@@ -7,9 +7,9 @@ import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.PaymentConstants;
 import com.anypluspay.payment.domain.trade.acquiring.AcquiringOrder;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import com.anypluspay.payment.types.IdType;
-import com.anypluspay.payment.types.biz.TradeType;
+import com.anypluspay.payment.types.trade.TradeType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

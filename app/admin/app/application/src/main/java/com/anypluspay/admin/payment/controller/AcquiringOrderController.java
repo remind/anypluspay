@@ -14,7 +14,7 @@ import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundRequest;
 import com.anypluspay.payment.facade.acquiring.refund.AcquiringRefundResponse;
 import com.anypluspay.payment.infra.persistence.dataobject.AcquiringOrderDO;
 import com.anypluspay.payment.infra.persistence.mapper.AcquiringOrderMapper;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.commons.lang3.StringUtils;

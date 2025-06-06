@@ -3,7 +3,7 @@ package com.anypluspay.payment.facade.deposit;
 import com.anypluspay.payment.application.TradeBuilder;
 import com.anypluspay.payment.domain.trade.deposit.DepositOrder;
 import com.anypluspay.payment.domain.pay.pay.PayOrder;
-import com.anypluspay.payment.types.biz.DepositOrderStatus;
+import com.anypluspay.payment.types.trade.DepositOrderStatus;
 import com.anypluspay.payment.facade.request.FundDetailInfo;
 import com.anypluspay.payment.types.IdType;
 import com.anypluspay.payment.types.PayOrderType;

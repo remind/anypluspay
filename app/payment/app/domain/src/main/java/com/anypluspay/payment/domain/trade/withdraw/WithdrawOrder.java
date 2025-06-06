@@ -2,7 +2,7 @@ package com.anypluspay.payment.domain.trade.withdraw;
 
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.trade.BaseTradeOrder;
-import com.anypluspay.payment.types.biz.WithdrawOrderStatus;
+import com.anypluspay.payment.types.trade.WithdrawOrderStatus;
 import lombok.Data;
 
 /**

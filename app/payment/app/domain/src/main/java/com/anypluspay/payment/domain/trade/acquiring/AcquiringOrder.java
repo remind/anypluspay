@@ -3,8 +3,8 @@ package com.anypluspay.payment.domain.trade.acquiring;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.payment.domain.trade.BaseTradeOrder;
-import com.anypluspay.payment.types.biz.TradeType;
-import com.anypluspay.payment.types.biz.AcquiringOrderStatus;
+import com.anypluspay.payment.types.trade.TradeType;
+import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

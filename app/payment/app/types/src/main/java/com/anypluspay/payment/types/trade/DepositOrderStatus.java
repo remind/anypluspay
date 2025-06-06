@@ -1,17 +1,17 @@
-package com.anypluspay.payment.types.biz;
+package com.anypluspay.payment.types.trade;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;
 
 /**
- * 提现订单状态
+ * 充值订单状态
  * @author wxj
- * 2025/5/15
+ * 2025/5/14
  */
 @Getter
-public enum WithdrawOrderStatus implements CodeEnum {
+public enum DepositOrderStatus implements CodeEnum {
 
-    PAYING("PAYING", "处理中"),
+    PAYING("PAYING", "支付中"),
 
     FAIL("FAIL", "失败"),
 
@@ -22,7 +22,7 @@ public enum WithdrawOrderStatus implements CodeEnum {
 
     private final String displayName;
 
-    WithdrawOrderStatus(String code, String displayName) {
+    DepositOrderStatus(String code, String displayName) {
         this.code = code;
         this.displayName = displayName;
     }
