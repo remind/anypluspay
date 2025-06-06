@@ -26,10 +26,10 @@ public class AcquiringRefundRequest {
     private String outTradeNo;
 
     /**
-     * 原支付单号
+     * 原交易ID
      */
-    @Length(min = 6, max = 32, message = "原支付单号长度为6-32")
-    private String origPaymentId;
+    @Length(min = 6, max = 32, message = "原交易ID长度为6-32")
+    private String origTradeId;
 
     /**
      * 原外部交易号

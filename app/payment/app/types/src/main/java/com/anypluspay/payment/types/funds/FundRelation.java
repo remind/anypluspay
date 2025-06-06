@@ -13,9 +13,9 @@ import java.util.List;
 public class FundRelation {
 
     /**
-     * 总单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 关系ID

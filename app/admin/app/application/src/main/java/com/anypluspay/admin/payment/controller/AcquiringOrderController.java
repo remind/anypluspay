@@ -69,10 +69,10 @@ public class AcquiringOrderController extends AbstractController {
      */
     @PostMapping("/refund")
     public ResponseResult<String> refund(@RequestBody RefundRequest request) {
-        TradeResponse tradeResponse = acquiringFacade.queryByTradeId(request.getPaymentId());
+        TradeResponse tradeResponse = acquiringFacade.queryByTradeId(request.getTradeId());
         if (tradeResponse.getStatus().equals(AcquiringOrderStatus.SUCCESS.getCode())) {
             AcquiringRefundRequest acquiringRefundRequest = new AcquiringRefundRequest();
-            acquiringRefundRequest.setOrigPaymentId(tradeResponse.getTradeId());
+            acquiringRefundRequest.setOrigTradeId(tradeResponse.getTradeId());
             acquiringRefundRequest.setOutTradeNo(StringUtil.randomId());
             acquiringRefundRequest.setAmount(request.getAmount());
             AcquiringRefundResponse acquiringRefundResponse = acquiringFacade.refund(acquiringRefundRequest);

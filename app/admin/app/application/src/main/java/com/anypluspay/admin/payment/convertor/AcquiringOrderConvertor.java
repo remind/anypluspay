@@ -15,7 +15,7 @@ import org.mapstruct.MappingConstants;
 public interface AcquiringOrderConvertor extends PageConvertor<AcquiringOrderResponse, AcquiringOrderDO> {
 
     @Mapping(target = "status", expression = "java(ConvertorUtils.toAcquiringStatus(doObject.getStatus()))")
-    @Mapping(target = "tradeType", expression = "java(ConvertorUtils.toTradeType(doObject.getTradeType()))")
+    @Mapping(target = "tradeTypeName", expression = "java(ConvertorUtils.toTradeType(doObject.getTradeType()))")
     @Mapping(target = "amount", expression = "java(ConvertorUtils.toDisplayMoney(doObject.getAmount(), doObject.getCurrencyCode()))")
     @Override
     AcquiringOrderResponse toEntity(AcquiringOrderDO doObject);

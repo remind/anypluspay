@@ -19,9 +19,9 @@ public class WithdrawOrderService {
     @Autowired
     private WithdrawOrderRepository withdrawOrderRepository;
 
-    public void processResult(String paymentId, boolean success) {
+    public void processResult(String tradeId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
-            WithdrawOrder withdrawOrder = withdrawOrderRepository.lock(paymentId);
+            WithdrawOrder withdrawOrder = withdrawOrderRepository.lock(tradeId);
             if (withdrawOrder.getStatus() == WithdrawOrderStatus.PAYING) {
                 if (success) {
                     withdrawOrder.setStatus(WithdrawOrderStatus.SUCCESS);

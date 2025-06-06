@@ -37,7 +37,7 @@ public class DepositFacadeImpl extends AbstractTradeService implements DepositFa
 
     @Override
     public DepositResponse apply(DepositRequest request) {
-        String paymentId = "";
+        String tradeId = "";
         DepositResponse response;
         try {
             DepositOrder depositOrder = depositBuilder.buildDepositOrder(request);
@@ -47,21 +47,21 @@ public class DepositFacadeImpl extends AbstractTradeService implements DepositFa
                 payOrderRepository.store(payOrder);
             });
             PayResult result = payOrderService.process(payOrder);
-            paymentId = depositOrder.getTradeId();
+            tradeId = depositOrder.getTradeId();
             response = processResult(depositOrder.getTradeId(), result);
         } catch (TransactionException e) {
             log.error("充值异常", e);
-            response = buildExceptionResponse(paymentId, e);
+            response = buildExceptionResponse(tradeId, e);
         }
         return response;
     }
 
-    private DepositResponse processResult(String paymentId, PayResult result) {
-        DepositOrder depositOrder = depositOrderRepository.load(paymentId);
+    private DepositResponse processResult(String tradeId, PayResult result) {
+        DepositOrder depositOrder = depositOrderRepository.load(tradeId);
         DepositResponse response = new DepositResponse();
         response.setSuccess(true);
         if (depositOrder != null) {
-            response.setTradeId(paymentId);
+            response.setTradeId(tradeId);
             response.setOrderStatus(depositOrder.getStatus().getCode());
         }
 
@@ -78,8 +78,8 @@ public class DepositFacadeImpl extends AbstractTradeService implements DepositFa
         return response;
     }
 
-    public DepositResponse buildExceptionResponse(String paymentId, Exception e) {
-        DepositResponse response = processResult(paymentId, null);
+    public DepositResponse buildExceptionResponse(String tradeId, Exception e) {
+        DepositResponse response = processResult(tradeId, null);
         BaseResult.fillExceptionResult(response, e);
         return response;
     }

@@ -8,10 +8,8 @@ package com.anypluspay.commons.enums;
  */
 public enum SystemCodeEnums {
     PAYMENT("001", "PAYMENT", "支付核心"),
-    BASIC("002", "BASIC", "公共平台"),
-    TRADE("003", "TRADE", "交易"),
-    CHANNEL("004", "CHANNEL", "渠道"),
-    ACCOUNT("004", "ACCOUNT", "账务"),
+    CHANNEL("002", "CHANNEL", "渠道"),
+    ACCOUNT("003", "ACCOUNT", "账务"),
 
     ;
 

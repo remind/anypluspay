@@ -23,7 +23,7 @@ public class WithdrawBuilder extends TradeBuilder {
 
     public WithdrawOrder buildWithdrawOrder(WithdrawRequest request) {
         WithdrawOrder withdrawOrder = new WithdrawOrder();
-        withdrawOrder.setTradeId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.WITHDRAW_ORDER_ID));
+        withdrawOrder.setTradeId(idGeneratorService.genTradeId(request.getMemberId(), IdType.WITHDRAW_ORDER_ID));
         withdrawOrder.setOrderId(idGeneratorService.genIdByRelateId(withdrawOrder.getTradeId(), PayOrderType.PAY.getIdType()));
         withdrawOrder.setAmount(request.getAmount());
         withdrawOrder.setMemberId(request.getMemberId());
@@ -49,11 +49,11 @@ public class WithdrawBuilder extends TradeBuilder {
         return payOrder;
     }
 
-    private FundDetail buildPayeeFundDetail(String paymentId, String orderId, WithdrawOrder withdrawOrder) {
+    private FundDetail buildPayeeFundDetail(String tradeId, String orderId, WithdrawOrder withdrawOrder) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setTradeId(paymentId);
+        fundDetail.setTradeId(tradeId);
         fundDetail.setOrderId(orderId);
-        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
+        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(tradeId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(withdrawOrder.getAmount());
         fundDetail.setMemberId(withdrawOrder.getMemberId());
         BankCardAsset bankCardAsset = new BankCardAsset(withdrawOrder.getAccountNo());
@@ -63,11 +63,11 @@ public class WithdrawBuilder extends TradeBuilder {
         return fundDetail;
     }
 
-    private FundDetail buildPayerFundDetail(String paymentId, String orderId, WithdrawOrder withdrawOrder) {
+    private FundDetail buildPayerFundDetail(String tradeId, String orderId, WithdrawOrder withdrawOrder) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setTradeId(paymentId);
+        fundDetail.setTradeId(tradeId);
         fundDetail.setOrderId(orderId);
-        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
+        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(tradeId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(withdrawOrder.getAmount());
         fundDetail.setMemberId(withdrawOrder.getMemberId());
         fundDetail.setAssetInfo(new BalanceAsset(withdrawOrder.getMemberId(), withdrawOrder.getAccountNo()));

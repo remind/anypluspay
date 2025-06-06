@@ -23,17 +23,17 @@ public abstract class TradeBuilder {
 
     /**
      * 构造资金明细
-     * @param paymentId
+     * @param tradeId
      * @param orderId
      * @param info
      * @param belongTo
      * @return
      */
-    protected FundDetail buildFundDetail(String paymentId, String orderId, FundDetailInfo info, BelongTo belongTo) {
+    protected FundDetail buildFundDetail(String tradeId, String orderId, FundDetailInfo info, BelongTo belongTo) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setTradeId(paymentId);
+        fundDetail.setTradeId(tradeId);
         fundDetail.setOrderId(orderId);
-        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
+        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(tradeId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(info.getAmount());
         fundDetail.setMemberId(info.getMemberId());
         fundDetail.setAssetInfo(AssetInfo.parse(info.getAssetTypeCode(), info.getAssetJsonStr()));

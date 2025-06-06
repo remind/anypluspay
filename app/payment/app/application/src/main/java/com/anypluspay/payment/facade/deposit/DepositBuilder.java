@@ -26,7 +26,7 @@ public class DepositBuilder extends TradeBuilder {
 
     public DepositOrder buildDepositOrder(DepositRequest request) {
         DepositOrder depositOrder = new DepositOrder();
-        depositOrder.setTradeId(idGeneratorService.genPaymentId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
+        depositOrder.setTradeId(idGeneratorService.genTradeId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
         depositOrder.setOrderId(idGeneratorService.genIdByRelateId(depositOrder.getTradeId(), PayOrderType.PAY.getIdType()));
         depositOrder.setAmount(request.getAmount());
         depositOrder.setMemberId(request.getMemberId());
@@ -48,11 +48,11 @@ public class DepositBuilder extends TradeBuilder {
         return payOrder;
     }
 
-    protected FundDetail buildPayeeFundDetail(String paymentId, String orderId, DepositOrder depositOrder) {
+    protected FundDetail buildPayeeFundDetail(String tradeId, String orderId, DepositOrder depositOrder) {
         FundDetail fundDetail = new FundDetail();
-        fundDetail.setTradeId(paymentId);
+        fundDetail.setTradeId(tradeId);
         fundDetail.setOrderId(orderId);
-        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(paymentId, IdType.FUND_DETAIL_ID));
+        fundDetail.setDetailId(idGeneratorService.genIdByRelateId(tradeId, IdType.FUND_DETAIL_ID));
         fundDetail.setAmount(depositOrder.getAmount());
         fundDetail.setMemberId(depositOrder.getMemberId());
         fundDetail.setAssetInfo(new BalanceAsset(depositOrder.getMemberId(), depositOrder.getAccountNo()));

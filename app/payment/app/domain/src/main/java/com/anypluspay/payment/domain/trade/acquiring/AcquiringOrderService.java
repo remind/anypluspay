@@ -32,18 +32,18 @@ public class AcquiringOrderService {
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
-    public void processResult(String paymentId, String orderId, boolean success) {
+    public void processResult(String tradeId, String orderId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
-            AcquiringOrder acquiringOrder = acquiringOrderRepository.lock(paymentId);
+            AcquiringOrder acquiringOrder = acquiringOrderRepository.lock(tradeId);
             if (success) {
                 if (acquiringOrder.getStatus() == AcquiringOrderStatus.SUCCESS) {
-                    refund(paymentId, orderId, RefundType.REPEAT);
+                    refund(tradeId, orderId, RefundType.REPEAT);
                 } else if (acquiringOrder.getStatus() == AcquiringOrderStatus.CLOSED) {
-                    refund(paymentId, orderId, RefundType.ORDER_CLOSE);
+                    refund(tradeId, orderId, RefundType.ORDER_CLOSE);
                 } else {
                     if (LocalDateTime.now().isAfter(acquiringOrder.getGmtExpire())) {
                         acquiringOrder.setStatus(AcquiringOrderStatus.CLOSED);
-                        refund(paymentId, orderId, RefundType.ORDER_CLOSE);
+                        refund(tradeId, orderId, RefundType.ORDER_CLOSE);
                     } else {
                         acquiringOrder.setOrderId(orderId);
                         acquiringOrder.setStatus(AcquiringOrderStatus.SUCCESS);
@@ -54,7 +54,7 @@ public class AcquiringOrderService {
         });
     }
 
-    private void refund(String paymentId, String orderId, RefundType refundType) {
-        threadPoolTaskExecutor.execute(() -> refundApplyService.apply(paymentId, orderId, refundType));
+    private void refund(String tradeId, String orderId, RefundType refundType) {
+        threadPoolTaskExecutor.execute(() -> refundApplyService.apply(tradeId, orderId, refundType));
     }
 }

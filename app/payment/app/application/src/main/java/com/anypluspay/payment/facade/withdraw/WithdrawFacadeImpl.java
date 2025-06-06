@@ -35,10 +35,10 @@ public class WithdrawFacadeImpl extends AbstractTradeService implements Withdraw
         return processResult(withdrawOrder.getTradeId(), result);
     }
 
-    private WithdrawResponse processResult(String paymentId, PayResult result) {
-        WithdrawOrder withdrawOrder = withdrawOrderRepository.load(paymentId);
+    private WithdrawResponse processResult(String tradeId, PayResult result) {
+        WithdrawOrder withdrawOrder = withdrawOrderRepository.load(tradeId);
         WithdrawResponse response = new WithdrawResponse();
-        response.setPaymentId(paymentId);
+        response.setTradeId(tradeId);
         response.setStatus(withdrawOrder.getStatus().getCode());
         response.setResult(result);
         return response;

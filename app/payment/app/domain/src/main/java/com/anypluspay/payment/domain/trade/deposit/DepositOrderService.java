@@ -20,9 +20,9 @@ public class DepositOrderService {
     @Autowired
     private DepositOrderRepository depositOrderRepository;
 
-    public void processResult(String paymentId, boolean success) {
+    public void processResult(String tradeId, boolean success) {
         transactionTemplate.executeWithoutResult(status -> {
-            DepositOrder depositOrder = depositOrderRepository.lock(paymentId);
+            DepositOrder depositOrder = depositOrderRepository.lock(tradeId);
             if (depositOrder.getStatus() == DepositOrderStatus.PAYING) {
                 if (success) {
                     depositOrder.setStatus(DepositOrderStatus.SUCCESS);

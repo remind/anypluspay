@@ -76,7 +76,7 @@ public class CashierService {
             throw new BizException(response.getResultCode(), response.getResultMsg());
         }
         CashierPayResult cashierPayResult = new CashierPayResult();
-        cashierPayResult.setPaymentId(response.getTradeId());
+        cashierPayResult.setTradeId(response.getTradeId());
         cashierPayResult.setResultCode(response.getResultCode());
         cashierPayResult.setResultMsg(response.getResultMsg());
         cashierPayResult.setStatus(response.getOrderStatus());
@@ -107,7 +107,7 @@ public class CashierService {
             throw new BizException(response.getResultCode(), response.getResultMsg());
         }
         CashierPayResult cashierPayResult = new CashierPayResult();
-        cashierPayResult.setPaymentId(response.getTradeId());
+        cashierPayResult.setTradeId(response.getTradeId());
         cashierPayResult.setResultCode(response.getResultCode());
         cashierPayResult.setResultMsg(response.getResultMsg());
         cashierPayResult.setStatus(response.getOrderStatus());

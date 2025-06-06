@@ -4,20 +4,20 @@ package com.anypluspay.payment.types;
 import com.anypluspay.commons.enums.BizIdType;
 
 /**
+ * 订单类型
  * @author wxj
  * 2024/1/15
  */
 public enum IdType implements BizIdType {
 
-    PAYMENT_INSTANT_ID("1", "01", "seq_payment_id", "支付总单-直接支付模式"),
-    TRADE_ORDER_ID("1", "10", "seq_payment_id", "支付业务单-交易单"),
-    DEPOSIT_ORDER_ID("1", "20", "seq_payment_id", "支付业务单-充值单"),
-    WITHDRAW_ORDER_ID("1", "30", "seq_payment_id", "支付业务单-提现单"),
-    PAY_ORDER_ID("2", "01", "seq_pay_order_id", "支付子单-支付单"),
-    REFUND_ORDER_ID("2", "02", "seq_pay_order_id", "支付子单-退款单"),
-    FUND_DETAIL_ID("3", "01", "seq_fund_detail_id", "支付明细单ID"),
-    FLUX_ORDER_ID("4", "01", "seq_flux_order_ID", "资产交换单ID"),
-    FLUX_INSTRUCT_ID("4", "02", "seq_flux_instruct_id", "资产交换指令ID"),
+    ACQUIRING_ORDER_ID("1", "10", "seq_trade_id", "交易-收单订单"),
+    DEPOSIT_ORDER_ID("1", "20", "seq_trade_id", "交易-充值单"),
+    WITHDRAW_ORDER_ID("1", "30", "seq_trade_id", "交易-提现单"),
+    PAY_ORDER_ID("2", "01", "seq_pay_order_id", "支付-支付单"),
+    REFUND_ORDER_ID("2", "02", "seq_pay_order_id", "支付-退款单"),
+    FUND_DETAIL_ID("3", "01", "seq_fund_detail_id", "支付-资金明细单"),
+    FLUX_ORDER_ID("4", "01", "seq_flux_order_id", "交换-资产交换单"),
+    FLUX_INSTRUCT_ID("4", "02", "seq_flux_instruct_id", "交易-资产交换指令"),
     ;
 
     /**

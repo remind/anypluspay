@@ -35,20 +35,20 @@ public class AcquiringIntegrityCheck {
     @Autowired
     protected RefundOrderRepository refundOrderRepository;
 
-    public void checkAcquiringOrder(String paymentId) {
-        AcquiringOrder acquiringOrder = acquiringOrderRepository.load(paymentId);
+    public void checkAcquiringOrder(String tradeId) {
+        AcquiringOrder acquiringOrder = acquiringOrderRepository.load(tradeId);
         Assert.assertNotNull(acquiringOrder);
         Assert.assertNotNull(acquiringOrder.getTradeId());
         Assert.assertNotNull(acquiringOrder.getPartnerId());
         Assert.assertNotNull(acquiringOrder.getOutTradeNo());
 
-        List<PayOrder> payOrders = payOrderRepository.loadByTradeId(paymentId);
+        List<PayOrder> payOrders = payOrderRepository.loadByTradeId(tradeId);
         Assert.assertNotNull(payOrders);
         Assert.assertEquals(1, payOrders.size());
-        checkPayProcess(paymentId, payOrders.get(0));
+        checkPayProcess(tradeId, payOrders.get(0));
     }
 
-    public void checkPayProcess(String paymentId, PayOrder generalPayOrder) {
+    public void checkPayProcess(String tradeId, PayOrder generalPayOrder) {
         Assert.assertNotNull(generalPayOrder);
         Assert.assertNotNull(generalPayOrder.getTradeId());
         Assert.assertNotNull(generalPayOrder.getOrderId());
@@ -58,7 +58,7 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(generalPayOrder.getGmtCreate());
         Assert.assertNotNull(generalPayOrder.getGmtModified());
 
-        Assert.assertEquals(paymentId, generalPayOrder.getTradeId());
+        Assert.assertEquals(tradeId, generalPayOrder.getTradeId());
         checkFundDetail(generalPayOrder.getTradeId(), generalPayOrder.getOrderId(), generalPayOrder.getAmount(), generalPayOrder.getPayerDetails(), generalPayOrder.getPayeeDetails());
         checkRefundProcess(generalPayOrder);
     }
@@ -76,7 +76,7 @@ public class AcquiringIntegrityCheck {
         }
     }
 
-    public void checkSingleRefundProcess(String paymentId, String orderId, RefundOrder refundOrder) {
+    public void checkSingleRefundProcess(String tradeId, String orderId, RefundOrder refundOrder) {
         Assert.assertNotNull(refundOrder);
         Assert.assertNotNull(refundOrder.getTradeId());
         Assert.assertNotNull(refundOrder.getOrderId());
@@ -87,27 +87,27 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(refundOrder.getGmtCreate());
         Assert.assertNotNull(refundOrder.getGmtModified());
 
-        Assert.assertEquals(paymentId, refundOrder.getTradeId());
+        Assert.assertEquals(tradeId, refundOrder.getTradeId());
         Assert.assertEquals(orderId, refundOrder.getOrderId());
         checkFundDetail(refundOrder.getTradeId(), refundOrder.getOrderId(), refundOrder.getAmount(), refundOrder.getPayerDetails(), refundOrder.getPayeeDetails());
 
 
     }
 
-    public void checkFundDetail(String paymentId, String orderId, Money totalAmount, List<FundDetail> payerFundDetails, List<FundDetail> payeeFundDetails) {
+    public void checkFundDetail(String tradeId, String orderId, Money totalAmount, List<FundDetail> payerFundDetails, List<FundDetail> payeeFundDetails) {
         Assert.assertNotNull(payerFundDetails);
         Assert.assertNotNull(payeeFundDetails);
 
         Money payerAmount = new Money(0, payerFundDetails.get(0).getAmount().getCurrency());
         Money payeeAmount = new Money(0, payeeFundDetails.get(0).getAmount().getCurrency());
         payerFundDetails.forEach(fundDetail -> {
-            checkSingleFundDetail(paymentId, orderId, fundDetail);
+            checkSingleFundDetail(tradeId, orderId, fundDetail);
             payerAmount.addTo(fundDetail.getAmount());
             Assert.assertEquals(BelongTo.PAYER, fundDetail.getBelongTo());
             Assert.assertEquals(FundAction.DECREASE, fundDetail.getFundAction());
         });
         payeeFundDetails.forEach(fundDetail -> {
-            checkSingleFundDetail(paymentId, orderId, fundDetail);
+            checkSingleFundDetail(tradeId, orderId, fundDetail);
             payeeAmount.addTo(fundDetail.getAmount());
             Assert.assertEquals(BelongTo.PAYEE, fundDetail.getBelongTo());
             Assert.assertEquals(FundAction.INCREASE, fundDetail.getFundAction());
@@ -116,7 +116,7 @@ public class AcquiringIntegrityCheck {
         Assert.assertEquals(totalAmount, payerAmount);
     }
 
-    public void checkSingleFundDetail(String paymentId, String orderId, FundDetail fundDetail) {
+    public void checkSingleFundDetail(String tradeId, String orderId, FundDetail fundDetail) {
         Assert.assertNotNull(fundDetail);
         Assert.assertNotNull(fundDetail.getDetailId());
         Assert.assertNotNull(fundDetail.getMemberId());
@@ -129,7 +129,7 @@ public class AcquiringIntegrityCheck {
         Assert.assertNotNull(fundDetail.getGmtCreate());
         Assert.assertNotNull(fundDetail.getGmtModified());
 
-        Assert.assertEquals(paymentId, fundDetail.getTradeId());
+        Assert.assertEquals(tradeId, fundDetail.getTradeId());
         Assert.assertEquals(orderId, fundDetail.getOrderId());
     }
 }

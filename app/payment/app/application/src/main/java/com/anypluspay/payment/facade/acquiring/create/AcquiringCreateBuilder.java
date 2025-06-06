@@ -31,7 +31,7 @@ public class AcquiringCreateBuilder extends TradeBuilder {
      */
     public AcquiringOrder buildTradeOrder(AcquiringCreateRequest request) {
         AcquiringOrder acquiringOrder = new AcquiringOrder();
-        acquiringOrder.setTradeId(idGeneratorService.genPaymentId(request.getPartnerId(), IdType.TRADE_ORDER_ID));
+        acquiringOrder.setTradeId(idGeneratorService.genTradeId(request.getPartnerId(), IdType.ACQUIRING_ORDER_ID));
         acquiringOrder.setPartnerId(request.getPartnerId());
         acquiringOrder.setOutTradeNo(request.getOutTradeNo());
         acquiringOrder.setTradeType(EnumUtil.getByCode(TradeType.class, request.getTradeType()));

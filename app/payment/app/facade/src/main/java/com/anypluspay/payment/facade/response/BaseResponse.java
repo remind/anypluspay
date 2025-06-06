@@ -11,9 +11,9 @@ import lombok.Data;
 public class BaseResponse {
 
     /**
-     * 支付总单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 支付结果

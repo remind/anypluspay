@@ -14,12 +14,12 @@ public interface AcquiringOrderRepository {
 
     void reStore(AcquiringOrder acquiringOrder);
 
-    AcquiringOrder load(String paymentId);
-    List<AcquiringOrder> loadByRelationPaymentId(String paymentId);
+    AcquiringOrder load(String tradeId);
+    List<AcquiringOrder> loadByRelationTradeId(String tradeId);
 
     AcquiringOrder load(String outTradeNo, String partnerId);
 
-    AcquiringOrder lock(String paymentId);
+    AcquiringOrder lock(String tradeId);
 
     AcquiringOrder lock(String outTradeNo, String partnerId);
 

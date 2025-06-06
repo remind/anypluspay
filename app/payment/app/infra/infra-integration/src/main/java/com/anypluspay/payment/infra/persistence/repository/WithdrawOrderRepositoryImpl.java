@@ -31,12 +31,12 @@ public class WithdrawOrderRepositoryImpl implements WithdrawOrderRepository {
     }
 
     @Override
-    public WithdrawOrder load(String paymentId) {
-        return dalConvertor.toEntity(dalMapper.selectById(paymentId));
+    public WithdrawOrder load(String tradeId) {
+        return dalConvertor.toEntity(dalMapper.selectById(tradeId));
     }
 
     @Override
-    public WithdrawOrder lock(String paymentId) {
-        return dalConvertor.toEntity(dalMapper.lockById(paymentId));
+    public WithdrawOrder lock(String tradeId) {
+        return dalConvertor.toEntity(dalMapper.lockById(tradeId));
     }
 }

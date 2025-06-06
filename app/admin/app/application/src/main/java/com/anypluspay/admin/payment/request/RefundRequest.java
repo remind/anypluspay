@@ -2,8 +2,6 @@ package com.anypluspay.admin.payment.request;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 /**
  * 退款申请请求
  *
@@ -14,9 +12,9 @@ import java.math.BigDecimal;
 public class RefundRequest {
 
     /**
-     * 支付单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 金额

@@ -36,14 +36,14 @@ public class AcquiringOrderRepositoryImpl implements AcquiringOrderRepository {
     }
 
     @Override
-    public AcquiringOrder load(String paymentId) {
-        return dalConvertor.toEntity(dalMapper.selectById(paymentId));
+    public AcquiringOrder load(String tradeId) {
+        return dalConvertor.toEntity(dalMapper.selectById(tradeId));
     }
 
     @Override
-    public List<AcquiringOrder> loadByRelationPaymentId(String paymentId) {
+    public List<AcquiringOrder> loadByRelationTradeId(String tradeId) {
         LambdaQueryWrapper<AcquiringOrderDO> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.eq(AcquiringOrderDO::getRelationTradeId, paymentId);
+        queryWrapper.eq(AcquiringOrderDO::getRelationTradeId, tradeId);
         return dalConvertor.toEntity(dalMapper.selectList(queryWrapper));
     }
 
@@ -56,8 +56,8 @@ public class AcquiringOrderRepositoryImpl implements AcquiringOrderRepository {
     }
 
     @Override
-    public AcquiringOrder lock(String paymentId) {
-        return dalConvertor.toEntity(dalMapper.lockById(paymentId));
+    public AcquiringOrder lock(String tradeId) {
+        return dalConvertor.toEntity(dalMapper.lockById(tradeId));
     }
 
     @Override

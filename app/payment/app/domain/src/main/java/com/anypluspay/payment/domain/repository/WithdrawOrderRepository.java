@@ -12,7 +12,7 @@ public interface WithdrawOrderRepository {
 
     void reStore(WithdrawOrder withdrawOrder);
 
-    WithdrawOrder load(String paymentId);
+    WithdrawOrder load(String tradeId);
 
-    WithdrawOrder lock(String paymentId);
+    WithdrawOrder lock(String tradeId);
 }

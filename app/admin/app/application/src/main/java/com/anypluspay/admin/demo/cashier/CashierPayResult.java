@@ -10,9 +10,9 @@ import lombok.Data;
 public class CashierPayResult {
 
     /**
-     * 支付单号
+     * 交易ID
      */
-    private String paymentId;
+    private String tradeId;
 
     /**
      * 订单状态

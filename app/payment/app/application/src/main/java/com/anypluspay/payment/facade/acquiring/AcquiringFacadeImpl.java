@@ -141,7 +141,7 @@ public class AcquiringFacadeImpl extends AbstractTradeService implements Acquiri
      */
     private RefundOrder saveRefundOrder(AcquiringRefundRequest request) {
         return transactionTemplate.execute(status -> {
-            AcquiringOrder origAcquiringOrder = lockTradeOrder(request.getOrigPaymentId(), request.getOrigOutTradeNo(), request.getPartnerId());
+            AcquiringOrder origAcquiringOrder = lockTradeOrder(request.getOrigTradeId(), request.getOrigOutTradeNo(), request.getPartnerId());
             AssertUtil.notNull(origAcquiringOrder, "原订单不存在");
             AcquiringOrder refundAcquiringOrder = acquiringRefundBuilder.buildTradeOrder(request, origAcquiringOrder);
             PayOrder originalPayOrder = payOrderRepository.load(origAcquiringOrder.getOrderId());
@@ -153,10 +153,10 @@ public class AcquiringFacadeImpl extends AbstractTradeService implements Acquiri
         });
     }
 
-    private AcquiringOrder loadTradeOrder(String paymentId, String partnerId, String outTradeNo) {
+    private AcquiringOrder loadTradeOrder(String tradeId, String partnerId, String outTradeNo) {
         AcquiringOrder acquiringOrder;
-        if (StringUtils.isNotBlank(paymentId)) {
-            acquiringOrder = acquiringOrderRepository.load(paymentId);
+        if (StringUtils.isNotBlank(tradeId)) {
+            acquiringOrder = acquiringOrderRepository.load(tradeId);
         } else {
             AssertUtil.isTrue(StringUtils.isNotBlank(partnerId) && StringUtils.isNotBlank(outTradeNo), "支付单号或外部交易单号至少传一个");
             acquiringOrder = acquiringOrderRepository.load(partnerId, outTradeNo);
@@ -164,10 +164,10 @@ public class AcquiringFacadeImpl extends AbstractTradeService implements Acquiri
         return acquiringOrder;
     }
 
-    private AcquiringOrder lockTradeOrder(String paymentId, String partnerId, String outTradeNo) {
+    private AcquiringOrder lockTradeOrder(String tradeId, String partnerId, String outTradeNo) {
         AcquiringOrder acquiringOrder;
-        if (StringUtils.isNotBlank(paymentId)) {
-            acquiringOrder = acquiringOrderRepository.lock(paymentId);
+        if (StringUtils.isNotBlank(tradeId)) {
+            acquiringOrder = acquiringOrderRepository.lock(tradeId);
         } else {
             AssertUtil.isTrue(StringUtils.isNotBlank(partnerId) && StringUtils.isNotBlank(outTradeNo), "支付单号或外部交易单号至少传一个");
             acquiringOrder = acquiringOrderRepository.lock(partnerId, outTradeNo);

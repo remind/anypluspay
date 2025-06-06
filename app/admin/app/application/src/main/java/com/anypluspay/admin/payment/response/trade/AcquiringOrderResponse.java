@@ -22,6 +22,11 @@ public class AcquiringOrderResponse extends BaseTradeResponse {
     private String tradeType;
 
     /**
+     * 交易类型名称
+     */
+    private String tradeTypeName;
+
+    /**
      * 外部订单号
      */
     private String outTradeNo;

@@ -17,7 +17,7 @@ public class IdGeneratorService {
     @Autowired
     private SequenceService sequenceService;
 
-    public String genPaymentId(String memberId, IdType idType) {
+    public String genTradeId(String memberId, IdType idType) {
         return sequenceService.getId(memberId, SystemCodeEnums.PAYMENT, idType);
     }
 

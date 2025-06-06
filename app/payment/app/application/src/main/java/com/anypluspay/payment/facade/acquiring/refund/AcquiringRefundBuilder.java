@@ -35,7 +35,7 @@ public class AcquiringRefundBuilder extends TradeBuilder {
         Money refundAmount = new Money(request.getAmount(), origAcquiringOrder.getAmount().getCurrency());
         checkRefundAmount(origAcquiringOrder, refundAmount);
         AcquiringOrder acquiringOrder = new AcquiringOrder();
-        acquiringOrder.setTradeId(idGeneratorService.genPaymentId(origAcquiringOrder.getTradeId(), IdType.TRADE_ORDER_ID));
+        acquiringOrder.setTradeId(idGeneratorService.genTradeId(origAcquiringOrder.getTradeId(), IdType.ACQUIRING_ORDER_ID));
         acquiringOrder.setRelationTradeId(origAcquiringOrder.getTradeId());
         acquiringOrder.setPartnerId(origAcquiringOrder.getPartnerId());
         acquiringOrder.setOutTradeNo(request.getOutTradeNo());
@@ -50,7 +50,7 @@ public class AcquiringRefundBuilder extends TradeBuilder {
     }
 
     private void checkRefundAmount(AcquiringOrder origAcquiringOrder, Money amount) {
-        List<AcquiringOrder> allRelationOrders = acquiringOrderRepository.loadByRelationPaymentId(origAcquiringOrder.getTradeId());
+        List<AcquiringOrder> allRelationOrders = acquiringOrderRepository.loadByRelationTradeId(origAcquiringOrder.getTradeId());
         if (!CollectionUtils.isEmpty(allRelationOrders)) {
             Money refundAmount = allRelationOrders.stream()
                     .filter(r -> r.getStatus().equals(AcquiringOrderStatus.SUCCESS) && r.getTradeType() == TradeType.REFUND_ACQUIRING)
@@ -69,7 +69,7 @@ public class AcquiringRefundBuilder extends TradeBuilder {
     public AcquiringRefundResponse buildResponse(AcquiringOrder acquiringOrder) {
         AcquiringRefundResponse response = new AcquiringRefundResponse();
         response.setSuccess(true);
-        response.setPaymentId(acquiringOrder.getTradeId());
+        response.setTradeId(acquiringOrder.getTradeId());
         response.setPartnerId(acquiringOrder.getPartnerId());
         response.setOutTradeNo(acquiringOrder.getOutTradeNo());
         response.setOrderStatus(acquiringOrder.getStatus().getCode());

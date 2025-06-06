@@ -65,8 +65,8 @@ public class ExternalExecutor implements AssetFluxExecutor {
 
     @Override
     public FluxResult increase(FluxOrder fluxOrder, FluxProcess fluxProcess) {
-        IdType paymentIdType = idGeneratorService.getIdType(fluxOrder.getTradeId());
-        if (paymentIdType == IdType.WITHDRAW_ORDER_ID) {
+        IdType tradIdType = idGeneratorService.getIdType(fluxOrder.getTradeId());
+        if (tradIdType == IdType.WITHDRAW_ORDER_ID) {
             FundOutRequest fundOutRequest = buildFundOutRequest(fluxOrder, fluxProcess);
             FundResult fundResult = fundOutFacade.apply(fundOutRequest);
             return externalResultService.process(fluxProcess, fundResult);
