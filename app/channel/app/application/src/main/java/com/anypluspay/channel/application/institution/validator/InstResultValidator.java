@@ -1,9 +1,9 @@
 package com.anypluspay.channel.application.institution.validator;
 
-import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.domain.bizorder.BaseBizOrder;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
+import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.exceptions.BizException;
 
 /**

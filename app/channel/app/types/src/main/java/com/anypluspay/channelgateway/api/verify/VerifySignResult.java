@@ -1,7 +1,7 @@
 package com.anypluspay.channelgateway.api.verify;
 
-import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.channelgateway.result.GatewayResult;
 import lombok.Data;
 
 /**

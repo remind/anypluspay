@@ -1,9 +1,9 @@
 package com.anypluspay.channel.infra.persistence.bizorder.fundin;
 
-import com.anypluspay.channel.domain.convertor.EnumsConvertor;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
-import com.anypluspay.channel.infra.persistence.dataobject.FundInOrderDO;
+import com.anypluspay.channel.domain.convertor.EnumsConvertor;
 import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
+import com.anypluspay.channel.infra.persistence.dataobject.FundInOrderDO;
 import com.anypluspay.commons.convertor.BaseExpressionConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

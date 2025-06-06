@@ -1,8 +1,8 @@
 package com.anypluspay.channel.application.institution.gateway;
 
+import com.anypluspay.channel.domain.channel.api.ChannelApi;
 import com.anypluspay.channelgateway.request.RequestContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
-import com.anypluspay.channel.domain.channel.api.ChannelApi;
 
 /**
  *  网关代理

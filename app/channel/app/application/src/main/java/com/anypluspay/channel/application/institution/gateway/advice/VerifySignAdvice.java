@@ -12,6 +12,8 @@ import com.anypluspay.channelgateway.api.verify.VerifySignResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 验签增强处理器
  *
@@ -39,7 +41,7 @@ public class VerifySignAdvice implements GatewayRequestAdvice<VerifyModel, Verif
     }
 
     @Override
-    public ChannelApiType supportApiType() {
-        return ChannelApiType.VERIFY_SIGN;
+    public List<ChannelApiType> supportApiType() {
+        return List.of(ChannelApiType.VERIFY_SIGN);
     }
 }

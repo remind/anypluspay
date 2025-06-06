@@ -4,6 +4,7 @@ import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.anypluspay.channelgateway.api.query.QueryGateway;
+import com.anypluspay.channelgateway.api.query.QueryModel;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AlipayQueryGateway extends AbstractAlipayGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) throws Exception {
+    public void query(GatewayRequest<QueryModel> gatewayRequest, QueryModel normalContent, GatewayResult result) throws Exception {
         AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
         AlipayTradeQueryModel model = new AlipayTradeQueryModel();
         model.setOutTradeNo(normalContent.getInstRequestNo());

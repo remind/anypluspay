@@ -1,8 +1,8 @@
 package com.anypluspay.channel.facade.request;
 
-import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.std.ExtensionDeserializer;
 import com.anypluspay.commons.lang.std.ExtensionSerializer;
+import com.anypluspay.commons.lang.types.Extension;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;

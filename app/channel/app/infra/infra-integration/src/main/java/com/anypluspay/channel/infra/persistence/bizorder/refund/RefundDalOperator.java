@@ -5,7 +5,6 @@ import com.anypluspay.channel.infra.persistence.bizorder.BizOrderDalOperator;
 import com.anypluspay.channel.infra.persistence.dataobject.BizOrderDO;
 import com.anypluspay.channel.infra.persistence.mapper.RefundOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 /**

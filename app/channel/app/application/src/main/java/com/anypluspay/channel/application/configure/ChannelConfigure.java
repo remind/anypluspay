@@ -20,7 +20,10 @@ public class ChannelConfigure {
     public Map<ChannelApiType, GatewayRequestAdvice> gatewayInterceptorMap(List<GatewayRequestAdvice> gatewayRequestAdvices) {
         Map<ChannelApiType, GatewayRequestAdvice> gatewayInterceptorMap = new HashMap<>();
         gatewayRequestAdvices.forEach(
-                gatewayRequestAdvice -> gatewayInterceptorMap.put(gatewayRequestAdvice.supportApiType(), gatewayRequestAdvice)
+                gatewayRequestAdvice -> {
+                    List<ChannelApiType> supportApiTypes = gatewayRequestAdvice.supportApiType();
+                    supportApiTypes.forEach(channelApiType -> gatewayInterceptorMap.put(channelApiType, gatewayRequestAdvice));
+                }
         );
         return gatewayInterceptorMap;
     }

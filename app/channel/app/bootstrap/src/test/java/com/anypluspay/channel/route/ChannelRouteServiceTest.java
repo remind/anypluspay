@@ -1,8 +1,8 @@
 package com.anypluspay.channel.route;
 
-import com.anypluspay.channel.mock.FundChannelMock;
 import com.anypluspay.channel.application.route.ChannelRouteService;
 import com.anypluspay.channel.application.route.RouteParam;
+import com.anypluspay.channel.mock.FundChannelMock;
 import com.anypluspay.channel.types.enums.RequestType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;

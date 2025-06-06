@@ -4,10 +4,12 @@ import com.alipay.api.domain.AlipayTradeFastpayRefundQueryModel;
 import com.alipay.api.request.AlipayTradeFastpayRefundQueryRequest;
 import com.alipay.api.response.AlipayTradeFastpayRefundQueryResponse;
 import com.anypluspay.channelgateway.api.query.QueryGateway;
+import com.anypluspay.channelgateway.api.query.QueryModel;
 import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.lang.types.Money;
+import com.anypluspay.commons.response.GlobalResultCode;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,13 +21,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AlipayRefundQueryGateway extends AbstractAlipayGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) throws Exception {
+    public void query(GatewayRequest<QueryModel> gatewayRequest, QueryModel normalContent, GatewayResult result) throws Exception {
         AlipayTradeFastpayRefundQueryRequest request = new AlipayTradeFastpayRefundQueryRequest();
         AlipayTradeFastpayRefundQueryModel model = new AlipayTradeFastpayRefundQueryModel();
 
-        // 设置支付宝交易号
-        // TODO 支付宝退款查询需要传入支付单号
-//        model.setOutTradeNo(normalContent.get());
+        // 需要原支付单号
+        model.setOutTradeNo(normalContent.getOrigInstRequestNo());
         model.setOutRequestNo(normalContent.getInstRequestNo());
 
         request.setBizModel(model);
@@ -33,8 +34,8 @@ public class AlipayRefundQueryGateway extends AbstractAlipayGateway implements Q
         fillResult(response, result, (v) -> {
             result.setInstRequestNo(response.getOutTradeNo());
             result.setInstResponseNo(response.getTradeNo());
-            result.setApiCode(response.getRefundStatus());
-            result.setRealAmount(new Money(response.getRefundAmount()));
+            result.setApiCode(StringUtils.isNotBlank(response.getRefundStatus()) ? response.getRefundStatus() : GlobalResultCode.UNKNOWN.getCode());
+            result.setRealAmount(StringUtils.isNotBlank(response.getRefundAmount()) ? new Money(response.getRefundAmount()) : null);
         });
         result.setSuccess(true);
     }

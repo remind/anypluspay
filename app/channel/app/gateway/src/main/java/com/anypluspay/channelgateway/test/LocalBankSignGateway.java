@@ -1,13 +1,13 @@
 package com.anypluspay.channelgateway.test;
 
 import cn.hutool.core.lang.UUID;
+import com.anypluspay.channel.types.test.TestConstants;
+import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.channelgateway.api.sign.SignGateway;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.NormalContent;
-import com.anypluspay.channel.types.test.TestConstants;
-import com.anypluspay.channel.types.test.TestFlag;
 import org.springframework.stereotype.Service;
 
 /**

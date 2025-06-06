@@ -2,6 +2,7 @@ package com.anypluspay.channelgateway.testbank;
 
 import com.anypluspay.channelgateway.AbstractTestBank;
 import com.anypluspay.channelgateway.api.query.QueryGateway;
+import com.anypluspay.channelgateway.api.query.QueryModel;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestBankQueryGateway extends AbstractTestBank implements QueryGateway {
     @Override
-    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) {
+    public void query(GatewayRequest<QueryModel> gatewayRequest, QueryModel normalContent, GatewayResult result) {
         PayOrder payOrder = getWebClient().get().uri("/query")
                 .attribute("outTradeNo", normalContent.getInstRequestNo())
                 .retrieve()

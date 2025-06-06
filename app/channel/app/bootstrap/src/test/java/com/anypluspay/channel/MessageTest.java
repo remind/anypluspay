@@ -1,7 +1,6 @@
 package com.anypluspay.channel;
 
 import com.anypluspay.channel.base.AbstractBaseTest;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.junit.Test;

@@ -1,11 +1,11 @@
 package com.anypluspay.channelgateway.test;
 
-import com.anypluspay.channelgateway.api.query.QueryGateway;
-import com.anypluspay.channelgateway.request.GatewayRequest;
-import com.anypluspay.channelgateway.request.NormalContent;
-import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
+import com.anypluspay.channelgateway.api.query.QueryGateway;
+import com.anypluspay.channelgateway.api.query.QueryModel;
+import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.commons.lang.types.Money;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class LocalBankQueryGateway extends AbstractLocalBankGateway implements QueryGateway {
     @Override
-    public void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) throws Exception {
+    public void query(GatewayRequest<QueryModel> gatewayRequest, QueryModel normalContent, GatewayResult result) throws Exception {
         result.setSuccess(true);
         if (isTest(normalContent)) {
             testProcess(normalContent, result);
         }
     }
 
-    private void testProcess(NormalContent normalContent, GatewayResult result) {
+    private void testProcess(QueryModel normalContent, GatewayResult result) {
         TestFlag testFlag = getTestFlag(normalContent);
         if (TestConstants.S.equals(testFlag.getQ())) {
             result.setApiCode("SUCCESS");

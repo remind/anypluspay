@@ -4,8 +4,8 @@ import cn.hutool.core.lang.UUID;
 import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.channelgateway.ChannelGateway;
-import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.request.GatewayRequest;
+import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,8 @@
 package com.anypluspay.channel.application.route.scorer;
 
-import com.anypluspay.channel.domain.channel.ChannelFullInfo;
 import com.anypluspay.channel.application.route.RouteParam;
 import com.anypluspay.channel.application.route.RouteScorer;
+import com.anypluspay.channel.domain.channel.ChannelFullInfo;
 
 /**
  * 渠道打分器

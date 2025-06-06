@@ -1,9 +1,9 @@
 package com.anypluspay.channelgateway.request;
 
 import com.anypluspay.channel.types.ChannelExtKey;
-import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.std.ExtensionDeserializer;
 import com.anypluspay.commons.lang.std.ExtensionSerializer;
+import com.anypluspay.commons.lang.types.Extension;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;

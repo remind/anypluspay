@@ -1,12 +1,12 @@
 package com.anypluspay.channel.application;
 
 import cn.hutool.json.JSONUtil;
-import com.anypluspay.channel.mock.FundChannelMock;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.facade.FundInFacade;
 import com.anypluspay.channel.facade.OrderQueryFacade;
 import com.anypluspay.channel.facade.request.FundInRequest;
 import com.anypluspay.channel.facade.result.FundResult;
+import com.anypluspay.channel.mock.FundChannelMock;
 import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.order.BizOrderStatus;
 import com.anypluspay.channel.types.test.TestConstants;

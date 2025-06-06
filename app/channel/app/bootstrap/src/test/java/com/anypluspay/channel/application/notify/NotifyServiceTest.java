@@ -2,13 +2,13 @@ package com.anypluspay.channel.application.notify;
 
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.application.FundInBaseTest;
-import com.anypluspay.channel.facade.request.NotifyRequest;
-import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channelgateway.test.request.LocalBankNotifyResult;
 import com.anypluspay.channel.facade.NotifyFacade;
+import com.anypluspay.channel.facade.request.NotifyRequest;
 import com.anypluspay.channel.facade.result.FundResult;
 import com.anypluspay.channel.types.ChannelExtKey;
+import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.order.BizOrderStatus;
+import com.anypluspay.channelgateway.test.request.LocalBankNotifyResult;
 import com.anypluspay.channelgateway.types.CallbackType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;

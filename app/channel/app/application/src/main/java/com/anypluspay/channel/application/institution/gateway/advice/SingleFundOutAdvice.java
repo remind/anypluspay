@@ -9,6 +9,8 @@ import com.anypluspay.channelgateway.request.FundOutContent;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author wxj
  * 2024/12/18
@@ -34,7 +36,7 @@ public class SingleFundOutAdvice implements GatewayRequestAdvice<FundOutContent,
     }
 
     @Override
-    public ChannelApiType supportApiType() {
-        return ChannelApiType.SINGLE_FUND_OUT;
+    public List<ChannelApiType> supportApiType() {
+        return List.of(ChannelApiType.SINGLE_FUND_OUT);
     }
 }

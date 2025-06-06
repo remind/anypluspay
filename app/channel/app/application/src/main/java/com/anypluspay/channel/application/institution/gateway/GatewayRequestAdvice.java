@@ -1,10 +1,12 @@
 package com.anypluspay.channel.application.institution.gateway;
 
-import com.anypluspay.channel.types.result.ProcessResult;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channel.types.result.ProcessResult;
 import com.anypluspay.channelgateway.request.RequestContent;
+
+import java.util.List;
 
 /**
  * 渠道网关调用增强
@@ -34,5 +36,5 @@ public interface GatewayRequestAdvice<T extends RequestContent, R extends Proces
      * 支持的api类型
      * @return
      */
-    ChannelApiType supportApiType();
+    List<ChannelApiType> supportApiType();
 }

@@ -2,17 +2,19 @@ package com.anypluspay.channel.application.institution.gateway.advice;
 
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.application.institution.CombineCallbackUrlService;
-import com.anypluspay.channel.types.ChannelExtKey;
-import com.anypluspay.channelgateway.api.sign.SignNormalContent;
-import com.anypluspay.channelgateway.api.sign.SignResult;
+import com.anypluspay.channel.application.institution.gateway.GatewayRequestAdvice;
 import com.anypluspay.channel.domain.bizorder.ChannelApiContext;
 import com.anypluspay.channel.domain.bizorder.OrderContext;
 import com.anypluspay.channel.domain.bizorder.fund.FundInOrder;
 import com.anypluspay.channel.domain.institution.InstOrder;
-import com.anypluspay.channel.application.institution.gateway.GatewayRequestAdvice;
+import com.anypluspay.channel.types.ChannelExtKey;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channelgateway.api.sign.SignNormalContent;
+import com.anypluspay.channelgateway.api.sign.SignResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wxj
@@ -41,8 +43,8 @@ public class SignRequestAdvice implements GatewayRequestAdvice<SignNormalContent
     }
 
     @Override
-    public ChannelApiType supportApiType() {
-        return ChannelApiType.SIGN;
+    public List<ChannelApiType> supportApiType() {
+        return List.of(ChannelApiType.SIGN);
     }
 
 }

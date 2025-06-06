@@ -6,8 +6,6 @@ import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Extension;
 import lombok.Data;
 
-import java.util.Map;
-
 /**
  * 机构指令单
  * @author wxj

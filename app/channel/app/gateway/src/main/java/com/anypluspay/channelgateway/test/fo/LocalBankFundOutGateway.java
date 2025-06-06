@@ -5,7 +5,6 @@ import com.anypluspay.channel.types.test.TestConstants;
 import com.anypluspay.channel.types.test.TestFlag;
 import com.anypluspay.channelgateway.ChannelGateway;
 import com.anypluspay.channelgateway.request.FundOutContent;
-import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import com.anypluspay.channelgateway.test.AbstractLocalBankGateway;

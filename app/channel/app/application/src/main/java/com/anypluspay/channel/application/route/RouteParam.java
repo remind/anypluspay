@@ -2,7 +2,9 @@ package com.anypluspay.channel.application.route;
 
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
-import com.anypluspay.channel.types.enums.*;
+import com.anypluspay.channel.types.enums.CardType;
+import com.anypluspay.channel.types.enums.CompanyOrPersonal;
+import com.anypluspay.channel.types.enums.RequestType;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;
 import com.anypluspay.commons.terminal.Terminal;

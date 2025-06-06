@@ -2,6 +2,7 @@ package com.anypluspay.channelgateway.types;
 
 import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.result.ProcessResult;
+import com.anypluspay.channelgateway.api.query.QueryModel;
 import com.anypluspay.channelgateway.api.refund.RefundContent;
 import com.anypluspay.channelgateway.api.sign.SignNormalContent;
 import com.anypluspay.channelgateway.api.sign.SignResult;
@@ -27,6 +28,8 @@ public enum RequestResponseClass {
     SINGLE_FUND_OUT(ChannelApiType.SINGLE_FUND_OUT, FundOutContent.class, null),
     VERIFY_SIGN(ChannelApiType.VERIFY_SIGN, VerifyModel.class, VerifySignResult.class),
     REFUND_VERIFY_SIGN(ChannelApiType.REFUND_VERIFY_SIGN, VerifyModel.class, VerifySignResult.class),
+    SINGLE_QUERY(ChannelApiType.SINGLE_QUERY, QueryModel.class, GatewayResult.class),
+    SINGLE_REFUND_QUERY(ChannelApiType.SINGLE_REFUND_QUERY, QueryModel.class, GatewayResult.class),
     ;
 
     private final ChannelApiType channelApiType;

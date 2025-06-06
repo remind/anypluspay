@@ -1,7 +1,6 @@
 package com.anypluspay.channelgateway.api.query;
 
 import com.anypluspay.channelgateway.ChannelGateway;
-import com.anypluspay.channelgateway.request.NormalContent;
 import com.anypluspay.channelgateway.request.GatewayRequest;
 import com.anypluspay.channelgateway.result.GatewayResult;
 import org.apache.commons.lang3.StringUtils;
@@ -12,10 +11,10 @@ import org.apache.commons.lang3.StringUtils;
  * @author wxj
  * 2024/9/15
  */
-public interface QueryGateway extends ChannelGateway<NormalContent> {
+public interface QueryGateway extends ChannelGateway<QueryModel> {
 
     @Override
-    default GatewayResult call(GatewayRequest<NormalContent> gatewayRequest) throws Exception {
+    default GatewayResult call(GatewayRequest<QueryModel> gatewayRequest) throws Exception {
         GatewayResult result = new GatewayResult();
         result.setInstRequestNo(gatewayRequest.getContent().getInstRequestNo());
         query(gatewayRequest, gatewayRequest.getContent(), result);
@@ -25,5 +24,5 @@ public interface QueryGateway extends ChannelGateway<NormalContent> {
         return result;
     }
 
-    void query(GatewayRequest<NormalContent> gatewayRequest, NormalContent normalContent, GatewayResult result) throws Exception;
+    void query(GatewayRequest<QueryModel> gatewayRequest, QueryModel queryModel, GatewayResult result) throws Exception;
 }
