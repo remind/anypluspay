@@ -1,6 +1,4 @@
 <configuration>
-    <!-- 日志目录 -->
-    <property name="path" value="logs"/>
     <!--输出到CONSOLE -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -8,7 +6,7 @@
             <charset>UTF-8</charset>
         </encoder>
     </appender>
-    <root level="info">
+    <root level="debug">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>

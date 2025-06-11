@@ -34,7 +34,7 @@
     </dependencies>
 
     <build>
-        <finalName>account-bootstrap</finalName>
+        <finalName>anypluspay-account</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

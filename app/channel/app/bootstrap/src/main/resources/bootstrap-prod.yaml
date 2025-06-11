@@ -1,13 +1,13 @@
 spring:
   application:
-    name: payment
+    name: channel
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
       discovery:
-        namespace: local
+        namespace: prod
       config: # 公共配置，其它的在import里面
-        namespace: local
+        namespace: prod
   config:
     import:
       - nacos:datasource.yaml?refreshEnabled=true

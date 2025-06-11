@@ -1,6 +1,6 @@
 spring:
   application:
-    name: payment
+    name: admin
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
@@ -12,3 +12,4 @@ spring:
     import:
       - nacos:datasource.yaml?refreshEnabled=true
       - nacos:${spring.application.name}.yaml?refreshEnabled=true
+

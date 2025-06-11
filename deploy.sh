@@ -23,3 +23,9 @@ cp ./app/channel-gateway/test-bank-gateway/target/test-bank-gateway-bootstrap.ja
 cp ./app/test-bank/target/test-bank-bootstrap.jar "$DIR"
 
 echo "复制完成"
+
+
+
+docker build -t payment:latest .
+docker tag payment:latest registry.cn-hangzhou.aliyuncs.com/anypluspay/payment:latest
+docker push registry.cn-hangzhou.aliyuncs.com/anypluspay/payment:latest
