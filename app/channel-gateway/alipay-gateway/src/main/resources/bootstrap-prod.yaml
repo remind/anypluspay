@@ -10,4 +10,5 @@ spring:
         namespace: prod
   config:
     import:
+      - nacos:channel-gateway-common.yaml?refreshEnabled=true
       - nacos:${spring.application.name}.yaml?refreshEnabled=true

@@ -10,5 +10,5 @@ spring:
         namespace: prod
   config:
     import:
-      - nacos:datasource.yaml?refreshEnabled=true
+      - nacos:common.yaml?refreshEnabled=true
       - nacos:${spring.application.name}.yaml?refreshEnabled=true
