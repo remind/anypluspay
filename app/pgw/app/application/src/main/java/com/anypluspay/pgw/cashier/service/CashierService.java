@@ -1,11 +1,14 @@
-package com.anypluspay.admin.demo.cashier;
+package com.anypluspay.pgw.cashier.service;
 
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
-import com.anypluspay.admin.demo.cashier.request.DepositPayRequest;
-import com.anypluspay.admin.demo.cashier.request.PayMethod;
-import com.anypluspay.admin.demo.cashier.request.PayRequest;
-import com.anypluspay.admin.demo.cashier.response.WebPayMethodResponse;
+import com.anypluspay.pgw.cashier.model.CashierConfig;
+import com.anypluspay.pgw.cashier.model.CashierPayResult;
+import com.anypluspay.pgw.cashier.model.CashierType;
+import com.anypluspay.pgw.cashier.request.DepositPayRequest;
+import com.anypluspay.pgw.cashier.request.PayMethod;
+import com.anypluspay.pgw.cashier.request.PayRequest;
+import com.anypluspay.pgw.cashier.response.WebPayMethodResponse;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.types.Extension;
 import com.anypluspay.commons.lang.types.Money;

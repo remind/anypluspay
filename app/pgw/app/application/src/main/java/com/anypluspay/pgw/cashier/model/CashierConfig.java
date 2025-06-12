@@ -1,6 +1,6 @@
-package com.anypluspay.admin.demo.cashier;
+package com.anypluspay.pgw.cashier.model;
 
-import com.anypluspay.admin.demo.cashier.request.PayMethod;
+import com.anypluspay.pgw.cashier.request.PayMethod;
 import com.anypluspay.payment.types.asset.AssetType;
 
 import java.util.List;

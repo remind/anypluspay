@@ -29,6 +29,16 @@
                 <version>${revision}</version>
             </dependency>
             <dependency>
+                <groupId>com.anypluspay.payment</groupId>
+                <artifactId>payment-facade</artifactId>
+                <version>${payment.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.account</groupId>
+                <artifactId>account-facade</artifactId>
+                <version>${account.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-facade</artifactId>
                 <version>${channel.version}</version>

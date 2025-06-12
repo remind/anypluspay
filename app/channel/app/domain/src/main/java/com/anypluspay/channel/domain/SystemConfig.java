@@ -11,5 +11,5 @@ public interface SystemConfig {
     /**
      * 支付结果通知地址
      */
-    String getNotifyUrl();
+    String getPgwDomain();
 }

@@ -1,4 +1,4 @@
-package com.anypluspay.admin.demo.cashier.response;
+package com.anypluspay.pgw.cashier.response;
 
 import lombok.Data;
 

@@ -1,21 +1,19 @@
 package com.anypluspay.admin.demo.controller;
 
-import cn.hutool.core.lang.UUID;
 import com.anypluspay.account.facade.manager.OuterAccountManagerFacade;
 import com.anypluspay.account.facade.manager.response.OuterAccountResponse;
+import com.anypluspay.admin.core.SystemConfig;
+import com.anypluspay.admin.demo.response.PayResponse;
+import com.anypluspay.commons.lang.utils.StringUtil;
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.payment.facade.acquiring.AcquiringFacade;
 import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateRequest;
-import com.anypluspay.payment.facade.acquiring.create.AcquiringCreateResponse;
 import com.anypluspay.payment.types.trade.TradeType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
- * demo
+ * 支付示例
  *
  * @author wxj
  * 2025/3/28
@@ -30,6 +28,9 @@ public class DemoController {
     @Autowired
     private OuterAccountManagerFacade outerAccountManagerFacade;
 
+    @Autowired
+    private SystemConfig systemConfig;
+
     /**
      * 创建交易订单
      *
@@ -37,11 +38,24 @@ public class DemoController {
      * @return
      */
     @PostMapping("/create-trade-order")
-    public ResponseResult<AcquiringCreateResponse> createTradeOrder(@RequestBody AcquiringCreateRequest request) {
+    public ResponseResult<PayResponse> createTradeOrder(@RequestBody AcquiringCreateRequest request) {
         request.setTradeType(TradeType.INSTANT_ACQUIRING.getCode());
-        request.setOutTradeNo(UUID.randomUUID().toString(true));
+        request.setOutTradeNo(StringUtil.randomId());
         request.setPayeeAccountNo(getBaseAccountNo(request.getPayeeId()));
-        return ResponseResult.success(acquiringFacade.create(request));
+        PayResponse payResponse = new PayResponse();
+        payResponse.setTrade(acquiringFacade.create(request));
+        payResponse.setCashierUrl(systemConfig.getPgwAddress()  + "/cashier/pay?tradeId=" + payResponse.getTrade().getTradeId());
+        return ResponseResult.success(payResponse);
+    }
+
+    /**
+     * 获取充值地址
+     * @return
+     */
+    @GetMapping("/get-deposit-address")
+    @ResponseBody
+    public ResponseResult<String> getDepositAddress() {
+        return ResponseResult.success(systemConfig.getPgwAddress() + "/cashier/deposit");
     }
 
     private String getBaseAccountNo(String memberId) {

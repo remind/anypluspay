@@ -1,22 +1,22 @@
-package com.anypluspay.channel.infra.config;
+package com.anypluspay.admin.core;
 
-import com.anypluspay.channel.domain.SystemConfig;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * 系统配置
+ *
  * @author wxj
- * 2024/12/8
+ * 2025/6/12
  */
 @Data
 @ConfigurationProperties(prefix = "system")
 @Configuration
-public class SystemConfigImpl implements SystemConfig {
+public class SystemConfig {
 
     /**
-     * pgw域名
+     * pgw地址
      */
-    private String pgwDomain;
+    private String pgwAddress;
 }
