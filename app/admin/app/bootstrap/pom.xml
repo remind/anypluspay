@@ -10,10 +10,6 @@
     <groupId>com.anypluspay.admin</groupId>
     <artifactId>admin-bootstrap</artifactId>
     <packaging>jar</packaging>
-
-    <name>admin-bootstrap</name>
-    <url>http://maven.apache.org</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -35,7 +31,7 @@
     </dependencies>
 
     <build>
-        <finalName>admin-bootstrap</finalName>
+        <finalName>anypluspay-admin</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

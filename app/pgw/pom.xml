@@ -1,56 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.anypluspay</groupId>
-    <artifactId>parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <groupId>com.anypluspay</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>pgw</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-        <module>../../app/pgw</module>
+        <module>app/application</module>
+        <module>app/bootstrap</module>
     </modules>
+
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <framework.version>1.0-SNAPSHOT</framework.version>
-        <commons.version>1.0-SNAPSHOT</commons.version>
-        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <revision>1.0-SNAPSHOT</revision>
+        <payment.version>1.0-SNAPSHOT</payment.version>
+        <channel.version>1.0-SNAPSHOT</channel.version>
+        <account.version>1.0-SNAPSHOT</account.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.anypluspay</groupId>
-                <artifactId>dependencies</artifactId>
-                <version>${framework.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.anypluspay.pgw</groupId>
+                <artifactId>pgw-application</artifactId>
+                <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>com.anypluspay.commons</groupId>
-                <artifactId>commons-lang</artifactId>
-                <version>${commons.version}</version>
+                <groupId>com.anypluspay.channel</groupId>
+                <artifactId>channel-facade</artifactId>
+                <version>${channel.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.anypluspay.commons</groupId>
-            <artifactId>commons-lang</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
@@ -92,4 +76,3 @@
         </plugins>
     </build>
 </project>
-

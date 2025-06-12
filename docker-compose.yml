@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  account:
+    build:
+      context: ./app/account  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: account:latest  # 构建后的镜像名称
+    container_name: anypluspay-account
+    environment:
+      - NACOS_HOST=nacos24
+      - NACOS_NAMESPACE=prod
+    ports:
+      - "8082:8082"
+    networks:
+      - devsoft_default
+    volumes:
+      - ~/dev/anypluspay-project/anypluspay/logs/account:/root/app/logs
+
+networks:
+  devsoft_default:
+    external: true

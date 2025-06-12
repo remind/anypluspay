@@ -50,5 +50,4 @@
         <appender-ref ref="ERROR_FILE"/>
     </root>
 
-
 </configuration>

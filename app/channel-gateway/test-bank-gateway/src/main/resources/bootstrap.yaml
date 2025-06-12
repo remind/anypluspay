@@ -3,11 +3,11 @@ spring:
     name: test-bank-gateway
   cloud:
     nacos:
-      server-addr: 127.0.0.1:8848
+      server-addr: ${NACOS_HOST:localhost}:8848
       discovery:
-        namespace: local
-      config: # 公共配置，其它的在import里面
-        namespace: local
+        namespace: ${NACOS_NAMESPACE:local}
+      config:
+        namespace: ${NACOS_NAMESPACE:local}
   config:
     import:
       - nacos:channel-gateway-common.yaml?refreshEnabled=true

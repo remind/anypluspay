@@ -1,11 +1,15 @@
-#指定jdk基础镜像
-#FROM openjdk:17-slim
+# java 17基础镜像
+#FROM eclipse-temurin:17-jdk-alpine
 FROM arm64v8/openjdk:17
 
 #配置时区，校正后续容器日志时间
 ENV TZ=Asia/Shanghai
 
 ENV LANG=C.UTF-8
+
+# 配置nacos地址和空间，可在run时覆盖
+ENV NACOS_HOST=localhost
+ENV NACOS_NAMESPACE=local
 
 # 创建目录
 RUN mkdir /root/app -p
@@ -23,4 +27,4 @@ WORKDIR /root/app
 EXPOSE 8082
 
 #入口，java项目的启动命令
-CMD ["java","-jar","/root/app/anypluspay-account.jar","--spring.profiles.active=prod"]
+CMD ["java","-jar","/root/app/anypluspay-account.jar"]
