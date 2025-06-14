@@ -64,10 +64,10 @@ services:
       - "${LOG_DIR}/account:/root/app/logs"
   channel:
     build:
-      context: ./app/account  # Dockerfile 所在目录
+      context: ./app/channel  # Dockerfile 所在目录
       dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
-    image: account:latest  # 构建后的镜像名称
-    container_name: anypluspay-account
+    image: channel:latest  # 构建后的镜像名称
+    container_name: anypluspay-channel
     environment:
       <<: *common-env
     ports:
