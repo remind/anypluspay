@@ -17,9 +17,9 @@ services:
     ports:
       - "8079:8079"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/pgw:/root/app/logs"
   admin:
     build:
       context: ./app/admin  # Dockerfile 所在目录
@@ -31,7 +31,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
       - "${LOG_DIR}/admin:/root/app/logs"
   payment:
@@ -45,9 +45,9 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/payment:/root/app/logs"
   account:
     build:
       context: ./app/account  # Dockerfile 所在目录
@@ -59,7 +59,7 @@ services:
     ports:
       - "8082:8082"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
       - "${LOG_DIR}/account:/root/app/logs"
   channel:
@@ -73,9 +73,9 @@ services:
     ports:
       - "8083:8083"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/channel:/root/app/logs"
   test-bank-gateway:
     build:
       context: ./app/channel-gateway/test-bank-gateway  # Dockerfile 所在目录
@@ -87,9 +87,9 @@ services:
     ports:
       - "8090:8090"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/test-bank-gateway:/root/app/logs"
   alipay-gateway:
     build:
       context: ./app/channel-gateway/alipay-gateway  # Dockerfile 所在目录
@@ -101,9 +101,9 @@ services:
     ports:
       - "8091:8091"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/alipay-gateway:/root/app/logs"
   test-bank:
     build:
       context: ./app/test-bank  # Dockerfile 所在目录
@@ -113,10 +113,11 @@ services:
     ports:
       - "8070:8070"
     networks:
-      - my-network # 网络
+      - anypluspay_network # 网络
     volumes:
-      - "${LOG_DIR}/account:/root/app/logs"
+      - "${LOG_DIR}/test-bank:/root/app/logs"
 
 networks:
-  my-network:
+  anypluspay_network:
+    name: ${DOCKER_NETWORK_NAME}  # 使用已存在网络的名称
     external: true
