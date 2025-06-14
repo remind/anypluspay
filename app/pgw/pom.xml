@@ -4,22 +4,15 @@
     <parent>
         <groupId>com.anypluspay</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../../framework/parent/pom.xml</relativePath>
     </parent>
     <artifactId>pgw</artifactId>
-    <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
         <module>app/application</module>
         <module>app/bootstrap</module>
     </modules>
-
-    <properties>
-        <revision>1.0-SNAPSHOT</revision>
-        <payment.version>1.0-SNAPSHOT</payment.version>
-        <channel.version>1.0-SNAPSHOT</channel.version>
-        <account.version>1.0-SNAPSHOT</account.version>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -31,17 +24,17 @@
             <dependency>
                 <groupId>com.anypluspay.payment</groupId>
                 <artifactId>payment-facade</artifactId>
-                <version>${payment.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.account</groupId>
                 <artifactId>account-facade</artifactId>
-                <version>${account.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-facade</artifactId>
-                <version>${channel.version}</version>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

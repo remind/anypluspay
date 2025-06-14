@@ -4,7 +4,8 @@
     <parent>
         <groupId>com.anypluspay</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../../../framework/parent/pom.xml</relativePath>
     </parent>
     <groupId>com.anypluspay.channelgateway</groupId>
     <artifactId>test-bank-gateway</artifactId>
@@ -12,14 +13,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <channel-gateway-ap>1.0-SNAPSHOT</channel-gateway-ap>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.anypluspay</groupId>
             <artifactId>channel-gateway-app</artifactId>
-            <version>${channel-gateway-ap}</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

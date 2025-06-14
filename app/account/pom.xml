@@ -4,10 +4,10 @@
     <parent>
         <groupId>com.anypluspay</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../../framework/parent/pom.xml</relativePath>
     </parent>
     <artifactId>account</artifactId>
-    <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
         <module>app/domain</module>
@@ -18,10 +18,6 @@
         <module>gen/dalgen</module>
         <module>app/bootstrap</module>
     </modules>
-
-    <properties>
-        <revision>1.0-SNAPSHOT</revision>
-    </properties>
 
     <dependencyManagement>
         <dependencies>

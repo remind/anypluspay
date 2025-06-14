@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.anypluspay</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
+        <relativePath>../../framework/parent/pom.xml</relativePath>
     </parent>
     <artifactId>payment</artifactId>
-    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,10 +20,6 @@
         <module>app/types</module>
         <module>gen/dalgen</module>
     </modules>
-
-    <properties>
-        <revision>1.0-SNAPSHOT</revision>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -65,12 +61,12 @@
             <dependency>
                 <groupId>com.anypluspay.channel</groupId>
                 <artifactId>channel-facade</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.anypluspay.account</groupId>
                 <artifactId>account-facade</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${revision}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
