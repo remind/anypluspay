@@ -1,6 +1,9 @@
 # java 17基础镜像
-#FROM eclipse-temurin:17-jdk-alpine
-FROM arm64v8/openjdk:17
+# 默认
+FROM m.daocloud.io/docker.io/eclipse-temurin:17.0.15_6-jdk
+
+# mac 使用
+#FROM arm64v8/openjdk:17
 
 #配置时区，校正后续容器日志时间
 ENV TZ=Asia/Shanghai

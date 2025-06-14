@@ -13,14 +13,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <component.gateway.version>1.0-SNAPSHOT</component.gateway.version>
+        <gateway.app.version>1.0-SNAPSHOT</gateway.app.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.anypluspay.component</groupId>
-            <artifactId>component-channel-gateway-application</artifactId>
-            <version>${component.gateway.version}</version>
+            <groupId>com.anypluspay</groupId>
+            <artifactId>channel-gateway-app</artifactId>
+            <version>${gateway.app.version}</version>
         </dependency>
         <dependency>
             <groupId>com.alipay.sdk</groupId>

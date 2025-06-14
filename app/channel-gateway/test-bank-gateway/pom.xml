@@ -12,14 +12,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <component.gateway.version>1.0-SNAPSHOT</component.gateway.version>
+        <channel-gateway-ap>1.0-SNAPSHOT</channel-gateway-ap>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.anypluspay.component</groupId>
-            <artifactId>component-channel-gateway-application</artifactId>
-            <version>${component.gateway.version}</version>
+            <groupId>com.anypluspay</groupId>
+            <artifactId>channel-gateway-app</artifactId>
+            <version>${channel-gateway-ap}</version>
         </dependency>
     </dependencies>
 

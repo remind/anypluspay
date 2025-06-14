@@ -2,13 +2,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.anypluspay.component</groupId>
-        <artifactId>component-channel-gateway</artifactId>
-        <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <groupId>com.anypluspay</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
     </parent>
-
-    <artifactId>component-channel-gateway-application</artifactId>
+    <artifactId>channel-gateway-app</artifactId>
     <packaging>jar</packaging>
 
     <properties>
