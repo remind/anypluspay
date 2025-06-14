@@ -18,7 +18,7 @@ ENV NACOS_NAMESPACE=local
 RUN mkdir /root/app -p
 
 #拷贝java项目包
-COPY ./app/bootstrap/target/anypluspay-admin.jar /root/app/anypluspay-admin.jar
+COPY ./target/anypluspay-test-bank-gateway.jar /root/app/anypluspay-test-bank-gateway.jar
 
 # 挂载日志目录
 VOLUME ["/root/app/logs"]
@@ -27,7 +27,7 @@ VOLUME ["/root/app/logs"]
 WORKDIR /root/app
 
 #镜像需要暴露的端口
-EXPOSE 8080
+EXPOSE 8090
 
 #入口，java项目的启动命令
-CMD ["java","-jar","/root/app/anypluspay-admin.jar"]
+CMD ["java","-jar","/root/app/anypluspay-test-bank-gateway.jar"]

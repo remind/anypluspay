@@ -12,66 +12,15 @@
         <module>framework/component</module>
         <module>framework/dependencies</module>
         <module>framework/parent</module>
+        <module>app/pgw</module>
         <module>app/admin</module>
         <module>app/payment</module>
         <module>app/account</module>
         <module>app/channel</module>
         <module>app/test-bank</module>
         <module>app/channel-gateway/channel-gateway-app</module>
-        <module>app/channel-gateway/wxpay-gateway</module>
-        <module>app/channel-gateway/alipay-gateway</module>
         <module>app/channel-gateway/test-bank-gateway</module>
+        <module>app/channel-gateway/alipay-gateway</module>
+        <module>app/channel-gateway/wxpay-gateway</module>
     </modules>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
-        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
-    </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>${flatten-maven-plugin.version}</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <parameters>true</parameters>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <annotationProcessors>
-                        <processor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</processor>
-                    </annotationProcessors>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

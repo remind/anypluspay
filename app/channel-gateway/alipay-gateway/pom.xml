@@ -30,7 +30,7 @@
     </dependencies>
 
     <build>
-        <finalName>alipay-gateway-bootstrap</finalName>
+        <finalName>anypluspay-alipay-gateway</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

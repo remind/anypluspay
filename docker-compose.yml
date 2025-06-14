@@ -1,6 +1,53 @@
 version: '3.8'
 
+# 定义公共变量
+x-common-env: &common-env
+  NACOS_HOST: "${NACOS_HOST}"
+  NACOS_NAMESPACE: "${NACOS_NAMESPACE}"
+
 services:
+  pgw:
+    build:
+      context: ./app/pgw  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: pgw:latest  # 构建后的镜像名称
+    container_name: anypluspay-pgw
+    environment:
+      <<: *common-env
+    ports:
+      - "8079:8079"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
+  admin:
+    build:
+      context: ./app/admin  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: admin:latest  # 构建后的镜像名称
+    container_name: anypluspay-admin
+    environment:
+      <<: *common-env
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/admin:/root/app/logs"
+  payment:
+    build:
+      context: ./app/payment  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: payment:latest  # 构建后的镜像名称
+    container_name: anypluspay-payment
+    environment:
+      <<: *common-env
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
   account:
     build:
       context: ./app/account  # Dockerfile 所在目录
@@ -8,14 +55,67 @@ services:
     image: account:latest  # 构建后的镜像名称
     container_name: anypluspay-account
     environment:
-      - NACOS_HOST=nacos24
-      - NACOS_NAMESPACE=prod
+      <<: *common-env
     ports:
       - "8082:8082"
     networks:
       - my-network # 网络
     volumes:
-      - ~/dev/anypluspay-project/anypluspay/logs/account:/root/app/logs
+      - "${LOG_DIR}/account:/root/app/logs"
+  channel:
+    build:
+      context: ./app/account  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: account:latest  # 构建后的镜像名称
+    container_name: anypluspay-account
+    environment:
+      <<: *common-env
+    ports:
+      - "8083:8083"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
+  test-bank-gateway:
+    build:
+      context: ./app/channel-gateway/test-bank-gateway  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: test-bank-gateway:latest  # 构建后的镜像名称
+    container_name: anypluspay-test-bank-gateway
+    environment:
+      <<: *common-env
+    ports:
+      - "8090:8090"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
+  alipay-gateway:
+    build:
+      context: ./app/channel-gateway/alipay-gateway  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: alipay-gateway:latest  # 构建后的镜像名称
+    container_name: anypluspay-alipay-gateway
+    environment:
+      <<: *common-env
+    ports:
+      - "8091:8091"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
+  test-bank:
+    build:
+      context: ./app/test-bank  # Dockerfile 所在目录
+      dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
+    image: test-bank:latest  # 构建后的镜像名称
+    container_name: anypluspay-test-bank
+    ports:
+      - "8070:8070"
+    networks:
+      - my-network # 网络
+    volumes:
+      - "${LOG_DIR}/account:/root/app/logs"
 
 networks:
   my-network:

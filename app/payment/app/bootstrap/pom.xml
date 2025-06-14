@@ -28,7 +28,7 @@
     </dependencies>
 
     <build>
-        <finalName>payment-bootstrap</finalName>
+        <finalName>anypluspay-payment</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
