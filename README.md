@@ -19,6 +19,7 @@ anypluspay
          ├── account -- 账务服务
          ├── channel -- 渠道服务
          ├── channel-gateway -- 渠道网关目录
+                ├── channel-gateway-app -- 渠道网关公共包
                 ├── alipay-gateway -- 支付宝网关
                 ├── wxpay-gateway -- 微信网关
                 └── test-bank-gateway -- 测试银行网关
