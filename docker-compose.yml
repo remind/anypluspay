@@ -110,6 +110,8 @@ services:
       dockerfile: Dockerfile  # 默认就是Dockerfile，可省略
     image: test-bank:latest  # 构建后的镜像名称
     container_name: anypluspay-test-bank
+    environment:
+      <<: *common-env
     ports:
       - "8070:8070"
     networks:
