@@ -21,7 +21,7 @@ public abstract class AbstractTestBank {
 
     protected WebClient getWebClient() {
         if (webClient == null) {
-            webClient = WebClient.builder().baseUrl(sysConfig.getBankUrl()).build();
+            webClient = WebClient.builder().baseUrl(sysConfig.getTestBankUrl()).build();
         }
         return webClient;
     }

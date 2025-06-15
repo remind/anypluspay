@@ -42,11 +42,11 @@ public class OnlineBankPayService {
         return payOrderDO;
     }
 
-    public void pay(String outTradeNo, String action) {
+    public void pay(String outTradeNo, String status) {
         PayOrderDO payOrderDO = getByOutTradeNo(outTradeNo);
-        if ("1".equals(action)) {
+        if ("1".equals(status)) {
             payOrderDO.setStatus(OrderStatus.TRADE_SUCCESS.name());
-        } else if ("2".equals(action)) {
+        } else if ("2".equals(status)) {
             payOrderDO.setStatus(OrderStatus.TRADE_CLOSED.name());
         }
         payOrderMapper.updateById(payOrderDO);

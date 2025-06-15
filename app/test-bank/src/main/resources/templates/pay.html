@@ -44,33 +44,29 @@
 <div class="container">
     <h1>测试银行页面</h1>
     <h2>订单信息</h2>
-    <div class="field">
-        <label>订单号：</label>
-        <span th:text="${payOrder.outTradeNo}"></span>
-    </div>
-    <div class="field">
-        <label>金额：</label>
-        <span th:text="${payOrder.amount}"></span>
-    </div>
-    <div class="field">
-        <label>主题：</label>
-        <span th:text="${payOrder.subject}"></span>
-    </div>
-    <div class="field">
-        <label>商品信息：</label>
-        <span th:text="${payOrder.goodsDesc}"></span>
-    </div>
-    <div class="actions">
-        <button class="success" th:onclick="submit(1)">支付成功</button>
-        <button class="failure" th:onclick="submit(2)">支付失败</button>
-    </div>
+    <form th:action="@{${testBankUrl} + '/online-bank/submit'}" method="post">
+        <div class="field">
+            <label>订单号：</label>
+            <span th:text="${payOrder.outTradeNo}"></span>
+            <input type="hidden" name="outTradeNo" th:value="${payOrder.outTradeNo}">
+        </div>
+        <div class="field">
+            <label>金额：</label>
+            <span th:text="${payOrder.amount}"></span>
+        </div>
+        <div class="field">
+            <label>主题：</label>
+            <span th:text="${payOrder.subject}"></span>
+        </div>
+        <div class="field">
+            <label>商品信息：</label>
+            <span th:text="${payOrder.goodsDesc}"></span>
+        </div>
+        <div class="actions">
+            <button type="submit" class="success" name="status" value="1">支付成功</button>
+            <button type="submit" class="failure" name="status" value="2">支付失败</button>
+        </div>
+    </form>
 </div>
-<script th:inline="javascript">
-    var outTradeNo = [[${payOrder.outTradeNo}]];
-    function submit(action) {
-        var url = "/online-bank/submit?outTradeNo=" + outTradeNo + "&action=" + action;
-        window.location.href = url;
-    }
-</script>
 </body>
 </html>

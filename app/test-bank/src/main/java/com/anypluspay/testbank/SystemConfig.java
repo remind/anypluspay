@@ -1,4 +1,4 @@
-package com.anypluspay.channelgateway;
+package com.anypluspay.testbank;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @ConfigurationProperties(prefix = "system")
 @Configuration
-public class SysConfig {
+public class SystemConfig {
 
     /**
      * 银行地址

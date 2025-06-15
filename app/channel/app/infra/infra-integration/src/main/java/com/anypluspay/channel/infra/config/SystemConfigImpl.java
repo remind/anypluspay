@@ -18,5 +18,5 @@ public class SystemConfigImpl implements SystemConfig {
     /**
      * pgw域名
      */
-    private String pgwDomain;
+    private String pgwAddress;
 }

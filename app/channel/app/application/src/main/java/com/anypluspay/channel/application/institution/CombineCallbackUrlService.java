@@ -36,13 +36,13 @@ public class CombineCallbackUrlService {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.VERIFY_SIGN)) {
-                return systemConfig.getPgwDomain() + "/notify/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + instRequestNo;
+                return systemConfig.getPgwAddress() + "/notify/" + ChannelApiType.VERIFY_SIGN.getCode() + "/" + instRequestNo;
             }
         } else if (channelApiContext.getChannelApiType() == ChannelApiType.SINGLE_REFUND) {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.REFUND_VERIFY_SIGN)) {
-                return systemConfig.getPgwDomain() + "/notify/" + ChannelApiType.REFUND_VERIFY_SIGN.getCode() + "/" + instRequestNo;
+                return systemConfig.getPgwAddress() + "/notify/" + ChannelApiType.REFUND_VERIFY_SIGN.getCode() + "/" + instRequestNo;
             }
         }
         return "";
@@ -60,7 +60,7 @@ public class CombineCallbackUrlService {
             ChannelFullInfo channelFullInfo = channelFullInfoRepository.getChannelFullInfo(channelApiContext.getChannelCode());
             if (channelFullInfo.getChannelApis().stream()
                     .anyMatch(channelApi -> channelApi.getType() == ChannelApiType.VERIFY_SIGN)) {
-                return systemConfig.getPgwDomain() + "/return-page/" + instRequestNo;
+                return systemConfig.getPgwAddress() + "/return-page/" + instRequestNo;
             }
         }
         return "";

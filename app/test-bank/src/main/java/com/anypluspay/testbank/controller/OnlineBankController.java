@@ -1,8 +1,9 @@
 package com.anypluspay.testbank.controller;
 
-import cn.hutool.core.lang.UUID;
+import com.anypluspay.testbank.SystemConfig;
 import com.anypluspay.testbank.controller.dto.OnlineBankPayDto;
 import com.anypluspay.testbank.controller.dto.RefundDto;
+import com.anypluspay.testbank.controller.request.PaySubmitRequest;
 import com.anypluspay.testbank.persistence.dataobject.PayOrderDO;
 import com.anypluspay.testbank.persistence.dataobject.RefundOrderDO;
 import com.anypluspay.testbank.service.OnlineBankPayService;
@@ -27,24 +28,28 @@ public class OnlineBankController {
     @Autowired
     private OnlineBankPayService onlineBankPayService;
 
+    @Autowired
+    private SystemConfig systemConfig;
+
     @PostMapping("/pay")
     public String pay(@ModelAttribute OnlineBankPayDto onlineBankPayDto, Model model) {
         PayOrderDO payOrderDO = onlineBankPayService.createOrder(onlineBankPayDto);
         model.addAttribute("payOrder", payOrderDO);
+        model.addAttribute("testBankUrl", systemConfig.getTestBankUrl());
         return "pay";
     }
 
-    @GetMapping("/submit")
-    public String pay(String outTradeNo, String action, Model model) {
-        onlineBankPayService.pay(outTradeNo, action);
-        PayOrderDO payOrderDO = onlineBankPayService.getByOutTradeNo(outTradeNo);
+    @PostMapping("/submit")
+    public String pay(@ModelAttribute PaySubmitRequest request, Model model) {
+        onlineBankPayService.pay(request.getOutTradeNo(), request.getStatus());
+        PayOrderDO payOrderDO = onlineBankPayService.getByOutTradeNo(request.getOutTradeNo());
         model.addAttribute("payOrder", payOrderDO);
-        return "submit";
+        return "submit-result";
     }
 
     @GetMapping("/query")
     @ResponseBody
-    public PayOrderDO pay(String outTradeNo) {
+    public PayOrderDO pay(@RequestParam String outTradeNo) {
         return onlineBankPayService.getByOutTradeNo(outTradeNo);
     }
 
@@ -60,9 +65,4 @@ public class OnlineBankController {
         return response;
     }
 
-    @GetMapping("/start")
-    public String start(Model model) {
-        model.addAttribute("outTradeNo", UUID.fastUUID().toString(true));
-        return "start";
-    }
 }

@@ -18,8 +18,6 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
 
     @Override
     public void sign(GatewayRequest<SignNormalContent> gatewayRequest, SignNormalContent signOrderInfo, SignResult result) {
-        System.out.println("api param id:" + signOrderInfo.getApiParamId());
-        System.out.println("api param appId:" + getByParamId(signOrderInfo.getApiParamId()).getAppId());
         Map<String, String> parameters = new HashMap<>();
         parameters.put("outTradeNo", signOrderInfo.getInstRequestNo());
         parameters.put("amount", signOrderInfo.getAmount().getAmount().toString());
@@ -27,7 +25,7 @@ public class TestBankSignGateway extends AbstractTestBank implements SignGateway
         parameters.put("goodsDesc", signOrderInfo.getGoodsDesc());
         parameters.put("notifyUrl", signOrderInfo.getServerNotifyUrl());
         parameters.put("returnUrl", signOrderInfo.getReturnPageUrl());
-        String formHtml = buildForm(sysConfig.getBankUrl() + "/online-bank/pay", parameters);
+        String formHtml = buildForm(sysConfig.getTestBankUrl() + "/online-bank/pay", parameters);
         result.setRedirectionData(new RedirectionData(RedirectionType.FORM_CONTENT.getCode(), formHtml));
         result.setSuccess(true);
         result.setApiCode("0000");

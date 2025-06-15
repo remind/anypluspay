@@ -10,5 +10,6 @@ spring:
         namespace: ${NACOS_NAMESPACE:local}
   config:
     import:
+      - nacos:common.yaml?refreshEnabled=true
       - nacos:channel-gateway-common.yaml?refreshEnabled=true
       - nacos:${spring.application.name}.yaml?refreshEnabled=true
