@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: test-bank
+  cloud:
+    nacos:
+      server-addr: ${NACOS_HOST:localhost}:8848
+      discovery:
+        namespace: ${NACOS_NAMESPACE:local}
+      config:
+        namespace: ${NACOS_NAMESPACE:local}
+  config:
+    import:
+      - nacos:common.yaml?refreshEnabled=true
+      - nacos:${spring.application.name}.yaml?refreshEnabled=true
