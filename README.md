@@ -5,6 +5,8 @@
 
 AnyPlusPay 是一套基于领域驱动设计（DDD）理念，采用微服务架构构建的高性能、高可用、易扩展的支付系统解决方案。本项目旨在为电商平台、产业互联网平台等提供从支付接入、交易处理、资金清算到对账管理的完整支付功能，快速适配各类在线支付需求。
 
+详细介绍请查看 [AnyPlusPay 文档](https://www.yuque.com/fengyu-sfney/anypluspay/uk7hgxghli5llszm)
+
 ## 系统架构
 ![balance-pay-sequence.png](docs/images/architecture.png)
 
@@ -47,9 +49,7 @@ anypluspay
 | [Spring Boot](https://github.com/spring-projects/spring-boot)           | 开发框架         | 3.4.1      |
 | [Spring Cloud](https://spring.io/projects/spring-cloud)                 | 微服务框架        | 2024.0.0   |
 | MySQL                                                                   | 数据库          | 8+         |
-| Redis                                                                   | 缓存           | 最新版本       |
-| [RocketMQ](https://https://github.com/apache/rocketmq)                  | 消息           | 5.0        |
-| [spring-cloud-alibaba](https://github.com/alibaba/spring-cloud-alibaba) | Nacos 依赖     | 2023.0.3.2 |
+| [RocketMQ](https://github.com/apache/rocketmq)                  | 消息           | 5.0        |
 | [Nacos](https://github.com/alibaba/nacos)                               | 注册中心、配置中心    | 2.4.1      |
 | [MyBatis-Plus](https://mp.baomidou.com/)                                | MyBatis 增强工具 | 3.5.4.1    |
 | [MapStruct](https://mapstruct.org/)                                     | 对象转换         | 1.6.3      |
