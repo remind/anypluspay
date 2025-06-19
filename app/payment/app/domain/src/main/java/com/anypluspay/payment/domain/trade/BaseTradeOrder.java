@@ -18,6 +18,11 @@ public abstract class BaseTradeOrder extends Entity {
     private String tradeId;
 
     /**
+     * 合作方
+     */
+    private String partnerId;
+
+    /**
      * 支付单号ID
      */
     private String orderId;

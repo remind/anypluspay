@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2025-06-06
+ * @since 2025-06-19
  */
 @TableName("tt_withdraw_order")
 public class WithdrawOrderDO implements Serializable {
@@ -27,6 +27,11 @@ public class WithdrawOrderDO implements Serializable {
      */
     @TableId(value = "trade_id", type = IdType.NONE)
     private String tradeId;
+
+    /**
+     * 合作方ID
+     */
+    private String partnerId;
 
     /**
      * 支付ID
@@ -106,6 +111,14 @@ public class WithdrawOrderDO implements Serializable {
 
     public void setTradeId(String tradeId) {
         this.tradeId = tradeId;
+    }
+
+    public String getPartnerId() {
+        return partnerId;
+    }
+
+    public void setPartnerId(String partnerId) {
+        this.partnerId = partnerId;
     }
 
     public String getOrderId() {
@@ -224,6 +237,7 @@ public class WithdrawOrderDO implements Serializable {
     public String toString() {
         return "WithdrawOrderDO{" +
         "tradeId = " + tradeId +
+        ", partnerId = " + partnerId +
         ", orderId = " + orderId +
         ", memberId = " + memberId +
         ", accountNo = " + accountNo +

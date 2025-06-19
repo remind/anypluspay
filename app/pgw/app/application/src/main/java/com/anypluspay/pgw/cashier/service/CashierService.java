@@ -94,6 +94,7 @@ public class CashierService {
      */
     public CashierPayResult depositPay(DepositPayRequest request) {
         DepositRequest depositRequest = new DepositRequest();
+        depositRequest.setPartnerId(request.getPartnerId());
         depositRequest.setMemberId(request.getMemberId());
         depositRequest.setAccountNo(request.getAccountNo());
         depositRequest.setAmount(new Money(request.getAmount()));

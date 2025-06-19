@@ -16,7 +16,7 @@ db:
       - tm_ #会员表
       - tc_ #配置类数据
     name:
-      - tt_acquiring_order
+#      - tt_acquiring_order
       - tt_withdraw_order
       - tt_deposit_order
 #      - tp_pay_order

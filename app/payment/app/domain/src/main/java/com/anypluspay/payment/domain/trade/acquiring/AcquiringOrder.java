@@ -33,11 +33,6 @@ public class AcquiringOrder extends BaseTradeOrder {
     private String outTradeNo;
 
     /**
-     * 合作方
-     */
-    private String partnerId;
-
-    /**
      * 收款方
      */
     private String payeeId;

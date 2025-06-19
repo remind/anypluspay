@@ -23,6 +23,7 @@ public class WithdrawBuilder extends TradeBuilder {
 
     public WithdrawOrder buildWithdrawOrder(WithdrawRequest request) {
         WithdrawOrder withdrawOrder = new WithdrawOrder();
+        withdrawOrder.setPartnerId(request.getPartnerId());
         withdrawOrder.setTradeId(idGeneratorService.genTradeId(request.getMemberId(), IdType.WITHDRAW_ORDER_ID));
         withdrawOrder.setOrderId(idGeneratorService.genIdByRelateId(withdrawOrder.getTradeId(), PayOrderType.PAY.getIdType()));
         withdrawOrder.setAmount(request.getAmount());

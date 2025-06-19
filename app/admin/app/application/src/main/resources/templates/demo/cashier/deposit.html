@@ -72,6 +72,10 @@
     <!-- 商品信息 -->
     <div class="item-list">
         <div class="item">
+            <span>合作方ID</span>
+            <span th:text="${request.partnerId}"></span>
+        </div>
+        <div class="item">
             <span>会员ID</span>
             <span th:text="${request.memberId}"></span>
         </div>
@@ -132,6 +136,7 @@
                 },
                 body: JSON.stringify({
                     payMethods: selectedPayMethods,
+                    partnerId: '[[${request.partnerId}]]',
                     memberId: '[[${request.memberId}]]',
                     accountNo: '[[${request.accountNo}]]',
                     amount: '[[${request.amount}]]',

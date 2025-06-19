@@ -10,6 +10,11 @@ import lombok.Data;
 public class DepositCashierRequest {
 
     /**
+     * 合作方ID
+     */
+    private String partnerId;
+
+    /**
      * 充值时的会员ID
      */
     private String memberId;

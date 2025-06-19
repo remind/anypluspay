@@ -26,6 +26,7 @@ public class DepositBuilder extends TradeBuilder {
 
     public DepositOrder buildDepositOrder(DepositRequest request) {
         DepositOrder depositOrder = new DepositOrder();
+        depositOrder.setPartnerId(request.getPartnerId());
         depositOrder.setTradeId(idGeneratorService.genTradeId(request.getMemberId(), IdType.DEPOSIT_ORDER_ID));
         depositOrder.setOrderId(idGeneratorService.genIdByRelateId(depositOrder.getTradeId(), PayOrderType.PAY.getIdType()));
         depositOrder.setAmount(request.getAmount());

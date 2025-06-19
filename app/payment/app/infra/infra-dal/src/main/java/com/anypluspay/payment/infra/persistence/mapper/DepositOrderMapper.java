@@ -9,7 +9,7 @@ import com.anypluspay.component.dal.mybatis.ext.ExtBaseMapper;
  * </p>
  *
  * @author wxj
- * @since 2025-06-06
+ * @since 2025-06-19
  */
 public interface DepositOrderMapper extends ExtBaseMapper<DepositOrderDO> {
 
