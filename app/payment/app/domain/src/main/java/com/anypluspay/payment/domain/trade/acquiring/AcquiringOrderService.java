@@ -4,6 +4,7 @@ import com.anypluspay.payment.domain.pay.refund.RefundApplyService;
 import com.anypluspay.payment.domain.repository.AcquiringOrderRepository;
 import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import com.anypluspay.payment.types.pay.RefundType;
+import com.anypluspay.payment.types.trade.TradeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -37,13 +38,19 @@ public class AcquiringOrderService {
             AcquiringOrder acquiringOrder = acquiringOrderRepository.lock(tradeId);
             if (success) {
                 if (acquiringOrder.getStatus() == AcquiringOrderStatus.SUCCESS) {
-                    refund(tradeId, orderId, RefundType.REPEAT);
+                    if (acquiringOrder.getTradeType() == TradeType.INSTANT_ACQUIRING || acquiringOrder.getTradeType() == TradeType.ENSURE_ACQUIRING) {
+                        refund(tradeId, orderId, RefundType.REPEAT);
+                    }
                 } else if (acquiringOrder.getStatus() == AcquiringOrderStatus.CLOSED) {
-                    refund(tradeId, orderId, RefundType.ORDER_CLOSE);
-                } else {
-                    if (LocalDateTime.now().isAfter(acquiringOrder.getGmtExpire())) {
-                        acquiringOrder.setStatus(AcquiringOrderStatus.CLOSED);
+                    if (acquiringOrder.getTradeType() == TradeType.INSTANT_ACQUIRING || acquiringOrder.getTradeType() == TradeType.ENSURE_ACQUIRING) {
                         refund(tradeId, orderId, RefundType.ORDER_CLOSE);
+                    }
+                } else {
+                    if (acquiringOrder.getGmtExpire() != null && LocalDateTime.now().isAfter(acquiringOrder.getGmtExpire())) {
+                        if (acquiringOrder.getTradeType() == TradeType.INSTANT_ACQUIRING || acquiringOrder.getTradeType() == TradeType.ENSURE_ACQUIRING) {
+                            acquiringOrder.setStatus(AcquiringOrderStatus.CLOSED);
+                            refund(tradeId, orderId, RefundType.ORDER_CLOSE);
+                        }
                     } else {
                         acquiringOrder.setOrderId(orderId);
                         acquiringOrder.setStatus(AcquiringOrderStatus.SUCCESS);

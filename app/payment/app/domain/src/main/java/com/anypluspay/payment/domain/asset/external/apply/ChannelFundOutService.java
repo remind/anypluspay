@@ -25,8 +25,8 @@ public class ChannelFundOutService extends AbstractExternalApplyService {
 
     public FluxResult apply(FluxOrder fluxOrder, FluxProcess fluxProcess) {
         FundOutRequest fundOutRequest = buildFundOutRequest(fluxOrder, fluxProcess);
-        FundResult fundResult = fundOutFacade.apply(fundOutRequest);
         fillTradeInfo(fluxOrder, fundOutRequest);
+        FundResult fundResult = fundOutFacade.apply(fundOutRequest);
         return externalResultService.process(fluxProcess, fundResult);
     }
 

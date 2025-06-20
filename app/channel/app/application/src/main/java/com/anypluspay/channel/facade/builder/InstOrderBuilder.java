@@ -10,6 +10,7 @@ import com.anypluspay.channel.domain.repository.channel.ChannelApiParamRepositor
 import com.anypluspay.channel.types.enums.TaskStatus;
 import com.anypluspay.channel.types.order.InstOrderStatus;
 import com.anypluspay.channel.types.order.SubmitTimeType;
+import com.anypluspay.commons.lang.utils.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,8 +53,16 @@ public class InstOrderBuilder {
         return instOrder;
     }
 
+    /**
+     * 获取渠道参数ID
+     *
+     * @param partnerId
+     * @param channelCode
+     * @return
+     */
     private String getApiParamId(String partnerId, String channelCode) {
-        ChannelApiParam channelApiParam = channelApiParamRepository.loadByPartnerIdANdChannelCode(partnerId, channelCode);
-        return channelApiParam == null ? null : channelApiParam.getId();
+        ChannelApiParam channelApiParam = channelApiParamRepository.loadByPartnerIdAndChannelCode(partnerId, channelCode);
+        AssertUtil.notNull(channelApiParam, "找不到对应的渠道参数");
+        return channelApiParam.getId();
     }
 }

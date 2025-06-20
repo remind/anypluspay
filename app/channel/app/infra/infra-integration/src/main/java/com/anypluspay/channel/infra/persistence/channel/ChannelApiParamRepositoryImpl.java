@@ -30,7 +30,7 @@ public class ChannelApiParamRepositoryImpl implements ChannelApiParamRepository 
     }
 
     @Override
-    public ChannelApiParam loadByPartnerIdANdChannelCode(String partnerId, String channelCode) {
+    public ChannelApiParam loadByPartnerIdAndChannelCode(String partnerId, String channelCode) {
         ChannelApiParamDO channelApiParamDO = dalMapper.selectOne(Wrappers.<ChannelApiParamDO>lambdaQuery()
                 .eq(ChannelApiParamDO::getPartnerId, partnerId)
                 .eq(ChannelApiParamDO::getChannelCode, channelCode));

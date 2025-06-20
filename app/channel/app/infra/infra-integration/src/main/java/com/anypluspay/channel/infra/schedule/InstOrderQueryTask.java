@@ -10,8 +10,10 @@ import com.anypluspay.channel.domain.institution.InstOrder;
 import com.anypluspay.channel.domain.repository.BizOrderRepository;
 import com.anypluspay.channel.domain.repository.InstOrderRepository;
 import com.anypluspay.channel.infra.persistence.mapper.TaskQuery;
+import com.anypluspay.channel.types.channel.ChannelApiType;
 import com.anypluspay.channel.types.enums.TaskStatus;
 import com.anypluspay.channel.types.order.InstOrderStatus;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.util.List;
  * 2024/12/13
  */
 @Service
+@Slf4j
 public class InstOrderQueryTask extends AbstractInstOrderTask {
 
     @Autowired
@@ -76,7 +79,17 @@ public class InstOrderQueryTask extends AbstractInstOrderTask {
 
     private InstOrder process(Long instOrderId) {
         InstOrder instOrder = instOrderRepository.load(instOrderId);
-        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(instOrder.getFundChannelCode(), channelApiDomainService.getQueryApiType(instOrder.getApiType()));
+        ChannelApiType queryApiType = channelApiDomainService.getQueryApiType(instOrder.getApiType());
+        if (queryApiType == null) {
+            log.error("机构订单查询补单任务，该订单不支持查询，instOrderId:{}, apiType:{}", instOrderId, instOrder.getApiType());
+            return instOrder;
+        }
+        ChannelApiContext channelApiContext = channelRouteService.routeByChannel(instOrder.getFundChannelCode(), queryApiType);
+        if (channelApiContext == null) {
+            log.error("机构订单查询补单任务，找不到对应的查询接口类型，instOrderId:{}", instOrderId);
+            return instOrder;
+        }
+
         BaseBizOrder bizOrder = bizOrderRepository.load(instOrder.getBizOrderId());
         OrderContext orderContext = instProcessService.createAndSubmit(channelApiContext, bizOrder, instOrder);
         return orderContext.getInstOrder();

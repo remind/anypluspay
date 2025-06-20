@@ -174,7 +174,7 @@ public abstract class AbstractChannelService {
             fundResult.setResultMsg(bizException.getMessage());
         } else {
             fundResult.setResultCode(GlobalResultCode.FAIL.getCode());
-            fundResult.setResultMsg(e.getMessage());
+            fundResult.setResultMsg(GlobalResultCode.FAIL.getMessage());
         }
         return fundResult;
     }
