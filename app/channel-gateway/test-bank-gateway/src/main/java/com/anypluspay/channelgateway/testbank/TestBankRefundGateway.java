@@ -19,6 +19,7 @@ import java.util.Map;
 public class TestBankRefundGateway extends AbstractTestBank implements RefundGateway {
     @Override
     public void refund(GatewayRequest<RefundContent> gatewayRequest, RefundContent refundOrder, GatewayResult result) {
+        validate(refundOrder);
         Map<String, String> params = new HashMap<>();
         params.put("outRequestNo", refundOrder.getInstRequestNo());
         params.put("origOrderId", refundOrder.getOrigInstResponseNo());

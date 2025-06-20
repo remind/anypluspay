@@ -3,6 +3,7 @@ package com.anypluspay.channelgateway.testbank;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.anypluspay.channel.types.channel.ChannelApiType;
+import com.anypluspay.channelgateway.AbstractTestBank;
 import com.anypluspay.channelgateway.api.verify.VerifyModel;
 import com.anypluspay.channelgateway.api.verify.VerifySignGateway;
 import com.anypluspay.channelgateway.api.verify.VerifySignResult;
@@ -14,9 +15,10 @@ import org.springframework.stereotype.Service;
  * 2024/12/8
  */
 @Service
-public class TestOnlineBankVerifySignGateway implements VerifySignGateway {
+public class TestOnlineBankVerifySignGateway extends AbstractTestBank implements VerifySignGateway {
     @Override
     public void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result) {
+        validate(verifyModel);
         result.setSuccess(true);
         JSONObject jsonObject = JSONUtil.parseObj(request.getContent().getRequestBody());
         result.setResponseBody("SUCCESS");
