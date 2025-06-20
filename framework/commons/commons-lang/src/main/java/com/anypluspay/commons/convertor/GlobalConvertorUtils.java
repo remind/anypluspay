@@ -6,6 +6,7 @@ import com.anypluspay.commons.lang.types.Money;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author wxj
@@ -30,6 +31,6 @@ public class GlobalConvertorUtils {
 
     public static String toDisplayMoney(BigDecimal amount, String currencyCode) {
         Money money = toMoney(amount, currencyCode);
-        return money.getCurrency().getSymbol() + money.getAmount().toString();
+        return money.getCurrency().getSymbol(Locale.CHINA) + money.getAmount().toString();
     }
 }
