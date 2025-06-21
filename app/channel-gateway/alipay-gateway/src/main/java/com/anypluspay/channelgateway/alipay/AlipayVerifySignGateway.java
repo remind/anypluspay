@@ -26,8 +26,9 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
     @Override
     public void notify(GatewayRequest<VerifyModel> request, VerifyModel verifyModel, VerifySignResult result) throws Exception {
         Map<String, String> paramsMap = JSONUtil.toBean(verifyModel.getRequestBody(), Map.class);
+        AlipayParam alipayParam = getAlipayParam(verifyModel.getApiParamId());
         // 后端回调直接验签
-        boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, getAlipayParam(verifyModel.getApiParamId()).getAlipayPublicKey(), AlipayConstants.CHARSET, AlipayConstants.SIGN_TYPE); //调用SDK验证签名
+        boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, alipayParam.getAlipayPublicKey(), AlipayConstants.CHARSET, alipayParam.getSignType()); //调用SDK验证签名
         result.setInstRequestNo(paramsMap.get("out_trade_no"));
         if (signVerified) {
             result.setApiCode(paramsMap.get("trade_status"));
