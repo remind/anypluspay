@@ -1,7 +1,6 @@
 package com.anypluspay.channelgateway.alipay;
 
 import cn.hutool.json.JSONUtil;
-import com.alipay.api.AlipayConstants;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.anypluspay.channelgateway.api.verify.VerifyModel;
 import com.anypluspay.channelgateway.api.verify.VerifySignGateway;
@@ -28,7 +27,7 @@ public class AlipayVerifySignGateway extends AbstractAlipayGateway implements Ve
         Map<String, String> paramsMap = JSONUtil.toBean(verifyModel.getRequestBody(), Map.class);
         AlipayParam alipayParam = getAlipayParam(verifyModel.getApiParamId());
         // 后端回调直接验签
-        boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, alipayParam.getAlipayPublicKey(), AlipayConstants.CHARSET, alipayParam.getSignType()); //调用SDK验证签名
+        boolean signVerified = AlipaySignature.rsaCheckV1(paramsMap, alipayParam.getAlipayPublicKey(), CHARSET, alipayParam.getSignType()); //调用SDK验证签名
         result.setInstRequestNo(paramsMap.get("out_trade_no"));
         if (signVerified) {
             result.setApiCode(paramsMap.get("trade_status"));

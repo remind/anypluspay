@@ -20,6 +20,8 @@ public class AbstractAlipayGateway {
     @Autowired
     private ApiParamTemplate apiParamTemplate;
 
+    protected static String CHARSET = "UTF-8";
+
     protected static final String RESULT_CODE_SUCCESS  = "10000";
 
     protected AlipayClient createAlipayClient(String paramId) {
