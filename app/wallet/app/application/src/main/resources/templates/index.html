@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>我的钱包</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+          background-color: #f5f7fa;
+          font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .balance-amount {
+          font-size: 32px;
+          font-weight: bold;
+          font-family: 'Din Pro', Arial, sans-serif;
+          cursor: pointer;
+        }
+        .balance-value {
+          font-size: 18px;
+          font-weight: 500;
+          font-family: 'Din Pro', Arial, sans-serif;
+        }
+        .card-action {
+          width: 24px;
+          height: 24px;
+          background: rgba(0, 0, 0, 0.5);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        .card-action:hover {
+          background: rgba(0, 0, 0, 0.7);
+        }
+        .card-item-actions {
+          display: none !important;
+        }
+        .card-item:hover .card-item-actions {
+          display: flex !important;
+        }
+        .type-income {
+          background-color: #e6f7e6;
+          color: #52c41a;
+        }
+        .type-expense {
+          background-color: #fff1f0;
+          color: #f5222d;
+        }
+        .status-success {
+          background-color: #e6f7e6;
+          color: #52c41a;
+        }
+        .status-pending {
+          background-color: #fffbe6;
+          color: #faad14;
+        }
+        .status-failed {
+          background-color: #fff1f0;
+          color: #f5222d;
+        }
+        .pagination .page-item.active .page-link {
+          background-color: #1a56ff;
+          border-color: #1a56ff;
+        }
+    </style>
+</head>
+<body>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+        <h1 class="h4 text-dark">我的钱包</h1>
+        <div class="text-muted">欢迎，用户ABC</div>
+    </div>
+
+    <!-- 余额卡片 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center mb-3">
+                        <h5 class="card-title text-muted mb-0 me-2">账户余额</h5>
+                        <button id="toggleVisibility" class="btn btn-sm bg-transparent p-0 border-0" title="显示/隐藏余额">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8a13.133 13.133 0 0 1-1.66 2.043C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.133 13.133 0 0 1 1.172 8z"/>
+                                <path d="M8 5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="balance-amount text-dark mb-3" id="balanceAmount">¥12,580.00</div>
+                    <div class="d-flex mb-4">
+                        <div class="me-5">
+                            <div class="text-muted small">可用余额</div>
+                            <div class="balance-value">¥12,200.00</div>
+                        </div>
+                        <div>
+                            <div class="text-muted small">冻结余额</div>
+                            <div class="balance-value">¥380.00</div>
+                        </div>
+                    </div>
+                    <div>
+                        <a href="/recharge" class="btn btn-primary me-2">充值</a>
+                        <a href="/withdraw" class="btn btn-outline-secondary">提现</a>
+                    </div>
+                </div>
+                <div class="col-md-4 border-start">
+                    <div class="ps-3">
+                        <h6 class="text-muted">说明</h6>
+                        <p class="text-muted small mb-0">在此区域可以显示关于余额的提示信息，例如资金来源、到账时间、冻结原因等。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 银行卡区域 -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">我的银行卡</h5>
+                <button class="btn btn-primary">添加银行卡</button>
+            </div>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="border rounded p-3 position-relative card-item">
+                        <div class="fw-bold mb-2">中国工商银行</div>
+                        <div class="mb-2">**** **** **** 1234</div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>储蓄卡</span><span>张三</span>
+                        </div>
+                        <div class="position-absolute top-0 end-0 m-2 d-flex card-item-actions">
+                            <button class="card-action me-1">✏️</button>
+                            <button class="card-action">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded p-3 position-relative card-item">
+                        <div class="fw-bold mb-2">中国建设银行</div>
+                        <div class="mb-2">**** **** **** 5678</div>
+                        <div class="d-flex justify-content-between small text-muted">
+                            <span>信用卡</span><span>张三</span>
+                        </div>
+                        <div class="position-absolute top-0 end-0 m-2 d-flex card-item-actions">
+                            <button class="card-action me-1">✏️</button>
+                            <button class="card-action">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border rounded p-3 position-relative card-item h-100 d-flex flex-column justify-content-center align-items-center text-muted" style="cursor: pointer;">
+                        <div class="fs-3">+</div>
+                        <div>添加银行卡</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 账单区域 -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">账单记录</h5>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-outline-primary active">全部</button>
+                    <button class="btn btn-outline-primary">收入</button>
+                    <button class="btn btn-outline-primary">支出</button>
+                    <button class="btn btn-outline-primary">充值</button>
+                    <button class="btn btn-outline-primary">提现</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>交易时间</th>
+                        <th>交易类型</th>
+                        <th>交易金额</th>
+                        <th>交易对象</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>2023-08-15 14:30</td>
+                        <td><span class="badge type-income">充值</span></td>
+                        <td class="text-success fw-bold">+1,000.00</td>
+                        <td>支付宝充值</td>
+                        <td><span class="badge status-success">成功</span></td>
+                        <td><a href="#">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>2023-08-14 10:15</td>
+                        <td><span class="badge type-expense">提现</span></td>
+                        <td class="text-danger fw-bold">-500.00</td>
+                        <td>工商银行(尾号1234)</td>
+                        <td><span class="badge status-success">成功</span></td>
+                        <td><a href="#">详情</a></td>
+                    </tr>
+                    <tr>
+                        <td>2023-08-13 18:45</td>
+                        <td><span class="badge type-expense">支付</span></td>
+                        <td class="text-danger fw-bold">-128.00</td>
+                        <td>京东商城</td>
+                        <td><span class="badge status-success">成功</span></td>
+                        <td><a href="#">详情</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="d-flex justify-content-end mt-3">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">上一页</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">下一页</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleBtn = document.getElementById('toggleVisibility');
+      const balanceAmount = document.getElementById('balanceAmount');
+      const balanceValues = document.querySelectorAll('.balance-value');
+      let isVisible = true;
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          isVisible = !isVisible;
+          balanceAmount.textContent = isVisible ? '¥12,580.00' : '******';
+          balanceValues.forEach(el => {
+            el.textContent = isVisible ? (el.dataset.value || '0') : '******';
+          });
+        });
+      }
+
+      balanceValues.forEach(el => {
+        el.dataset.value = el.textContent;
+      });
+    });
+</script>
+</body>
+</html>
