@@ -2,6 +2,8 @@ package com.anypluspay.account.domain.repository;
 
 import com.anypluspay.account.domain.OuterAccount;
 
+import java.util.List;
+
 /**
  * 账户仓储
  * @author wxj
@@ -17,6 +19,7 @@ public interface OuterAccountRepository {
 
     OuterAccount lock(String accountNo);
 
-    OuterAccount queryByMemberAndAccountTypeId(String memberId, String accountType);
+    OuterAccount queryByMemberIdAndAccountType(String memberId, String accountType);
+    List<OuterAccount> queryByMemberId(String memberId);
 
 }

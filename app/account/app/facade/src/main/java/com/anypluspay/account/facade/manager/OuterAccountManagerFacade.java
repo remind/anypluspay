@@ -74,5 +74,13 @@ public interface OuterAccountManagerFacade {
      * @return
      */
     @GetMapping(PREFIX + "/query-by-member-account-type")
-    OuterAccountResponse queryByMemberAndAccountTypeId(@RequestParam String memberId, @RequestParam String accountType);
+    OuterAccountResponse queryByMemberIdAndAccountType(@RequestParam String memberId, @RequestParam String accountType);
+
+    /**
+     * 根据会员编号查询
+     * @param memberId  会员编号
+     * @return
+     */
+    @GetMapping(PREFIX + "/query-by-member-id")
+    List<OuterAccountResponse> queryByMemberId(@RequestParam String memberId);
 }

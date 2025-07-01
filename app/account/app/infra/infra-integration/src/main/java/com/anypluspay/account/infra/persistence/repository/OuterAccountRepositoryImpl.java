@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
     }
 
     @Override
-    public OuterAccount queryByMemberAndAccountTypeId(String memberId, String accountType) {
+    public OuterAccount queryByMemberIdAndAccountType(String memberId, String accountType) {
         LambdaQueryWrapper<OuterAccountDO> wrapper = Wrappers.lambdaQuery(OuterAccountDO.class)
                 .eq(OuterAccountDO::getMemberId, memberId)
                 .eq(OuterAccountDO::getAccountType, accountType);
@@ -105,6 +106,22 @@ public class OuterAccountRepositoryImpl implements OuterAccountRepository {
             outerAccount = dalConvertor.toEntity(outerAccountDO, outerSubAccountDOS);
         }
         return outerAccount;
+    }
+
+    @Override
+    public List<OuterAccount> queryByMemberId(String memberId) {
+        LambdaQueryWrapper<OuterAccountDO> wrapper = Wrappers.lambdaQuery(OuterAccountDO.class)
+                .eq(OuterAccountDO::getMemberId, memberId);
+        List<OuterAccountDO> outerAccountDOs = outerAccountMapper.selectList(wrapper);
+        List<OuterAccount> outerAccounts = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(outerAccountDOs)) {
+            outerAccountDOs.forEach(outerAccountDO -> {
+                List<OuterSubAccountDO> outerSubAccountDOS = outerSubAccountMapper.selectList(Wrappers.lambdaQuery(OuterSubAccountDO.class)
+                        .eq(OuterSubAccountDO::getAccountNo, outerAccountDO.getAccountNo()));
+                outerAccounts.add(dalConvertor.toEntity(outerAccountDO, outerSubAccountDOS));
+            });
+        }
+        return outerAccounts;
     }
 
     private String genAccountNo(String memberId, String accountTitleNo, String currencyCode) {

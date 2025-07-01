@@ -94,8 +94,14 @@ public class OuterAccountManagerFacadeImpl implements OuterAccountManagerFacade 
     }
 
     @Override
-    public OuterAccountResponse queryByMemberAndAccountTypeId(String memberId, String accountType) {
-        OuterAccount outerAccount = outerAccountRepository.queryByMemberAndAccountTypeId(memberId, accountType);
+    public OuterAccountResponse queryByMemberIdAndAccountType(String memberId, String accountType) {
+        OuterAccount outerAccount = outerAccountRepository.queryByMemberIdAndAccountType(memberId, accountType);
         return outerAccountConvertor.toResponse(outerAccount);
+    }
+
+    @Override
+    public List<OuterAccountResponse> queryByMemberId(String memberId) {
+        List<OuterAccount> outerAccounts = outerAccountRepository.queryByMemberId(memberId);
+        return outerAccounts.stream().map(outerAccount -> outerAccountConvertor.toResponse(outerAccount)).toList();
     }
 }

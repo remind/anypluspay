@@ -52,7 +52,7 @@ public class CashierService {
             payMethodResponse.setCode(payMethod.getCode());
             payMethodResponse.setName(payMethod.getName());
             if (payMethod.getPayModel().equals(PayModel.BALANCE.getCode())) {
-                OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberAndAccountTypeId(payerId, payMethod.getPayInst());
+                OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberIdAndAccountType(payerId, payMethod.getPayInst());
                 payMethodResponse.setTitle("可用余额：" + accountResponse.getAvailableBalance());
             }
             return payMethodResponse;
@@ -167,7 +167,7 @@ public class CashierService {
     }
 
     private String getBaseAccountNo(String memberId) {
-        OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberAndAccountTypeId(memberId, "101");
+        OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberIdAndAccountType(memberId, "101");
         return accountResponse.getAccountNo();
     }
 }

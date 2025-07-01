@@ -1,4 +1,4 @@
-package com.anypluspay.pgw.wallet.member.response;
+package com.anypluspay.pgw.wallet.response.member;
 
 import com.anypluspay.commons.lang.std.MoneyDisplaySerializer;
 import com.anypluspay.commons.lang.types.Money;

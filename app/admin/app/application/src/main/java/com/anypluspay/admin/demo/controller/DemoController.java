@@ -59,7 +59,7 @@ public class DemoController {
     }
 
     private String getBaseAccountNo(String memberId) {
-        OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberAndAccountTypeId(memberId, "101");
+        OuterAccountResponse accountResponse = outerAccountManagerFacade.queryByMemberIdAndAccountType(memberId, "101");
         return accountResponse.getAccountNo();
     }
 

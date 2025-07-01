@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anypluspay.payment.infra.persistence.mapper.TradeBillQueryMapper">
+
+    <resultMap id="queryResult" type="com.anypluspay.payment.types.trade.query.TradeBillDto">
+        <id column="trade_id" property="tradeId"/>
+        <result column="bill_type" property="billType"/>
+        <result column="status" property="status"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <association property="amount" javaType="com.anypluspay.commons.lang.types.Money">
+            <constructor>
+                <arg column="amount" javaType="java.math.BigDecimal"/>
+                <arg column="currency_code" javaType="java.util.Currency"
+                     typeHandler="com.anypluspay.component.dal.mybatis.type.CurrencyTypeHandler"/>
+            </constructor>
+        </association>
+    </resultMap>
+
+    <select id="queryBill" resultMap="queryResult">
+        select * from (
+        <trim prefixOverrides="UNION">
+            <if test="query.billType != null and query.billType.contains(1)">
+                union
+                select trade_id,'1' as bill_type,status,amount,currency_code,gmt_create from tt_acquiring_order
+                where payee_id = #{query.memberId}
+            </if>
+            <if test="query.billType != null and query.billType.contains(2)">
+                union
+                select trade_id,'2' as bill_type,status,amount,currency_code,gmt_create from tt_acquiring_order
+                where payer_id = #{query.memberId}
+            </if>
+            <if test="query.billType != null and query.billType.contains(3)">
+                union
+                select trade_id,'3' as bill_type,status,amount,currency_code,gmt_create from tt_deposit_order
+                where member_id  = #{query.memberId}
+            </if>
+            <if test="query.billType != null and query.billType.contains(4)">
+                union
+                select trade_id,'4' as bill_type,status,amount,currency_code,gmt_create from tt_withdraw_order
+                where member_id = #{query.memberId}
+            </if>
+        </trim>
+        ) t order by gmt_create desc
+    </select>
+</mapper>
