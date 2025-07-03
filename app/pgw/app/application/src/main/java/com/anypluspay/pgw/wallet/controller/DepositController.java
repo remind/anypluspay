@@ -7,6 +7,7 @@ import com.anypluspay.pgw.cashier.request.DepositPayRequest;
 import com.anypluspay.pgw.cashier.response.WebPayMethodResponse;
 import com.anypluspay.pgw.cashier.service.CashierService;
 import com.anypluspay.pgw.wallet.AbstractWalletController;
+import com.anypluspay.pgw.wallet.WalletConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,9 @@ public class DepositController extends AbstractWalletController {
 
     @Autowired
     private CashierService cashierService;
+
+    @Autowired
+    private WalletConfig walletConfig;
 
     /**
      * 获取充值的支付方式
@@ -44,7 +48,7 @@ public class DepositController extends AbstractWalletController {
     @PostMapping("/submit")
     @ResponseBody
     public ResponseResult<CashierPayResult> submit(@RequestBody DepositPayRequest request) {
-        request.setPartnerId("100000003");
+        request.setPartnerId(walletConfig.getPartnerId());
         request.setMemberId(getLoginMember().getMemberId());
         return ResponseResult.success(cashierService.depositPay(request));
     }
