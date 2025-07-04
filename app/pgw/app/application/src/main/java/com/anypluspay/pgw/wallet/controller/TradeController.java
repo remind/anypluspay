@@ -2,8 +2,10 @@ package com.anypluspay.pgw.wallet.controller;
 
 import com.anypluspay.commons.response.ResponseResult;
 import com.anypluspay.commons.response.page.PageResult;
-import com.anypluspay.payment.facade.trade.TradeBillFacade;
+import com.anypluspay.payment.facade.trade.TradeQueryFacade;
 import com.anypluspay.payment.types.trade.query.TradeBillQuery;
+import com.anypluspay.payment.types.trade.query.deposit.DepositOrderQuery;
+import com.anypluspay.payment.types.trade.query.deposit.DepositOrderResponse;
 import com.anypluspay.pgw.wallet.AbstractWalletController;
 import com.anypluspay.pgw.wallet.convertor.TradeBillConvertor;
 import com.anypluspay.pgw.wallet.response.TradeBillResponse;
@@ -23,19 +25,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class TradeController extends AbstractWalletController {
 
     @Autowired
-    private TradeBillFacade tradeBillFacade;
+    private TradeQueryFacade tradeQueryFacade;
 
     @Autowired
     private TradeBillConvertor tradeBillConvertor;
 
     /**
      * 账单查询
+     *
      * @param query
      * @return
      */
     @GetMapping("/bill")
     public ResponseResult<PageResult<TradeBillResponse>> query(TradeBillQuery query) {
         query.setMemberId(getLoginMember().getMemberId());
-        return ResponseResult.success(tradeBillConvertor.convert(tradeBillFacade.query(query)));
+        return ResponseResult.success(tradeBillConvertor.convert(tradeQueryFacade.pageQueryBill(query)));
+    }
+
+    /**
+     * 充值查询
+     *
+     * @param query
+     * @return
+     */
+    @GetMapping("/deposit-list")
+    public ResponseResult<PageResult<DepositOrderResponse>> depositList(DepositOrderQuery query) {
+        query.setMemberId(getLoginMember().getMemberId());
+        return ResponseResult.success(tradeQueryFacade.pageQueryDeposit(query));
     }
 }
