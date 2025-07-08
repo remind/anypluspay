@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.anypluspay.commons.lang.types.Money;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -28,9 +30,12 @@ public class GlobalConvertorUtils {
         return new Money(amount, Currency.getInstance(currencyCode));
     }
 
-
     public static String toDisplayMoney(BigDecimal amount, String currencyCode) {
         Money money = toMoney(amount, currencyCode);
         return money.getCurrency().getSymbol(Locale.CHINA) + money.getAmount().toString();
+    }
+
+    public static String dateToString(LocalDateTime dateTime) {
+        return dateTime != null ? dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : "";
     }
 }

@@ -17,8 +17,8 @@ db:
       - tc_ #配置类数据
     name:
 #      - tt_acquiring_order
-      - tt_withdraw_order
-      - tt_deposit_order
+#      - tt_withdraw_order
+#      - tt_deposit_order
 #      - tp_pay_order
 #      - tp_refund_order
 #      - tp_fund_detail
@@ -28,3 +28,4 @@ db:
 #      - tm_partner_scene
 #      - tm_scene_pay_method
 #      - tc_pay_method
+      - tm_member_bank_card

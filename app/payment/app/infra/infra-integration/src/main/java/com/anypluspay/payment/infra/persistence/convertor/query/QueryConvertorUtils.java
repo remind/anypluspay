@@ -9,9 +9,6 @@ import com.anypluspay.payment.types.trade.AcquiringOrderStatus;
 import com.anypluspay.payment.types.trade.DepositOrderStatus;
 import com.anypluspay.payment.types.trade.TradeType;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * @author wxj
  * 2025/7/4
@@ -46,10 +43,6 @@ public class QueryConvertorUtils extends GlobalConvertorUtils {
     public static String toAssetTypeName(String assetType) {
         AssetType assetTypeEnumObject = EnumUtil.getByCode(AssetType.class, assetType);
         return assetTypeEnumObject != null ? assetTypeEnumObject.getDisplayName() : "未知";
-    }
-
-    public static String dateToString(LocalDateTime dateTime) {
-        return dateTime != null ? dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : "";
     }
 
 }
