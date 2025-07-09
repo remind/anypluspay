@@ -4,6 +4,7 @@ import lombok.Data;
 
 /**
  * 登录会员
+ *
  * @author wxj
  * 2025/6/29
  */
@@ -16,12 +17,23 @@ public class LoginMember {
     private String memberId;
 
     /**
-     * 会员名称
-     */
-    private String memberName;
-
-    /**
      * 默认账户
      */
     private String defaultAccountNo;
+
+    /**
+     * 身份证号码
+     */
+    private String authIdNo;
+
+    /**
+     * 实名姓名
+     */
+    private String authName;
+
+    /**
+     * 实名手机号码
+     */
+    private String authMobile;
+
 }

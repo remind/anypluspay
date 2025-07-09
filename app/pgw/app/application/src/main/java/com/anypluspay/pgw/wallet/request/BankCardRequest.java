@@ -1,4 +1,4 @@
-package com.anypluspay.payment.facade.member;
+package com.anypluspay.pgw.wallet.request;
 
 import com.anypluspay.commons.validator.UpdateValidate;
 import jakarta.validation.constraints.NotNull;
@@ -6,18 +6,13 @@ import lombok.Data;
 
 /**
  * @author wxj
- * 2025/7/8
+ * 2025/7/9
  */
 @Data
-public class MemberBankCardRequest {
+public class BankCardRequest {
 
     @NotNull(groups = UpdateValidate.class)
     private Long id;
-
-    /**
-     * 会员ID
-     */
-    private String memberId;
 
     /**
      * 卡号
@@ -25,22 +20,8 @@ public class MemberBankCardRequest {
     private String cardNo;
 
     /**
-     * 身份证号码
-     */
-    private String cardIdNo;
-
-    /**
-     * 姓名
-     */
-    private String cardName;
-
-    /**
      * 银行编码
      */
     private String bankCode;
 
-    /**
-     * 手机号
-     */
-    private String mobile;
 }

@@ -1,6 +1,5 @@
 package com.anypluspay.payment.facade.member;
 
-import com.anypluspay.commons.enums.EnumObject;
 import com.anypluspay.payment.facade.ApiConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
+ * 会员银行卡
  * @author wxj
  * 2025/7/8
  */
 @FeignClient(name = ApiConstants.SERVICE_NAME, contextId = ApiConstants.SERVICE_NAME + "MemberQueryFacade")
-public interface MemberQueryFacade {
+public interface MemberBankCardFacade {
 
-    String PREFIX = "/member-query";
+    String PREFIX = "/member-bank-card";
 
     /**
      * 查询会员的银行卡列表
@@ -24,8 +24,8 @@ public interface MemberQueryFacade {
      * @param memberId
      * @return
      */
-    @GetMapping(PREFIX + "/query-bank-card")
-    List<MemberBankCardResponse> queryBankCard(@RequestParam String memberId);
+    @GetMapping(PREFIX + "/query-by-member-id")
+    List<MemberBankCardResponse> queryByMemberId(@RequestParam String memberId);
 
     /**
      * 添加银行卡
@@ -33,8 +33,8 @@ public interface MemberQueryFacade {
      * @param request
      * @return
      */
-    @PostMapping(PREFIX + "/add-bank-card")
-    MemberBankCardResponse addBankCard(MemberBankCardRequest request);
+    @PostMapping(PREFIX + "/add")
+    MemberBankCardResponse add(MemberBankCardRequest request);
 
     /**
      * 修改银行卡
@@ -42,8 +42,8 @@ public interface MemberQueryFacade {
      * @param request
      * @return
      */
-    @PostMapping(PREFIX + "/update-bank-card")
-    MemberBankCardResponse updateBankCard(MemberBankCardRequest request);
+    @PostMapping(PREFIX + "/update")
+    MemberBankCardResponse update(MemberBankCardRequest request);
 
     /**
      * 删除银行卡
@@ -51,15 +51,7 @@ public interface MemberQueryFacade {
      * @param id
      * @return
      */
-    @GetMapping(PREFIX + "/delete-bank-card")
-    void deleteBankCard(@RequestParam Long id);
-
-    /**
-     * 查询银行列表
-     *
-     * @return
-     */
-    @GetMapping(PREFIX + "/query-bank-codes")
-    List<EnumObject> queryBankCodes();
+    @GetMapping(PREFIX + "/delete")
+    void delete(@RequestParam Long id);
 
 }

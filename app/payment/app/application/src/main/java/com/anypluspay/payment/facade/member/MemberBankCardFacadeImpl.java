@@ -1,8 +1,6 @@
 package com.anypluspay.payment.facade.member;
 
 import com.anypluspay.commons.convertor.GlobalConvertorUtils;
-import com.anypluspay.commons.enums.EnumObject;
-import com.anypluspay.commons.lang.utils.EnumUtil;
 import com.anypluspay.payment.domain.member.MemberBankCard;
 import com.anypluspay.payment.domain.repository.MemberBankCardRepository;
 import com.anypluspay.payment.types.paymethod.BankCode;
@@ -16,39 +14,34 @@ import java.util.List;
  * 2025/7/8
  */
 @RestController
-public class MemberQueryFacadeImpl implements MemberQueryFacade {
+public class MemberBankCardFacadeImpl implements MemberBankCardFacade {
 
     @Autowired
     private MemberBankCardRepository memberBankCardRepository;
 
     @Override
-    public List<MemberBankCardResponse> queryBankCard(String memberId) {
+    public List<MemberBankCardResponse> queryByMemberId(String memberId) {
         List<MemberBankCard> memberBankCards = memberBankCardRepository.queryByMemberId(memberId);
-        return memberBankCards.stream().map(MemberQueryFacadeImpl::toMemberBankCardResponse).toList();
+        return memberBankCards.stream().map(MemberBankCardFacadeImpl::toMemberBankCardResponse).toList();
     }
 
     @Override
-    public MemberBankCardResponse addBankCard(MemberBankCardRequest request) {
+    public MemberBankCardResponse add(MemberBankCardRequest request) {
         MemberBankCard memberBankCard = toBankCard(request);
         memberBankCardRepository.store(memberBankCard);
         return toMemberBankCardResponse(memberBankCardRepository.load(memberBankCard.getId()));
     }
 
     @Override
-    public MemberBankCardResponse updateBankCard(MemberBankCardRequest request) {
+    public MemberBankCardResponse update(MemberBankCardRequest request) {
         MemberBankCard memberBankCard = toBankCard(request);
         memberBankCardRepository.reStore(memberBankCard);
         return toMemberBankCardResponse(memberBankCardRepository.load(memberBankCard.getId()));
     }
 
     @Override
-    public void deleteBankCard(Long id) {
+    public void delete(Long id) {
         memberBankCardRepository.delete(id);
-    }
-
-    @Override
-    public List<EnumObject> queryBankCodes() {
-        return EnumUtil.toEnumObjects(BankCode.class);
     }
 
     private MemberBankCard toBankCard(MemberBankCardRequest request) {
