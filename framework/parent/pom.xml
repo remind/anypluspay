@@ -5,9 +5,6 @@
     <artifactId>parent</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
-    <modules>
-        <module>../../app/wallet</module>
-    </modules>
     <properties>
         <revision>1.0-SNAPSHOT</revision>
         <maven.compiler.source>17</maven.compiler.source>

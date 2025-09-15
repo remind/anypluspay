@@ -4,7 +4,7 @@ project:
 
 db:
   dataSource:
-    url: jdbc:mysql://127.0.0.1:3306/ap_payment?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/hd_dms?useUnicode=true&characterEncoding=utf8
     user: root
     password: root
   table:
@@ -15,6 +15,7 @@ db:
       - tf_ #交换表
       - tm_ #会员表
       - tc_ #配置类数据
+      - t_
     name:
 #      - tt_acquiring_order
 #      - tt_withdraw_order
@@ -28,4 +29,9 @@ db:
 #      - tm_partner_scene
 #      - tm_scene_pay_method
 #      - tc_pay_method
-      - tm_member_bank_card
+#      - tm_member_bank_card
+#      - t_data_source
+#      - t_logic_database
+#      - t_physics_database
+#      - t_sql_records
+      - t_logic_physics_database
