@@ -22,5 +22,6 @@
         <module>app/channel-gateway/test-bank-gateway</module>
         <module>app/channel-gateway/alipay-gateway</module>
         <module>app/channel-gateway/wxpay-gateway</module>
+        <module>app/anypay</module>
     </modules>
 </project>

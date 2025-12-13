@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.anypluspay</groupId>
+        <artifactId>parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../framework/parent/pom.xml</relativePath>
+    </parent>
+    <artifactId>anypay</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>app/anypay-bootstrap</module>
+        <module>app/anypay-infra</module>
+        <module>app/anypay-application</module>
+        <module>app/anypay-types</module>
+        <module>app/anypay-domain</module>
+        <module>app/anypay-web</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.anypluspay.anypay</groupId>
+                <artifactId>anypay-types</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.anypay</groupId>
+                <artifactId>anypay-domain</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.anypay</groupId>
+                <artifactId>anypay-infra</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.anypay</groupId>
+                <artifactId>anypay-application</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.anypluspay.anypay</groupId>
+                <artifactId>anypay-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
