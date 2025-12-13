@@ -1,12 +1,8 @@
 package com.anypluspay.anypay.account;
 
-import com.anypluspay.anypay.types.account.AccountAttribute;
 import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 外部账户类型
@@ -33,18 +29,8 @@ public class OuterAccountType extends Entity {
     private String titleCode;
 
     /**
-     * 外部账户分类
-     */
-    private AccountAttribute accountAttribute;
-
-    /**
      * 币种代码
      */
     private String currencyCode;
-
-    /**
-     * 资金类型
-     */
-    private List<String> fundTypes = new ArrayList<>();
 
 }

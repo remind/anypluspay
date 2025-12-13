@@ -1,30 +1,31 @@
-package com.anypluspay.anypay.account;
+package com.anypluspay.anypay.application.account.response;
 
 import com.anypluspay.anypay.types.account.AccountAttribute;
-import com.anypluspay.anypay.types.account.AccountFamily;
 import com.anypluspay.anypay.types.account.DenyStatus;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 外部账户
+ * 外部户详情
  *
  * @author wxj
- * 2023/12/16
+ * 2024/12/30
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class OuterAccount extends Account {
+public class OuterAccountResponse extends AccountResponse {
 
     /**
      * 会员ID
      */
     private String memberId;
+
     /**
      * 可用余额
      */
-    private Money availableBalance = new Money();
+    private Money availableBalance;
+
     /**
      * 账户属性
      */
@@ -39,11 +40,4 @@ public class OuterAccount extends Account {
      * 冻结状态
      */
     private DenyStatus denyStatus;
-
-    @Override
-    public AccountFamily getAccountFamily() {
-        return AccountFamily.OUTER;
-    }
-
-
 }
