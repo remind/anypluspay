@@ -44,11 +44,6 @@ public class OuterAccountTypeDO implements Serializable {
      */
     private String currencyCode;
 
-    /**
-     * 资金类型编码，多个用逗号分隔
-     */
-    private String fundTypes;
-
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime gmtCreate;
 
@@ -95,14 +90,6 @@ public class OuterAccountTypeDO implements Serializable {
         this.currencyCode = currencyCode;
     }
 
-    public String getFundTypes() {
-        return fundTypes;
-    }
-
-    public void setFundTypes(String fundTypes) {
-        this.fundTypes = fundTypes;
-    }
-
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -127,7 +114,6 @@ public class OuterAccountTypeDO implements Serializable {
         ", titleCode = " + titleCode +
         ", accountAttribute = " + accountAttribute +
         ", currencyCode = " + currencyCode +
-        ", fundTypes = " + fundTypes +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

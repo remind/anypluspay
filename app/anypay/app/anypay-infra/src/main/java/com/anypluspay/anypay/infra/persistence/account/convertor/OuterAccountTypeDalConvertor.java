@@ -4,7 +4,6 @@ import com.anypluspay.anypay.account.OuterAccountType;
 import com.anypluspay.anypay.infra.persistence.dataobject.OuterAccountTypeDO;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 /**
  * @author wxj
@@ -13,11 +12,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
 public interface OuterAccountTypeDalConvertor extends ReadWriteConvertor<OuterAccountType, OuterAccountTypeDO> {
 
-    @Mapping(target = "fundTypes", expression = "java(toList(outerAccountTypeDO.getFundTypes()))")
     @Override
     OuterAccountType toEntity(OuterAccountTypeDO outerAccountTypeDO);
 
-    @Mapping(target = "fundTypes", expression = "java(toStr(outerAccountType.getFundTypes()))")
     @Override
     OuterAccountTypeDO toDO(OuterAccountType outerAccountType);
 

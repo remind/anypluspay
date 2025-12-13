@@ -9,7 +9,6 @@
     </parent>
     <groupId>com.anypluspay.anypay</groupId>
     <artifactId>anypay-infra</artifactId>
-    <packaging>pom</packaging>
 
     <dependencies>
         <dependency>
