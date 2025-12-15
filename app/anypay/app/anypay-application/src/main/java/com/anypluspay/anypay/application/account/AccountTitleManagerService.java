@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.application.account;
 
-import com.anypluspay.anypay.account.AccountTitle;
-import com.anypluspay.anypay.account.repository.AccountTitleRepository;
+import com.anypluspay.anypay.domain.account.AccountTitle;
+import com.anypluspay.anypay.domain.account.repository.AccountTitleRepository;
 import com.anypluspay.commons.exceptions.BizException;
 import com.anypluspay.commons.lang.utils.AssertUtil;
 import com.anypluspay.commons.validator.AddValidate;

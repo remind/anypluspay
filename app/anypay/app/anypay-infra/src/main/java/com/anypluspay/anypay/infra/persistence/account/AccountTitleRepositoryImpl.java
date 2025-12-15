@@ -1,8 +1,8 @@
 package com.anypluspay.anypay.infra.persistence.account;
 
-import com.anypluspay.anypay.account.AccountDomainConstants;
-import com.anypluspay.anypay.account.AccountTitle;
-import com.anypluspay.anypay.account.repository.AccountTitleRepository;
+import com.anypluspay.anypay.domain.account.AccountDomainConstants;
+import com.anypluspay.anypay.domain.account.AccountTitle;
+import com.anypluspay.anypay.domain.account.repository.AccountTitleRepository;
 import com.anypluspay.anypay.infra.persistence.account.convertor.AccountTitleDalConvertor;
 import com.anypluspay.anypay.infra.persistence.dataobject.AccountTitleDO;
 import com.anypluspay.anypay.infra.persistence.mapper.AccountTitleMapper;

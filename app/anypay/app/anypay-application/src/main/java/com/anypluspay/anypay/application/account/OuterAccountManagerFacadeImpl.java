@@ -1,8 +1,8 @@
 package com.anypluspay.anypay.application.account;
 
-import com.anypluspay.anypay.account.OuterAccount;
-import com.anypluspay.anypay.account.repository.OuterAccountRepository;
-import com.anypluspay.anypay.account.service.OuterAccountDomainService;
+import com.anypluspay.anypay.domain.account.OuterAccount;
+import com.anypluspay.anypay.domain.account.repository.OuterAccountRepository;
+import com.anypluspay.anypay.domain.account.service.OuterAccountDomainService;
 import com.anypluspay.anypay.application.account.builder.OuterAccountBuilder;
 import com.anypluspay.anypay.application.account.convertor.OuterAccountConvertor;
 import com.anypluspay.anypay.application.account.request.OuterAccountRequest;

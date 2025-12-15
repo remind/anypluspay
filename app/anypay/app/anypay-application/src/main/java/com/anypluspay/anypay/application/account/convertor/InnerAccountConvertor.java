@@ -1,6 +1,6 @@
 package com.anypluspay.anypay.application.account.convertor;
 
-import com.anypluspay.anypay.account.InnerAccount;
+import com.anypluspay.anypay.domain.account.InnerAccount;
 import com.anypluspay.anypay.application.account.request.InnerAccountRequest;
 import com.anypluspay.anypay.application.account.response.InnerAccountResponse;
 import org.mapstruct.Mapper;

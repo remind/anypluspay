@@ -2,8 +2,8 @@ package com.anypluspay.anypay.infra.persistence.trade;
 
 import com.anypluspay.anypay.infra.persistence.mapper.DepositOrderMapper;
 import com.anypluspay.anypay.infra.persistence.trade.convertor.DepositOrderDalConvertor;
-import com.anypluspay.anypay.trade.DepositOrder;
-import com.anypluspay.anypay.trade.repository.DepositOrderRepository;
+import com.anypluspay.anypay.domain.trade.DepositOrder;
+import com.anypluspay.anypay.domain.trade.repository.DepositOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
 package com.anypluspay.anypay.infra.persistence.account;
 
 
-import com.anypluspay.anypay.account.OuterAccountType;
-import com.anypluspay.anypay.account.repository.AccountTypeRepository;
+import com.anypluspay.anypay.domain.account.OuterAccountType;
+import com.anypluspay.anypay.domain.account.repository.AccountTypeRepository;
 import com.anypluspay.anypay.infra.persistence.account.convertor.OuterAccountTypeDalConvertor;
 import com.anypluspay.anypay.infra.persistence.dataobject.OuterAccountTypeDO;
 import com.anypluspay.anypay.infra.persistence.mapper.OuterAccountTypeMapper;

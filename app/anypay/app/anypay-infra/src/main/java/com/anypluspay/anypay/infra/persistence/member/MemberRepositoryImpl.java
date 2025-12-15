@@ -2,8 +2,8 @@ package com.anypluspay.anypay.infra.persistence.member;
 
 import com.anypluspay.anypay.infra.persistence.mapper.MemberMapper;
 import com.anypluspay.anypay.infra.persistence.member.convertor.MemberDalConvertor;
-import com.anypluspay.anypay.member.Member;
-import com.anypluspay.anypay.member.repository.MemberRepository;
+import com.anypluspay.anypay.domain.member.Member;
+import com.anypluspay.anypay.domain.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

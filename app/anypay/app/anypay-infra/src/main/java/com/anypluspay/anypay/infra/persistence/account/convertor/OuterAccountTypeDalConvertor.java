@@ -1,6 +1,6 @@
 package com.anypluspay.anypay.infra.persistence.account.convertor;
 
-import com.anypluspay.anypay.account.OuterAccountType;
+import com.anypluspay.anypay.domain.account.OuterAccountType;
 import com.anypluspay.anypay.infra.persistence.dataobject.OuterAccountTypeDO;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
 import org.mapstruct.Mapper;

@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.infra.persistence.trade.convertor;
 
 import com.anypluspay.anypay.infra.persistence.dataobject.WithdrawOrderDO;
-import com.anypluspay.anypay.trade.WithdrawOrder;
+import com.anypluspay.anypay.domain.trade.WithdrawOrder;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

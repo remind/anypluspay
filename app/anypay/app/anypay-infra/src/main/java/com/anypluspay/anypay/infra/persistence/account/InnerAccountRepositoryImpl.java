@@ -1,9 +1,9 @@
 package com.anypluspay.anypay.infra.persistence.account;
 
 
-import com.anypluspay.anypay.account.AccountDomainConstants;
-import com.anypluspay.anypay.account.InnerAccount;
-import com.anypluspay.anypay.account.repository.InnerAccountRepository;
+import com.anypluspay.anypay.domain.account.AccountDomainConstants;
+import com.anypluspay.anypay.domain.account.InnerAccount;
+import com.anypluspay.anypay.domain.account.repository.InnerAccountRepository;
 import com.anypluspay.anypay.infra.persistence.account.convertor.InnerAccountDalConvertor;
 import com.anypluspay.anypay.infra.persistence.dataobject.InnerAccountDO;
 import com.anypluspay.anypay.infra.persistence.mapper.InnerAccountMapper;

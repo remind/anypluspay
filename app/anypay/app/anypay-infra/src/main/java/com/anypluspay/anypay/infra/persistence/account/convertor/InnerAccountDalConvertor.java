@@ -5,7 +5,7 @@ package com.anypluspay.anypay.infra.persistence.account.convertor;
  * 2023/12/24
  */
 
-import com.anypluspay.anypay.account.InnerAccount;
+import com.anypluspay.anypay.domain.account.InnerAccount;
 import com.anypluspay.anypay.infra.persistence.dataobject.InnerAccountDO;
 import com.anypluspay.commons.convertor.ReadWriteConvertor;
 import org.mapstruct.Mapper;

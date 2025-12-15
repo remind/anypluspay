@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.application.account;
 
-import com.anypluspay.anypay.account.InnerAccount;
-import com.anypluspay.anypay.account.repository.InnerAccountRepository;
+import com.anypluspay.anypay.domain.account.InnerAccount;
+import com.anypluspay.anypay.domain.account.repository.InnerAccountRepository;
 import com.anypluspay.anypay.application.account.builder.InnerAccountBuilder;
 import com.anypluspay.anypay.application.account.convertor.InnerAccountConvertor;
 import com.anypluspay.anypay.application.account.request.InnerAccountRequest;

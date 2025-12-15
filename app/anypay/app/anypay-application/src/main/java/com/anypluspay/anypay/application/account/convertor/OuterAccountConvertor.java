@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.application.account.convertor;
 
-import com.anypluspay.anypay.account.OuterAccount;
-import com.anypluspay.anypay.account.OuterAccountType;
+import com.anypluspay.anypay.domain.account.OuterAccount;
+import com.anypluspay.anypay.domain.account.OuterAccountType;
 import com.anypluspay.anypay.application.account.request.OuterAccountRequest;
 import com.anypluspay.anypay.application.account.response.OuterAccountResponse;
 import org.mapstruct.Mapper;

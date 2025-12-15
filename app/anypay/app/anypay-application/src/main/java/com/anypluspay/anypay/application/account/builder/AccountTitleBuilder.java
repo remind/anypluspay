@@ -1,8 +1,8 @@
 package com.anypluspay.anypay.application.account.builder;
 
-import com.anypluspay.anypay.account.AccountDomainConstants;
-import com.anypluspay.anypay.account.AccountTitle;
-import com.anypluspay.anypay.account.repository.AccountTitleRepository;
+import com.anypluspay.anypay.domain.account.AccountDomainConstants;
+import com.anypluspay.anypay.domain.account.AccountTitle;
+import com.anypluspay.anypay.domain.account.repository.AccountTitleRepository;
 import com.anypluspay.anypay.types.account.AccountTitleScope;
 import com.anypluspay.anypay.types.account.AccountTitleType;
 import com.anypluspay.anypay.types.account.BalanceDirection;
