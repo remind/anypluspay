@@ -1,5 +1,6 @@
 package com.anypluspay.anypay.trade;
 
+import com.anypluspay.anypay.types.trade.AcquiringOrderStatus;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
