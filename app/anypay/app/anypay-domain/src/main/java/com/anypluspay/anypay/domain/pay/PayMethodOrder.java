@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.domain.payment;
+package com.anypluspay.anypay.domain.pay;
 
 import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
@@ -15,5 +15,10 @@ public class PayMethodOrder extends Entity {
     /**
      * 支付单号
      */
-    private String paymentId;
+    private String payId;
+
+    /**
+     * 支付方式
+     */
+    private String payMethod;
 }

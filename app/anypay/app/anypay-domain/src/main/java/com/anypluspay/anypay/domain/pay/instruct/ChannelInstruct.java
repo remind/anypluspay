@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.domain.payment.instruct;
+package com.anypluspay.anypay.domain.pay.instruct;
 
 import lombok.Data;
 
