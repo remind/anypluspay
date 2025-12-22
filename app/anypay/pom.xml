@@ -16,6 +16,7 @@
         <module>app/anypay-types</module>
         <module>app/anypay-domain</module>
         <module>app/anypay-web</module>
+        <module>gen/dalgen</module>
     </modules>
 
     <dependencyManagement>

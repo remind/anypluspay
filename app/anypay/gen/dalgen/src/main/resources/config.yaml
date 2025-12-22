@@ -1,0 +1,20 @@
+project:
+  name: anypay
+  author: wxj
+
+db:
+  dataSource:
+    url: jdbc:mysql://127.0.0.1:3306/anypluspay?useUnicode=true&characterEncoding=utf8
+    user: root
+    password: root
+  table:
+    prefix:
+      # 表名前缀
+      - tt_ #交易表
+      - tp_ #支付表
+      - tf_ #交换表
+      - tm_ #会员表
+      - tc_ #配置类数据
+      - t_
+    name:
+      - tc_dictionary
