@@ -1,5 +1,6 @@
 package com.anypluspay.anypay.domain.pay;
 
+import com.anypluspay.anypay.types.common.PayStatus;
 import com.anypluspay.commons.lang.Entity;
 import lombok.Data;
 
@@ -21,5 +22,10 @@ public class PayOrder extends Entity {
      * 交易单号
      */
     private String tradeId;
+
+    /**
+     * 支付状态
+     */
+    private PayStatus status;
 
 }
