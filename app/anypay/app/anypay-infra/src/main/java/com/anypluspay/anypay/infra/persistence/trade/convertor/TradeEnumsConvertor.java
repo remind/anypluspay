@@ -12,7 +12,7 @@ import org.mapstruct.Mapper;
  * 2024/1/18
  */
 @Mapper(componentModel = "spring")
-public interface EnumsConvertor {
+public interface TradeEnumsConvertor {
 
     default DepositOrderStatus toDepositOrderStatus(String code) {
         return EnumUtil.getByCode(DepositOrderStatus.class, code);

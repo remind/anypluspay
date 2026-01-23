@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
  * @author wxj
  * 2025/5/17
  */
-@Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
+@Mapper(componentModel = "spring", uses = {TradeEnumsConvertor.class})
 public interface AcquiringOrderDalConvertor extends ReadWriteConvertor<AcquiringOrder, AcquiringOrderDO> {
 
     @Override

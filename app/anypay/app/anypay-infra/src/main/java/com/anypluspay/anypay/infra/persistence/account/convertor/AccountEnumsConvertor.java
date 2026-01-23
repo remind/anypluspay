@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
  * 2023/12/16
  */
 @Mapper(componentModel = "spring")
-public interface EnumsConvertor {
+public interface AccountEnumsConvertor {
 
     default AccountTitleType toAccountTitleType(String code) {
         return EnumUtil.getByCode(AccountTitleType.class, code);

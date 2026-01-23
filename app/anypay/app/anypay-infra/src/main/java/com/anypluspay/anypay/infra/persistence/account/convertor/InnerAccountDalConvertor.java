@@ -11,7 +11,7 @@ import com.anypluspay.commons.convertor.ReadWriteConvertor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
+@Mapper(componentModel = "spring", uses = {AccountEnumsConvertor.class})
 public interface InnerAccountDalConvertor extends ReadWriteConvertor<InnerAccount, InnerAccountDO> {
 
     @Mapping(target = "balance", expression = "java(toMoney(innerAccountDO.getBalance(), innerAccountDO.getCurrencyCode()))")

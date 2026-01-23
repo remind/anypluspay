@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * @author wxj
  * 2023/12/18
  */
-@Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
+@Mapper(componentModel = "spring", uses = {AccountEnumsConvertor.class})
 public interface OuterAccountDalConvertor {
 
     OuterAccount toEntity(OuterAccountDO outerAccountDO);

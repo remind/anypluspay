@@ -24,13 +24,11 @@ public class DictionaryDO implements Serializable {
     /**
      * 字典类型
      */
-    @TableId(value = "type", type = IdType.NONE)
     private String type;
 
     /**
      * 编码
      */
-    @TableId(value = "code", type = IdType.NONE)
     private String code;
 
     /**

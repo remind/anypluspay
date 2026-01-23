@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * @author wxj
  * 2023/12/22
  */
-@Mapper(componentModel = "spring", uses = {EnumsConvertor.class})
+@Mapper(componentModel = "spring", uses = {AccountEnumsConvertor.class})
 public interface OuterAccountTypeDalConvertor extends ReadWriteConvertor<OuterAccountType, OuterAccountTypeDO> {
 
     @Override
