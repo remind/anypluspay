@@ -16,12 +16,12 @@ public class PayOrder extends Entity {
     /**
      * 支付单号
      */
-    private String payId;
+    private String payOrderId;
 
     /**
-     * 交易单号
+     * 外部交易单号
      */
-    private String tradeId;
+    private String outTradeNo;
 
     /**
      * 支付状态

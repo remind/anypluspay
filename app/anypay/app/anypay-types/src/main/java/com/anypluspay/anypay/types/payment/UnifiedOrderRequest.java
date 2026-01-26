@@ -14,10 +14,10 @@ import lombok.Data;
 public class UnifiedOrderRequest {
 
     /**
-     * 业务单号
+     * 外部交易
      */
-    @NotBlank(message = "业务单号不能为空")
-    private String bizOrderNo;
+    @NotBlank(message = "外部交易单号不能为空")
+    private String outTradeNo;
 
     /**
      * 支付方式

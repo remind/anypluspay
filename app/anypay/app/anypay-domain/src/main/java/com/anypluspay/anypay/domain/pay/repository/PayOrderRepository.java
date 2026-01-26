@@ -1,6 +1,5 @@
 package com.anypluspay.anypay.domain.pay.repository;
 
-import com.anypluspay.anypay.domain.member.Member;
 import com.anypluspay.anypay.domain.pay.PayOrder;
 
 /**
@@ -13,7 +12,7 @@ public interface PayOrderRepository {
 
     void reStore(PayOrder payOrder);
 
-    Member load(String payOrderId);
+    PayOrder load(String payOrderId);
 
-    Member lock(String payOrderId);
+    PayOrder lock(String payOrderId);
 }
