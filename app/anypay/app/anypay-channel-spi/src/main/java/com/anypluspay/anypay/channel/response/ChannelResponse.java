@@ -17,14 +17,14 @@ public class ChannelResponse {
     private ChannelOrderStatus status;
 
     /**
-     * 提交机构订单号
+     * 提交渠道订单号
      */
-    private String instRequestNo;
+    private String channelRequestNo;
 
     /**
-     * 机构返回流水号
+     * 渠道返回流水号
      */
-    private String instResponseNo;
+    private String channelResponseNo;
 
     /**
      * 渠道返回错误代码

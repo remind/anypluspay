@@ -4,12 +4,12 @@ import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
 @Data
-public class UnifiedOrderRequest {
+public class ChannelUnifiedOrderRequest {
 
     /**
-     * 机构请求订单号
+     * 渠道请求订单号
      */
-    private String instRequestNo;
+    private String channelRequestNo;
 
     /**
      * 金额

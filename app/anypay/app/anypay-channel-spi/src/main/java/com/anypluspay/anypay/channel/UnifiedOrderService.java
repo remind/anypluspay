@@ -1,6 +1,6 @@
 package com.anypluspay.anypay.channel;
 
-import com.anypluspay.anypay.channel.request.UnifiedOrderRequest;
+import com.anypluspay.anypay.channel.request.ChannelUnifiedOrderRequest;
 import com.anypluspay.anypay.channel.response.ChannelResponse;
 
 /**
@@ -8,6 +8,6 @@ import com.anypluspay.anypay.channel.response.ChannelResponse;
  */
 public interface UnifiedOrderService {
 
-    ChannelResponse unifiedOrder(UnifiedOrderRequest request);
+    ChannelResponse unifiedOrder(ChannelUnifiedOrderRequest request);
 
 }
