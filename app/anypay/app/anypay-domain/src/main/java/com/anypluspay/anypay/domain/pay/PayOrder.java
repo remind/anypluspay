@@ -19,9 +19,9 @@ public class PayOrder extends Entity {
     private String payOrderId;
 
     /**
-     * 外部交易单号
+     * 交易单号
      */
-    private String outTradeNo;
+    private String tradeOrderId;
 
     /**
      * 支付状态

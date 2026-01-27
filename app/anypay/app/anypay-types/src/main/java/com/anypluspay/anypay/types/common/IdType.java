@@ -10,7 +10,7 @@ import com.anypluspay.commons.enums.BizIdType;
  */
 public enum IdType implements BizIdType {
 
-    ACQUIRING_ORDER_ID("1", "10", "seq_trade_id", "交易-收单订单"),
+    TRADE_ORDER_ID("1", "10", "seq_trade_id", "交易订单"),
     DEPOSIT_ORDER_ID("1", "20", "seq_trade_id", "交易-充值单"),
     WITHDRAW_ORDER_ID("1", "30", "seq_trade_id", "交易-提现单"),
     PAY_ORDER_ID("2", "01", "seq_pay_order_id", "支付-支付单"),

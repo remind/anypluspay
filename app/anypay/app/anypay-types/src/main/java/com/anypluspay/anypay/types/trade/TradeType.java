@@ -14,6 +14,8 @@ public enum TradeType implements CodeEnum {
     INSTANT_ACQUIRING("20", "即时到账"),
     ENSURE_ACQUIRING("21", "担保交易"),
     REFUND_ACQUIRING("30", "收单退款"),
+    DEPOSIT("40", "充值"),
+    WITHDRAW("50", "提现"),
 
     ;
     private final String code;

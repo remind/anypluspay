@@ -1,12 +1,12 @@
-package com.anypluspay.anypay.types.payment;
+package com.anypluspay.anypay.types.request;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
  * 统一下单请求
+ *
  * @author wxj
  * 2026/1/26
  */
@@ -20,17 +20,34 @@ public class UnifiedOrderRequest {
     private String outTradeNo;
 
     /**
-     * 支付方式
+     * 收款方
      */
-    @NotBlank(message = "支付方式不能为空")
-    private String payWayCode;
+    @NotBlank(message = "收款方ID不能为空")
+    private String payeeId;
+
+    /**
+     * 收款方账户号
+     */
+    @NotBlank(message = "收款方账户号不能为空")
+    private String payeeAccountNo;
+
+    /**
+     * 付款方
+     */
+    @NotBlank(message = "付款方ID不能为空")
+    private String payerId;
+
+    /**
+     * 标题
+     */
+    @NotBlank(message = "标题不能为空")
+    private String subject;
 
     /**
      * 支付金额
      */
     @NotNull(message = "支付金额不能为空")
-    @Min(value = 1, message = "支付金额不能为空")
-    private Double amount;
+    private String amount;
 
     /**
      * 货币代码

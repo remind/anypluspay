@@ -4,7 +4,7 @@ project:
 
 db:
   dataSource:
-    url: jdbc:mysql://127.0.0.1:3306/anypluspay?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:33066/anypluspay?useUnicode=true&characterEncoding=utf8
     user: root
     password: root
   table:
@@ -17,4 +17,5 @@ db:
       - tc_ #配置类数据
       - t_
     name:
-      - tc_dictionary
+#      - tc_dictionary
+      - tp_pay_way

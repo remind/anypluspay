@@ -1,39 +1,40 @@
 package com.anypluspay.anypay.domain.trade;
 
-import com.anypluspay.anypay.types.trade.AcquiringOrderStatus;
+import com.anypluspay.anypay.types.trade.TradeType;
+import com.anypluspay.anypay.types.trade.TraderOrderStatus;
+import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
- * 收单订单
+ * 交易订单
  *
  * @author wxj
- * 2025/12/11
+ * 2026/1/27
  */
 @Data
-public class AcquiringOrder {
-
+public class TradeOrder extends Entity {
     /**
      * 交易单号
      */
     private String tradeOrderId;
 
     /**
-     * 支付单号ID
+     * 外部交易单号
      */
-    private String orderId;
+    private String outTradeNo;
+
+    /**
+     * 交易类型
+     */
+    private TradeType tradeType;
 
     /**
      * 关联的交易单号
      */
-    private String relationTradeId;
-
-    /**
-     * 外部订单号
-     */
-    private String outTradeNo;
+    private String relationTradeOrderId;
 
     /**
      * 收款方
@@ -63,11 +64,10 @@ public class AcquiringOrder {
     /**
      * 状态
      */
-    private AcquiringOrderStatus status;
+    private TraderOrderStatus status;
 
     /**
      * 过期时间
      */
     private LocalDateTime gmtExpire;
-
 }

@@ -15,5 +15,9 @@
             <groupId>com.anypluspay.anypay</groupId>
             <artifactId>anypay-infra</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>
