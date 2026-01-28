@@ -6,5 +6,5 @@ package com.anypluspay.anypay.openapi.controller;
  * @author wxj
  * 2026/1/27
  */
-public class EnsurePaymentController extends AbstractPaymentController {
+public class EnsureTradeController extends AbstractTradeController {
 }

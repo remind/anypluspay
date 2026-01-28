@@ -1,9 +1,9 @@
-package com.anypluspay.anypay.application.trade.builder;
+package com.anypluspay.anypay.openapi.builder;
 
 import com.anypluspay.anypay.domain.common.service.IdGeneratorService;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
 import com.anypluspay.anypay.types.common.IdType;
-import com.anypluspay.anypay.types.request.UnifiedOrderRequest;
+import com.anypluspay.anypay.openapi.request.InstantCreateOrderRequest;
 import com.anypluspay.anypay.types.trade.TradeType;
 import com.anypluspay.anypay.types.trade.TraderOrderStatus;
 import com.anypluspay.commons.lang.types.Money;
@@ -15,7 +15,7 @@ import java.util.Currency;
 
 /**
  * @author wxj
- * 2026/1/27
+ * 2026/1/28
  */
 @Service
 public class TradeBuilder {
@@ -23,15 +23,16 @@ public class TradeBuilder {
     @Autowired
     private IdGeneratorService idGeneratorService;
 
-    public TradeOrder buildTradeOrder(UnifiedOrderRequest request, TradeType tradeType) {
+    public TradeOrder buildTradeOrder(InstantCreateOrderRequest request, TradeType tradeType) {
         TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setTradeOrderId(idGeneratorService.genTradeId(request.getPayerId(), IdType.TRADE_ORDER_ID));
+        tradeOrder.setTradeId(idGeneratorService.genTradeId(request.getPayerId(), IdType.TRADE_ORDER_ID));
         tradeOrder.setTradeType(tradeType);
         tradeOrder.setOutTradeNo(request.getOutTradeNo());
         tradeOrder.setPayerId(request.getPayerId());
         tradeOrder.setPayeeId(request.getPayeeId());
         tradeOrder.setPayeeAccountNo(request.getPayeeAccountNo());
         tradeOrder.setSubject(request.getSubject());
+        tradeOrder.setBody(request.getBody());
         tradeOrder.setAmount(new Money(request.getAmount(), Currency.getInstance(request.getCurrency())));
         tradeOrder.setPayeeId(request.getPayeeId());
         tradeOrder.setStatus(TraderOrderStatus.INIT);

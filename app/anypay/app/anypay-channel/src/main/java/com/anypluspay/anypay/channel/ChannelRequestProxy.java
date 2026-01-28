@@ -19,8 +19,8 @@ public class ChannelRequestProxy {
     @Autowired
     private ApplicationContext applicationContext;
 
-    public ChannelResponse unifiedOrder(String instCode, ChannelUnifiedOrderRequest request) {
-        UnifiedOrderService unifiedOrderService = applicationContext.getBean(instCode + "UnifiedOrderService", UnifiedOrderService.class);
+    public ChannelResponse unifiedOrder(String channelCode, ChannelUnifiedOrderRequest request) {
+        UnifiedOrderService unifiedOrderService = applicationContext.getBean(channelCode + "UnifiedOrderService", UnifiedOrderService.class);
         Assert.notNull(unifiedOrderService, "渠道服务不存在");
         return unifiedOrderService.unifiedOrder(request);
     }

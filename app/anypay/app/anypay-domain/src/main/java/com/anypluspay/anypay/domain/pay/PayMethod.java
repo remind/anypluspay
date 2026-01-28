@@ -10,7 +10,7 @@ import lombok.Data;
  * 2026/1/26
  */
 @Data
-public class PayWay extends Entity {
+public class PayMethod extends Entity {
 
     /**
      * 支付方式编码

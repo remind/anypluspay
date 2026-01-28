@@ -19,7 +19,7 @@ public class TradeOrder extends Entity {
     /**
      * 交易单号
      */
-    private String tradeOrderId;
+    private String tradeId;
 
     /**
      * 外部交易单号
@@ -34,7 +34,7 @@ public class TradeOrder extends Entity {
     /**
      * 关联的交易单号
      */
-    private String relationTradeOrderId;
+    private String relationTradeId;
 
     /**
      * 收款方
@@ -55,6 +55,11 @@ public class TradeOrder extends Entity {
      * 标题
      */
     private String subject;
+
+    /**
+     * 描述
+     */
+    private String body;
 
     /**
      * 金额

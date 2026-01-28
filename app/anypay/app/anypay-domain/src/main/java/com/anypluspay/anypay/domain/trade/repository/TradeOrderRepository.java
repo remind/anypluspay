@@ -12,11 +12,11 @@ public interface TradeOrderRepository {
 
     void reStore(TradeOrder tradeOrder);
 
-    TradeOrder load(String tradeOrderId);
+    TradeOrder load(String tradeId);
 
     TradeOrder loadByOutTradeNo(String outTradeNo);
 
-    TradeOrder lock(String tradeOrderId);
+    TradeOrder lock(String tradeId);
 
     TradeOrder lockByOutTradeNo(String outTradeNo);
 }

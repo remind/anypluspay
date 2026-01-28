@@ -1,17 +1,17 @@
-package com.anypluspay.anypay.types.request;
+package com.anypluspay.anypay.openapi.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * 统一下单请求
+ * 即时到账下单请求
  *
  * @author wxj
  * 2026/1/26
  */
 @Data
-public class UnifiedOrderRequest {
+public class InstantCreateOrderRequest {
 
     /**
      * 外部交易
@@ -42,6 +42,12 @@ public class UnifiedOrderRequest {
      */
     @NotBlank(message = "标题不能为空")
     private String subject;
+
+    /**
+     * 商品描述
+     */
+    @NotBlank(message = "商品描述不能为空")
+    private String body;
 
     /**
      * 支付金额
