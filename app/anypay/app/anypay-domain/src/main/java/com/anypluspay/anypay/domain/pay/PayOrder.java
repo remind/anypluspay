@@ -1,7 +1,8 @@
 package com.anypluspay.anypay.domain.pay;
 
-import com.anypluspay.anypay.types.common.PayStatus;
+import com.anypluspay.anypay.types.common.PayOrderStatus;
 import com.anypluspay.commons.lang.Entity;
+import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
 
 /**
@@ -16,16 +17,61 @@ public class PayOrder extends Entity {
     /**
      * 支付单号
      */
-    private String payOrderId;
+    private String payId;
 
     /**
      * 交易单号
      */
-    private String tradeOrderId;
+    private String tradeId;
+
+    /**
+     * 支付方式
+     */
+    private String payMethod;
+
+    /**
+     * 支付参数
+     */
+    private String payParam;
+
+    /**
+     * 支付金额
+     */
+    private Money amount;
 
     /**
      * 支付状态
      */
-    private PayStatus status;
+    private PayOrderStatus status;
+
+    /**
+     * 渠道编码
+     */
+    private String channelCode;
+
+    /**
+     * 渠道请求单号
+     */
+    private String channelRequestNo;
+
+    /**
+     * 渠道响应单号
+     */
+    private String channelResponseNo;
+
+    /**
+     * 渠道返回参数
+     **/
+    private String channelParam;
+
+    /**
+     * 结果码
+     **/
+    private String resultCode;
+
+    /**
+     * 结果信息
+     **/
+    private String resultMsg;
 
 }

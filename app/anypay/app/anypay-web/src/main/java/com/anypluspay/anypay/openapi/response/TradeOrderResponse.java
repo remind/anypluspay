@@ -1,11 +1,6 @@
 package com.anypluspay.anypay.openapi.response;
 
-import com.anypluspay.anypay.types.trade.TradeType;
-import com.anypluspay.anypay.types.trade.TraderOrderStatus;
-import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * @author wxj

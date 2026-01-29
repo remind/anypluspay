@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.channel.response;
+package com.anypluspay.anypay.domain.channel.spi.response;
 
 import lombok.Data;
 
@@ -27,13 +27,18 @@ public class ChannelResponse {
     private String channelResponseNo;
 
     /**
-     * 渠道返回错误代码
+     * 渠道返回参数
      **/
-    private String errCode;
+    private String channelParam;
 
     /**
-     * 渠道返回错误信息
+     * 渠道返回结果代码
      **/
-    private String errMsg;
+    private String resultCode;
+
+    /**
+     * 渠道返回结果信息
+     **/
+    private String resultMsg;
 
 }

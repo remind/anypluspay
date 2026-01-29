@@ -16,8 +16,6 @@
         <module>app/anypay-types</module>
         <module>app/anypay-domain</module>
         <module>app/anypay-web</module>
-        <module>app/anypay-channel-spi</module>
-        <module>app/anypay-channel</module>
         <module>gen/dalgen</module>
     </modules>
 
@@ -46,16 +44,6 @@
             <dependency>
                 <groupId>com.anypluspay.anypay</groupId>
                 <artifactId>anypay-web</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.anypluspay.anypay</groupId>
-                <artifactId>anypay-channel-spi</artifactId>
-                <version>${revision}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.anypluspay.anypay</groupId>
-                <artifactId>anypay-channel</artifactId>
                 <version>${revision}</version>
             </dependency>
         </dependencies>

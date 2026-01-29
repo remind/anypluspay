@@ -16,10 +16,6 @@
             <artifactId>anypay-domain</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.anypluspay.anypay</groupId>
-            <artifactId>anypay-channel</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
         </dependency>

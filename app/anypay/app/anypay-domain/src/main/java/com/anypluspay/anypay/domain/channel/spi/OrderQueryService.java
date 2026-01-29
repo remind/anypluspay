@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.channel;
+package com.anypluspay.anypay.domain.channel.spi;
 
 /**
  * @author wxj

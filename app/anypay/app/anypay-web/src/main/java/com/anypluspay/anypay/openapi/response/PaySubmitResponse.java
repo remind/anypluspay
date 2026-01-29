@@ -30,14 +30,14 @@ public class PaySubmitResponse {
     private String status;
 
     /**
-     * 错误码
-     */
-    private String errorCode;
+     * 结果码
+     **/
+    private String resultCode;
 
     /**
-     * 错误信息
-     */
-    private String errorMsg;
+     * 结果信息
+     **/
+    private String resultMsg;
 
     /**
      * 渠道参数

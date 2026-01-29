@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.domain.trade;
 
+import com.anypluspay.anypay.types.trade.TradeOrderStatus;
 import com.anypluspay.anypay.types.trade.TradeType;
-import com.anypluspay.anypay.types.trade.TraderOrderStatus;
 import com.anypluspay.commons.lang.Entity;
 import com.anypluspay.commons.lang.types.Money;
 import lombok.Data;
@@ -69,7 +69,7 @@ public class TradeOrder extends Entity {
     /**
      * 状态
      */
-    private TraderOrderStatus status;
+    private TradeOrderStatus status;
 
     /**
      * 过期时间

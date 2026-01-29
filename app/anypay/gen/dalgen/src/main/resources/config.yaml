@@ -18,5 +18,6 @@ db:
       - t_
     name:
 #      - tc_dictionary
-      - tp_pay_method
+#      - tp_pay_method
 #      - t_trade_order
+      - t_pay_order

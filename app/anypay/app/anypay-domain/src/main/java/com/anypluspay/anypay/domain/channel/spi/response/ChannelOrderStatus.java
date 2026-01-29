@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.channel.response;
+package com.anypluspay.anypay.domain.channel.spi.response;
 
 import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum ChannelOrderStatus implements CodeEnum {
 
-    PROCESSING("PROCESSING", "处理中"),
+    PAYING("PAYING", "支付中"),
 
     SUCCESS("SUCCESS", "成功"),
 
