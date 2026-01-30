@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2026-01-28
+ * @since 2026-01-30
  */
 @TableName("t_trade_order")
 public class TradeOrderDO implements Serializable {
@@ -92,6 +92,26 @@ public class TradeOrderDO implements Serializable {
      * 扩展信息
      */
     private String extension;
+
+    /**
+     * 跳转地址
+     */
+    private String returnUrl;
+
+    /**
+     * 通知地址
+     */
+    private String notifyUrl;
+
+    /**
+     * 通知时间
+     */
+    private LocalDateTime notifyTime;
+
+    /**
+     * S-成功，W-待通知
+     */
+    private String notifyStatus;
 
     /**
      * 创建时间
@@ -214,6 +234,38 @@ public class TradeOrderDO implements Serializable {
         this.extension = extension;
     }
 
+    public String getReturnUrl() {
+        return returnUrl;
+    }
+
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
+    }
+
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
+    public LocalDateTime getNotifyTime() {
+        return notifyTime;
+    }
+
+    public void setNotifyTime(LocalDateTime notifyTime) {
+        this.notifyTime = notifyTime;
+    }
+
+    public String getNotifyStatus() {
+        return notifyStatus;
+    }
+
+    public void setNotifyStatus(String notifyStatus) {
+        this.notifyStatus = notifyStatus;
+    }
+
     public LocalDateTime getGmtCreate() {
         return gmtCreate;
     }
@@ -247,6 +299,10 @@ public class TradeOrderDO implements Serializable {
         ", status = " + status +
         ", gmtExpire = " + gmtExpire +
         ", extension = " + extension +
+        ", returnUrl = " + returnUrl +
+        ", notifyUrl = " + notifyUrl +
+        ", notifyTime = " + notifyTime +
+        ", notifyStatus = " + notifyStatus +
         ", gmtCreate = " + gmtCreate +
         ", gmtModified = " + gmtModified +
         "}";

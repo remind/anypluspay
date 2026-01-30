@@ -1,8 +1,8 @@
 package com.anypluspay.anypay.openapi.controller;
 
 import com.anypluspay.anypay.application.pay.PaymentService;
-import com.anypluspay.anypay.domain.channel.ChannelRequestService;
-import com.anypluspay.anypay.domain.channel.spi.response.ChannelResponse;
+import com.anypluspay.anypay.domain.channel.ChannelFactoryService;
+import com.anypluspay.anypay.domain.channel.spi.response.ChannelUnifiedOrderResponse;
 import com.anypluspay.anypay.domain.pay.PayMethod;
 import com.anypluspay.anypay.domain.pay.PayOrder;
 import com.anypluspay.anypay.domain.pay.repository.PayMethodRepository;
@@ -47,7 +47,7 @@ public class PayController {
     private PayMethodRepository payMethodRepository;
 
     @Resource
-    private ChannelRequestService channelRequestService;
+    private ChannelFactoryService channelFactoryService;
 
     @Resource
     private PaymentService paymentService;
@@ -75,8 +75,8 @@ public class PayController {
         Assert.isTrue(payMethod != null, "支付方式不存在");
         PayOrder payOrder = payOrderBuilder.build(request, payMethod, tradeOrder);
         payOrderRepository.store(payOrder);
-        ChannelResponse channelResponse = channelRequestService.unifiedOrder(tradeOrder, payOrder);
-        paymentService.processResult(tradeOrder.getTradeId(), payOrder.getPayId(), channelResponse);
+        ChannelUnifiedOrderResponse channelUnifiedOrderResponse = channelFactoryService.unifiedOrder(payMethod.getChannelCode()).create(tradeOrder, payOrder);
+        paymentService.processChannelResult(tradeOrder.getTradeId(), payOrder.getPayId(), channelUnifiedOrderResponse);
         return ResponseResult.success(buildPaySubmitResponse(payOrder.getPayId()));
     }
 
@@ -87,7 +87,7 @@ public class PayController {
         response.setTradeId(payOrder.getTradeId());
         response.setOutTradeNo(tradeOrder.getOutTradeNo());
         response.setPayMethod(payOrder.getPayMethod());
-        response.setStatus(payOrder.getStatus().getDisplayName());
+        response.setStatus(tradeOrder.getStatus().getCode());
         response.setResultCode(payOrder.getResultCode());
         response.setResultMsg(payOrder.getResultMsg());
         response.setChannelParam(payOrder.getChannelParam());

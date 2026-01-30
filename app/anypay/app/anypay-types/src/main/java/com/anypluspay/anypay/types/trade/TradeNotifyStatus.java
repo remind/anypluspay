@@ -4,26 +4,22 @@ import com.anypluspay.commons.enums.CodeEnum;
 import lombok.Getter;
 
 /**
- * 交易订单状态
- *
  * @author wxj
- * 2026/1/27
+ * 2026/1/30
  */
 @Getter
-public enum TradeOrderStatus implements CodeEnum {
+public enum TradeNotifyStatus implements CodeEnum {
 
-    WAIT_PAY("WAIT_PAY", "待支付"),
-    SUCCESS("SUCCESS", "成功"),
-    CLOSED("CLOSED", "关闭"),
+    WAIT_NOTIFY("W", "待通知"),
+    SUCCESS("S", "成功"),
+    IGNORED("I", "忽略"),
     ;
-
     private final String code;
 
     private final String displayName;
 
-    TradeOrderStatus(String code, String displayName) {
+    TradeNotifyStatus(String code, String displayName) {
         this.code = code;
         this.displayName = displayName;
     }
 }
-

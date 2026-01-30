@@ -14,5 +14,9 @@ public interface PayOrderRepository {
 
     PayOrder load(String payOrderId);
 
+    PayOrder loadByChannelRequestNo(String channelCode, String channelRequestNo);
+
+    PayOrder loadByChannelResponseNo(String channelCode, String channelResponseNo);
+
     PayOrder lock(String payOrderId);
 }

@@ -27,18 +27,20 @@ public class InstantTradeController extends AbstractTradeController {
     }
 
     @GetMapping("/close")
-    public ResponseResult<String> close(@RequestParam String tradeOrderId) {
+    public ResponseResult<String> close(@RequestParam String tradeId) {
+        innerClose(tradeId);
         return ResponseResult.success();
     }
 
     @GetMapping("/close/out-trade-no")
     public ResponseResult<String> closeByOutTradeNo(@RequestParam String outTradeNo) {
+        innerCloseByOutTradeNo(outTradeNo);
         return ResponseResult.success();
     }
 
     @GetMapping("/query")
-    public ResponseResult<TradeOrderResponse> query(@RequestParam String tradeOrderId) {
-        TradeOrder tradeOrder = tradeOrderRepository.load(tradeOrderId);
+    public ResponseResult<TradeOrderResponse> query(@RequestParam(required = false) String tradeId, @RequestParam(required = false) String outTradeNo) {
+        TradeOrder tradeOrder = tradeOrderRepository.load(tradeId);
         return ResponseResult.success(buildTradeOrderResponse(tradeOrder));
     }
 
@@ -50,7 +52,7 @@ public class InstantTradeController extends AbstractTradeController {
 
     private TradeOrderResponse buildTradeOrderResponse(TradeOrder tradeOrder) {
         TradeOrderResponse response = new TradeOrderResponse();
-        response.setTradeOrderId(tradeOrder.getTradeId());
+        response.setTradeId(tradeOrder.getTradeId());
         response.setOutTradeNo(tradeOrder.getOutTradeNo());
         response.setAmount(tradeOrder.getAmount().toString());
         response.setCurrency(tradeOrder.getAmount().getCurrency().getCurrencyCode());

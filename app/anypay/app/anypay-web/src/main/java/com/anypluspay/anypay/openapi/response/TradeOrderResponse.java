@@ -12,12 +12,17 @@ public class TradeOrderResponse {
     /**
      * 交易单号
      */
-    private String tradeOrderId;
+    private String tradeId;
 
     /**
      * 外部交易单号
      */
     private String outTradeNo;
+
+    /**
+     * 交易类型
+     */
+    private String tradeType;
 
     /**
      * 金额

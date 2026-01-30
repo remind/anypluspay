@@ -1,5 +1,6 @@
 package com.anypluspay.anypay.domain.trade;
 
+import com.anypluspay.anypay.types.trade.TradeNotifyStatus;
 import com.anypluspay.anypay.types.trade.TradeOrderStatus;
 import com.anypluspay.anypay.types.trade.TradeType;
 import com.anypluspay.commons.lang.Entity;
@@ -70,6 +71,26 @@ public class TradeOrder extends Entity {
      * 状态
      */
     private TradeOrderStatus status;
+
+    /**
+     * 跳转地址
+     */
+    private String returnUrl;
+
+    /**
+     * 通知地址
+     */
+    private String notifyUrl;
+
+    /**
+     * 通知时间
+     */
+    private LocalDateTime notifyTime;
+
+    /**
+     * 通知状态
+     */
+    private TradeNotifyStatus notifyStatus;
 
     /**
      * 过期时间

@@ -1,7 +1,7 @@
 package com.anypluspay.anypay.domain.channel.spi;
 
 
-import com.anypluspay.anypay.domain.channel.spi.response.ChannelResponse;
+import com.anypluspay.anypay.domain.channel.spi.response.ChannelUnifiedOrderResponse;
 import com.anypluspay.anypay.domain.pay.PayOrder;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
 
@@ -10,6 +10,6 @@ import com.anypluspay.anypay.domain.trade.TradeOrder;
  */
 public interface UnifiedOrderService {
 
-    ChannelResponse unifiedOrder(TradeOrder tradeOrder, PayOrder payOrder);
+    ChannelUnifiedOrderResponse create(TradeOrder tradeOrder, PayOrder payOrder);
 
 }
