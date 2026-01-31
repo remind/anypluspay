@@ -3,10 +3,10 @@ package com.anypluspay.anypay.domain.channel.spi.response;
 import lombok.Data;
 
 /**
- * 网关专用结果
+ * 渠道响应结果
  *
  * @author wxj
- * 2024/9/15
+ * 2026/1/30
  */
 @Data
 public class ChannelResponse {
@@ -27,11 +27,6 @@ public class ChannelResponse {
     private String channelResponseNo;
 
     /**
-     * 渠道返回参数
-     **/
-    private String channelParam;
-
-    /**
      * 渠道返回结果代码
      **/
     private String resultCode;
@@ -40,5 +35,4 @@ public class ChannelResponse {
      * 渠道返回结果信息
      **/
     private String resultMsg;
-
 }
