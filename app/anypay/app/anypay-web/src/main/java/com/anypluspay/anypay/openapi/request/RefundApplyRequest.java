@@ -15,12 +15,16 @@ public class RefundApplyRequest {
      * 退款外部交易单号
      */
     @NotBlank(message = "退款外部交易单号不能为空")
-    private String outTradeNo;
+    private String refundOutTradeNo;
+
+    /**
+     * 原交易单号
+     */
+    private String origTradeId;
 
     /**
      * 原外部交易单号
      */
-    @NotBlank(message = "原外部交易单号不能为空")
     private String origOutTradeNo;
 
     /**
