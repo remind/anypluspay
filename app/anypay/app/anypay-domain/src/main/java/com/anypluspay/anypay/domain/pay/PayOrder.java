@@ -25,6 +25,11 @@ public class PayOrder extends Entity {
     private String tradeId;
 
     /**
+     * 原支付单号
+     */
+    private String origPayId;
+
+    /**
      * 支付方式
      */
     private String payMethod;

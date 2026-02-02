@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.openapi.request;
+package com.anypluspay.anypay.application.trade.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +31,6 @@ public class RefundApplyRequest {
      * 退款金额
      */
     @NotNull(message = "支付金额不能为空")
-    private String amount;
+    private String refundAmount;
 
 }

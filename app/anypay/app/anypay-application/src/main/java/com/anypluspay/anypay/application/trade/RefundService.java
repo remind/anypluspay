@@ -1,5 +1,6 @@
 package com.anypluspay.anypay.application.trade;
 
+import com.anypluspay.anypay.application.trade.request.RefundApplyRequest;
 import com.anypluspay.anypay.domain.common.service.IdGeneratorService;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
 import com.anypluspay.anypay.domain.trade.repository.TradeOrderRepository;
@@ -37,16 +38,14 @@ public class RefundService {
     /**
      * 退款申请
      *
-     * @param tradeId
-     * @param outTradeNo
-     * @param refundOutTradeNo
-     * @param refundApplyAmount
+     * @param request
      */
-    public void apply(String tradeId, String outTradeNo, String refundOutTradeNo, Money refundApplyAmount) {
+    public void apply(RefundApplyRequest request) {
         transactionTemplate.executeWithoutResult(status -> {
-            TradeOrder tradeOrder = tradeOrderRepository.validateAndLock(tradeId, outTradeNo);
+            TradeOrder tradeOrder = tradeOrderRepository.validateAndLock(request.getOrigTradeId(), request.getOrigOutTradeNo());
+            Money refundApplyAmount = new Money(request.getRefundAmount(), tradeOrder.getAmount().getCurrency());
             validate(tradeOrder, refundApplyAmount);
-            saveRefundTradeOrder(tradeOrder, refundOutTradeNo, refundApplyAmount);
+            saveRefundTradeOrder(tradeOrder, request.getRefundOutTradeNo(), refundApplyAmount);
         });
     }
 

@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 支付订单仓储实现
  *
@@ -42,6 +44,20 @@ public class PayOrderRepositoryImpl implements PayOrderRepository {
     @Override
     public PayOrder load(String payOrderId) {
         return payOrderDalConvertor.toEntity(payOrderMapper.selectById(payOrderId));
+    }
+
+    @Override
+    public List<PayOrder> loadByTradeId(String tradeId) {
+        LambdaQueryWrapper<PayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PayOrderDO::getTradeId, tradeId);
+        return payOrderDalConvertor.toEntity(payOrderMapper.selectList(queryWrapper));
+    }
+
+    @Override
+    public List<PayOrder> loadByOrigPayId(String origPayId) {
+        LambdaQueryWrapper<PayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PayOrderDO::getOrigPayId, origPayId);
+        return payOrderDalConvertor.toEntity(payOrderMapper.selectList(queryWrapper));
     }
 
     @Override

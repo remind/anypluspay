@@ -1,8 +1,10 @@
 package com.anypluspay.anypay.domain.trade.service;
 
 import com.anypluspay.anypay.domain.trade.TradeOrder;
+import com.anypluspay.anypay.domain.trade.validator.RefundValidator;
 import com.anypluspay.anypay.types.trade.TradeNotifyStatus;
 import com.anypluspay.anypay.types.trade.TradeOrderStatus;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -14,6 +16,9 @@ import org.springframework.util.Assert;
  */
 @Service
 public class TradeOrderDomainService {
+
+    @Resource
+    private RefundValidator refundValidator;
 
     /**
      * 支付成功
@@ -34,5 +39,9 @@ public class TradeOrderDomainService {
     public void close(TradeOrder tradeOrder) {
         Assert.isTrue(tradeOrder.getStatus() == TradeOrderStatus.WAIT_PAY, "仅待支付才能关闭");
         tradeOrder.setStatus(TradeOrderStatus.CLOSED);
+    }
+
+    public void refund(TradeOrder refundTradeOrder) {
+        refundValidator.validate(refundTradeOrder);
     }
 }

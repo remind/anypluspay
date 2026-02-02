@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author wxj
- * @since 2026-01-29
+ * @since 2026-02-02
  */
 @TableName("t_pay_order")
 public class PayOrderDO implements Serializable {
@@ -32,6 +32,11 @@ public class PayOrderDO implements Serializable {
      * 交易ID
      */
     private String tradeId;
+
+    /**
+     * 原支付ID
+     */
+    private String origPayId;
 
     /**
      * 支付方式
@@ -119,6 +124,14 @@ public class PayOrderDO implements Serializable {
 
     public void setTradeId(String tradeId) {
         this.tradeId = tradeId;
+    }
+
+    public String getOrigPayId() {
+        return origPayId;
+    }
+
+    public void setOrigPayId(String origPayId) {
+        this.origPayId = origPayId;
     }
 
     public String getPayMethod() {
@@ -238,6 +251,7 @@ public class PayOrderDO implements Serializable {
         return "PayOrderDO{" +
         "payId = " + payId +
         ", tradeId = " + tradeId +
+        ", origPayId = " + origPayId +
         ", payMethod = " + payMethod +
         ", amount = " + amount +
         ", currency = " + currency +
