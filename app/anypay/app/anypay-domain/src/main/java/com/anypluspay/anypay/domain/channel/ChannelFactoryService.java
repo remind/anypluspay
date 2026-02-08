@@ -1,6 +1,7 @@
 package com.anypluspay.anypay.domain.channel;
 
 import com.anypluspay.anypay.domain.channel.spi.ChannelCallbackService;
+import com.anypluspay.anypay.domain.channel.spi.ChannelRefundService;
 import com.anypluspay.anypay.domain.channel.spi.UnifiedOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -27,6 +28,12 @@ public class ChannelFactoryService {
         ChannelCallbackService channelCallBackService = applicationContext.getBean(channelCode + "ChannelCallbackService", ChannelCallbackService.class);
         Assert.notNull(channelCallBackService, "渠道接口不存在");
         return channelCallBackService;
+    }
+
+    public ChannelRefundService channelRefund(String channelCode) {
+        ChannelRefundService channelRefundService = applicationContext.getBean(channelCode + "ChannelRefundService", ChannelRefundService.class);
+        Assert.notNull(channelRefundService, "渠道接口不存在");
+        return channelRefundService;
     }
 
 }

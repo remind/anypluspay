@@ -23,6 +23,11 @@ public class PayMethod extends Entity {
     private String name;
 
     /**
+     * 处理器
+     */
+    private String processor;
+
+    /**
      * 渠道编码
      */
     private String channelCode;

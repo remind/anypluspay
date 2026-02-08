@@ -1,11 +1,13 @@
 package com.anypluspay.anypay.domain.trade.service;
 
 import com.anypluspay.anypay.domain.trade.TradeOrder;
+import com.anypluspay.anypay.domain.trade.repository.TradeOrderRepository;
 import com.anypluspay.anypay.domain.trade.validator.RefundValidator;
 import com.anypluspay.anypay.types.trade.TradeNotifyStatus;
 import com.anypluspay.anypay.types.trade.TradeOrderStatus;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 
 /**
@@ -19,6 +21,12 @@ public class TradeOrderDomainService {
 
     @Resource
     private RefundValidator refundValidator;
+
+    @Resource
+    private TradeOrderRepository tradeOrderRepository;
+
+    @Resource
+    private TransactionTemplate transactionTemplate;
 
     /**
      * 支付成功
@@ -42,6 +50,10 @@ public class TradeOrderDomainService {
     }
 
     public void refund(TradeOrder refundTradeOrder) {
-        refundValidator.validate(refundTradeOrder);
+        transactionTemplate.executeWithoutResult(status -> {
+            TradeOrder originTradeOrder = tradeOrderRepository.lock(refundTradeOrder.getRelationTradeId());
+            refundValidator.validate(refundTradeOrder, originTradeOrder);
+            tradeOrderRepository.store(refundTradeOrder);
+        });
     }
 }

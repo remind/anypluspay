@@ -54,9 +54,9 @@ public class PayOrderRepositoryImpl implements PayOrderRepository {
     }
 
     @Override
-    public List<PayOrder> loadByOrigPayId(String origPayId) {
+    public List<PayOrder> loadByOrigPayIds(List<String> origPayIds) {
         LambdaQueryWrapper<PayOrderDO> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PayOrderDO::getOrigPayId, origPayId);
+        queryWrapper.in(PayOrderDO::getOrigPayId, origPayIds);
         return payOrderDalConvertor.toEntity(payOrderMapper.selectList(queryWrapper));
     }
 

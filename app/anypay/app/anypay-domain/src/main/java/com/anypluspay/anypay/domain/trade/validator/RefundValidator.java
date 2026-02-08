@@ -23,9 +23,8 @@ public class RefundValidator {
     @Resource
     private TradeOrderRepository tradeOrderRepository;
 
-    public void validate(TradeOrder refundTradeOrder) {
+    public void validate(TradeOrder refundTradeOrder, TradeOrder originTradeOrder ) {
         Assert.isTrue(MoneyUtils.isGreatThanZero(refundTradeOrder.getAmount()), "退款金额必须大于0");
-        TradeOrder originTradeOrder = tradeOrderRepository.load(refundTradeOrder.getRelationTradeId());
         Assert.isTrue(originTradeOrder != null, "原交易不存在");
         validateOriginTradeOrder(originTradeOrder);
         validateRefundAmount(originTradeOrder, refundTradeOrder);
@@ -40,7 +39,7 @@ public class RefundValidator {
         List<TradeOrder> refundTradeOrders = tradeOrderRepository.loadByRelationTradeId(originTradeOrder.getTradeId());
         if (!CollectionUtils.isEmpty(refundTradeOrders)) {
             Money refundAmount = refundTradeOrders.stream()
-                    .filter(rto -> rto.getStatus() == TradeOrderStatus.SUCCESS && rto.getTradeType() == TradeType.REFUND_ACQUIRING)
+                    .filter(rto -> (rto.getStatus() == TradeOrderStatus.SUCCESS || rto.getStatus() == TradeOrderStatus.WAIT_PAY) && rto.getTradeType() == TradeType.REFUND_ACQUIRING)
                     .map(TradeOrder::getAmount)
                     .reduce(Money::add).orElse(new Money(0));
             Assert.isTrue(!refundTradeOrder.getAmount().add(refundAmount).greaterThan(originTradeOrder.getAmount()), "退款金额已经超过可退金额");

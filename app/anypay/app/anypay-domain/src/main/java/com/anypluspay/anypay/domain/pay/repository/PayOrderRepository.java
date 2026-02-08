@@ -18,7 +18,7 @@ public interface PayOrderRepository {
 
     List<PayOrder> loadByTradeId(String tradeId);
 
-    List<PayOrder> loadByOrigPayId(String origPayId);
+    List<PayOrder> loadByOrigPayIds(List<String> origPayIds);
 
     PayOrder loadByChannelRequestNo(String channelCode, String channelRequestNo);
 

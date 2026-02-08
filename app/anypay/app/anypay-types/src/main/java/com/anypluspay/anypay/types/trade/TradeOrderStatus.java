@@ -15,6 +15,7 @@ public enum TradeOrderStatus implements CodeEnum {
     WAIT_PAY("WAIT_PAY", "待支付"),
     SUCCESS("SUCCESS", "成功"),
     CLOSED("CLOSED", "关闭"),
+    FAIL("FAIL", "失败"),
     ;
 
     private final String code;
