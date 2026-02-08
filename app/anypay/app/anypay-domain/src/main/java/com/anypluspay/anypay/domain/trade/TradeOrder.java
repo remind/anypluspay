@@ -93,6 +93,16 @@ public class TradeOrder extends Entity {
     private TradeNotifyStatus notifyStatus;
 
     /**
+     * 结果码
+     **/
+    private String resultCode;
+
+    /**
+     * 结果信息
+     **/
+    private String resultMsg;
+
+    /**
      * 过期时间
      */
     private LocalDateTime gmtExpire;

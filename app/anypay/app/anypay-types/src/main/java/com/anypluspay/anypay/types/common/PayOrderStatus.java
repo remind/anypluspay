@@ -16,7 +16,6 @@ public enum PayOrderStatus implements CodeEnum {
     PAYING("PAYING", "支付中"),
     CLOSED("CLOSED", "关闭"),
     FAIL("FAIL", "失败"),
-    MANUAL("MANUAL", "人工处理"),
     SUCCESS("SUCCESS", "成功"),
     ;
 

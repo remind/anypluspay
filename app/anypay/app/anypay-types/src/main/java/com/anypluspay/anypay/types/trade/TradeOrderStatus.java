@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 public enum TradeOrderStatus implements CodeEnum {
 
-    WAIT_PAY("WAIT_PAY", "待支付"),
+    WAIT_PAY("WAIT_PAY", "待支付"), // 支付单待支付，退款单退款中
     SUCCESS("SUCCESS", "成功"),
     CLOSED("CLOSED", "关闭"),
     FAIL("FAIL", "失败"),

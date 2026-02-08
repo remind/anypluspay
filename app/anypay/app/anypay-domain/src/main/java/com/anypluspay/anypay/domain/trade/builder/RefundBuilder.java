@@ -1,4 +1,4 @@
-package com.anypluspay.anypay.domain.pay.builder;
+package com.anypluspay.anypay.domain.trade.builder;
 
 import com.anypluspay.anypay.domain.common.service.IdGeneratorService;
 import com.anypluspay.anypay.domain.pay.PayOrder;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * 2026/2/2
  */
 @Component
-public class PayOrderBuilder {
+public class RefundBuilder {
 
     @Autowired
     private PayOrderRepository payOrderRepository;

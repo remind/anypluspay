@@ -1,7 +1,9 @@
 package com.anypluspay.anypay.domain.trade.validator;
 
+import com.anypluspay.anypay.domain.pay.PayOrder;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
 import com.anypluspay.anypay.domain.trade.repository.TradeOrderRepository;
+import com.anypluspay.anypay.types.common.PayOrderStatus;
 import com.anypluspay.anypay.types.trade.TradeOrderStatus;
 import com.anypluspay.anypay.types.trade.TradeType;
 import com.anypluspay.commons.lang.types.Money;
@@ -23,11 +25,23 @@ public class RefundValidator {
     @Resource
     private TradeOrderRepository tradeOrderRepository;
 
-    public void validate(TradeOrder refundTradeOrder, TradeOrder originTradeOrder ) {
+    public void validate(TradeOrder refundTradeOrder, TradeOrder originTradeOrder, List<PayOrder> originPayOrders) {
         Assert.isTrue(MoneyUtils.isGreatThanZero(refundTradeOrder.getAmount()), "退款金额必须大于0");
         Assert.isTrue(originTradeOrder != null, "原交易不存在");
         validateOriginTradeOrder(originTradeOrder);
         validateRefundAmount(originTradeOrder, refundTradeOrder);
+        validatePayOrder(refundTradeOrder, originPayOrders);
+    }
+
+    private void validatePayOrder(TradeOrder refundTradeOrder, List<PayOrder> originPayOrders) {
+        Assert.notEmpty(originPayOrders, "原支付单不能为空");
+        originPayOrders.forEach(originPayOrder -> {
+            Assert.isTrue(originPayOrder.getStatus() == PayOrderStatus.SUCCESS, "原支付单不是为成功");
+        });
+        Assert.isTrue(!refundTradeOrder.getAmount().greaterThan(
+                originPayOrders.stream().map(PayOrder::getAmount).reduce(Money::add)
+                        .orElse(new Money(0, refundTradeOrder.getAmount().getCurrency()))), "退款金额不能大于原支付金额");
+
     }
 
     private void validateOriginTradeOrder(TradeOrder originTradeOrder) {

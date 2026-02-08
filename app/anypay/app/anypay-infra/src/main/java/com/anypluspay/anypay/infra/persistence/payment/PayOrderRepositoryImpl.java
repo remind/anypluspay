@@ -8,6 +8,7 @@ import com.anypluspay.anypay.infra.persistence.payment.convertor.PayOrderDalConv
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 
@@ -26,12 +27,22 @@ public class PayOrderRepositoryImpl implements PayOrderRepository {
     @Resource
     private PayOrderDalConvertor payOrderDalConvertor;
 
+    @Resource
+    private TransactionTemplate transactionTemplate;
+
     @Override
     public void store(PayOrder payOrder) {
         PayOrderDO payOrderDO = payOrderDalConvertor.toDO(payOrder);
         payOrderMapper.insert(payOrderDO);
         payOrder.setGmtCreate(payOrderDO.getGmtCreate());
         payOrder.setGmtModified(payOrderDO.getGmtModified());
+    }
+
+    @Override
+    public void store(List<PayOrder> payOrders) {
+        transactionTemplate.executeWithoutResult(status -> {
+            payOrders.forEach(this::store);
+        });
     }
 
     @Override
