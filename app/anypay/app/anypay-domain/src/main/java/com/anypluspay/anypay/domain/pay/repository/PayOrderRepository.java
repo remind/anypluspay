@@ -12,6 +12,8 @@ public interface PayOrderRepository {
 
     void store(PayOrder payOrder);
 
+    void store(List<PayOrder> payOrders);
+
     void reStore(PayOrder payOrder);
 
     PayOrder load(String payOrderId);
