@@ -27,12 +27,6 @@ public class PayOrderDomainService {
     private PayOrderRepository payOrderRepository;
 
     @Resource
-    private PayValidator payValidator;
-
-    @Resource
-    private PayOrderBuilder payOrderBuilder;
-
-    @Resource
     private ProcessorExecutor processorExecutor;
 
     @Resource

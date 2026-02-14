@@ -1,14 +1,22 @@
 package com.anypluspay.anypay.domain.trade.service;
 
+import com.anypluspay.anypay.domain.pay.PayOrder;
+import com.anypluspay.anypay.domain.pay.repository.PayOrderRepository;
+import com.anypluspay.anypay.domain.pay.service.PayOrderDomainService;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
+import com.anypluspay.anypay.domain.trade.builder.RefundBuilder;
 import com.anypluspay.anypay.domain.trade.repository.TradeOrderRepository;
 import com.anypluspay.anypay.domain.trade.validator.RefundValidator;
+import com.anypluspay.anypay.types.PayResult;
 import com.anypluspay.anypay.types.trade.TradeNotifyStatus;
 import com.anypluspay.anypay.types.trade.TradeOrderStatus;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 交易单领域服务
@@ -35,13 +43,7 @@ public class TradeOrderDomainService {
     private PayOrderDomainService payOrderDomainService;
 
     @Resource
-    private PayOrderRepository payOrderRepository;
-
-    @Resource
     private TransactionTemplate transactionTemplate;
-
-    @Resource
-    private PayOrderDomainService payOrderDomainService;
 
     /**
      * 支付成功
@@ -68,8 +70,6 @@ public class TradeOrderDomainService {
         transactionTemplate.executeWithoutResult(status -> {
             TradeOrder tradeOrder = tradeOrderRepository.lock(tradeId);
             payOrderRepository.store(payOrder);
-            payOrderDomainService.pay(tradeOrder, payOrder);
-
         });
     }
 
