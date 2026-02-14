@@ -1,5 +1,7 @@
 package com.anypluspay.anypay.domain.pay.service;
 
+import com.anypluspay.anypay.domain.channel.spi.response.ChannelUnifiedOrderResponse;
+import com.anypluspay.anypay.domain.pay.PayMethod;
 import com.anypluspay.anypay.domain.pay.PayOrder;
 import com.anypluspay.anypay.domain.pay.builder.PayOrderBuilder;
 import com.anypluspay.anypay.domain.pay.processor.ProcessorExecutor;
@@ -52,6 +54,10 @@ public class PayOrderDomainService {
     public void paying(PayOrder payOrder) {
         Assert.isTrue(payOrder.getStatus() == PayOrderStatus.INIT || payOrder.getStatus() == PayOrderStatus.PAYING, "仅支付初始化或支付中才能到支付中");
         payOrder.setStatus(PayOrderStatus.PAYING);
+    }
+
+    public void pay(TradeOrder tradeOrder, PayOrder payOrder) {
+        processorExecutor.pay(tradeOrder, payOrder);
     }
 
     public void refund(TradeOrder refundTradeOrder, List<PayOrder> originPayOrders) {

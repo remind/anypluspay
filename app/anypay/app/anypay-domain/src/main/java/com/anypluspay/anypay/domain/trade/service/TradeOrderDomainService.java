@@ -1,5 +1,10 @@
 package com.anypluspay.anypay.domain.trade.service;
 
+import com.anypluspay.anypay.domain.channel.spi.response.ChannelUnifiedOrderResponse;
+import com.anypluspay.anypay.domain.pay.PayMethod;
+import com.anypluspay.anypay.domain.pay.PayOrder;
+import com.anypluspay.anypay.domain.pay.repository.PayOrderRepository;
+import com.anypluspay.anypay.domain.pay.service.PayOrderDomainService;
 import com.anypluspay.anypay.domain.trade.TradeOrder;
 import com.anypluspay.anypay.domain.trade.repository.TradeOrderRepository;
 import com.anypluspay.anypay.domain.trade.validator.RefundValidator;
@@ -26,7 +31,13 @@ public class TradeOrderDomainService {
     private TradeOrderRepository tradeOrderRepository;
 
     @Resource
+    private PayOrderRepository payOrderRepository;
+
+    @Resource
     private TransactionTemplate transactionTemplate;
+
+    @Resource
+    private PayOrderDomainService payOrderDomainService;
 
     /**
      * 支付成功
@@ -47,6 +58,15 @@ public class TradeOrderDomainService {
     public void close(TradeOrder tradeOrder) {
         Assert.isTrue(tradeOrder.getStatus() == TradeOrderStatus.WAIT_PAY, "仅待支付才能关闭");
         tradeOrder.setStatus(TradeOrderStatus.CLOSED);
+    }
+
+    public void pay(String tradeId, PayOrder payOrder) {
+        transactionTemplate.executeWithoutResult(status -> {
+            TradeOrder tradeOrder = tradeOrderRepository.lock(tradeId);
+            payOrderRepository.store(payOrder);
+            payOrderDomainService.pay(tradeOrder, payOrder);
+
+        });
     }
 
     public void refund(TradeOrder refundTradeOrder) {

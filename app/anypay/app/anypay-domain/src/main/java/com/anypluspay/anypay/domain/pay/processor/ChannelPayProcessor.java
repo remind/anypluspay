@@ -50,7 +50,8 @@ public class ChannelPayProcessor implements PayProcessor {
             payOrder.setStatus(PayOrderStatus.FAIL);
         } else if (channelResponse.getStatus() == ChannelOrderStatus.PAYING) {
             payOrder.setStatus(PayOrderStatus.PAYING);
+        } else if (channelResponse.getStatus() == ChannelOrderStatus.SUCCESS) {
+            payOrder.setStatus(PayOrderStatus.SUCCESS);
         }
-        payOrderRepository.reStore(payOrder);
     }
 }
